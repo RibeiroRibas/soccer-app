@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/models/match.dart';
 import 'package:team_draw/themes/theme_colors.dart';
 
-import 'sections/teams/change_player.dart';
-
 class Matches extends StatefulWidget {
   final Match match;
 

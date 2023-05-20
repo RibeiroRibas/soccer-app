@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/components/box_card.dart';
-import 'package:team_draw/components/section_tittle.dart';
+import 'package:team_draw/shared/components/box_card.dart';
+import 'package:team_draw/shared/section_tittle.dart';
 
 class MatchSettingsSection extends StatelessWidget {
   const MatchSettingsSection({Key? key}) : super(key: key);

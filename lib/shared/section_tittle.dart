@@ -7,7 +7,7 @@ class SectionTittle extends StatelessWidget {
     required this.icon,
     required this.tittle,
   }) : super(key: key);
-  
+
   final IconData icon;
   final String tittle;
 
@@ -19,10 +19,28 @@ class SectionTittle extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            tittle,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-            softWrap: true,
+          Stack(
+            children: [
+              Text(
+                tittle,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 1
+                    ..color = greenTheme.primaryColor,
+                ),
+                softWrap: true,
+              ),
+              Text(
+                tittle,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                softWrap: true,
+              )
+            ],
           ),
           Icon(
             icon,

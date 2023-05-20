@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/components/box_card.dart';
-import 'package:team_draw/components/sections/players/player_lineup.dart';
-import 'package:team_draw/components/section_tittle.dart';
+
+import 'package:team_draw/shared/sections/players/player_lineup.dart';
+import 'package:team_draw/shared/section_tittle.dart';
+
+import '../../components/box_card.dart';
 
 class Players extends StatelessWidget {
   const Players({Key? key}) : super(key: key);

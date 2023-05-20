@@ -90,3 +90,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Play
+      fonts:
+        - asset: fonts/Play-Regular.ttf
+        - asset: fonts/Play-Bold.ttf
+          weight: 700

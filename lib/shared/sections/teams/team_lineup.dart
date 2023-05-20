@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/components/player_position.dart';
-import 'package:team_draw/components/sections/teams/team_overall.dart';
+import 'package:team_draw/shared/player_position.dart';
+import 'package:team_draw/shared/sections/teams/team_overall.dart';
 import 'package:team_draw/models/player.dart';
 import 'package:team_draw/models/position.dart';
 import 'package:team_draw/models/team.dart';
