@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:team_draw/shared/components/default_button.dart';
+import 'package:team_draw/shared/components/default_layout.dart';
 
-import '../components/box_card.dart';
-import '../components/section_tittle.dart';
-import '../models/player.dart';
-import '../players_data.dart';
-import '../themes/green_theme.dart';
+import '../../shared/components/box_card.dart';
+import '../../shared/messages.dart';
+import '../../shared/section_tittle.dart';
+import '../../models/player.dart';
+import '../../players_data.dart';
+import '../../themes/green_theme.dart';
 
 class PlayerLineupPage extends StatefulWidget {
   const PlayerLineupPage({Key? key}) : super(key: key);
@@ -16,11 +19,8 @@ class PlayerLineupPage extends StatefulWidget {
 class _PlayerLineupPageState extends State<PlayerLineupPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('ESCALAÇÃO'),
-        centerTitle: true,
-      ),
+    return DefaultLayout(
+      tittle: newMatch,
       body: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: Column(
@@ -28,7 +28,7 @@ class _PlayerLineupPageState extends State<PlayerLineupPage> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             const SectionTittle(
-              tittle: "Selecione os Jogadores",
+              tittle: selectPlayers,
               icon: Icons.person_add,
             ),
             BoxCard(
@@ -37,19 +37,12 @@ class _PlayerLineupPageState extends State<PlayerLineupPage> {
               width: MediaQuery.of(context).size.width,
             ),
             const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(
-                Size(
-                  MediaQuery.of(context).size.width,
-                  40,
-                ),
-              )),
-              child: const Text("SORTEAR EQUIPES"),
-            )
           ],
         ),
+      ),
+      buttonNavigationBar: DefaultButton(
+        text: drawTeam,
+        onButtonPressed: () {},
       ),
     );
   }
