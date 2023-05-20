@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:team_draw/themes/green_theme.dart';
 
 class BoxCard extends StatelessWidget {
   final Widget boxCardBody;
@@ -18,7 +19,7 @@ class BoxCard extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
+        color: greenTheme.cardColor,
         borderRadius: BorderRadius.circular(5),
         boxShadow: kElevationToShadow[2],
       ),
