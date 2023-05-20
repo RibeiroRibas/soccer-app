@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/themes/green_theme.dart';
 
-class DefaultLayout extends StatelessWidget {
+import '../themes/green_theme.dart';
+
+class DefaultPageLayout extends StatelessWidget {
   final String tittle;
   final Widget body;
   final Widget buttonNavigationBar;
 
-  const DefaultLayout({
+  const DefaultPageLayout({
     Key? key,
     required this.tittle,
     required this.body,
@@ -32,7 +33,6 @@ class DefaultLayout extends StatelessWidget {
       ),
       bottomNavigationBar: buttonNavigationBar,
       body: body,
-
     );
   }
 }

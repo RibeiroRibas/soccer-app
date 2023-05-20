@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/models/position.dart';
-import 'package:team_draw/themes/green_theme.dart';
+import 'package:team_draw/shared/themes/green_theme.dart';
 
-class PlayerPosition extends StatefulWidget {
+class PlayerPositionWidget extends StatefulWidget {
   final Position? position;
   final Color positionColor;
 
-  const PlayerPosition({
+  const PlayerPositionWidget({
     Key? key,
     required this.position,
     required this.positionColor,
   }) : super(key: key);
 
   @override
-  State<PlayerPosition> createState() => _PlayerPositionState();
+  State<PlayerPositionWidget> createState() => _PlayerPositionWidgetState();
 }
 
-class _PlayerPositionState extends State<PlayerPosition> {
-
+class _PlayerPositionWidgetState extends State<PlayerPositionWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -35,12 +34,12 @@ class _PlayerPositionState extends State<PlayerPosition> {
             )),
         child: widget.position != null
             ? Text(
-          widget.position!.name,
-          style: TextStyle(
-            fontSize: 12,
-            color: widget.positionColor,
-          ),
-        )
+                widget.position!.name,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: widget.positionColor,
+                ),
+              )
             : null,
       ),
     );

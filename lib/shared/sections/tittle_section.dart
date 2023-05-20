@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/themes/green_theme.dart';
 
-class SectionTittle extends StatelessWidget {
-  const SectionTittle({
+import '../themes/green_theme.dart';
+
+class TittleSection extends StatelessWidget {
+  const TittleSection({
     Key? key,
-    required this.icon,
+    this.icon,
     required this.tittle,
   }) : super(key: key);
 
-  final IconData icon;
+  final IconData? icon;
   final String tittle;
 
   @override
@@ -23,30 +24,23 @@ class SectionTittle extends StatelessWidget {
             children: [
               Text(
                 tittle,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                style: greenTheme.textTheme.titleMedium!.copyWith(
                   foreground: Paint()
                     ..style = PaintingStyle.stroke
-                    ..strokeWidth = 1
+                    ..strokeWidth = 0.5
                     ..color = greenTheme.primaryColor,
                 ),
                 softWrap: true,
               ),
               Text(
                 tittle,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
+                style: greenTheme.textTheme.titleMedium,
                 softWrap: true,
               )
             ],
           ),
-          Icon(
-            icon,
-            size: 32,
-            color: greenTheme.primaryColor,
-          ),
+          if (icon != null)
+            Icon(icon, size: 32, color: greenTheme.primaryColor),
         ],
       ),
     );
