@@ -5,12 +5,12 @@ class Match {
   Team teamTwo;
   int scoreTeamOne;
   int scoreTeamTwo;
-  DateTime startMatch;
+  DateTime matchDate;
 
   Match(
       {required this.teamOne,
       required this.teamTwo,
       required this.scoreTeamOne,
       required this.scoreTeamTwo,
-      required this.startMatch});
+      required this.matchDate});
 }
