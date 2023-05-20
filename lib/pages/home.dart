@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/components/sections/configurations/match_settings_section.dart';
-import 'package:team_draw/components/sections/matches/history_matches.dart';
-import 'package:team_draw/components/sections/players/player_lineup.dart';
-import 'package:team_draw/components/sections/teams/teams_section.dart';
+import 'package:team_draw/shared/sections/configurations/match_settings_section.dart';
+import 'package:team_draw/shared/sections/matches/history_matches.dart';
+import 'package:team_draw/shared/sections/teams/teams_section.dart';
 
-import '../components/main_drawer.dart';
-import '../components/sections/players/players_section.dart';
+import '../shared/main_drawer.dart';
 import '../themes/green_theme.dart';
 
 class Home extends StatefulWidget {
@@ -47,7 +45,6 @@ class _HomeState extends State<Home> {
       body: SingleChildScrollView(
         child: Column(
           children: const <Widget>[
-            Players(),
             TeamsSection(),
             HistoryMatches(),
             MatchSettingsSection(),

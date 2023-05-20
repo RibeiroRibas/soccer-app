@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/components/box_card.dart';
-import 'package:team_draw/components/section_tittle.dart';
-import 'package:team_draw/components/sections/teams/change_player.dart';
-import 'package:team_draw/components/sections/teams/team_lineup.dart';
+import 'package:team_draw/shared/components/box_card.dart';
+import 'package:team_draw/shared/section_tittle.dart';
+import 'package:team_draw/shared/sections/teams/change_player.dart';
+import 'package:team_draw/shared/sections/teams/team_lineup.dart';
 import 'package:team_draw/models/team.dart';
 import 'package:team_draw/teams_data.dart';
 

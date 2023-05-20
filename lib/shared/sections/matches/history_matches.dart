@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/components/box_card.dart';
-import 'package:team_draw/components/matches.dart';
+import 'package:team_draw/shared/components/box_card.dart';
+import 'package:team_draw/shared/matches.dart';
 import 'package:team_draw/models/match.dart';
 import 'package:team_draw/teams_data.dart';
 
