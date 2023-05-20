@@ -1,0 +1,11 @@
+const newMatch = "NOVA PARTIDA";
+const selectPlayers = "Selecione os Jogadores";
+const drawTeam = "SORTEAR EQUIPES";
+const next = "Continuar";
+const playFontFamily = "Play";
+const historyMatches = "Histórico de jogos das duas equipes";
+const appName = "My Football App";
+const match = "Partida";
+const teams = "Times";
+const history = "Histórico";
+const versus = "x";
