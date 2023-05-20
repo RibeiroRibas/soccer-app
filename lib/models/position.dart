@@ -1,12 +1,11 @@
 enum Position {
-  GOLEIRO("G"),
-  DEFENSOR("D"),
-  LATERAL("L"),
-  MEIO_CAMPISTA("M"),
-  ATACANTE("A");
+  goalkeeper("G"),
+  defender("D"),
+  fullBack("L"),
+  midfielder("M"),
+  forward("A");
 
   const Position(this.name);
-
   final String name;
 
 }
