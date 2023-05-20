@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/themes/green_theme.dart';
 
-class BoxCard extends StatelessWidget {
+import '../themes/green_theme.dart';
+
+class BoxCardComponent extends StatelessWidget {
   final Widget boxCardBody;
   final double height;
   final double width;
 
-  const BoxCard({
+  const BoxCardComponent({
     Key? key,
     required this.boxCardBody,
     required this.height,

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/shared/components/box_card.dart';
-import 'package:team_draw/shared/section_tittle.dart';
-import 'package:team_draw/shared/sections/teams/change_player.dart';
-import 'package:team_draw/shared/sections/teams/team_lineup.dart';
 import 'package:team_draw/models/team.dart';
-import 'package:team_draw/teams_data.dart';
+import 'package:team_draw/shared/components/box_card_component.dart';
+import 'package:team_draw/shared/sections/team_versus/change_player_widget.dart';
+import 'package:team_draw/shared/sections/team_versus/team_lineup_widget.dart';
+import 'package:team_draw/data/team_data.dart';
 
-class TeamsSection extends StatelessWidget {
-  const TeamsSection({Key? key}) : super(key: key);
+class TeamsVersusSection extends StatelessWidget {
+  const TeamsVersusSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,22 +18,18 @@ class TeamsSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const SectionTittle(
-            tittle: "Times",
-            icon: Icons.people,
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              BoxCard(
-                boxCardBody: TeamLineup(team: teamOne),
+              BoxCardComponent(
+                boxCardBody: TeamLineupWidget(team: teamOne),
                 height: 300,
                 width: MediaQuery.of(context).size.width * 0.4,
               ),
-              const ChangePlayer(),
-              BoxCard(
-                boxCardBody: TeamLineup(team: teamTwo),
+              const ChangePlayerWidget(),
+              BoxCardComponent(
+                boxCardBody: TeamLineupWidget(team: teamTwo),
                 height: 300,
                 width: MediaQuery.of(context).size.width * 0.4,
               ),

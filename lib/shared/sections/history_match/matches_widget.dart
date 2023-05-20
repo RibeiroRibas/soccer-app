@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/models/match.dart';
-import 'package:team_draw/themes/theme_colors.dart';
+import 'package:team_draw/shared/components/vertical_division_component.dart';
 
-class Matches extends StatefulWidget {
+import '../../i18n/messages.dart';
+
+class MatchesWidget extends StatefulWidget {
   final Match match;
 
-  const Matches({Key? key, required this.match}) : super(key: key);
+  const MatchesWidget({Key? key, required this.match}) : super(key: key);
 
   @override
-  State<Matches> createState() => _MatchesState();
+  State<MatchesWidget> createState() => _MatchesWidgetState();
 }
 
-class _MatchesState extends State<Matches> {
+class _MatchesWidgetState extends State<MatchesWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,9 +29,9 @@ class _MatchesState extends State<Matches> {
             ),
           ),
           Text(widget.match.scoreTeamOne.toString()),
-          Padding(
-            padding: const EdgeInsets.only(left: 4.0,right: 4.0),
-            child: Text("X"),
+          const Padding(
+            padding: EdgeInsets.only(left: 4.0,right: 4.0),
+            child: Text(versus),
           ),
           Text(widget.match.scoreTeamTwo.toString()),
           Padding(
@@ -40,14 +42,9 @@ class _MatchesState extends State<Matches> {
             ),
           ),
           Text(widget.match.teamTwo.acronym),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
-            child: Container(
-              height: 30,
-              width: 1,
-              decoration:
-              BoxDecoration(border: Border.all(color: ThemeColors.division)),
-            ),
+          const Padding(
+            padding: EdgeInsets.only(left: 16.0),
+            child: VerticalDivisionComponent(height: 35)
           ),
         ],
       ),

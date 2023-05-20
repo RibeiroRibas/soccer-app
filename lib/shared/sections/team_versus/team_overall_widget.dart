@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/models/position.dart';
-import 'package:team_draw/themes/theme_colors.dart';
+import 'package:team_draw/shared/themes/theme_colors.dart';
 
-class TeamOverallByPosition extends StatefulWidget {
+class TeamOverallWidget extends StatefulWidget {
   final Map<Position, double> overallByPosition;
 
-  const TeamOverallByPosition({Key? key, required this.overallByPosition}) : super(key: key);
+  const TeamOverallWidget({Key? key, required this.overallByPosition}) : super(key: key);
 
   @override
-  State<TeamOverallByPosition> createState() => _TeamOverallByPositionState();
+  State<TeamOverallWidget> createState() => _TeamOverallWidgetState();
 }
 
-class _TeamOverallByPositionState extends State<TeamOverallByPosition> {
+class _TeamOverallWidgetState extends State<TeamOverallWidget> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -34,7 +34,7 @@ class _TeamOverallByPositionState extends State<TeamOverallByPosition> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: ThemeColors.secondaryPosition)),
+                      border: Border.all(color: ThemeColors.white)),
                   child: Text(
                     widget.overallByPosition.keys
                         .elementAt(index)
