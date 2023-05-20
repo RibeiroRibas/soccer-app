@@ -1,4 +1,3 @@
-import 'package:team_draw/models/player_type.dart';
 import 'package:team_draw/models/position.dart';
 
 class Player {
@@ -7,12 +6,10 @@ class Player {
   Position? secondaryPosition;
   Position? tertiaryPosition;
   double overall;
-  PlayerType? type;
 
   Player({
     required this.name,
     required this.overall,
-    this.type,
     this.principalPosition,
     this.secondaryPosition,
     this.tertiaryPosition,
