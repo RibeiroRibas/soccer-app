@@ -14,7 +14,8 @@ class TeamOverallWidget extends StatefulWidget {
 class _TeamOverallWidgetState extends State<TeamOverallWidget> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return SizedBox(
+      height: 30,
       child: ListView.builder(
         itemBuilder: (context, index) {
           return Row(

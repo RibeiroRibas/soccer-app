@@ -15,7 +15,12 @@ ThemeData greenTheme = ThemeData(
     brightness: Brightness.dark,
   ),
   textTheme: const TextTheme(
-    displayMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+    displaySmall: TextStyle(fontSize: 14, color: ThemeColors.white),
+    displayMedium: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+      color: ThemeColors.white,
+    ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(

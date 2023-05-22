@@ -15,13 +15,15 @@ class _AllMatchesWidgetState extends State<AllMatchesWidget> {
   @override
   Widget build(BuildContext context) {
     List<Match> matches = allMatches;
-    return
-      ListView.builder(
-        itemBuilder: (context, index) {
-          return MatchesWidget(match: matches[index]);
-        },
-        itemCount: matches.length,
-        scrollDirection: Axis.horizontal,
-      );
+    return SizedBox(
+      height: 50,
+      child: ListView.builder(
+          itemBuilder: (context, index) {
+            return MatchesWidget(match: matches[index]);
+          },
+          itemCount: matches.length,
+          scrollDirection: Axis.horizontal,
+        ),
+    );
   }
 }

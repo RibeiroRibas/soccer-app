@@ -6,37 +6,41 @@ import 'package:team_draw/shared/sections/team_versus/team_lineup_widget.dart';
 import 'package:team_draw/data/team_data.dart';
 
 class TeamsVersusSection extends StatelessWidget {
-  const TeamsVersusSection({Key? key}) : super(key: key);
+  final bool enablePlayerChange;
+
+  const TeamsVersusSection({
+    Key? key,
+    required this.enablePlayerChange,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Team teamOne = getTeamOne;
     final Team teamTwo = getTeamTwo;
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              BoxCardComponent(
-                boxCardBody: TeamLineupWidget(team: teamOne),
-                height: 300,
-                width: MediaQuery.of(context).size.width * 0.4,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            BoxCardComponent(
+              boxCardBody: TeamLineupWidget(
+                team: teamOne,
+                enablePlayerChange: enablePlayerChange,
               ),
-              const ChangePlayerWidget(),
-              BoxCardComponent(
-                boxCardBody: TeamLineupWidget(team: teamTwo),
-                height: 300,
-                width: MediaQuery.of(context).size.width * 0.4,
+            ),
+            if (enablePlayerChange) const ChangePlayerWidget(),
+            BoxCardComponent(
+              boxCardBody: TeamLineupWidget(
+                team: teamTwo,
+                enablePlayerChange: enablePlayerChange,
               ),
-            ],
-          )
-        ],
-      ),
+            ),
+          ],
+        )
+      ],
     );
   }
 }

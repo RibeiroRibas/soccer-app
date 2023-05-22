@@ -16,23 +16,31 @@ class DefaultPageLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          tittle,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(
-            Icons.arrow_back,
-            color: greenTheme.primaryColor,
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            tittle,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          leading: IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.arrow_back,
+              color: greenTheme.primaryColor,
+            ),
           ),
         ),
+        bottomNavigationBar: buttonNavigationBar,
+        body: Padding(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          child: body,
+        ),
       ),
-      bottomNavigationBar: buttonNavigationBar,
-      body: body,
     );
   }
 }
