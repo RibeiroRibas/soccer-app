@@ -24,16 +24,16 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.brightness_1),
-            label: match,
+            icon: Icon(Icons.history),
+            label: history,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
             label: teams,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: history,
+            icon: Icon(Icons.person),
+            label: players,
           ),
         ],
         selectedItemColor: greenTheme.primaryColor,
@@ -42,11 +42,19 @@ class _HomeState extends State<Home> {
         },
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: const <Widget>[
-            TeamsVersusSection(),
-            HistoryMatchesSection(),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 12.0,
+            right: 12.0,
+            top: 8.0,
+            bottom: 8.0,
+          ),
+          child: Column(
+            children: <Widget>[
+              TeamsVersusSection(enablePlayerChange: true),
+              HistoryMatchesSection(),
+            ],
+          ),
         ),
       ),
     );

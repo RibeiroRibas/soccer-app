@@ -19,24 +19,19 @@ class _PlayerLineupPageState extends State<PlayerLineupPage> {
   Widget build(BuildContext context) {
     return DefaultPageLayout(
       tittle: newMatch,
-      body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            const TittleSection(
-              tittle: selectPlayers,
-              icon: Icons.person_add,
-            ),
-            BoxCardComponent(
-              boxCardBody: const PlayerLineupSection(),
-              height: 500,
-              width: MediaQuery.of(context).size.width,
-            ),
-            const SizedBox(height: 16.0),
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: const <Widget>[
+          TittleSection(
+            tittle: selectPlayers,
+            icon: Icons.person_add,
+          ),
+          BoxCardComponent(
+            boxCardBody: PlayerLineupSection(),
+          ),
+          SizedBox(height: 16.0),
+        ],
       ),
       buttonNavigationBar: ElevatedButtonComponent(
         text: next,

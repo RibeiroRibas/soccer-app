@@ -10,23 +10,18 @@ class HistoryMatchesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 16.0, left: 16.0),
-      child: Column(
+    return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
+        children: const [
+          Padding(
             padding:
                 EdgeInsets.only(top: 16.0, bottom: 8.0, left: 4.0, right: 8.0),
             child: TittleSection(tittle: historyMatches)
           ),
           BoxCardComponent(
-            boxCardBody: const AllMatchesWidget(),
-            height: 50,
-            width: MediaQuery.of(context).size.width,
+            boxCardBody: AllMatchesWidget(),
           ),
         ],
-      ),
     );
   }
 }
