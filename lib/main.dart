@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/modules/home.dart';
-import 'package:team_draw/shared/themes/green_theme.dart';
+import 'package:team_draw/ui/view/home_view.dart';
+import 'package:team_draw/shared/theme/green_theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Só Pra Rir FC',
       theme: greenTheme,
-      home: Home(),
+      home: HomeView(),
     );
   }
 }

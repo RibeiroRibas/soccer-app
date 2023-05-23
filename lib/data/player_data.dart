@@ -1,5 +1,5 @@
-import 'package:team_draw/models/player.dart';
-import 'package:team_draw/models/position.dart';
+import 'package:team_draw/model/player.dart';
+import 'package:team_draw/model/position.dart';
 
 List<Player> playersList = [
   Player(
