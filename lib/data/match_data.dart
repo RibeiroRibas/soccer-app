@@ -1,6 +1,6 @@
 import 'package:team_draw/data/team_data.dart';
-import 'package:team_draw/models/match_settings.dart';
-import 'package:team_draw/models/match.dart';
+import 'package:team_draw/model/match_settings.dart';
+import 'package:team_draw/model/match.dart';
 
 List<Match> allMatches = [
   Match(

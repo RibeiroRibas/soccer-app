@@ -1,5 +1,5 @@
 import 'package:team_draw/data/player_data.dart';
-import 'package:team_draw/models/team.dart';
+import 'package:team_draw/model/team.dart';
 
 const String _imageInitialPath = "assets/images";
 
