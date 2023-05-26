@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/section/history_match/history_matches_section.dart';
-import 'package:team_draw/ui/section/team_versus/team_versus_section.dart';
 
 import '../../shared/theme/green_theme.dart';
+import '../component/text_with_border_component.dart';
+import 'team_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -17,7 +17,10 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(appName),
+        title: TextWithBorderComponent(
+          text: appName,
+          textStyle: greenTheme.textTheme.displayLarge,
+        ),
         centerTitle: true,
       ),
       drawer: const Drawer(),
@@ -41,22 +44,26 @@ class _HomeViewState extends State<HomeView> {
           setState(() {});
         },
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(
-            left: 12.0,
-            right: 12.0,
-            top: 8.0,
-            bottom: 8.0,
-          ),
-          child: Column(
-            children: <Widget>[
-              TeamsVersusSection(enablePlayerChange: true),
-              HistoryMatchesSection(),
-            ],
-          ),
-        ),
-      ),
+      body:
+      // SingleChildScrollView(
+      //   child:
+      //   Padding(
+      //     padding: const EdgeInsets.only(
+      //       left: 12.0,
+      //       right: 12.0,
+      //       top: 8.0,
+      //       bottom: 8.0,
+      //     ),
+      //     child:
+      //     Column(
+      //       children: <Widget>[
+      //         TeamsVersusSection(enablePlayerChange: true),
+      //         HistoryMatchesSection(),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      const TeamView(),
     );
   }
 }

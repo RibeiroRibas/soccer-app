@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/ui/component/box_card_component.dart';
 import 'package:team_draw/ui/section/team_versus/widget/change_player_widget.dart';
-import 'package:team_draw/ui/section/team_versus/widget/team_lineup_widget.dart';
+import 'package:team_draw/ui/section/team_lineup_section.dart';
 import 'package:team_draw/data/team_data.dart';
 
 class TeamsVersusSection extends StatelessWidget {
@@ -26,16 +26,20 @@ class TeamsVersusSection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             BoxCardComponent(
-              boxCardBody: TeamLineupWidget(
+              boxCardBody: TeamLineupSection(
                 team: teamOne,
-                enablePlayerChange: enablePlayerChange,
+                cardWidth: enablePlayerChange
+                    ? MediaQuery.of(context).size.width * 0.4
+                    : MediaQuery.of(context).size.width * 0.43,
               ),
             ),
             if (enablePlayerChange) const ChangePlayerWidget(),
             BoxCardComponent(
-              boxCardBody: TeamLineupWidget(
+              boxCardBody: TeamLineupSection(
                 team: teamTwo,
-                enablePlayerChange: enablePlayerChange,
+                cardWidth: enablePlayerChange
+                    ? MediaQuery.of(context).size.width * 0.4
+                    : MediaQuery.of(context).size.width * 0.43,
               ),
             ),
           ],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class ThemeColors {
   static const MaterialColor division = Colors.grey;
   static const Color principalPosition = Colors.orange;
+  static const Color secondaryPosition = Colors.yellow;
   static const Color white = Colors.white;
   static const Color black = Colors.black;
   static const Color primary = Color.fromRGBO(0, 255, 66, 1);
