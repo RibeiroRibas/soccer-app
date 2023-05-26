@@ -9,37 +9,66 @@ class Team {
   String shield;
   List<Player> players;
   List<Match> matches = [];
-  Map<Position, double> overallByPosition = {};
-  Map<Map<Position, double>, double> teamOverall = {};
+  int numberOfStartingPlayers;
+  final Map<Position, double> _overallByPosition = {};
+  final Map<Map<Position, double>, double> _teamOverall = {};
 
-  Team({required this.name,
+  Team({
+    required this.name,
     required this.acronym,
     required this.shield,
-    required this.players});
+    required this.players,
+    required this.numberOfStartingPlayers,
+  });
 
   Map<Map<Position, double>, double> get getTeamOverall {
+    double teamOverall = _calculateTeamOverall();
+    _teamOverall[_overallByPosition] = teamOverall;
+    return _teamOverall;
+  }
+
+  double _calculateTeamOverall() {
     _setDefaultOverallByPosition();
     double teamOverall = 0.0;
     for (var player in players) {
-      teamOverall = teamOverall +player.overall;
-        _increasePositionOverall(position: player.principalPosition ,weight: 1);
-      if (player.secondaryPosition != null) {
-        _increasePositionOverall(position: player.secondaryPosition! ,weight: 0.5);
-      }
+      teamOverall = _setTeamOverall(teamOverall, player);
     }
-    this.teamOverall[overallByPosition] = teamOverall; 
-    return this.teamOverall;
+    return teamOverall;
   }
 
-  void _increasePositionOverall({required Position position, required double weight}) {
-    overallByPosition[position] = (overallByPosition[position]! + weight);
+  void _increasePositionOverall(
+      {required Position position, required double weight}) {
+    _overallByPosition[position] = (_overallByPosition[position]! + weight);
   }
 
   void _setDefaultOverallByPosition() {
-    overallByPosition[Position.forward] = 0.0;
-    overallByPosition[Position.defender] = 0.0;
-    overallByPosition[Position.midfielder] = 0.0;
-    overallByPosition[Position.goalkeeper] = 0.0;
-    overallByPosition[Position.fullBack] = 0.0;
+    _overallByPosition[Position.forward] = 0.0;
+    _overallByPosition[Position.defender] = 0.0;
+    _overallByPosition[Position.midfielder] = 0.0;
+    _overallByPosition[Position.goalkeeper] = 0.0;
+    _overallByPosition[Position.fullBack] = 0.0;
+  }
+
+  bool hasPlayerBackup() {
+    return numberOfStartingPlayers < players.length;
+  }
+
+  Map<Map<Position, double>, double> get getTeamOverallWithPlayerBackup {
+    double teamOverall =
+        (_calculateTeamOverall() / players.length) * numberOfStartingPlayers;
+    _overallByPosition.updateAll(
+        (key, overall) => (overall / players.length) * numberOfStartingPlayers);
+    _teamOverall[_overallByPosition] = teamOverall;
+    return _teamOverall;
+  }
+
+  double _setTeamOverall(double teamOverall, Player player) {
+    teamOverall = teamOverall + player.overall;
+    _increasePositionOverall(position: player.principalPosition, weight: 1);
+    if (player.secondaryPosition != null) {
+      _increasePositionOverall(
+          position: player.secondaryPosition!, weight: 0.5);
+    }
+    return teamOverall;
   }
 }

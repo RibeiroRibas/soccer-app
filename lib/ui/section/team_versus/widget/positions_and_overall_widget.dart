@@ -25,7 +25,7 @@ class _PositionsAndOverallWidgetState extends State<PositionsAndOverallWidget> {
         ),
         PlayerPositionWidget(
           position: widget.player.secondaryPosition,
-          positionColor: ThemeColors.white,
+          positionColor: ThemeColors.secondaryPosition,
         ),
         Padding(
           padding: const EdgeInsets.all(4.0),
