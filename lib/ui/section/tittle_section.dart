@@ -18,7 +18,10 @@ class TittleSection extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TextWithBorderComponent(text: tittle),
+        TextWithBorderComponent(
+          text: tittle,
+          textStyle: greenTheme.textTheme.displayMedium,
+        ),
         if (icon != null) Icon(icon, size: 32, color: greenTheme.primaryColor),
       ],
     );

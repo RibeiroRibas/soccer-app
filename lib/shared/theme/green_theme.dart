@@ -21,6 +21,11 @@ ThemeData greenTheme = ThemeData(
       fontWeight: FontWeight.bold,
       color: ThemeColors.white,
     ),
+    displayLarge: TextStyle(
+      fontSize: 20,
+      fontWeight: FontWeight.bold,
+      color: ThemeColors.white,
+    ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(

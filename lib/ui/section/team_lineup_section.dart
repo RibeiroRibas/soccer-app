@@ -1,32 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/ui/section/team_versus/widget/positions_and_overrall_widget.dart';
+import 'package:team_draw/ui/section/team_versus/widget/positions_and_overall_widget.dart';
 import 'package:team_draw/ui/section/team_versus/widget/team_overall_widget.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
 
-class TeamLineupWidget extends StatefulWidget {
+class TeamLineupSection extends StatefulWidget {
   final Team team;
-  final bool enablePlayerChange;
+  final double cardWidth;
 
-  const TeamLineupWidget({
+  const TeamLineupSection({
     Key? key,
     required this.team,
-    required this.enablePlayerChange,
+    required this.cardWidth,
   }) : super(key: key);
 
   @override
-  State<TeamLineupWidget> createState() => _TeamLineupWidgetState();
+  State<TeamLineupSection> createState() => _TeamLineupSectionState();
 }
 
-class _TeamLineupWidgetState extends State<TeamLineupWidget> {
+class _TeamLineupSectionState extends State<TeamLineupSection> {
+
+  late Map<Map<Position, double>, double> teamOverall;
+
+  @override
+  void initState() {
+    super.initState();
+    teamOverall = widget.team.hasPlayerBackup()
+        ? widget.team.getTeamOverallWithPlayerBackup
+        : widget.team.getTeamOverall;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Map<Map<Position, double>, double> teamOverall = widget.team.getTeamOverall;
     return SizedBox(
-      width: widget.enablePlayerChange
-          ? MediaQuery.of(context).size.width * 0.4
-          : MediaQuery.of(context).size.width * 0.43,
+      width: widget.cardWidth,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
@@ -70,6 +78,7 @@ class _TeamLineupWidgetState extends State<TeamLineupWidget> {
                 );
               },
               itemCount: widget.team.players.length,
+              physics: const ScrollPhysics(),
             ),
           ),
           Padding(
@@ -83,7 +92,10 @@ class _TeamLineupWidgetState extends State<TeamLineupWidget> {
               ),
             ),
           ),
-          TeamOverallWidget(overallByPosition: teamOverall.keys.elementAt(0)),
+          TeamOverallWidget(
+            overallByPosition: teamOverall.keys.elementAt(0),
+            cardWidth: widget.cardWidth,
+          ),
         ],
       ),
     );

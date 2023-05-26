@@ -4,10 +4,12 @@ import '../../shared/theme/green_theme.dart';
 
 class TextWithBorderComponent extends StatelessWidget {
   final String text;
+  final TextStyle? textStyle;
 
   const TextWithBorderComponent({
     Key? key,
     required this.text,
+    required this.textStyle,
   }) : super(key: key);
 
   @override
@@ -16,7 +18,7 @@ class TextWithBorderComponent extends StatelessWidget {
       children: [
         Text(
           text,
-          style: greenTheme.textTheme.displayMedium!.copyWith(
+          style: textStyle!.copyWith(
             foreground: Paint()
               ..style = PaintingStyle.stroke
               ..strokeWidth = 0.5
@@ -26,7 +28,7 @@ class TextWithBorderComponent extends StatelessWidget {
         ),
         Text(
           text,
-          style: greenTheme.textTheme.displayMedium,
+          style: textStyle,
           softWrap: true,
         )
       ],
