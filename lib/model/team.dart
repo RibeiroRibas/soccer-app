@@ -8,10 +8,11 @@ class Team {
   String acronym;
   String shield;
   List<Player> players;
-  List<Match> matches = [];
+  List<Match> matches;
   int numberOfStartingPlayers;
   final Map<Position, double> _overallByPosition = {};
   final Map<Map<Position, double>, double> _teamOverall = {};
+  // List<int>
 
   Team({
     required this.name,
@@ -19,6 +20,7 @@ class Team {
     required this.shield,
     required this.players,
     required this.numberOfStartingPlayers,
+    this.matches = const [],
   });
 
   Map<Map<Position, double>, double> get getTeamOverall {

@@ -5,6 +5,10 @@ import 'package:team_draw/shared/theme/theme_colors.dart';
 ThemeData greenTheme = ThemeData(
   primaryColor: ThemeColors.primary,
   cardColor: ThemeColors.cardColor,
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    foregroundColor: ThemeColors.black,
+    backgroundColor: ThemeColors.primary,
+  ),
   scaffoldBackgroundColor: ThemeColors.backgroundColor,
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: ThemeColors.backgroundColor,

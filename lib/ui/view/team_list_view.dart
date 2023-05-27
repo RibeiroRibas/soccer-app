@@ -6,8 +6,8 @@ import 'package:team_draw/ui/section/team_lineup_section.dart';
 
 import '../section/subtitle/subtitle_section.dart';
 
-class TeamView extends StatelessWidget {
-  const TeamView({Key? key}) : super(key: key);
+class TeamListView extends StatelessWidget {
+  const TeamListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
