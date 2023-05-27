@@ -56,4 +56,4 @@ O projeto usa como modelo de arquitetura o padrão MVVM (model-view-viewmodel).
 - ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/d2e1fcb3-9541-45ad-83d9-7f41859efad0) - arquivos com o final `layout` -> estrutura base para compor um modelo de página.
 - ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/e55ac267-a3d3-4f90-9622-d52404502f2e) - arquivos com o final `section` -> agrupamento de componentes visuais formando uma seção com o intuito de ser reaproveitada.
 - ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/c0f4be53-0794-4cac-b5c8-6a378ad3ddde) - arquivos com o final `view` -> representa as telas da aplicação.
-- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/e2698d77-6001-4e27-ba58-7636cbe13082) - arquivos com o final `widget` -> Widgets que foram encapsulados saindo do seu escopo principal, eles não serão reaproveitaveis at
+- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/e2698d77-6001-4e27-ba58-7636cbe13082) - arquivos com o final `widget` -> Widgets que foram encapsulados saindo do seu escopo principal, eles não serão reaproveitaveis até que se prove o contrário.
