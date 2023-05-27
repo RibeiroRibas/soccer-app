@@ -1,4 +1,4 @@
-# Sorteia meu time aí! - app
+# Sorteia meu time! - app
 
 
 # 1. Sobre o App
