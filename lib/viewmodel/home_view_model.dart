@@ -8,7 +8,8 @@ import '../model/team_score.dart';
 class HomeViewModel {
   List<TeamScore> teamScoreTable = [];
 
-  void init() {
+
+  HomeViewModel(){
     List<Team> teams = getAllTeams;
     List<TeamMatch> matches = getAllMatches;
     _calculateTeamScore(teams, matches);

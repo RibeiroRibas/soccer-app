@@ -8,18 +8,25 @@ class ColumnTeamScoresWidget extends StatelessWidget {
     required this.teamScoreTableValues,
   }) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     const int numberOfColumns = 7;
-    Color tableCellColor = Colors.white12;
+    int finalCell = 6;
+    int countCell = 0;
+    Color tableCellColor = Colors.white24;
 
     double calculateCellWidth(BuildContext context) =>
         (_getScreenWidthHalf(context)) / numberOfColumns;
 
-    Color getTableCellColor() =>
-        tableCellColor == Colors.white12 ? Colors.white24 : Colors.white12;
+    Color getTableCellColor() {
+      if (countCell > finalCell) {
+        tableCellColor =
+            tableCellColor == Colors.white12 ? Colors.white24 : Colors.white12;
+        finalCell += 7;
+      }
+      countCell++;
+      return tableCellColor;
+    }
 
     return SizedBox(
       width: _getScreenWidthHalf(context),
@@ -52,5 +59,4 @@ class ColumnTeamScoresWidget extends StatelessWidget {
 
   double _getScreenWidthHalf(BuildContext context) =>
       MediaQuery.of(context).size.width / 2.0;
-  
 }
