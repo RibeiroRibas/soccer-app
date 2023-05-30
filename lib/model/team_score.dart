@@ -18,6 +18,7 @@ class TeamScore extends Comparable<TeamScore> {
       setMatchResult(match.getMatchResult(team: team));
       setGoalsScored(match.getGoalsScored(team: team));
       setGoalsConceded(match.getGoalsConceded(team: team));
+      numberOfMatches += 1;
     }
   }
 

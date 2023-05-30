@@ -16,27 +16,27 @@ Team getTeamTwo = Team(
     players: playersList.getRange(7, 14).toList(),
     numberOfStartingPlayers: 6);
 Team getTeamTree = Team(
-    name: 'Super Saiyajins',
-    acronym: "DBZ",
+    name: 'Farofas FC',
+    acronym: "FAR",
     shield: "$_imageInitialPath/logo-avai-256.png",
     players: playersList.getRange(4, 10).toList(),
     numberOfStartingPlayers: 6);
 Team getTeamFour = Team(
-    name: 'Super Saiyajins',
-    acronym: "DBZ",
-    shield: "$_imageInitialPath/logo-avai-256.png",
+    name: 'Capivaras FC',
+    acronym: "CAP",
+    shield: "$_imageInitialPath/logo-figueirense-256.png",
     players: playersList.getRange(7, 13).toList(),
     numberOfStartingPlayers: 6);
 Team getTeamFive = Team(
     name: 'Super Saiyajins',
     acronym: "DBZ",
-    shield: "$_imageInitialPath/logo-avai-256.png",
+    shield: "$_imageInitialPath/logo-palmeiras-256.png",
     players: playersList.getRange(6, 12).toList(),
     numberOfStartingPlayers: 6);
 Team getTeamSix = Team(
-    name: 'Super Saiyajins',
-    acronym: "DBZ",
-    shield: "$_imageInitialPath/logo-avai-256.png",
+    name: 'Pisadinha FC',
+    acronym: "PIS",
+    shield: "$_imageInitialPath/logo-dortmund-256.png",
     players: playersList.getRange(5, 11).toList(),
     numberOfStartingPlayers: 6);
 
