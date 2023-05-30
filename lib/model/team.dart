@@ -1,4 +1,4 @@
-import 'package:team_draw/model/match.dart';
+import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/model/player.dart';
 
 import 'position.dart';
@@ -8,8 +8,8 @@ class Team {
   String acronym;
   String shield;
   List<Player> players;
-  List<Match> matches = [];
   int numberOfStartingPlayers;
+  List<TeamMatch> matches = [];
   final Map<Position, double> _overallByPosition = {};
   final Map<Map<Position, double>, double> _teamOverall = {};
 
@@ -70,5 +70,15 @@ class Team {
           position: player.secondaryPosition!, weight: 0.5);
     }
     return teamOverall;
+  }
+
+  List<TeamMatch> getMatches(List<TeamMatch> matches) {
+    List<TeamMatch> teamMatches = [];
+    for (TeamMatch match in matches) {
+        if(match.teamOne == this || match.teamTwo == this) {
+          teamMatches.add(match);
+        }
+    }
+    return teamMatches;
   }
 }

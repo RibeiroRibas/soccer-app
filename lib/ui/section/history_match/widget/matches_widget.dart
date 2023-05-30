@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/model/match.dart';
+import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/ui/component/vertical_division_component.dart';
 
 import '../../../../shared/i18n/messages.dart';
 
 class MatchesWidget extends StatefulWidget {
-  final Match match;
+  final TeamMatch match;
 
   const MatchesWidget({Key? key, required this.match}) : super(key: key);
 

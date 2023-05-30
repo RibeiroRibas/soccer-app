@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ThemeColors {
   static const MaterialColor division = Colors.grey;
+  static const Color table = Colors.white24;
   static const Color principalPosition = Colors.orange;
   static const Color secondaryPosition = Colors.yellow;
   static const Color white = Colors.white;
