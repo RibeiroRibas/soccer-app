@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:team_draw/model/match.dart';
+import 'package:team_draw/model/team_match.dart';
 
 import '../../../../data/match_data.dart';
 import 'matches_widget.dart';
@@ -14,7 +14,7 @@ class AllMatchesWidget extends StatefulWidget {
 class _AllMatchesWidgetState extends State<AllMatchesWidget> {
   @override
   Widget build(BuildContext context) {
-    List<Match> matches = allMatches;
+    List<TeamMatch> matches = getAllMatches;
     return SizedBox(
       height: 50,
       child: ListView.builder(

@@ -1,4 +1,4 @@
-# Sorteia meu time aí! - app
+# Sorteia meu time! - app
 
 
 # 1. Sobre o App
@@ -45,8 +45,15 @@ O projeto usa como modelo de arquitetura o padrão MVVM (model-view-viewmodel).
 
 - ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/3eb5d8b4-c9ae-444d-bc30-339c3161e579) - toda e qualquer imagem adicionada ao projeto.
 - ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/ec511c38-d16f-4dd6-a943-7acab965fe9f) - toda e qualquer font de texto adicionada ao projeto.
-- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/a24907d3-e97b-4399-ae02-39e6a54ab7f3) - classes relacionadas com dados, como por exemplo ler ou escrever dados no smartphone.
-- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/49cb90ff-355c-44f4-9bb9-0694a7283992) - classes modelo do projeto, as que tem relação direta 
-
+- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/49cb90ff-355c-44f4-9bb9-0694a7283992) - classes modelo do projeto, as que tem relação direta com o mundo real.
+- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/a7459e64-c67c-404c-b225-a49a0ae207ca) - camada para persistência de dados.
+- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/bbf7d2e7-a7a3-4ab3-b91f-ef4c45457d11) - camada compartilhada, toda e qualquer informação compartilhado no app, como classes e métodos úteis, mensagens de texto, themas, cores,etc.
+- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/aed81b9e-2900-4a54-b37c-d290bce1c058) - camada visual (view e viewmodel), camada de IU, interface do usuário e gerenciamento de estados.
 
 ## Nomenclaturas
+
+- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/b2042828-5b36-4985-ae9f-bac82e7b1cef) - arquivos com o final `component` -> componentes visuais reaproveitáveis, como um botão por exemplo.
+- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/d2e1fcb3-9541-45ad-83d9-7f41859efad0) - arquivos com o final `layout` -> estrutura base para compor um modelo de página.
+- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/e55ac267-a3d3-4f90-9622-d52404502f2e) - arquivos com o final `section` -> agrupamento de componentes visuais formando uma seção com o intuito de ser reaproveitada.
+- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/c0f4be53-0794-4cac-b5c8-6a378ad3ddde) - arquivos com o final `view` -> representa as telas da aplicação.
+- ![](https://github.com/RibeiroRibas/soccer-app/assets/96504657/e2698d77-6001-4e27-ba58-7636cbe13082) - arquivos com o final `widget` -> Widgets que foram encapsulados saindo do seu escopo principal, eles não serão reaproveitaveis até que se prove o contrário.
