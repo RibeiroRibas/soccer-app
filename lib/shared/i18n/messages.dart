@@ -13,6 +13,7 @@ const name = "Nome";
 const principalPosition = "Posição atuante";
 const secondaryPosition = "Posição auxiliar";
 const overall = "Overall";
+const classificationTable = "Tabela de classificação";
 
 // new player
 const newPLayer = "NOVO JOGADOR";

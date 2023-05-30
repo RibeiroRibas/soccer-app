@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 
 import '../../shared/theme/green_theme.dart';
-import '../component/text_with_border_component.dart';
-import '../view/team_list_view.dart';
+import '../view/app_navigator/home_view.dart';
+import '../view/app_navigator/team_list_view.dart';
 
 class AppNavigatorLayout extends StatefulWidget {
   const AppNavigatorLayout({Key? key}) : super(key: key);
@@ -18,13 +18,13 @@ class _AppNavigatorLayoutState extends State<AppNavigatorLayout> {
   @override
   Widget build(BuildContext context) {
 
-    final List<Widget> pages = [TeamListView(), TeamListView(),TeamListView()];
+    final List<Widget> pages = [HomeView(), TeamView(),HomeView()];
 
     return Scaffold(
       appBar: AppBar(
-        title: TextWithBorderComponent(
-          text: appName,
-          textStyle: greenTheme.textTheme.displayLarge,
+        title: Text(
+          appName,
+          style: greenTheme.textTheme.displayLarge,
         ),
         centerTitle: true,
       ),

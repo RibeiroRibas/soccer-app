@@ -1,8 +1,8 @@
 import 'package:team_draw/data/team_data.dart';
 import 'package:team_draw/model/match_settings.dart';
-import 'package:team_draw/model/match.dart';
+import 'package:team_draw/model/team_match.dart';
 
-List<Match> allMatches = [matchOneVSTwo, matchOneVSTree, matchTwoVSTree];
+List<TeamMatch> getAllMatches = [matchOneVSTwo, matchOneVSTree, matchTwoVSTree];
 
 MatchSettings matchSettings = MatchSettings(
   durationTime: 1,
@@ -11,15 +11,15 @@ MatchSettings matchSettings = MatchSettings(
   timeToChangePlayer: 10,
 );
 
-Match matchOneVSTwo = Match(
+TeamMatch matchOneVSTwo = TeamMatch(
   teamOne: getTeamOne,
   teamTwo: getTeamTwo,
-  scoreTeamOne: 10,
+  scoreTeamOne: 100,
   scoreTeamTwo: 8,
   matchDate: DateTime.now(),
 );
 
-Match matchOneVSTree = Match(
+TeamMatch matchOneVSTree = TeamMatch(
   teamOne: getTeamOne,
   teamTwo: getTeamTree,
   scoreTeamOne: 15,
@@ -27,7 +27,7 @@ Match matchOneVSTree = Match(
   matchDate: DateTime.now(),
 );
 
-Match matchTwoVSTree = Match(
+TeamMatch matchTwoVSTree = TeamMatch(
   teamOne: getTeamTwo,
   teamTwo: getTeamTree,
   scoreTeamOne: 9,
