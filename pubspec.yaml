@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.18.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -64,6 +65,9 @@ flutter:
     - assets/images/logo-flamengo-256.png
     - assets/images/logo-avai-256.png
     - assets/images/logo-red-bull-bragantino-256.png
+    - assets/images/logo-palmeiras-256.png
+    - assets/images/logo-dortmund-256.png
+    - assets/images/logo-figueirense-256.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
