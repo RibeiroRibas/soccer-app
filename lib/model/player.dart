@@ -12,4 +12,8 @@ class Player {
     required this.principalPosition,
     this.secondaryPosition,
   });
+
+  bool isGoalKeeper() {
+    return principalPosition == Position.goalkeeper;
+  }
 }

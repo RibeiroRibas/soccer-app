@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
+import 'package:team_draw/model/team_overall.dart';
+import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/theme/theme_colors.dart';
+import 'package:team_draw/ui/component/horizontal_division_component.dart';
 import 'package:team_draw/ui/section/team_versus/widget/positions_and_overall_widget.dart';
 import 'package:team_draw/ui/section/team_versus/widget/team_overall_widget.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
@@ -21,14 +24,12 @@ class TeamLineupSection extends StatefulWidget {
 
 class _TeamLineupSectionState extends State<TeamLineupSection> {
 
-  late Map<Map<Position, double>, double> teamOverall;
+  late TeamOverall teamOverall;
 
   @override
   void initState() {
     super.initState();
-    teamOverall = widget.team.hasPlayerBackup()
-        ? widget.team.getTeamOverallWithPlayerBackup
-        : widget.team.getTeamOverall;
+    teamOverall = TeamOverall(widget.team);
   }
 
   @override
@@ -36,7 +37,7 @@ class _TeamLineupSectionState extends State<TeamLineupSection> {
     return SizedBox(
       width: widget.cardWidth,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
             children: [
@@ -54,11 +55,29 @@ class _TeamLineupSectionState extends State<TeamLineupSection> {
                   overflow: TextOverflow.fade,
                   style: greenTheme.textTheme.displaySmall,
                 ),
-              )
+              ),
+              Container(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  teamOverall.teamOverall.toStringAsFixed(1),
+                  softWrap: false,
+                  overflow: TextOverflow.fade,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: ThemeColors.primary,
+                  ),
+                ),
+              ),
             ],
           ),
           SizedBox(
-            height: 200,
+            child: HorizontalDivisionComponent(
+              width: MediaQuery.of(context).size.width,
+            ),
+          ),
+          SizedBox(
+            height: widget.team.players.length * 34,
             child: ListView.builder(
               itemBuilder: (context, index) {
                 return Row(
@@ -81,19 +100,17 @@ class _TeamLineupSectionState extends State<TeamLineupSection> {
               physics: const ScrollPhysics(),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(right: 4.0),
-            child: Text(
-              teamOverall.values.elementAt(0).toInt().toString(),
-              textAlign: TextAlign.end,
-              style: TextStyle(
-                color: greenTheme.primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
+          SizedBox(
+            child: HorizontalDivisionComponent(
+              width: MediaQuery.of(context).size.width,
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.all(12.0),
+            child: Text(teamAmount, textAlign: TextAlign.end),
+          ),
           TeamOverallWidget(
-            overallByPosition: teamOverall.keys.elementAt(0),
+            overallByPosition: teamOverall.overallByPosition,
             cardWidth: widget.cardWidth,
           ),
         ],

@@ -22,8 +22,8 @@ class _PlayerPositionWidgetState extends State<PlayerPositionWidget> {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Container(
-        height: 15,
-        width: 15,
+        height: 25,
+        width: 25,
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
