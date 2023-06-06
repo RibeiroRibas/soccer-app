@@ -1,7 +1,8 @@
 enum Position {
   goalkeeper("G"),
   defender("D"),
-  fullBack("L"),
+  leftBack("LE"),
+  rightBack("LD"),
   midfielder("M"),
   forward("A");
 
