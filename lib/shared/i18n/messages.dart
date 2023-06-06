@@ -14,6 +14,7 @@ const principalPosition = "Posição atuante";
 const secondaryPosition = "Posição auxiliar";
 const overall = "Overall";
 const classificationTable = "Tabela de classificação";
+const teamAmount = "Overall do time divido por posições";
 
 // new player
 const newPLayer = "NOVO JOGADOR";
