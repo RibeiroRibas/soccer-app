@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/ui/section/team_versus_section.dart';
 
 import '../../shared/theme/green_theme.dart';
 import '../view/app_navigator/home_view.dart';
@@ -17,8 +18,11 @@ class _AppNavigatorLayoutState extends State<AppNavigatorLayout> {
 
   @override
   Widget build(BuildContext context) {
-
-    final List<Widget> pages = [HomeView(), TeamView(),HomeView()];
+    final List<Widget> pages = [
+      HomeView(),
+      TeamView(),
+      TeamsVersusSection(),
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -30,7 +34,7 @@ class _AppNavigatorLayoutState extends State<AppNavigatorLayout> {
       ),
       drawer: const Drawer(),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: () {},
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -57,7 +61,7 @@ class _AppNavigatorLayoutState extends State<AppNavigatorLayout> {
         },
       ),
       body: pages.elementAt(_currentPage),
-   //   const TeamView(),
+      //   const TeamView(),
     );
   }
 }
