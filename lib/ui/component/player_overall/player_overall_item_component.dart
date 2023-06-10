@@ -1,15 +1,24 @@
 import 'package:flutter/cupertino.dart';
+import 'package:team_draw/model/player_score.dart';
+import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/ui/component/player_overall/player_score_widget.dart';
 import 'package:team_draw/ui/component/player_position_component.dart';
 
-import '../../model/player.dart';
-import '../../shared/theme/green_theme.dart';
-import '../../shared/theme/theme_colors.dart';
+import '../../../model/player.dart';
+import '../../../shared/theme/green_theme.dart';
+import '../../../shared/theme/theme_colors.dart';
 
 class PlayerOverallItemComponent extends StatefulWidget {
   final Player player;
+  final bool showPlayerScore;
+  final List<TeamMatch> matches;
 
-  const PlayerOverallItemComponent({Key? key, required this.player})
-      : super(key: key);
+  const PlayerOverallItemComponent({
+    Key? key,
+    required this.player,
+    this.showPlayerScore = false,
+    this.matches = const [],
+  }) : super(key: key);
 
   @override
   State<PlayerOverallItemComponent> createState() =>
@@ -18,6 +27,16 @@ class PlayerOverallItemComponent extends StatefulWidget {
 
 class _PlayerOverallItemComponentState
     extends State<PlayerOverallItemComponent> {
+  late PlayerScore playerScore;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.showPlayerScore) {
+      playerScore = PlayerScore(widget.matches, widget.player);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -51,11 +70,11 @@ class _PlayerOverallItemComponentState
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: Container(
-                width: 15,
-                height: 15,
+                width: 25,
+                height: 25,
                 alignment: Alignment.center,
                 child: Text(
-                  widget.player.overall.toInt().toString(),
+                  widget.player.overall.toStringAsFixed(1),
                   style: TextStyle(
                     fontSize: 12,
                     color: greenTheme.primaryColor,
@@ -63,6 +82,15 @@ class _PlayerOverallItemComponentState
                 ),
               ),
             ),
+            if (widget.showPlayerScore)
+              Row(
+                children: [
+                  PlayerScoreWidget(score: playerScore.goals.toString()),
+                  PlayerScoreWidget(score: playerScore.victories.toString()),
+                  PlayerScoreWidget(score: playerScore.defeats.toString()),
+                  PlayerScoreWidget(score: playerScore.draws.toString()),
+                ],
+              ),
           ],
         ),
       ],

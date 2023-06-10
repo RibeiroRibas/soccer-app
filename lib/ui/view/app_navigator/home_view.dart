@@ -16,18 +16,14 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     HomeViewModel viewModel = HomeViewModel();
 
-    return Padding(
-      padding: const EdgeInsets.only(
-          left: 12.0, right: 12.0, top: 32.0, bottom: 8.0),
-      child: CustomScrollView(
-        slivers: <Widget>[
-          ClassificationTableSection(
-            teamNameTableValues: viewModel.getTeamNames(),
-            teamScoreTableValues: viewModel.getTeamScores(),
-          ),
-          HistoryMatchesSection(),
-        ],
-      ),
+    return CustomScrollView(
+      slivers: <Widget>[
+        ClassificationTableSection(
+          teamNameTableValues: viewModel.getTeamNames(),
+          teamScoreTableValues: viewModel.getTeamScores(),
+        ),
+        const HistoryMatchesSection(),
+      ],
     );
   }
 }

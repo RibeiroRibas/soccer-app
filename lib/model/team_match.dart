@@ -1,4 +1,5 @@
 import 'package:team_draw/model/match_result.dart';
+import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
 
 class TeamMatch {
@@ -7,13 +8,15 @@ class TeamMatch {
   int scoreTeamOne;
   int scoreTeamTwo;
   DateTime matchDate;
+  Map<Player, int> playerGoals;
 
   TeamMatch(
       {required this.teamOne,
       required this.teamTwo,
       required this.scoreTeamOne,
       required this.scoreTeamTwo,
-      required this.matchDate});
+      required this.matchDate,
+      required this.playerGoals});
 
   MatchResult getMatchResult({required Team team}) {
     MatchResult resultTeamOne = MatchResult.draw;

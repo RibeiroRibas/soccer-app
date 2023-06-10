@@ -3,7 +3,7 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_overall.dart';
 import 'package:team_draw/ui/component/horizontal_division_component.dart';
-import 'package:team_draw/ui/component/player_overall_item_component.dart';
+import 'package:team_draw/ui/component/player_overall/player_overall_item_component.dart';
 import 'package:team_draw/ui/section/team_lineup/widget/team_overall_by_position_widget.dart';
 import 'package:team_draw/ui/section/team_lineup/widget/team_overall_widget.dart';
 

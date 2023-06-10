@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/section/team_versus_section.dart';
+import 'package:team_draw/ui/view/app_navigator/player_list/player_list_view.dart';
 
 import '../../shared/theme/green_theme.dart';
 import '../view/app_navigator/home_view.dart';
@@ -21,7 +21,7 @@ class _AppNavigatorLayoutState extends State<AppNavigatorLayout> {
     final List<Widget> pages = [
       HomeView(),
       TeamView(),
-      TeamsVersusSection(),
+      PlayerListView(),
     ];
 
     return Scaffold(
@@ -60,7 +60,11 @@ class _AppNavigatorLayoutState extends State<AppNavigatorLayout> {
           });
         },
       ),
-      body: pages.elementAt(_currentPage),
+      body: Padding(
+        padding: const EdgeInsets.only(
+            left: 12.0, right: 12.0, top: 8.0, bottom: 8.0),
+        child: pages.elementAt(_currentPage),
+      ),
       //   const TeamView(),
     );
   }

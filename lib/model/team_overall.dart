@@ -33,9 +33,9 @@ class TeamOverall {
   void _increaseOverallPrincipalPosition(Player player) {
     overallByPosition.increaseOverallByPosition(
       player.principalPosition,
-      player.overall.toDouble(),
+      player.overall,
     );
-    teamOverall = teamOverall + player.overall.toDouble();
+    teamOverall = teamOverall + player.overall;
   }
 
   Map<Position, double> _getDefaultOverallByPosition() {
@@ -123,7 +123,7 @@ class TeamOverall {
 }
 
 extension _TeamOverall on Map<Position, double> {
-  void updateOverallWithGoalKeeper(Team team, int goalKeeperOverall) {
+  void updateOverallWithGoalKeeper(Team team, double goalKeeperOverall) {
     updateAll((key, overall) {
       if (key == Position.goalkeeper) return goalKeeperOverall.toDouble();
       return (overall *

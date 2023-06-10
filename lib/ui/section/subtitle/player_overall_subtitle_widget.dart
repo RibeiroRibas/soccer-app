@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class SubtitleWidget extends StatelessWidget {
+class PlayerOverallSubtitleWidget extends StatelessWidget {
   final String text;
   final Color color;
 
-  const SubtitleWidget({
+  const PlayerOverallSubtitleWidget({
     Key? key,
     required this.text,
     required this.color,
