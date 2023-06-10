@@ -15,6 +15,10 @@ const secondaryPosition = "Posição auxiliar";
 const overall = "Overall";
 const classificationTable = "Tabela de classificação";
 const teamAmount = "Overall do time divido por posições";
+const goals = "Gols";
+const defeats = "Derrotas";
+const victories = "Vitórias";
+const draws = "Empates";
 
 // new player
 const newPLayer = "NOVO JOGADOR";

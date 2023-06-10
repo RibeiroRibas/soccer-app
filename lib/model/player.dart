@@ -4,7 +4,7 @@ class Player {
   String name;
   Position principalPosition;
   Position? secondaryPosition;
-  int overall;
+  double overall;
 
   Player({
     required this.name,
