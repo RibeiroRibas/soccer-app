@@ -5,10 +5,14 @@ import '../../shared/theme/green_theme.dart';
 
 class CheckBoxSection extends StatefulWidget {
   final String text;
+  final bool isChecked;
+  final Function(String) onItemSelected;
 
   const CheckBoxSection({
     Key? key,
     required this.text,
+    this.isChecked = true,
+    required this.onItemSelected,
   }) : super(key: key);
 
   @override
@@ -16,7 +20,16 @@ class CheckBoxSection extends StatefulWidget {
 }
 
 class _CheckBoxPlayerState extends State<CheckBoxSection> {
-  bool isChecked = true;
+  late bool isChecked;
+
+  @override
+  void initState() {
+    super.initState();
+    isChecked = widget.isChecked;
+    if (isChecked) {
+      widget.onItemSelected(widget.text);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +41,7 @@ class _CheckBoxPlayerState extends State<CheckBoxSection> {
           value: isChecked,
           onChanged: (bool? value) {
             setState(() {
+              widget.onItemSelected(widget.text);
               isChecked = value!;
             });
           },

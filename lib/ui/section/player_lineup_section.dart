@@ -10,6 +10,17 @@ class PlayerLineupSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Player> players = playersList;
+    List<Player> selectedPlayers = [];
+
+    void onSelectedPlayer(String playerName) {
+      Player selectedPlayer =
+          players.singleWhere((player) => player.name == playerName);
+      if (selectedPlayers.any((element) => element == selectedPlayer)) {
+        selectedPlayers.remove(selectedPlayer);
+      } else {
+        selectedPlayers.add(selectedPlayer);
+      }
+    }
 
     return SizedBox(
       height: 500,
@@ -23,7 +34,11 @@ class PlayerLineupSection extends StatelessWidget {
             childAspectRatio: 3.5,
           ),
           children: List.generate(players.length, (index) {
-            return CheckBoxSection(text: players[index].name);
+            return CheckBoxSection(
+              text: players[index].name,
+              onItemSelected: (playerName) =>
+                  onSelectedPlayer(playerName),
+            );
           }),
         ),
       ),

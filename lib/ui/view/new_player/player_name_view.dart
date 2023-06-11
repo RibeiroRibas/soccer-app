@@ -13,10 +13,10 @@ class PlayerNamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultPageLayout(
         tittle: newPLayer,
-        body: Padding(
-          padding: const EdgeInsets.only(top: 64.0),
+        body: const Padding(
+          padding: EdgeInsets.only(top: 64.0),
           child: Column(
-            children: const [
+            children: [
               QuestionSection(
                 questionText: whatIsPlayerName,
                 subQuestionText: orNickname,

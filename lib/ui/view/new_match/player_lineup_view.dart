@@ -19,10 +19,10 @@ class _PlayerLineupViewState extends State<PlayerLineupView> {
   Widget build(BuildContext context) {
     return DefaultPageLayout(
       tittle: newMatch,
-      body: Column(
+      body: const Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: const <Widget>[
+        children: <Widget>[
           TittleSection(
             tittle: selectPlayers,
             icon: Icons.person_add,
