@@ -34,4 +34,8 @@ const midfielder = "MEIO CAMPO";
 const defender = "DEFESA";
 const leftBack = "LATERAL E";
 const rightBack = "LATERAL R";
+const savePlayer = "Salvar Jogador";
+const savePlayerAndAddNew = "Salvar e adicionar um novo";
+const playerOverall = "Qual o overall desse jogador?";
+const fromOneToFive = "de 1 a 5";
 
