@@ -2,7 +2,7 @@ import 'package:team_draw/model/match_result.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
 
-class TeamScore extends Comparable<TeamScore> {
+class TeamScore implements Comparable<TeamScore> {
   String teamName = "";
   int points = 0;
   int numberOfMatches = 0;
