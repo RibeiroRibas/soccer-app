@@ -33,7 +33,7 @@ class _PlayerPositionComponentState extends State<PlayerPositionComponent> {
           )),
       child: widget.position != null
           ? Text(
-              widget.position!.name,
+              widget.position!.acronym,
               style: TextStyle(
                 fontSize: 12,
                 color: widget.positionColor,

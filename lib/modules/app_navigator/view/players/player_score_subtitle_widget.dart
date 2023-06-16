@@ -6,7 +6,8 @@ class PlayerScoreSubtitleWidget extends StatefulWidget {
   const PlayerScoreSubtitleWidget({Key? key}) : super(key: key);
 
   @override
-  State<PlayerScoreSubtitleWidget> createState() => _PlayerScoreSubtitleWidgetState();
+  State<PlayerScoreSubtitleWidget> createState() =>
+      _PlayerScoreSubtitleWidgetState();
 }
 
 class _PlayerScoreSubtitleWidgetState extends State<PlayerScoreSubtitleWidget> {

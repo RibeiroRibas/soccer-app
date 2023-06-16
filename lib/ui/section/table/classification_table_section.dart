@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:team_draw/modules/app_navigator/model/team_score.dart';
+import 'package:team_draw/shared/extensions/team_score_list_extension.dart';
 
 import '../../../shared/i18n/messages.dart';
 import '../../../shared/theme/green_theme.dart';
@@ -7,14 +9,12 @@ import 'widget/column_position_and_name_widget.dart';
 import 'widget/column_team_scores_widget.dart';
 
 class ClassificationTableSection extends StatelessWidget {
-  final List<String> teamNameTableValues;
-  final List<List<String>> teamScoreTableValues;
+  final List<TeamScore> teamsScore;
 
-  const ClassificationTableSection(
-      {Key? key,
-      required this.teamScoreTableValues,
-      required this.teamNameTableValues})
-      : super(key: key);
+  const ClassificationTableSection({
+    Key? key,
+    required this.teamsScore,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,11 @@ class ClassificationTableSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ColumnPositionAndNameWidget(teamNameTableValues: teamNameTableValues),
-              ColumnTeamScoresWidget(teamScoreTableValues: teamScoreTableValues)
+              ColumnPositionAndNameWidget(
+                  teamNameTableValues: teamsScore.getTeamNames()),
+              ColumnTeamScoresWidget(
+                teamScoreTableValues: teamsScore.getTeamScores(),
+              )
             ],
           ),
         ],
