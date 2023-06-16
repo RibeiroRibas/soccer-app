@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/data/player_data.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/ui/component/elevated_button_component.dart';
@@ -17,7 +16,7 @@ class PlayerPositionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> positions = playerPositions;
+    List<String> positions = Position.positionNames();
     Position position;
 
     return DefaultPageLayout(

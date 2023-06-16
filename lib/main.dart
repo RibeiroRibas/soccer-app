@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/ui/layout/app_navigator_layout.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:team_draw/modules/app_navigator/routes/app_navigator_module.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
 
+
 void main() {
-  runApp(const MyApp());
+  runApp(ModularApp(module: AppNavigatorModule(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -11,10 +13,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Só Pra Rir FC',
       theme: greenTheme,
-      home: AppNavigatorLayout(),
+      routeInformationParser: Modular.routeInformationParser,
+      routerDelegate: Modular.routerDelegate,
     );
   }
 }

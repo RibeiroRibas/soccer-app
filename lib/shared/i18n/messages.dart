@@ -20,6 +20,7 @@ const defeats = "Derrotas";
 const victories = "Vitórias";
 const draws = "Empates";
 
+
 // new player
 const newPLayer = "NOVO JOGADOR";
 const whatIsPlayerName = "Qual o nome do craque?";
@@ -28,12 +29,18 @@ const principalPositionQuestion = "Qual a posição MAIS atuante?";
 const secondaryPositionQuestion = "Qual a SEGUNDA posição MAIS atuante?";
 const principalPositionSubQuestion = "Aquela que o jogador se garante";
 const secondaryPositionSubQuestion = "Aquela que o jogador se apresenta de vez em quando";
-const goalkeeper = "GOLEIRO";
-const forward = "ATACANTE";
-const midfielder = "MEIO CAMPO";
-const defender = "DEFESA";
-const leftBack = "LATERAL E";
-const rightBack = "LATERAL R";
+const goalkeeperPosition = "GOLEIRO";
+const forwardPosition = "ATACANTE";
+const midfielderPosition = "MEIO CAMPO";
+const defenderPosition = "DEFESA";
+const leftBackPosition = "LATERAL E";
+const rightBackPosition = "LATERAL R";
+const gk = "G";
+const d = "D";
+const m = "M";
+const a = "A";
+const rb = "LD";
+const lb = "LE";
 const savePlayer = "Salvar Jogador";
 const savePlayerAndAddNew = "Salvar e adicionar um novo";
 const playerOverall = "Qual o overall desse jogador?";

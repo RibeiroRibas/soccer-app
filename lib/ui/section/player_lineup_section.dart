@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:team_draw/model/player.dart';
 import 'package:team_draw/ui/section/check_box_section.dart';
 
-import '../../data/player_data.dart';
-import '../../model/player.dart';
-
 class PlayerLineupSection extends StatelessWidget {
-  const PlayerLineupSection({Key? key}) : super(key: key);
+  final List<Player> players;
+  const PlayerLineupSection({Key? key, required this.players}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final List<Player> players = playersList;
     List<Player> selectedPlayers = [];
 
     void onSelectedPlayer(String playerName) {
