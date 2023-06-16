@@ -1,6 +1,5 @@
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
-import 'package:team_draw/shared/i18n/messages.dart';
 
 Player ribeiro = Player(
   name: "Ribeiro",
@@ -91,7 +90,7 @@ Player guilherme = Player(
   secondaryPosition: Position.rightBack,
   overall: 2,
 );
-List<Player> playersList = [
+List<Player> getAllPlayers = [
   ribeiro,
   pedro,
   jodir,
@@ -107,13 +106,4 @@ List<Player> playersList = [
   galdino,
   bruno,
   guilherme
-];
-
-List<String> playerPositions = [
-  goalkeeper,
-  forward,
-  midfielder,
-  defender,
-  leftBack,
-  rightBack
 ];
