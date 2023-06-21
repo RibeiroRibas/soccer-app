@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:team_draw/modules/app_navigator/routes/app_navigator_module.dart';
+import 'package:team_draw/modules/app/app_module.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
 
 
 void main() {
-  runApp(ModularApp(module: AppNavigatorModule(), child: const MyApp()));
+  runApp(ModularApp(module: AppModule(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

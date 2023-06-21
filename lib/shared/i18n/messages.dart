@@ -2,6 +2,7 @@ const newMatch = "NOVA PARTIDA";
 const selectPlayers = "Selecione os Jogadores";
 const drawTeam = "SORTEAR EQUIPES";
 const next = "Continuar";
+const nextRecommended = "Continuar (recomendado)";
 const playFontFamily = "Play";
 const historyMatches = "Histórico de jogos";
 const appName = "Sorteia meu time!";
@@ -42,7 +43,12 @@ const a = "A";
 const rb = "LD";
 const lb = "LE";
 const savePlayer = "Salvar Jogador";
-const savePlayerAndAddNew = "Salvar e adicionar um novo";
+const addNewPlayer = "foi adicionado ao time";
+const conclude = "Concluir";
 const playerOverall = "Qual o overall desse jogador?";
 const fromOneToFive = "de 1 a 5";
+const newPlayerSuccess = 'Um novo jogador foi contratado!!';
+const requestPlayerName = "Nome do jogador é obrigatório";
+const playerAlreadyExist = "Já existe um jogador com esse nome";
+
 

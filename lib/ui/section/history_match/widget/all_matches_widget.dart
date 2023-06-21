@@ -8,15 +8,13 @@ class AllMatchesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height / 3.0,
-      child: ListView.builder(
-          itemBuilder: (context, index) {
-            return MatchesItemWidget(match: teamMatches[index]);
-          },
-          itemCount: teamMatches.length,
-          scrollDirection: Axis.vertical,
-        ),
-    );
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return MatchesItemWidget(match: teamMatches[index]);
+        },
+        itemCount: teamMatches.length,
+      );
   }
 }

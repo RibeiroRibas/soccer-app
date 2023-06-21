@@ -33,7 +33,7 @@ class PlayerLineupSection extends StatelessWidget {
           ),
           children: List.generate(players.length, (index) {
             return CheckBoxSection(
-              text: players[index].name,
+              text: players[index].name!,
               onItemSelected: (playerName) =>
                   onSelectedPlayer(playerName),
             );

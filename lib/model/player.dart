@@ -1,18 +1,18 @@
 import 'package:team_draw/model/match_result.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/app_navigator/model/player_score.dart';
+import 'package:team_draw/modules/home/model/player_score.dart';
 
 class Player {
-  String name;
-  Position principalPosition;
+  String? name;
+  Position? principalPosition;
   Position? secondaryPosition;
-  double overall;
+  double? overall;
 
   Player({
-    required this.name,
-    required this.overall,
-    required this.principalPosition,
+    this.name,
+    this.overall,
+    this.principalPosition,
     this.secondaryPosition,
   });
 

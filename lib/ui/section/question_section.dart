@@ -22,7 +22,7 @@ class QuestionSection extends StatelessWidget {
             text: questionText,
             textStyle: greenTheme.textTheme.displayMedium,
           ),
-          Text("($subQuestionText)"),
+          Text("($subQuestionText)",textAlign: TextAlign.center,),
         ],
       ),
     );

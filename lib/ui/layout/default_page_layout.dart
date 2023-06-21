@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
-
-import '../../shared/theme/green_theme.dart';
+import 'package:team_draw/shared/theme/green_theme.dart';
 
 class DefaultPageLayout extends StatelessWidget {
   final String tittle;
   final Widget body;
   final Widget buttonNavigationBar;
+  final VoidCallback onBackPress;
 
   const DefaultPageLayout({
     Key? key,
     required this.tittle,
     required this.body,
     required this.buttonNavigationBar,
+    required this.onBackPress,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -28,7 +30,7 @@ class DefaultPageLayout extends StatelessWidget {
           ),
           centerTitle: true,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: onBackPress,
             icon: Icon(
               Icons.arrow_back,
               color: greenTheme.primaryColor,

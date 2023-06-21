@@ -39,6 +39,7 @@ dependencies:
   flutter_modular: ^5.0.3
   mobx: ^2.2.0
   flutter_mobx: ^2.0.6+5
+  lottie: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -66,13 +67,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/logo-barcelona-256.png
-    - assets/images/logo-flamengo-256.png
-    - assets/images/logo-avai-256.png
-    - assets/images/logo-red-bull-bragantino-256.png
-    - assets/images/logo-palmeiras-256.png
-    - assets/images/logo-dortmund-256.png
-    - assets/images/logo-figueirense-256.png
+    - assets/images/
+    - assets/animations/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
