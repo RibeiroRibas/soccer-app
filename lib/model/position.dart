@@ -29,14 +29,14 @@ enum Position {
     return rightBack;
   }
 
-  static List<String> positionNames() {
-    return [
-      goalkeeper.name,
-      forward.name,
-      midfielder.name,
-      defender.name,
-      leftBack.name,
-      rightBack.name
-    ];
+  static Map<String, bool> positionNames() {
+    return {
+      goalkeeper.name: false,
+      forward.name: false,
+      midfielder.name: false,
+      defender.name: false,
+      leftBack.name: false,
+      rightBack.name: false
+    };
   }
 }

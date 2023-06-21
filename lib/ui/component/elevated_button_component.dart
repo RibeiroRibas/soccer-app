@@ -12,12 +12,9 @@ class ElevatedButtonComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0,bottom: 8.0),
-      child: ElevatedButton(
-        onPressed: onButtonPressed,
-        child: Text(text),
-      ),
+    return FilledButton(
+      onPressed: onButtonPressed,
+      child: Text(text, textAlign: TextAlign.center,style: const TextStyle(fontWeight: FontWeight.bold),),
     );
   }
 }

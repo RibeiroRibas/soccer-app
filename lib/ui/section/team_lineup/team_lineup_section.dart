@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/app_navigator/model/team_overall.dart';
+import 'package:team_draw/modules/home/model/team_overall.dart';
 import 'package:team_draw/ui/component/horizontal_division_component.dart';
 import 'package:team_draw/ui/component/player_overall/player_overall_item_component.dart';
 import 'package:team_draw/ui/section/team_lineup/widget/team_overall_by_position_widget.dart';

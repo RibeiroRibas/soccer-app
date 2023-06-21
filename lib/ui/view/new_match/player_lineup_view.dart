@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/modules/app_navigator/view_model/app_navigator_view_model.dart';
+import 'package:team_draw/modules/home/view_model/home_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/ui/component/box_card_component.dart';
 import 'package:team_draw/ui/section/player_lineup_section.dart';
@@ -15,8 +15,8 @@ class PlayerLineupView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AppNavigatorViewModel controller =
-    Modular.get<AppNavigatorViewModel>();
+    final HomeViewModel controller =
+    Modular.get<HomeViewModel>();
     List<Player> players = controller.players;
 
     return DefaultPageLayout(
@@ -38,7 +38,7 @@ class PlayerLineupView extends StatelessWidget {
       buttonNavigationBar: ElevatedButtonComponent(
         text: next,
         onButtonPressed: () {},
-      ),
+      ), onBackPress: () {  },
     );
   }
 }

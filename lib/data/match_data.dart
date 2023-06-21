@@ -10,7 +10,13 @@ List<TeamMatch> getAllMatches = [
   matchFiveVSSix,
   matchFourVSTree,
   matchSixVSFour,
-  matchTwoVSFour
+  matchTwoVSFour,
+  matchOneVSTwo,
+  matchOneVSTree,
+  matchTwoVSTree,
+  matchFiveVSSix,
+  matchFourVSTree,
+  matchSixVSFour,
 ];
 
 MatchSettings matchSettings = MatchSettings(

@@ -8,11 +8,11 @@ class PlayerOverallSubtitleSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
+    return const Padding(
+      padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const <Widget>[
+        children: <Widget>[
           PlayerOverallSubtitleWidget(
             text: principalPosition,
             color: ThemeColors.principalPosition,

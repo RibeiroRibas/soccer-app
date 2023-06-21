@@ -1,5 +1,4 @@
-
-import 'package:team_draw/modules/app_navigator/model/team_score.dart';
+import 'package:team_draw/modules/home/model/team_score.dart';
 
 extension TeamScoreExtension on List<TeamScore> {
   List<String> getTeamNames() {
