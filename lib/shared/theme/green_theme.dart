@@ -3,6 +3,7 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 
 ThemeData greenTheme = ThemeData(
+  useMaterial3: true,
   primaryColor: ThemeColors.primary,
   cardColor: ThemeColors.cardColor,
   floatingActionButtonTheme: const FloatingActionButtonThemeData(

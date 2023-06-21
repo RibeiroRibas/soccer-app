@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:team_draw/modules/app_navigator/model/player_score.dart';
+import 'package:team_draw/modules/home/model/player_score.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 import 'package:team_draw/ui/component/player_overall/player_score_widget.dart';
@@ -23,7 +23,7 @@ class PlayerOverallItemComponent extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            playerScore.player.name,
+            playerScore.player.name!,
             softWrap: false,
             overflow: TextOverflow.fade,
             style: const TextStyle(fontSize: 12),
@@ -53,7 +53,7 @@ class PlayerOverallItemComponent extends StatelessWidget {
                 height: 25,
                 alignment: Alignment.center,
                 child: Text(
-                  playerScore.player.overall.toStringAsFixed(1),
+                  playerScore.player.overall!.toStringAsFixed(1),
                   style: TextStyle(
                     fontSize: 12,
                     color: greenTheme.primaryColor,
