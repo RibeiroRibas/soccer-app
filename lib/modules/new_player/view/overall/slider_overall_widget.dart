@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class SliderOverallWidget extends StatefulWidget {
   final double? initialValue;
-  final void Function(double overall) onChanged;
+  final void Function(double overall) onChangeEnd;
 
   const SliderOverallWidget({
     Key? key,
-    required this.onChanged, this.initialValue,
+    required this.onChangeEnd,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -15,6 +16,7 @@ class SliderOverallWidget extends StatefulWidget {
 
 class _SliderOverallWidgetState extends State<SliderOverallWidget> {
   late double _currentSliderValue;
+
   @override
   void initState() {
     super.initState();
@@ -28,12 +30,10 @@ class _SliderOverallWidgetState extends State<SliderOverallWidget> {
       max: 5,
       divisions: 10,
       label: _currentSliderValue.toString(),
-      onChanged: (double value) {
-        setState(() {
-          _currentSliderValue = value;
-          widget.onChanged(value);
-        });
-      },
+      onChanged: (double value) => setState(
+        () => _currentSliderValue = value,
+      ),
+      onChangeEnd: (double value) => widget.onChangeEnd(value),
     );
   }
 }

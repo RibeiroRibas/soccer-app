@@ -1,7 +1,5 @@
-import 'dart:ui';
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/model/position.dart';
 import 'package:team_draw/modules/new_player/repository/new_player_repository.dart';
 import 'package:team_draw/modules/new_player/state/player_state.dart';
 
@@ -10,46 +8,23 @@ part 'player_view_model.g.dart';
 class PlayerViewModel = PlayerViewModelBase with _$PlayerViewModel;
 
 abstract class PlayerViewModelBase with Store {
-  final NewPlayerRepository _repository;
+  final PlayerRepository _repository;
 
   PlayerViewModelBase(this._repository);
 
-  Player player = Player();
+  @observable
+  int currentView = 0;
 
   @observable
-  PlayerState state = StartPlayerState();
-
-  @observable
-  Map<String, bool> principalPositions = Position.positionNames();
-
-  @observable
-  Map<String, bool> secondaryPositions = Position.positionNames();
-
-  @observable
-  bool changeBottomNavigationButtons = false;
-
-  bool canGoToNextView = false;
-
-  VoidCallback? onButtonPressed;
+  PlayerState playerState = StartPlayerState();
 
   @action
-  void changePrincipalPosition(String position) {
-    Map<String, bool> positions = Position.positionNames();
-    positions[position] = true;
-    principalPositions = positions;
-  }
-
-  @action
-  void changeSecondaryPosition(String position) {
-    Map<String, bool> positions = Position.positionNames();
-    positions[position] = true;
-    secondaryPositions = positions;
-  }
-
-  @action
-  Future<void> addPlayer() async {
-    _repository.addPlayer(player);
-    state = SuccessPlayerState();
+  void changeCurrentView(int index) {
+    if (index == -1) {
+      currentView = currentView - 1;
+    } else {
+      currentView = index;
+    }
   }
 
   Future<List<Player>> findAllPlayers() async {
@@ -57,22 +32,8 @@ abstract class PlayerViewModelBase with Store {
   }
 
   @action
-  void bottomNavigationWithOneButton() {
-    changeBottomNavigationButtons = true;
-  }
-
-  @action
-  void bottomNavigationWithTwoButtons() {
-    changeBottomNavigationButtons = false;
-  }
-
-  @action
-  void resetObservables() {
-    state = StartPlayerState();
-    principalPositions = Position.positionNames();
-    secondaryPositions = Position.positionNames();
-    changeBottomNavigationButtons = false;
-    player = Player();
-    canGoToNextView = false;
+  Future savePlayer(Player player) async{
+    await _repository.addPlayer(player);
+    playerState = SuccessPlayerState();
   }
 }

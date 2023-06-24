@@ -8,37 +8,24 @@ class NewPlayerRoutes extends RouteNavigator {
     Modular.to.navigate(routeName, arguments: arguments);
   }
 
-  void backRouteFromIndex(int index) {
+  void nextRouteFromIndex(int index, Map<String, dynamic> arguments) {
     String routeName = startRote;
     switch (index) {
       case 0:
-        routeName = startRote;
-        break;
-      case 1:
         routeName = '$newPlayerRote$nameRoute';
         break;
-      case 2:
+      case 1:
         routeName = '$newPlayerRote$principalPositionRoute';
+        break;
+      case 2:
+        routeName = '$newPlayerRote$secondaryPositionRoute';
         break;
       case 3:
-        routeName = '$newPlayerRote$secondaryPositionRoute';
-    }
-    goTo(routeName, null);
-  }
-
-  void nextRouteFromIndex(int index) {
-    String routeName = startRote;
-    switch (index) {
-      case 0:
-        routeName = '$newPlayerRote$principalPositionRoute';
-        break;
-      case 1:
-        routeName = '$newPlayerRote$secondaryPositionRoute';
-        break;
-      case 2:
         routeName = '$newPlayerRote$overallRoute';
         break;
+      case 4:
+        routeName = '$newPlayerRote$confirmNewPlayer';
     }
-    goTo(routeName, null);
+    goTo(routeName, arguments);
   }
 }
