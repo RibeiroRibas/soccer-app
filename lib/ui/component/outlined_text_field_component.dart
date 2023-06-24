@@ -19,6 +19,7 @@ class OutlinedTextFieldComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofocus: true,
       validator: validator,
       initialValue: playerName,
       decoration: InputDecoration(

@@ -7,7 +7,12 @@ import 'package:team_draw/ui/component/outlined_text_field_component.dart';
 import 'package:team_draw/ui/section/question_section.dart';
 
 class PlayerNameView extends StatefulWidget {
-  const PlayerNameView({Key? key}) : super(key: key);
+  final Player player;
+  final void Function(int) onActionPress;
+
+  const PlayerNameView(
+      {Key? key, required this.player, required this.onActionPress})
+      : super(key: key);
 
   @override
   State<PlayerNameView> createState() => _PlayerNameViewState();
@@ -15,31 +20,17 @@ class PlayerNameView extends StatefulWidget {
 
 class _PlayerNameViewState extends State<PlayerNameView> {
   final PlayerViewModel viewModel = Modular.get<PlayerViewModel>();
-  late final List<Player> allPlayers;
   final TextEditingController _controller = TextEditingController();
+  late final List<Player> allPlayers;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    findAllPlayers();
+    _findAllPLayers();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    viewModel.onButtonPressed = () {
-      _validateForm(viewModel.player.name ?? "");
-    };
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
-  }
-
-  Future<void> findAllPlayers() async {
+  Future _findAllPLayers() async {
     allPlayers = await viewModel.findAllPlayers();
   }
 
@@ -68,22 +59,24 @@ class _PlayerNameViewState extends State<PlayerNameView> {
                     ? playerAlreadyExist
                     : null,
             labelText: name,
-            playerName: viewModel.player.name ?? "",
+            playerName: widget.player.name ?? "",
             onChanged: (String value) {
-              _validateForm(value);
+              widget.player.name = value;
+              _formKey.currentState!.validate();
             },
+            onFieldSubmitted: (_) => _formKey.currentState!.validate()
+                ? widget.onActionPress(1)
+                : null,
           ),
-        )
+        ),
+        const Expanded(child: SizedBox()),
       ],
     );
   }
 
-  void _validateForm(String value) {
-    viewModel.player.name = value;
-    if (_formKey.currentState!.validate()) {
-      viewModel.canGoToNextView = true;
-    } else {
-      viewModel.canGoToNextView = false;
-    }
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 }

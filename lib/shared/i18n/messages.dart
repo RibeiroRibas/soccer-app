@@ -43,12 +43,15 @@ const a = "A";
 const rb = "LD";
 const lb = "LE";
 const savePlayer = "Salvar Jogador";
-const addNewPlayer = "foi adicionado ao time";
-const conclude = "Concluir";
+const playerConfirmData = "Confirme os dados do jogador:";
 const playerOverall = "Qual o overall desse jogador?";
-const fromOneToFive = "de 1 a 5";
-const newPlayerSuccess = 'Um novo jogador foi contratado!!';
+const swipeToSelect = "Deslize para selecionar";
+const markAsUndefined = "Marcar como indefinido";
 const requestPlayerName = "Nome do jogador é obrigatório";
 const playerAlreadyExist = "Já existe um jogador com esse nome";
+const nameConfirm = "Nome: ";
+const principalPositionConfirm = "Posição principal: ";
+const secondaryPositionConfirm = "Posição auxiliar: ";
+const overallConfirm = "Overall: ";
 
 

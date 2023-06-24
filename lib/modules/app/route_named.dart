@@ -11,4 +11,5 @@ const String nameRoute = '/player_name';
 const String principalPositionRoute = '/principal_position';
 const String secondaryPositionRoute = '/secondary_position';
 const String overallRoute = '/overall';
+const String confirmNewPlayer = "/confirm";
 const String successNewPlayerRote = '/success';

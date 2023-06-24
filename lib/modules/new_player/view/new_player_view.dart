@@ -3,14 +3,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
-import 'package:team_draw/modules/app/route_named.dart';
+import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/new_player/routes/new_player_rote_navigator.dart';
-import 'package:team_draw/modules/new_player/state/player_state.dart';
 import 'package:team_draw/modules/new_player/view_model/player_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
-import 'package:team_draw/ui/component/elevated_button_component.dart';
 
 class NewPlayerView extends StatefulWidget {
   const NewPlayerView({
@@ -24,43 +22,27 @@ class NewPlayerView extends StatefulWidget {
 class _NewPlayerViewState extends State<NewPlayerView> {
   final NewPlayerRoutes navigator = Modular.get<NewPlayerRoutes>();
   final PlayerViewModel viewModel = Modular.get<PlayerViewModel>();
-
-  int index = 0;
+  late final void Function(int) onActionPress;
+  final Player player = Player();
 
   @override
   void initState() {
     super.initState();
-    navigator.goTo('$newPlayerRote$nameRoute', null);
+    onActionPress = (int index) => viewModel.changeCurrentView(index);
+    autorun((_) => _goToNextView(viewModel.currentView));
   }
 
   @override
   void didChangeDependencies() {
-    reaction((_) => viewModel.state, (state) {
-      if (state is SuccessPlayerState) {
-        _showSnackBar();
-        navigator.goTo(startRote, null);
-      }
-    });
     super.didChangeDependencies();
   }
 
-  void _showSnackBar() {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: ThemeColors.primary,
-      duration: const Duration(seconds: 3),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      content: Text(
-        "${viewModel.player.name!} $addNewPlayer",
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          color: ThemeColors.black,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ));
+  void _goToNextView(int index) {
+    Map<String, dynamic> arguments = {
+      "player": player,
+      "onActionPress": onActionPress,
+    };
+    navigator.nextRouteFromIndex(index, arguments);
   }
 
   @override
@@ -74,68 +56,49 @@ class _NewPlayerViewState extends State<NewPlayerView> {
         ),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {
-            if (viewModel.changeBottomNavigationButtons) {
-              viewModel.bottomNavigationWithTwoButtons();
-            }
-            navigator.backRouteFromIndex(index);
-            index--;
-          },
+          onPressed: () => viewModel.changeCurrentView(-1),
           icon: Icon(
             Icons.arrow_back,
             color: greenTheme.primaryColor,
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-        child: Observer(
-          builder: (_) => Row(
-            children: [
-              Expanded(
-                child: ElevatedButtonComponent(
-                  onButtonPressed: () {
-                    if (viewModel.canGoToNextView) {
-                      viewModel.addPlayer();
-                    } else {
-                      viewModel.onButtonPressed!.call();
-                    }
-                  },
-                  text: savePlayer,
-                ),
-              ),
-              !viewModel.changeBottomNavigationButtons
-                  ? Expanded(
-                      child: ElevatedButtonComponent(
-                        onButtonPressed: () {
-                          if (index == 2) {
-                            viewModel.bottomNavigationWithOneButton();
-                          }
-                          if (viewModel.canGoToNextView) {
-                            navigator.nextRouteFromIndex(index);
-                            index++;
-                          } else {
-                            viewModel.onButtonPressed!.call();
-                          }
-                        },
-                        text: nextRecommended,
-                      ),
-                    )
-                  : const SizedBox(),
-            ],
-          ),
-        ),
-      ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 64),
+        padding: const EdgeInsets.only(
+            left: 16.0, right: 16.0, top: 64, bottom: 32.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Expanded(child: RouterOutlet()),
-            SizedBox(
-              width: 175,
-              height: 175,
-              child: Lottie.asset('assets/animations/foot.json'),
+            Observer(
+              builder: (BuildContext context) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    for (int index = 0; index < 5; index++) ...{
+                      Column(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 5.5,
+                            height: 175,
+                            child: viewModel.currentView == index
+                                ? Lottie.asset('assets/animations/ball.json')
+                                : null,
+                          ),
+                          Container(
+                            width: (MediaQuery.of(context).size.width / 5) / 4,
+                            height: 5,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: viewModel.currentView == index
+                                    ? ThemeColors.primary
+                                    : ThemeColors.table),
+                          ),
+                        ],
+                      ),
+                    },
+                  ],
+                );
+              },
             ),
           ],
         ),
