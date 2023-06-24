@@ -1,41 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
-import 'package:team_draw/modules/new_player/view_model/player_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/modules/new_player/view/player_position/player_position_view.dart';
 
 class PlayerPrincipalPositionView extends StatelessWidget {
+  final Player player;
+  final void Function(int) onActionPress;
 
-  const PlayerPrincipalPositionView({Key? key})
+  const PlayerPrincipalPositionView(
+      {Key? key, required this.player, required this.onActionPress})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final PlayerViewModel viewModel = Modular.get<PlayerViewModel>();
+    final List<Position> positions = Position.allPositions();
 
     return PlayerPositionView(
       questionText: principalPositionQuestion,
       subQuestionText: principalPositionSubQuestion,
       positions: List.generate(
-        viewModel.principalPositions.length,
+        positions.length,
         (index) {
           return Observer(
             builder: (BuildContext context) {
               return CheckboxListTile(
                 title: Text(
-                  viewModel.principalPositions.keys.elementAt(index),
+                  positions.elementAt(index).name,
                   style: const TextStyle(fontSize: 12),
                   softWrap: false,
                 ),
-                value: viewModel.principalPositions.values.elementAt(index),
+                value: player.principalPosition != null
+                    ? player.principalPosition! == positions[index]
+                    : false,
                 onChanged: (_) {
-                  if (!viewModel.principalPositions.values.elementAt(index)) {
-                    viewModel.player.principalPosition = Position.fromIndex(index);
-                  }
-                  viewModel.changePrincipalPosition(
-                      viewModel.principalPositions.keys.elementAt(index));
+                  player.principalPosition = Position.fromIndex(index);
+                  onActionPress(2);
                 },
               );
             },
