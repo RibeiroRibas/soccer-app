@@ -39,7 +39,6 @@ dependencies:
   mobx: ^2.2.0
   flutter_mobx: ^2.0.6+5
   lottie: ^2.4.0
-  camera: ^0.10.5+2
 
 dev_dependencies:
   flutter_test:

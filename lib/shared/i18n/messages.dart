@@ -54,4 +54,19 @@ const principalPositionConfirm = "Posição principal: ";
 const secondaryPositionConfirm = "Posição auxiliar: ";
 const overallConfirm = "Overall: ";
 
+//new match
+const newMatchTittle = "NOVA PARTIDA";
+const matchSettings = "Configurações da partida:";
+const duration = "Duração: ";
+const hour = "hr";
+const minute = "min";
+const numberOfPlayersByTeam = "Numero de jogadores por time: ";
+const hasChangeSideQuestion = "Troca de lado?";
+const yes = "Sim";
+const no = "Não";
+const changePlayerEvery = "Troca jogador a cada:";
+const newTeamsQuestion = "Novos Times? **";
+const newTeamsSubTittle = "** Evita a repetição de times e partidas que já aconteceram.";
+const quantity = "qtd";
+
 
