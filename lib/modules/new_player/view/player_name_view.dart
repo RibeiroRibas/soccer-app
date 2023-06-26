@@ -20,9 +20,9 @@ class PlayerNameView extends StatefulWidget {
 
 class _PlayerNameViewState extends State<PlayerNameView> {
   final PlayerViewModel viewModel = Modular.get<PlayerViewModel>();
-  final TextEditingController _controller = TextEditingController();
   late final List<Player> allPlayers;
   final _formKey = GlobalKey<FormState>();
+  final _focusNode = FocusNode();
 
   @override
   void initState() {
@@ -53,13 +53,15 @@ class _PlayerNameViewState extends State<PlayerNameView> {
         Form(
           key: _formKey,
           child: OutlinedTextFieldComponent(
+            focusNode: _focusNode,
+            autoFocus: false,
             validator: (String? value) => value == null || value.isEmpty
                 ? requestPlayerName
                 : playerNameAlreadyExist(value)
                     ? playerAlreadyExist
                     : null,
             labelText: name,
-            playerName: widget.player.name ?? "",
+            initialValue: widget.player.name ?? "",
             onChanged: (String value) {
               widget.player.name = value;
               _formKey.currentState!.validate();
@@ -72,11 +74,5 @@ class _PlayerNameViewState extends State<PlayerNameView> {
         const Expanded(child: SizedBox()),
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller.dispose();
   }
 }
