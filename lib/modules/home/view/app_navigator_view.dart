@@ -3,7 +3,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:team_draw/modules/app/route_named.dart';
 import 'package:team_draw/modules/home/routes/home_rote_navigator.dart';
+import 'package:team_draw/modules/home/view/expandable_fab/action_button_widget.dart';
+import 'package:team_draw/modules/home/view/expandable_fab/expandable_fab_widget.dart';
 import 'package:team_draw/modules/home/view_model/home_view_model.dart';
+import 'package:team_draw/presentation/custom_icons.dart';
 import 'package:team_draw/shared/helper/focus_node_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
@@ -54,9 +57,18 @@ class AppNavigatorView extends StatelessWidget {
           centerTitle: true,
         ),
         drawer: const Drawer(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => navigator.goTo('$newMatchRote/', null),
-          child: const Icon(Icons.add),
+        floatingActionButton: ExpandableFabWidget(
+          distance: 80,
+          children: [
+            ActionButtonWidget(
+              onPressed: () => navigator.goTo('$newPlayerRote/', null),
+              icon: const Icon(Icons.person_add),
+            ),
+            ActionButtonWidget(
+              onPressed: () => navigator.goTo('$newMatchRote/', null),
+              icon: const Icon(CustomIcons.soccerBall),
+            ),
+          ],
         ),
         bottomNavigationBar: Observer(
           builder: (_) => BottomNavigationBar(

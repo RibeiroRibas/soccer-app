@@ -9,7 +9,7 @@ import 'package:team_draw/modules/new_match/view_model/new_match_view_model.dart
 import 'package:team_draw/shared/route_navigator.dart';
 
 class NewMatchModule extends Module {
-  static const durationTransaction = 200;
+  static const durationTransaction = 500;
 
   @override
   List<Bind> get binds => [
@@ -22,7 +22,7 @@ class NewMatchModule extends Module {
   List<ModularRoute> get routes => [
         ChildRoute(startRote,
             child: (context, args) => const NewMatchView(),
-            transition: TransitionType.downToUp,
+            transition: TransitionType.rightToLeft,
             duration: const Duration(milliseconds: durationTransaction),
             children: [
               ChildRoute(

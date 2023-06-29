@@ -53,6 +53,13 @@ class _NewMatchViewState extends State<NewMatchView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      onHorizontalDragEnd: (details){
+        if(details.primaryVelocity! > 0){
+          viewModel.changeCurrentView(-1);
+        } else if (details.primaryVelocity! < 0){
+          viewModel.changeCurrentView(1);
+        }
+      },
       onTap: () => FocusNodeHelper.dismissKeyboard(context),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
