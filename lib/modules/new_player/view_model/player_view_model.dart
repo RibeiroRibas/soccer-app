@@ -23,7 +23,7 @@ abstract class PlayerViewModelBase with Store {
     if (index == -1) {
       currentView = currentView - 1;
     } else {
-      currentView = currentView + index;
+      currentView = index;
     }
   }
 

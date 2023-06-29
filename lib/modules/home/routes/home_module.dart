@@ -2,6 +2,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/modules/app/route_named.dart';
 import 'package:team_draw/modules/home/repository/home_repository.dart';
 import 'package:team_draw/modules/home/routes/home_rote_navigator.dart';
+import 'package:team_draw/modules/home/view_model/expandable_button_controller.dart';
 import 'package:team_draw/shared/route_navigator.dart';
 import 'package:team_draw/modules/home/view/app_navigator_view.dart';
 import 'package:team_draw/modules/home/view/home_view.dart';
@@ -14,8 +15,9 @@ class AppNavigatorModule extends Module {
 
   @override
   List<Bind> get binds => [
-        Bind.factory((i) => HomeRepository()),
+        Bind.factory((_) => HomeRepository()),
         Bind.singleton((i) => HomeViewModel(i())),
+        Bind.singleton((_) => ExpandableButtonController()),
         Bind.lazySingleton<RouteNavigator>((i) => AppNavigatorRoutes())
       ];
 
