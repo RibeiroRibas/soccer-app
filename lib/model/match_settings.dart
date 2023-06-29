@@ -1,13 +1,19 @@
 class MatchSettings {
-  double durationTime;
-  bool hasChangeSide;
-  bool hasReservePlayer;
-  int timeToChangePlayer;
+  int? durationHr;
+  int? durationMin;
+  bool? hasChangeSide;
+  bool? hasReservePlayer;
+  int? timeToChangePlayer;
+  bool? isDrawNewTeams;
+  int? numberOfStartingPlayers;
 
   MatchSettings({
-    required this.durationTime,
-    required this.hasChangeSide,
-    required this.hasReservePlayer,
-    required this.timeToChangePlayer,
+    this.durationHr,
+    this.durationMin,
+    this.hasChangeSide,
+    this.hasReservePlayer,
+    this.timeToChangePlayer,
+    this.isDrawNewTeams,
+    this.numberOfStartingPlayers
 });
 }
