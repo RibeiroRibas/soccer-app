@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/shared/helper/date_format_helper.dart';
-
-import '../../../../shared/i18n/messages.dart';
-import '../../../../shared/theme/theme_colors.dart';
+import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class MatchesItemWidget extends StatefulWidget {
   final TeamMatch match;
@@ -27,9 +26,9 @@ class _MatchesItemWidgetState extends State<MatchesItemWidget> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(widget.match.teamOne!.acronym),
+                  Text(widget.match.teamOne!.acronym!),
                   Image(
-                    image: AssetImage(widget.match.teamOne!.shield),
+                    image: AssetImage(widget.match.teamOne!.shield!),
                     height: 35,
                   ),
                 ],
@@ -50,10 +49,10 @@ class _MatchesItemWidgetState extends State<MatchesItemWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Image(
-                  image: AssetImage(widget.match.teamTwo!.shield),
+                  image: AssetImage(widget.match.teamTwo!.shield!),
                   height: 35,
                 ),
-                Text(widget.match.teamTwo!.acronym),
+                Text(widget.match.teamTwo!.acronym!),
               ],
             ),
           ),

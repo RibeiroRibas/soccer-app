@@ -15,13 +15,13 @@ class TeamOverallWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: Image(
-            image: AssetImage(team.shield),
+            image: AssetImage(team.shield!),
             height: 35,
           ),
         ),
         Expanded(
           child: Text(
-            team.name,
+            team.name!,
             softWrap: false,
             overflow: TextOverflow.fade,
             style: greenTheme.textTheme.displaySmall,

@@ -68,5 +68,6 @@ const changePlayerEvery = "Troca jogador a cada:";
 const newTeamsQuestion = "Novos Times? **";
 const newTeamsSubTittle = "** Evita a repetição de times e partidas que já aconteceram.";
 const quantity = "qtd";
+const numberOfTeams = "Número de times";
 
 

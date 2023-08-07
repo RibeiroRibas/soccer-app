@@ -4,26 +4,27 @@ import 'package:team_draw/modules/home/model/team_overall.dart';
 import 'package:team_draw/shared/extensions/team_overall_map_extension.dart';
 
 class Team {
-  String name;
-  String acronym;
-  String shield;
-  List<Player> players;
-  int numberOfStartingPlayers;
+  String? name;
+  String? acronym;
+  String? shield;
+  List<Player>? players;
+  int? numberOfStartingPlayers;
+  TeamOverall? teamOverall;
 
   Team({
-    required this.name,
-    required this.acronym,
-    required this.shield,
-    required this.players,
-    required this.numberOfStartingPlayers,
+    this.name,
+    this.acronym,
+    this.shield,
+    this.players,
+    this.numberOfStartingPlayers,
   });
 
   bool hasPlayerBackup() {
-    return numberOfStartingPlayers < players.length;
+    return numberOfStartingPlayers! < players!.length;
   }
 
   bool hasGoalKeeper() {
-    return players
+    return players!
         .any((element) => element.principalPosition == Position.goalkeeper);
   }
 
@@ -38,7 +39,7 @@ class Team {
   }
 
   void _calculateOverall(TeamOverall teamOverall) {
-    for (Player player in teamOverall.team.players) {
+    for (Player player in teamOverall.team.players!) {
       _increaseOverallPrincipalPosition(player, teamOverall);
       if (player.secondaryPosition != null) {
         _increaseOverallSecondaryPosition(player, teamOverall);
@@ -69,11 +70,11 @@ class Team {
   void _calculateWithoutGoalKeeper(TeamOverall teamOverall) {
     _calculateOverall(teamOverall);
     double playerOverallAsGoalKeeper =
-        (teamOverall.teamOverall / 2) / teamOverall.team.players.length;
+        (teamOverall.teamOverall / 2) / teamOverall.team.players!.length;
     teamOverall.teamOverall -= playerOverallAsGoalKeeper;
     int result = _numberOfStartingPlayerWithoutGoalKeeper(teamOverall.team);
     teamOverall.teamOverall *= result;
-    teamOverall.teamOverall /= teamOverall.team.players.length;
+    teamOverall.teamOverall /= teamOverall.team.players!.length;
     teamOverall.teamOverall += playerOverallAsGoalKeeper;
     teamOverall.overallByPosition.updateOverallWithoutGoalKeeper(
       teamOverall.team,
@@ -108,19 +109,19 @@ class Team {
 
   int _numberOfStartingPlayerWithoutGoalKeeper(Team team) {
     int numberOfPlayerBackup =
-        team.players.length - team.numberOfStartingPlayers;
-    return team.players.length - numberOfPlayerBackup - 1;
+        team.players!.length - team.numberOfStartingPlayers!;
+    return team.players!.length - numberOfPlayerBackup - 1;
   }
 
   void _calculateWithGoalKeeper(TeamOverall teamOverall) {
     if (teamOverall.hasPlayerBackup()) {
       Player goalKeeper = teamOverall.getGoalKeeper();
-      teamOverall.team.players.remove(goalKeeper);
+      teamOverall.team.players!.remove(goalKeeper);
       _calculateOverallWithPlayerBackup(teamOverall);
       teamOverall.teamOverall += goalKeeper.overall!;
       teamOverall.overallByPosition
           .updateOverallWithGoalKeeper(teamOverall.team, goalKeeper.overall!);
-      teamOverall.team.players.add(goalKeeper);
+      teamOverall.team.players!.add(goalKeeper);
     } else {
       _calculateOverall(teamOverall);
     }
@@ -129,7 +130,7 @@ class Team {
   void _calculateOverallWithPlayerBackup(TeamOverall teamOverall) {
     int numberOfPlayerBackup = teamOverall.getNumberOfPlayerBackup();
     _calculateOverall(teamOverall);
-    int numberOfPlayers = teamOverall.team.players.length;
+    int numberOfPlayers = teamOverall.team.players!.length;
     double result =
         teamOverall.teamOverall * (numberOfPlayers - numberOfPlayerBackup);
     teamOverall.teamOverall = result / numberOfPlayers;
