@@ -32,7 +32,7 @@ class TeamLineupSection extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                 ),
               ),
-              for (Player player in teamOverall.team.players) ...{
+              for (Player player in teamOverall.team.players!) ...{
                 PlayerOverallItemComponent(
                     playerScore: player.calculateScore(allMatches)),
               },

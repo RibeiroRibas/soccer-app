@@ -6,8 +6,8 @@ extension TeamOverallExtension on Map<Position, double> {
     updateAll((key, overall) {
       if (key == Position.goalkeeper) return goalKeeperOverall.toDouble();
       return (overall *
-          (team.players.length - _numberOfPlayerBackup(team)) /
-          team.players.length);
+          (team.players!.length - _numberOfPlayerBackup(team)) /
+          team.players!.length);
     });
   }
 
@@ -19,7 +19,7 @@ extension TeamOverallExtension on Map<Position, double> {
     updateAll((key, overall) {
       if (key == Position.goalkeeper) return playerOverallAsGoalKeeper;
       double result = overall * numberOfStatingPLayer;
-      return result / team.players.length;
+      return result / team.players!.length;
     });
   }
 
@@ -28,5 +28,5 @@ extension TeamOverallExtension on Map<Position, double> {
   }
 
   int _numberOfPlayerBackup(Team team) =>
-      team.players.length - team.numberOfStartingPlayers;
+      team.players!.length - team.numberOfStartingPlayers!;
 }

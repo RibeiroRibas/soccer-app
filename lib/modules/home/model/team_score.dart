@@ -13,7 +13,7 @@ class TeamScore implements Comparable<TeamScore> {
   int goalsConceded = 0;
 
   TeamScore({required Team team, required List<TeamMatch> matches}) {
-    teamName = team.name;
+    teamName = team.name!;
     for (var match in matches) {
       setMatchResult(match.getMatchResult(team: team));
       setGoalsScored(match.getGoalsScored(team: team));
