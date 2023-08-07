@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/new_match/view/player_lineup/player_check_box_widget.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/ui/section/tittle_section.dart';
 
 class PlayersLineupView extends StatelessWidget {
-  final TeamMatch match;
   final Map<Player, bool> selectedPlayers;
   final MatchSettings matchSettings;
 
   const PlayersLineupView({
     Key? key,
-    required this.match,
     required this.selectedPlayers,
     required this.matchSettings,
   }) : super(key: key);

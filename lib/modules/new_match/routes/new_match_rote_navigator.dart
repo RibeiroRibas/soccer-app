@@ -19,6 +19,9 @@ class NewMatchRoteNavigator extends RouteNavigator {
       case 1:
         routeName = '$newMatchRote$matchSettingsRoute';
         break;
+      case 2:
+        routeName = '$newMatchRote$drawnTeamsRote';
+        break;
     }
     goTo(routeName, arguments);
   }

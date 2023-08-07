@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/new_match/view/match_settings/widget/match_duration_time_widget.dart';
 import 'package:team_draw/modules/new_match/view/match_settings/widget/select_box_widget.dart';
 import 'package:team_draw/modules/new_match/view_model/match_settings_view_model.dart';
@@ -13,13 +12,11 @@ import 'package:team_draw/ui/section/tittle_section.dart';
 import 'widget/select_one_option_widget.dart';
 
 class MatchSettingsView extends StatefulWidget {
-  final TeamMatch match;
   final Map<Player, bool> selectedPlayers;
   final MatchSettings matchSettings;
 
   const MatchSettingsView(
       {Key? key,
-      required this.match,
       required this.selectedPlayers,
       required this.matchSettings})
       : super(key: key);
@@ -55,6 +52,15 @@ class _MatchSettingsViewState extends State<MatchSettingsView> {
                 widget.matchSettings.durationHr = value,
             onDurationMinChange: (value) =>
                 widget.matchSettings.durationMin = value,
+          ),
+          const Divider(color: ThemeColors.division),
+          SelectBoxWidget(
+            value: widget.matchSettings.numberOfTeams,
+            onValueChange: (value) =>
+            widget.matchSettings.numberOfTeams = value,
+            values: ListHelper.getListOfTeams(),
+            description: numberOfTeams,
+            labelText: quantity,
           ),
           const Divider(color: ThemeColors.division),
           SelectBoxWidget(

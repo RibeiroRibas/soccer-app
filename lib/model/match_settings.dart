@@ -6,6 +6,7 @@ class MatchSettings {
   int? timeToChangePlayer;
   bool? isDrawNewTeams;
   int? numberOfStartingPlayers;
+  int? numberOfTeams;
 
   MatchSettings({
     this.durationHr,
@@ -14,6 +15,7 @@ class MatchSettings {
     this.hasReservePlayer,
     this.timeToChangePlayer,
     this.isDrawNewTeams,
-    this.numberOfStartingPlayers
+    this.numberOfStartingPlayers,
+    this.numberOfTeams
 });
 }

@@ -19,7 +19,7 @@ abstract class NewMatchViewModelBase with Store {
     if (index == -1) {
       currentView = currentView - 1;
     } else {
-      currentView = index;
+      currentView++;
     }
   }
 

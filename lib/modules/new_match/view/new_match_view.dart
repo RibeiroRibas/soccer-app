@@ -6,7 +6,6 @@ import 'package:mobx/mobx.dart';
 import 'package:team_draw/data/match_data.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/new_match/routes/new_match_rote_navigator.dart';
 import 'package:team_draw/modules/new_match/view_model/new_match_view_model.dart';
 import 'package:team_draw/shared/helper/focus_node_helper.dart';
@@ -25,7 +24,6 @@ class _NewMatchViewState extends State<NewMatchView> {
   final NewMatchRoteNavigator navigator = Modular.get<NewMatchRoteNavigator>();
   final NewMatchViewModel viewModel = Modular.get<NewMatchViewModel>();
   late final void Function(int) onActionPress;
-  final TeamMatch match = TeamMatch();
   late final Map<Player, bool> selectedPlayers;
   final MatchSettings matchSettings = getMatchSettings;
 
@@ -43,7 +41,6 @@ class _NewMatchViewState extends State<NewMatchView> {
 
   Future _goToNextView(int index) async {
     Map<String, dynamic> arguments = {
-      "match": match,
       "selectedPlayers": selectedPlayers,
       "matchSettings": matchSettings,
     };

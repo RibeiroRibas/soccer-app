@@ -27,6 +27,7 @@ MatchSettings getMatchSettings = MatchSettings(
   timeToChangePlayer: 10,
   isDrawNewTeams: true,
   numberOfStartingPlayers: 6,
+  numberOfTeams: 2
 );
 
 TeamMatch matchOneVSTwo = TeamMatch(

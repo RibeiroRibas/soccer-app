@@ -19,8 +19,8 @@ class TeamOverall {
   bool hasPlayerBackup() => team.hasPlayerBackup();
 
   Player getGoalKeeper() =>
-      team.players.singleWhere((player) => player.isGoalKeeper());
+      team.players!.firstWhere((player) => player.isGoalKeeper());
 
   int getNumberOfPlayerBackup() =>
-      team.players.length - team.numberOfStartingPlayers;
+      team.players!.length - team.numberOfStartingPlayers!;
 }
