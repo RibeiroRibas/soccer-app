@@ -28,7 +28,7 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
   @override
   void initState() {
     super.initState();
-    reaction((p0) => viewModel.playerState, (playerState) {
+    reaction((_) => viewModel.playerState, (playerState) {
       if (playerState is SuccessPlayerState) {
         navigator.goTo('$newPlayerRote$successNewPlayerRote', null);
       }

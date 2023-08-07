@@ -32,7 +32,7 @@ abstract class PlayerViewModelBase with Store {
   }
 
   @action
-  Future savePlayer(Player player) async{
+  Future savePlayer(Player player) async {
     await _repository.addPlayer(player);
     playerState = SuccessPlayerState();
   }
