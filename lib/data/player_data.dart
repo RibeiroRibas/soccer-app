@@ -69,8 +69,7 @@ Player neny = Player(
 );
 Player diego = Player(
   name: "Diego",
-  principalPosition: Position.forward,
-  secondaryPosition: Position.defender,
+  principalPosition: Position.goalkeeper,
   overall: 5,
 );
 Player galdino = Player(

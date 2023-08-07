@@ -25,7 +25,7 @@ class Player {
     List<TeamMatch> matches = [];
     matches.addAll(allMatches);
     matches.removeWhere((e) =>
-        !e.teamOne!.players.contains(this) && !e.teamTwo!.players.contains(this));
+        !e.teamOne!.players!.contains(this) && !e.teamTwo!.players!.contains(this));
     for (TeamMatch teamMatch in matches) {
       teamMatch.playerGoals!.forEach((key, value) {
         if (key == this) {
@@ -44,7 +44,7 @@ class Player {
     MatchResult resultTeamOne =
         teamMatch.getMatchResult(team: teamMatch.teamOne!);
     bool isPlayerTeamOne =
-        teamMatch.teamOne!.players.any((element) => element == this);
+        teamMatch.teamOne!.players!.any((element) => element == this);
 
     switch (resultTeamOne) {
       case MatchResult.victory:
@@ -72,4 +72,26 @@ class Player {
         }
     }
   }
+
+  bool isForward() {
+    return principalPosition == Position.forward;
+  }
+
+  bool isMidfielder() {
+    return principalPosition == Position.midfielder;
+  }
+
+  bool isDefender() {
+    return principalPosition == Position.defender;
+  }
+
+  bool isLeftBack() {
+    return principalPosition == Position.leftBack;
+  }
+
+  bool isRightBack() {
+    return principalPosition == Position.rightBack;
+  }
+  
+  
 }

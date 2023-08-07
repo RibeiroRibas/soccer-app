@@ -22,4 +22,13 @@ class ListHelper {
     }
     return hours;
   }
+
+  static List<int> getListOfTeams() {
+    List<int> values = [];
+    for (int i = 0; i < 10; i++) {
+      values.add(i);
+    }
+    return values;
+  }
 }
+

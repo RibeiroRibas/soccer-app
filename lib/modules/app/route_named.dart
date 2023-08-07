@@ -19,4 +19,5 @@ const String successNewPlayerRote = '/success';
 const String newMatchRote = '/new_match';
 const String playerLineupRote = '/lineup';
 const String matchSettingsRoute = '/settings';
+const String drawnTeamsRote = '/drawn_teams';
 
