@@ -6,7 +6,7 @@ import 'package:team_draw/modules/new_player/routes/new_player_rote_navigator.da
 import 'package:team_draw/shared/theme/green_theme.dart';
 
 class SuccessView extends StatefulWidget {
-  const SuccessView({Key? key}) : super(key: key);
+  const SuccessView({super.key});
 
   @override
   State<SuccessView> createState() => _SuccessViewState();

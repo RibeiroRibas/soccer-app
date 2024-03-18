@@ -5,10 +5,10 @@ class SliderOverallWidget extends StatefulWidget {
   final void Function(double overall) onChangeEnd;
 
   const SliderOverallWidget({
-    Key? key,
+    super.key,
     required this.onChangeEnd,
     this.initialValue,
-  }) : super(key: key);
+  });
 
   @override
   State<SliderOverallWidget> createState() => _SliderOverallWidgetState();

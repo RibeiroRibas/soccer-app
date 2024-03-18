@@ -7,7 +7,7 @@ import 'package:team_draw/shared/theme/theme_colors.dart';
 class MatchesItemWidget extends StatefulWidget {
   final TeamMatch match;
 
-  const MatchesItemWidget({Key? key, required this.match}) : super(key: key);
+  const MatchesItemWidget({super.key, required this.match});
 
   @override
   State<MatchesItemWidget> createState() => _MatchesItemWidgetState();

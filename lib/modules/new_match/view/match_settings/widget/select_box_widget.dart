@@ -9,13 +9,12 @@ class SelectBoxWidget extends StatelessWidget {
   final String labelText;
 
   const SelectBoxWidget(
-      {Key? key,
+      {super.key,
       this.value,
       required this.onValueChange,
       required this.values,
       required this.description,
-      required this.labelText})
-      : super(key: key);
+      required this.labelText});
 
   @override
   Widget build(BuildContext context) {

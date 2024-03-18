@@ -5,15 +5,15 @@ class PlayerOverallSubtitleWidget extends StatelessWidget {
   final Color color;
 
   const PlayerOverallSubtitleWidget({
-    Key? key,
+    super.key,
     required this.text,
     required this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0,right: 8.0),
+      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
       child: Row(
         children: [
           Container(

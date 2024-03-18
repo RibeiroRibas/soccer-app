@@ -8,8 +8,10 @@ extension TeamScoreExtension on List<TeamScore> {
   }
 
   List<List<String>> getTeamScores() {
-    List<List<String>> teamScoreTableValues = [["P","J","V","D","E","GS","GC"]];
-    for (TeamScore teamScore in this){
+    List<List<String>> teamScoreTableValues = [
+      ["P", "J", "V", "D", "E", "GS", "GC"]
+    ];
+    for (TeamScore teamScore in this) {
       teamScoreTableValues.add(teamScore.getValuesAsString());
     }
     return teamScoreTableValues;

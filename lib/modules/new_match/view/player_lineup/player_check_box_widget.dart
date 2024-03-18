@@ -7,11 +7,11 @@ class PlayerCheckBoxWidget extends StatefulWidget {
   final Function(Player) onItemSelected;
 
   const PlayerCheckBoxWidget({
-    Key? key,
+    super.key,
     required this.player,
     required this.isChecked,
     required this.onItemSelected,
-  }) : super(key: key);
+  });
 
   @override
   State<PlayerCheckBoxWidget> createState() => _CheckBoxPlayerState();

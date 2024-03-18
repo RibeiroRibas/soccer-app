@@ -6,9 +6,9 @@ import 'package:team_draw/modules/new_player/routes/new_player_module.dart';
 
 class AppModule extends Module {
   @override
-  List<ModularRoute> get routes => [
-        ModuleRoute(startRote, module: AppNavigatorModule()),
-        ModuleRoute(newPlayerRote, module: NewPlayerModule()),
-        ModuleRoute(newMatchRote, module: NewMatchModule()),
-      ];
+  void routes(r) {
+    r.module(startRote, module: AppNavigatorModule());
+    r.module(newPlayerRote, module: NewPlayerModule());
+    r.module(newMatchRote, module: NewMatchModule());
+  }
 }

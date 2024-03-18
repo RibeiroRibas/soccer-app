@@ -7,23 +7,27 @@ import 'package:team_draw/ui/section/tittle_section.dart';
 import 'widget/all_matches_widget.dart';
 
 class HistoryMatchesSection extends StatelessWidget {
-  final List <TeamMatch> teamMatches;
-  const HistoryMatchesSection({Key? key, required this.teamMatches,}) : super(key: key);
+  final List<TeamMatch> teamMatches;
+  const HistoryMatchesSection({
+    super.key,
+    required this.teamMatches,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
             padding:
                 EdgeInsets.only(top: 16.0, bottom: 8.0, left: 4.0, right: 8.0),
-            child: TittleSection(tittle: historyMatches)
+            child: TittleSection(tittle: historyMatches)),
+        BoxCardComponent(
+          boxCardBody: AllMatchesWidget(
+            teamMatches: teamMatches,
           ),
-          BoxCardComponent(
-            boxCardBody: AllMatchesWidget(teamMatches: teamMatches,),
-          ),
-        ],
+        ),
+      ],
     );
   }
 }

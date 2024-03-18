@@ -12,6 +12,4 @@ class ThemeColors {
   static const backgroundColor = Color.fromRGBO(24, 24, 40, 1);
 }
 
-final Map<int, Color> shades = {
-  50: const Color.fromRGBO(0, 255, 66, 1)
-};
+final Map<int, Color> shades = {50: const Color.fromRGBO(0, 255, 66, 1)};

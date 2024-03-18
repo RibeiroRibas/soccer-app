@@ -4,7 +4,7 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
 
 class ChangePlayerWidget extends StatelessWidget {
-  const ChangePlayerWidget({Key? key}) : super(key: key);
+  const ChangePlayerWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

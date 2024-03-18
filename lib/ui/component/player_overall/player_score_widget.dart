@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class PlayerScoreWidget extends StatelessWidget {
   final String score;
 
-  const PlayerScoreWidget({Key? key, required this.score}) : super(key: key);
+  const PlayerScoreWidget({super.key, required this.score});
 
   @override
   Widget build(BuildContext context) {

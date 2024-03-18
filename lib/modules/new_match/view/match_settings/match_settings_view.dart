@@ -12,14 +12,11 @@ import 'package:team_draw/ui/section/tittle_section.dart';
 import 'widget/select_one_option_widget.dart';
 
 class MatchSettingsView extends StatefulWidget {
-  final Map<Player, bool> selectedPlayers;
+  final List<Player> selectedPlayers;
   final MatchSettings matchSettings;
 
   const MatchSettingsView(
-      {Key? key,
-      required this.selectedPlayers,
-      required this.matchSettings})
-      : super(key: key);
+      {super.key, required this.selectedPlayers, required this.matchSettings});
 
   @override
   State<MatchSettingsView> createState() => _MatchSettingsViewState();
@@ -57,7 +54,7 @@ class _MatchSettingsViewState extends State<MatchSettingsView> {
           SelectBoxWidget(
             value: widget.matchSettings.numberOfTeams,
             onValueChange: (value) =>
-            widget.matchSettings.numberOfTeams = value,
+                widget.matchSettings.numberOfTeams = value,
             values: ListHelper.getListOfTeams(),
             description: numberOfTeams,
             labelText: quantity,

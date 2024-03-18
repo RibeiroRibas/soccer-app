@@ -5,8 +5,7 @@ class TapToOpenFabWidget extends StatelessWidget {
   final VoidCallback onTapButton;
 
   const TapToOpenFabWidget(
-      {Key? key, required this.isOpen, required this.onTapButton})
-      : super(key: key);
+      {super.key, required this.isOpen, required this.onTapButton});
 
   @override
   Widget build(BuildContext context) {

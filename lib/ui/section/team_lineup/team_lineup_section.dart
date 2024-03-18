@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/home/model/team_overall.dart';
 import 'package:team_draw/ui/component/horizontal_division_component.dart';
 import 'package:team_draw/ui/component/player_overall/player_overall_item_component.dart';
 import 'package:team_draw/ui/section/team_lineup/widget/team_overall_by_position_widget.dart';
 import 'package:team_draw/ui/section/team_lineup/widget/team_overall_widget.dart';
 
 class TeamLineupSection extends StatelessWidget {
-  final TeamOverall teamOverall;
-  final List<TeamMatch> allMatches;
+  final Team team;
+  final List<TeamMatch>? allMatches;
 
-  const TeamLineupSection({Key? key, required this.teamOverall, required this.allMatches})
-      : super(key: key);
+  const TeamLineupSection({super.key, required this.team, this.allMatches});
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +23,17 @@ class TeamLineupSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               TeamOverallWidget(
-                team: teamOverall.team,
-                teamOverall: teamOverall.teamOverall,
+                team: team,
+                teamOverall: team.teamOverall.value,
               ),
               SizedBox(
                 child: HorizontalDivisionComponent(
                   width: MediaQuery.of(context).size.width,
                 ),
               ),
-              for (Player player in teamOverall.team.players!) ...{
+              for (Player player in team.players!) ...{
                 PlayerOverallItemComponent(
-                    playerScore: player.calculateScore(allMatches)),
+                    playerScore: player.calculateScore(allMatches ?? [])),
               },
               SizedBox(
                 child: HorizontalDivisionComponent(
@@ -42,7 +41,7 @@ class TeamLineupSection extends StatelessWidget {
                 ),
               ),
               TeamOverallByPositionWidget(
-                overallByPosition: teamOverall.overallByPosition,
+                overallByPosition: team.teamOverall.overallByPosition,
               ),
             ],
           ),

@@ -7,8 +7,8 @@ import 'package:team_draw/ui/component/player_position_component.dart';
 class TeamOverallByPositionWidget extends StatefulWidget {
   final Map<Position, double> overallByPosition;
 
-  const TeamOverallByPositionWidget({Key? key, required this.overallByPosition})
-      : super(key: key);
+  const TeamOverallByPositionWidget(
+      {super.key, required this.overallByPosition});
 
   @override
   State<TeamOverallByPositionWidget> createState() =>

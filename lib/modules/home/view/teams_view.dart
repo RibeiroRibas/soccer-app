@@ -1,17 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/home/model/team_overall.dart';
 import 'package:team_draw/ui/component/box_card_component.dart';
 import 'package:team_draw/ui/section/subtitle/player_overall_subtitle_section.dart';
 import 'package:team_draw/ui/section/team_lineup/team_lineup_section.dart';
 
 class TeamsView extends StatelessWidget {
-  final List<TeamOverall> teamsOverall;
+  final List<Team> teams;
   final List<TeamMatch> allMatches;
 
-  const TeamsView(
-      {Key? key, required this.teamsOverall, required this.allMatches})
-      : super(key: key);
+  const TeamsView({super.key, required this.teams, required this.allMatches});
 
   @override
   Widget build(BuildContext context) {
@@ -25,13 +23,13 @@ class TeamsView extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: BoxCardComponent(
                   boxCardBody: TeamLineupSection(
-                    teamOverall: teamsOverall[index],
+                    team: teams[index],
                     allMatches: allMatches,
                   ),
                 ),
               );
             },
-            childCount: teamsOverall.length,
+            childCount: teams.length,
           ),
         ),
       ],

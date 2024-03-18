@@ -28,7 +28,7 @@ abstract class PlayerViewModelBase with Store {
   }
 
   Future<List<Player>> findAllPlayers() async {
-    return _repository.findAllPlayers();
+    return await _repository.findAllPlayers();
   }
 
   @action

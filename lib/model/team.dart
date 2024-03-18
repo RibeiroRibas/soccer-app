@@ -9,7 +9,7 @@ class Team {
   String? shield;
   List<Player>? players;
   int? numberOfStartingPlayers;
-  TeamOverall? teamOverall;
+  TeamOverall teamOverall = TeamOverall();
 
   Team({
     this.name,
@@ -28,68 +28,60 @@ class Team {
         .any((element) => element.principalPosition == Position.goalkeeper);
   }
 
-  TeamOverall calculateTeamOverall() {
-    TeamOverall teamOverall = TeamOverall(this);
+  void calculateTeamOverall() async {
     if (hasGoalKeeper()) {
-      _calculateWithGoalKeeper(teamOverall);
+      _calculateWithGoalKeeper();
     } else {
-      _calculateWithoutGoalKeeper(teamOverall);
+      _calculateWithoutGoalKeeper();
     }
-    return teamOverall;
   }
 
-  void _calculateOverall(TeamOverall teamOverall) {
-    for (Player player in teamOverall.team.players!) {
-      _increaseOverallPrincipalPosition(player, teamOverall);
+  void _calculateOverall() {
+    for (Player player in players!) {
+      _increaseOverallPrincipalPosition(player);
       if (player.secondaryPosition != null) {
-        _increaseOverallSecondaryPosition(player, teamOverall);
+        _increaseOverallSecondaryPosition(player);
       }
     }
   }
 
-  void _increaseOverallSecondaryPosition(
-      Player player, TeamOverall teamOverall) {
+  void _increaseOverallSecondaryPosition(Player player) {
     const int secondaryPositionWeight = 2;
     double playerOverall = player.overall! / secondaryPositionWeight;
     teamOverall.overallByPosition.increaseOverallByPosition(
       player.secondaryPosition!,
       playerOverall,
     );
-    teamOverall.teamOverall += playerOverall;
+    teamOverall.value += playerOverall;
   }
 
-  void _increaseOverallPrincipalPosition(
-      Player player, TeamOverall teamOverall) {
+  void _increaseOverallPrincipalPosition(Player player) {
     teamOverall.overallByPosition.increaseOverallByPosition(
       player.principalPosition!,
       player.overall!,
     );
-    teamOverall.teamOverall += player.overall!;
+    teamOverall.value += player.overall!;
   }
 
-  void _calculateWithoutGoalKeeper(TeamOverall teamOverall) {
-    _calculateOverall(teamOverall);
+  void _calculateWithoutGoalKeeper() {
+    _calculateOverall();
     double playerOverallAsGoalKeeper =
-        (teamOverall.teamOverall / 2) / teamOverall.team.players!.length;
-    teamOverall.teamOverall -= playerOverallAsGoalKeeper;
-    int result = _numberOfStartingPlayerWithoutGoalKeeper(teamOverall.team);
-    teamOverall.teamOverall *= result;
-    teamOverall.teamOverall /= teamOverall.team.players!.length;
-    teamOverall.teamOverall += playerOverallAsGoalKeeper;
+        (teamOverall.value / 2) / players!.length;
+    teamOverall.value -= playerOverallAsGoalKeeper;
+    int result = _numberOfStartingPlayerWithoutGoalKeeper();
+    teamOverall.value *= result;
+    teamOverall.value /= players!.length;
+    teamOverall.value += playerOverallAsGoalKeeper;
     teamOverall.overallByPosition.updateOverallWithoutGoalKeeper(
-      teamOverall.team,
+      players!,
       playerOverallAsGoalKeeper,
       result,
     );
-    _calculateOverallByPositionWithoutGoalKeeper(
-      playerOverallAsGoalKeeper,
-      teamOverall,
-    );
+    _calculateOverallByPositionWithoutGoalKeeper(playerOverallAsGoalKeeper);
   }
 
   void _calculateOverallByPositionWithoutGoalKeeper(
     double playerOverallAsGoalKeeper,
-    TeamOverall teamOverall,
   ) {
     Map<Position, double> overallByPositionAux = {};
     overallByPositionAux.addAll(teamOverall.overallByPosition);
@@ -107,32 +99,36 @@ class Team {
     });
   }
 
-  int _numberOfStartingPlayerWithoutGoalKeeper(Team team) {
-    int numberOfPlayerBackup =
-        team.players!.length - team.numberOfStartingPlayers!;
-    return team.players!.length - numberOfPlayerBackup - 1;
+  int _numberOfStartingPlayerWithoutGoalKeeper() {
+    int numberOfPlayerBackup = players!.length - numberOfStartingPlayers!;
+    return players!.length - numberOfPlayerBackup - 1;
   }
 
-  void _calculateWithGoalKeeper(TeamOverall teamOverall) {
-    if (teamOverall.hasPlayerBackup()) {
-      Player goalKeeper = teamOverall.getGoalKeeper();
-      teamOverall.team.players!.remove(goalKeeper);
-      _calculateOverallWithPlayerBackup(teamOverall);
-      teamOverall.teamOverall += goalKeeper.overall!;
-      teamOverall.overallByPosition
-          .updateOverallWithGoalKeeper(teamOverall.team, goalKeeper.overall!);
-      teamOverall.team.players!.add(goalKeeper);
+  void _calculateWithGoalKeeper() {
+    if (hasPlayerBackup()) {
+      Player goalKeeper = getGoalKeeper();
+      players!.remove(goalKeeper);
+      _calculateOverallWithPlayerBackup();
+      teamOverall.value += goalKeeper.overall!;
+      teamOverall.overallByPosition.updateOverallWithGoalKeeper(
+          players!, numberOfStartingPlayers!, goalKeeper.overall!);
+      players!.add(goalKeeper);
     } else {
-      _calculateOverall(teamOverall);
+      _calculateOverall();
     }
   }
 
-  void _calculateOverallWithPlayerBackup(TeamOverall teamOverall) {
-    int numberOfPlayerBackup = teamOverall.getNumberOfPlayerBackup();
-    _calculateOverall(teamOverall);
-    int numberOfPlayers = teamOverall.team.players!.length;
+  void _calculateOverallWithPlayerBackup() {
+    int numberOfPlayerBackup = getNumberOfPlayerBackup();
+    _calculateOverall();
+    int numberOfPlayers = players!.length;
     double result =
-        teamOverall.teamOverall * (numberOfPlayers - numberOfPlayerBackup);
-    teamOverall.teamOverall = result / numberOfPlayers;
+        teamOverall.value * (numberOfPlayers - numberOfPlayerBackup);
+    teamOverall.value = result / numberOfPlayers;
   }
+
+  Player getGoalKeeper() =>
+      players!.firstWhere((player) => player.isGoalKeeper());
+
+  int getNumberOfPlayerBackup() => players!.length - numberOfStartingPlayers!;
 }

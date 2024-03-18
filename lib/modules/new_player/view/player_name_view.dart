@@ -11,8 +11,7 @@ class PlayerNameView extends StatefulWidget {
   final void Function(int) onActionPress;
 
   const PlayerNameView(
-      {Key? key, required this.player, required this.onActionPress})
-      : super(key: key);
+      {super.key, required this.player, required this.onActionPress});
 
   @override
   State<PlayerNameView> createState() => _PlayerNameViewState();
@@ -56,7 +55,7 @@ class _PlayerNameViewState extends State<PlayerNameView> {
             focusNode: _focusNode,
             autoFocus: false,
             validator: (String? value) => value == null || value.isEmpty
-                ? requestPlayerName
+                ? requestTeamName
                 : playerNameAlreadyExist(value)
                     ? playerAlreadyExist
                     : null,
