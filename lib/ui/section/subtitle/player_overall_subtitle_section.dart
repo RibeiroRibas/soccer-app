@@ -4,7 +4,7 @@ import 'package:team_draw/shared/theme/theme_colors.dart';
 import 'package:team_draw/ui/section/subtitle/player_overall_subtitle_widget.dart';
 
 class PlayerOverallSubtitleSection extends StatelessWidget {
-  const PlayerOverallSubtitleSection({Key? key}) : super(key: key);
+  const PlayerOverallSubtitleSection({super.key});
 
   @override
   Widget build(BuildContext context) {

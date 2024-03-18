@@ -9,13 +9,13 @@ class DropDownButtonComponent extends StatelessWidget {
   final String labelText;
 
   const DropDownButtonComponent({
-    Key? key,
+    super.key,
     this.value,
     required this.onValueChange,
     required this.width,
     required this.values,
     required this.labelText,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

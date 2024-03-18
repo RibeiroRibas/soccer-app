@@ -7,11 +7,10 @@ class SelectOneOptionWidget extends StatelessWidget {
   final Function(bool) onValueSelected;
 
   const SelectOneOptionWidget(
-      {Key? key,
+      {super.key,
       required this.question,
       required this.value,
-      required this.onValueSelected})
-      : super(key: key);
+      required this.onValueSelected});
 
   @override
   Widget build(BuildContext context) {

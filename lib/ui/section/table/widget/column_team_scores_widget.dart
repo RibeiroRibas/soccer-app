@@ -4,9 +4,9 @@ class ColumnTeamScoresWidget extends StatelessWidget {
   final List<List<String>> teamScoreTableValues;
 
   const ColumnTeamScoresWidget({
-    Key? key,
+    super.key,
     required this.teamScoreTableValues,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

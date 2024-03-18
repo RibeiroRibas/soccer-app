@@ -15,7 +15,7 @@ class OutlinedTextFieldComponent extends StatelessWidget {
   final FocusNode? focusNode;
 
   const OutlinedTextFieldComponent({
-    Key? key,
+    super.key,
     required this.labelText,
     required this.initialValue,
     required this.onChanged,
@@ -26,7 +26,7 @@ class OutlinedTextFieldComponent extends StatelessWidget {
     this.inputFormatters,
     this.maxLength,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -9,10 +9,10 @@ class HomeView extends StatelessWidget {
   final List<TeamMatch> allMatches;
 
   const HomeView({
-    Key? key,
+    super.key,
     required this.teamsScore,
     required this.allMatches,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

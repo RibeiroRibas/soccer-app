@@ -7,7 +7,7 @@ import 'player_score_subtitle_widget.dart';
 
 class PlayersView extends StatelessWidget {
   final List<PlayerScore> playersScore;
-  const PlayersView({Key? key, required this.playersScore}) : super(key: key);
+  const PlayersView({super.key, required this.playersScore});
 
   @override
   Widget build(BuildContext context) {

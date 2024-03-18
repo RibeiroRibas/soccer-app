@@ -3,12 +3,11 @@ import 'dart:math' as math;
 
 class ExpandingActionButtonWidget extends StatelessWidget {
   const ExpandingActionButtonWidget(
-      {Key? key,
+      {super.key,
       required this.directionInDegrees,
       required this.maxDistance,
       required this.progress,
-      required this.child})
-      : super(key: key);
+      required this.child});
 
   final double directionInDegrees;
   final double maxDistance;

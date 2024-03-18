@@ -11,9 +11,9 @@ class ClassificationTableSection extends StatelessWidget {
   final List<TeamScore> teamsScore;
 
   const ClassificationTableSection({
-    Key? key,
+    super.key,
     required this.teamsScore,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

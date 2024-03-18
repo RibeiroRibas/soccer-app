@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
-import '../../shared/theme/green_theme.dart';
+import 'package:team_draw/shared/theme/green_theme.dart';
 
 class TextWithBorderComponent extends StatelessWidget {
   final String text;
   final TextStyle? textStyle;
 
   const TextWithBorderComponent({
-    Key? key,
+    super.key,
     required this.text,
     required this.textStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

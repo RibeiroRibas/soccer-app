@@ -6,22 +6,27 @@ import 'package:team_draw/shared/theme/theme_colors.dart';
 class TeamOverallWidget extends StatelessWidget {
   final Team team;
   final double teamOverall;
-  const TeamOverallWidget({Key? key, required this.team, required this.teamOverall,}) : super(key: key);
+  const TeamOverallWidget({
+    super.key,
+    required this.team,
+    required this.teamOverall,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Row(
       children: [
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: Image(
-            image: AssetImage(team.shield!),
+            image: AssetImage(
+                team.shield ?? "assets/images/logo-barcelona-256.png"),
             height: 35,
           ),
         ),
         Expanded(
           child: Text(
-            team.name!,
+            team.name ?? "Flamengo",
             softWrap: false,
             overflow: TextOverflow.fade,
             style: greenTheme.textTheme.displaySmall,

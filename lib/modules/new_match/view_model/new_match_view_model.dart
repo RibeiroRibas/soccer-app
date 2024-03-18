@@ -23,12 +23,7 @@ abstract class NewMatchViewModelBase with Store {
     }
   }
 
-  Future<Map<Player, bool>> findAllPlayers() async {
-    Map<Player, bool> selectedPlayers = {};
-    List<Player> players = await _repository.findAllPlayers();
-    for (Player player in players) {
-      selectedPlayers[player] = true;
-    }
-    return selectedPlayers;
+  Future<List<Player>> findAllPlayers() async {
+    return await _repository.findAllPlayers();
   }
 }

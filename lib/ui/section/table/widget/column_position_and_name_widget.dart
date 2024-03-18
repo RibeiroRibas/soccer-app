@@ -4,9 +4,9 @@ class ColumnPositionAndNameWidget extends StatelessWidget {
   final List<String> teamNameTableValues;
 
   const ColumnPositionAndNameWidget({
-    Key? key,
+    super.key,
     required this.teamNameTableValues,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

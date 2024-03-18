@@ -1,25 +1,27 @@
+import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
-import 'package:team_draw/model/team.dart';
 
 extension TeamOverallExtension on Map<Position, double> {
-  void updateOverallWithGoalKeeper(Team team, double goalKeeperOverall) {
+  void updateOverallWithGoalKeeper(List<Player> players,
+      int numberOfStartingPlayers, double goalKeeperOverall) {
     updateAll((key, overall) {
       if (key == Position.goalkeeper) return goalKeeperOverall.toDouble();
       return (overall *
-          (team.players!.length - _numberOfPlayerBackup(team)) /
-          team.players!.length);
+          (players.length -
+              _numberOfPlayerBackup(players, numberOfStartingPlayers)) /
+          players.length);
     });
   }
 
   void updateOverallWithoutGoalKeeper(
-      Team team,
-      double playerOverallAsGoalKeeper,
-      int numberOfStatingPLayer,
-      ) {
+    List<Player> players,
+    double playerOverallAsGoalKeeper,
+    int numberOfStatingPLayer,
+  ) {
     updateAll((key, overall) {
       if (key == Position.goalkeeper) return playerOverallAsGoalKeeper;
       double result = overall * numberOfStatingPLayer;
-      return result / team.players!.length;
+      return result / players.length;
     });
   }
 
@@ -27,6 +29,9 @@ extension TeamOverallExtension on Map<Position, double> {
     this[position] = this[position]! + overall;
   }
 
-  int _numberOfPlayerBackup(Team team) =>
-      team.players!.length - team.numberOfStartingPlayers!;
+  int _numberOfPlayerBackup(
+    List<Player> players,
+    int numberOfStartingPlayers,
+  ) =>
+      players.length - numberOfStartingPlayers;
 }

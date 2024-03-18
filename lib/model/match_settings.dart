@@ -8,14 +8,13 @@ class MatchSettings {
   int? numberOfStartingPlayers;
   int? numberOfTeams;
 
-  MatchSettings({
-    this.durationHr,
-    this.durationMin,
-    this.hasChangeSide,
-    this.hasReservePlayer,
-    this.timeToChangePlayer,
-    this.isDrawNewTeams,
-    this.numberOfStartingPlayers,
-    this.numberOfTeams
-});
+  MatchSettings(
+      {this.durationHr,
+      this.durationMin,
+      this.hasChangeSide,
+      this.hasReservePlayer,
+      this.timeToChangePlayer,
+      this.isDrawNewTeams,
+      this.numberOfStartingPlayers,
+      this.numberOfTeams});
 }

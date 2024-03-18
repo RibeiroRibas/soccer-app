@@ -8,16 +8,15 @@ class DefaultPageLayout extends StatelessWidget {
   final VoidCallback onBackPress;
 
   const DefaultPageLayout({
-    Key? key,
+    super.key,
     required this.tittle,
     required this.body,
     required this.buttonNavigationBar,
     required this.onBackPress,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();

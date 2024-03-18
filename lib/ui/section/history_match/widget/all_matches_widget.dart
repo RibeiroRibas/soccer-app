@@ -4,17 +4,17 @@ import 'matches_item_widget.dart';
 
 class AllMatchesWidget extends StatelessWidget {
   final List<TeamMatch> teamMatches;
-  const AllMatchesWidget({Key? key, required this.teamMatches}) : super(key: key);
+  const AllMatchesWidget({super.key, required this.teamMatches});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemBuilder: (context, index) {
-          return MatchesItemWidget(match: teamMatches[index]);
-        },
-        itemCount: teamMatches.length,
-      );
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return MatchesItemWidget(match: teamMatches[index]);
+      },
+      itemCount: teamMatches.length,
+    );
   }
 }

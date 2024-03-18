@@ -1,5 +1,1 @@
-enum MatchResult{
-  victory,
-  defeat,
-  draw
-}
+enum MatchResult { victory, defeat, draw }

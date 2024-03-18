@@ -14,8 +14,7 @@ import 'package:team_draw/ui/section/tittle_section.dart';
 class ConfirmNewPlayerView extends StatefulWidget {
   final Player player;
 
-  const ConfirmNewPlayerView({Key? key, required this.player})
-      : super(key: key);
+  const ConfirmNewPlayerView({super.key, required this.player});
 
   @override
   State<ConfirmNewPlayerView> createState() => _ConfirmNewPlayerViewState();
@@ -84,11 +83,15 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
         const SizedBox(height: 15),
         SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: ElevatedButtonComponent(
-            onButtonPressed: () {
-              viewModel.savePlayer(widget.player);
-            },
-            text: savePlayer,
+          child: Row(
+            children: [
+              ElevatedButtonComponent(
+                onButtonPressed: () {
+                  viewModel.savePlayer(widget.player);
+                },
+                text: savePlayer,
+              ),
+            ],
           ),
         ),
       ],

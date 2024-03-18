@@ -9,14 +9,12 @@ import 'package:team_draw/ui/component/elevated_button_component.dart';
 import 'package:team_draw/ui/layout/default_page_layout.dart';
 import 'package:team_draw/ui/section/tittle_section.dart';
 
-
 class PlayerLineupView extends StatelessWidget {
-  const PlayerLineupView({Key? key}) : super(key: key);
+  const PlayerLineupView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final HomeViewModel controller =
-    Modular.get<HomeViewModel>();
+    final HomeViewModel controller = Modular.get<HomeViewModel>();
     List<Player> players = controller.players;
 
     return DefaultPageLayout(
@@ -38,7 +36,8 @@ class PlayerLineupView extends StatelessWidget {
       buttonNavigationBar: ElevatedButtonComponent(
         text: next,
         onButtonPressed: () {},
-      ), onBackPress: () {  },
+      ),
+      onBackPress: () {},
     );
   }
 }

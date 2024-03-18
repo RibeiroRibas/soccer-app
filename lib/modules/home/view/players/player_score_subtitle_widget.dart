@@ -3,7 +3,7 @@ import 'package:team_draw/presentation/custom_icons.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 
 class PlayerScoreSubtitleWidget extends StatefulWidget {
-  const PlayerScoreSubtitleWidget({Key? key}) : super(key: key);
+  const PlayerScoreSubtitleWidget({super.key});
 
   @override
   State<PlayerScoreSubtitleWidget> createState() =>
