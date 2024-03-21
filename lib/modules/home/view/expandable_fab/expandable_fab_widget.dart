@@ -43,10 +43,12 @@ class _ExpandableFabWidgetState extends State<ExpandableFabWidget>
       parent: _controller,
     );
     autorun((_) async {
-      if (expandableButtonController.isButtonOpen) {
-        _controller.forward();
-      } else {
-        _controller.reverse();
+      if (mounted) {
+        if (expandableButtonController.isButtonOpen) {
+          _controller.forward();
+        } else {
+          _controller.reverse();
+        }
       }
     });
   }

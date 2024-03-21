@@ -11,7 +11,7 @@ import 'package:team_draw/ui/component/elevated_button_component.dart';
 import 'package:team_draw/ui/section/team_lineup/team_lineup_section.dart';
 
 class DrawnTeamsView extends StatefulWidget {
-  final List<Player> selectedPlayers;
+  final Map<Player, bool> selectedPlayers;
   final MatchSettings matchSettings;
 
   const DrawnTeamsView(
@@ -30,9 +30,7 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
   }
 
   void _sortTeams() {
-    List<Player> players = [];
-    players.addAll(widget.selectedPlayers);
-    controller.sortTeamsMatch(players, widget.matchSettings);
+    controller.sortTeamsMatch(widget.selectedPlayers, widget.matchSettings);
   }
 
   @override

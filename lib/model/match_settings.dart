@@ -1,20 +1,15 @@
 class MatchSettings {
-  int? durationHr;
-  int? durationMin;
-  bool? hasChangeSide;
-  bool? hasReservePlayer;
-  int? timeToChangePlayer;
-  bool? isDrawNewTeams;
+  int durationHr = 1;
+  int durationMin = 0;
+  bool hasChangeSide = false;
+  int timeToChangePlayer = 10;
+  bool isDrawNewTeams = false;
   int? numberOfStartingPlayers;
   int? numberOfTeams;
 
-  MatchSettings(
-      {this.durationHr,
-      this.durationMin,
-      this.hasChangeSide,
-      this.hasReservePlayer,
-      this.timeToChangePlayer,
-      this.isDrawNewTeams,
-      this.numberOfStartingPlayers,
-      this.numberOfTeams});
+  MatchSettings({this.numberOfStartingPlayers, this.numberOfTeams});
+
+  bool isNotConfig() {
+    return numberOfStartingPlayers == null;
+  }
 }

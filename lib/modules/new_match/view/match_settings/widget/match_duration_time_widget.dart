@@ -33,7 +33,7 @@ class MatchDurationTimeWidget extends StatelessWidget {
         const SizedBox(width: 2),
         DropDownButtonComponent(
           value: durationMin,
-          onValueChange: (value) => onDurationHrChange(value),
+          onValueChange: (value) => onDurationMinChange(value),
           width: MediaQuery.of(context).size.width / 4,
           values: ListHelper.getListOfMinutes(),
           labelText: minute,
