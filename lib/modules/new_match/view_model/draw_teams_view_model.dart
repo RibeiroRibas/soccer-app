@@ -26,7 +26,6 @@ abstract class DrawTeamsViewModelBase with Store {
   Future<void> sortTeamsMatch(
       Map<Player, bool> selectedPlayers, MatchSettings matchSettings) async {
     List<Player> players = _getSelectedPlayers(selectedPlayers);
-
     final teamMatches = service.sortTeamsMatch(players, matchSettings);
     teamsInformation = [];
     for (var teamMatch in teamMatches) {

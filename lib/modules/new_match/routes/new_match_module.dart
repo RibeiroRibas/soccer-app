@@ -28,6 +28,7 @@ class NewMatchModule extends Module {
     i.addLazySingleton(NewMatchRoteNavigator.new);
     i.addLazySingleton(MatchSettingsViewModel.new);
     i.addLazySingleton(PlayerLineupViewModel.new);
+
   }
 
   @override

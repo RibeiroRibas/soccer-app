@@ -13,7 +13,7 @@ import 'package:team_draw/ui/section/tittle_section.dart';
 import 'widget/select_one_option_widget.dart';
 
 class MatchSettingsView extends StatefulWidget {
-  final Map<Player, bool> selectedPlayers;
+  final List<Player> selectedPlayers;
   final MatchSettings matchSettings;
 
   const MatchSettingsView(
