@@ -19,7 +19,6 @@ class PlayerNameView extends StatefulWidget {
 
 class _PlayerNameViewState extends State<PlayerNameView> {
   final PlayerViewModel viewModel = Modular.get<PlayerViewModel>();
-  late final List<Player> allPlayers;
   final _formKey = GlobalKey<FormState>();
   final _focusNode = FocusNode();
 
@@ -30,15 +29,7 @@ class _PlayerNameViewState extends State<PlayerNameView> {
   }
 
   Future _findAllPLayers() async {
-    allPlayers = await viewModel.findAllPlayers();
-  }
-
-  bool playerNameAlreadyExist(String name) {
-    return allPlayers.any((player) {
-      String playerName = name;
-      return player.name!.toLowerCase() ==
-          playerName.trimLeft().trimRight().toLowerCase();
-    });
+    await viewModel.findAllPlayers();
   }
 
   @override
@@ -53,10 +44,9 @@ class _PlayerNameViewState extends State<PlayerNameView> {
           key: _formKey,
           child: OutlinedTextFieldComponent(
             focusNode: _focusNode,
-            autoFocus: false,
             validator: (String? value) => value == null || value.isEmpty
                 ? requestTeamName
-                : playerNameAlreadyExist(value)
+                : viewModel.playerNameAlreadyExist(value)
                     ? playerAlreadyExist
                     : null,
             labelText: name,
