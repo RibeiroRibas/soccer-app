@@ -24,7 +24,9 @@ abstract class DrawTeamsViewModelBase with Store {
 
   @action
   Future<void> sortTeamsMatch(
-      List<Player> players, MatchSettings matchSettings) async {
+      Map<Player, bool> selectedPlayers, MatchSettings matchSettings) async {
+    List<Player> players = _getSelectedPlayers(selectedPlayers);
+
     final teamMatches = service.sortTeamsMatch(players, matchSettings);
     teamsInformation = [];
     for (var teamMatch in teamMatches) {
@@ -50,17 +52,27 @@ abstract class DrawTeamsViewModelBase with Store {
   // }
   List<String> _getTeamInformation(Team team) {
     List<String> teamInformation = [];
-    teamInformation.add(team.teamOverall.value.toString());
-    teamInformation
-        .add(team.teamOverall.overallByPosition[Position.forward].toString());
-    teamInformation
-        .add(team.teamOverall.overallByPosition[Position.defender].toString());
-    teamInformation.add(
-        team.teamOverall.overallByPosition[Position.midfielder].toString());
-    teamInformation
-        .add(team.teamOverall.overallByPosition[Position.leftBack].toString());
-    teamInformation
-        .add(team.teamOverall.overallByPosition[Position.rightBack].toString());
+    teamInformation.add(team.teamOverall.value.toStringAsFixed(1));
+    teamInformation.add(team.teamOverall.overallByPosition[Position.forward]!
+        .toStringAsFixed(1));
+    teamInformation.add(team.teamOverall.overallByPosition[Position.defender]!
+        .toStringAsFixed(1));
+    teamInformation.add(team.teamOverall.overallByPosition[Position.midfielder]!
+        .toStringAsFixed(1));
+    teamInformation.add(team.teamOverall.overallByPosition[Position.leftBack]!
+        .toStringAsFixed(1));
+    teamInformation.add(team.teamOverall.overallByPosition[Position.rightBack]!
+        .toStringAsFixed(1));
     return teamInformation;
+  }
+
+  List<Player> _getSelectedPlayers(Map<Player, bool> selectedPlayers) {
+    List<Player> players = [];
+    selectedPlayers.forEach((player, isSelected) {
+      if (isSelected) {
+        players.add(player);
+      }
+    });
+    return players;
   }
 }
