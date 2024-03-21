@@ -21,7 +21,6 @@ const defeats = "Derrotas";
 const victories = "Vitórias";
 const draws = "Empates";
 
-
 // new player
 const newPLayer = "NOVO JOGADOR";
 const whatIsPlayerName = "Qual o nome do craque?";
@@ -29,7 +28,8 @@ const orNickname = "ou apelido";
 const principalPositionQuestion = "Qual a posição MAIS atuante?";
 const secondaryPositionQuestion = "Qual a SEGUNDA posição MAIS atuante?";
 const principalPositionSubQuestion = "Aquela que o jogador se garante";
-const secondaryPositionSubQuestion = "Aquela que o jogador se apresenta de vez em quando";
+const secondaryPositionSubQuestion =
+    "Aquela que o jogador se apresenta de vez em quando";
 const goalkeeperPosition = "GOLEIRO";
 const forwardPosition = "ATACANTE";
 const midfielderPosition = "MEIO CAMPO";
@@ -66,8 +66,17 @@ const yes = "Sim";
 const no = "Não";
 const changePlayerEvery = "Troca jogador a cada:";
 const newTeamsQuestion = "Novos Times? **";
-const newTeamsSubTittle = "** Evita a repetição de times e partidas que já aconteceram.";
+const newTeamsSubTittle =
+    "** Evita a repetição de times e partidas que já aconteceram.";
 const quantity = "qtd";
 const numberOfTeams = "Número de times";
+const sortTeams = "Sortear Equipes";
+const requestTeamName = "Nome do time é obrigatório";
 
-
+// teams information
+const forward = "Ataque";
+const defense = "Defesa";
+const midfielder = "Meio-Campo";
+const leftBack = "Lateral Esquerdo";
+const rightBack = "Lateral Direito";
+const matches = "Jogos";

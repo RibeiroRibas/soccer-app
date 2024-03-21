@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:team_draw/modules/app/route_named.dart';
-import 'package:team_draw/modules/home/routes/home_rote_navigator.dart';
+import 'package:team_draw/modules/home/routes/app_navigator_routes.dart';
 import 'package:team_draw/modules/home/view/expandable_fab/action_button_widget.dart';
 import 'package:team_draw/modules/home/view/expandable_fab/expandable_fab_widget.dart';
 import 'package:team_draw/modules/home/view_model/home_view_model.dart';
@@ -11,8 +11,8 @@ import 'package:team_draw/shared/helper/focus_node_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
 
-class AppNavigatorView extends StatelessWidget {
-  const AppNavigatorView({Key? key}) : super(key: key);
+class AppNavigatorBaseView extends StatelessWidget {
+  const AppNavigatorBaseView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class AppNavigatorView extends StatelessWidget {
 
     goToTeamsView() {
       Map<String, dynamic> arguments = {
-        "teamsOverall": controller.calculateTeamOverall(),
+        "teams": controller.teams,
         "allMatches": controller.allMatches,
       };
       navigator.goTo(teamsRoute, arguments);

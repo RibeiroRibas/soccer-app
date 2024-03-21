@@ -3,7 +3,7 @@ import 'package:team_draw/model/player.dart';
 
 class PlayerLineupSection extends StatelessWidget {
   final List<Player> players;
-  const PlayerLineupSection({Key? key, required this.players}) : super(key: key);
+  const PlayerLineupSection({super.key, required this.players});
 
   @override
   Widget build(BuildContext context) {

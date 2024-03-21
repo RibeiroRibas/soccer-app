@@ -5,17 +5,16 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
 
-class HomeRepository{
-
-  Future<List<Team>> findAllTeams() async{
+class HomeRepository {
+  Future<List<Team>> findAllTeams() async {
     return getAllTeams;
   }
 
-  Future<List<TeamMatch>> findAllMatches() async{
+  Future<List<TeamMatch>> findAllMatches() async {
     return getAllMatches;
   }
 
-  Future<List<Player>> findAllPlayers() async{
-     return getAllPlayers;
+  Future<List<Player>> findAllPlayers() async {
+    return getAllPlayers;
   }
 }

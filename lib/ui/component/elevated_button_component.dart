@@ -7,11 +7,11 @@ class ElevatedButtonComponent extends StatelessWidget {
   final Color? backgroundColor;
 
   const ElevatedButtonComponent({
-    Key? key,
+    super.key,
     required this.onButtonPressed,
     required this.text,
     this.backgroundColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

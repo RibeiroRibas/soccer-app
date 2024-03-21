@@ -3,7 +3,6 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
-import 'package:team_draw/modules/home/model/team_overall.dart';
 import 'package:team_draw/modules/home/model/team_score.dart';
 import 'package:team_draw/modules/home/repository/home_repository.dart';
 
@@ -29,7 +28,9 @@ abstract class HomeViewModelBase with Store {
   }
 
   Future<void> findAllData() async {
-    teams = await _repository.findAllTeams();
+    teams = await _repository
+        .findAllTeams()
+        .then((value) => calculateTeamOverall(value));
     players = await _repository.findAllPlayers();
     allMatches = await _repository.findAllMatches();
   }
@@ -48,12 +49,11 @@ abstract class HomeViewModelBase with Store {
     return teamsScore;
   }
 
-  List<TeamOverall> calculateTeamOverall() {
-    List<TeamOverall> teamsOverall = [];
+  Future<List<Team>> calculateTeamOverall(List<Team> teams) async {
     for (Team team in teams) {
-      teamsOverall.add(team.calculateTeamOverall());
+      team.calculateTeamOverall();
     }
-    return teamsOverall;
+    return teams;
   }
 
   List<PlayerScore> calculatePlayerScore() {

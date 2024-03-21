@@ -7,11 +7,10 @@ class PlayerPositionView extends StatelessWidget {
   final List<Widget> positions;
 
   const PlayerPositionView(
-      {Key? key,
+      {super.key,
       required this.questionText,
       required this.subQuestionText,
-      required this.positions})
-      : super(key: key);
+      required this.positions});
 
   @override
   Widget build(BuildContext context) {

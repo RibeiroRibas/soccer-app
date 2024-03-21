@@ -7,12 +7,11 @@ class MatchCheckBoxWidget extends StatefulWidget {
   final ListTileControlAffinity? controlAffinity;
 
   const MatchCheckBoxWidget(
-      {Key? key,
+      {super.key,
       required this.description,
       required this.isChecked,
       required this.onItemSelected,
-      this.controlAffinity})
-      : super(key: key);
+      this.controlAffinity});
 
   @override
   State<MatchCheckBoxWidget> createState() => _MatchCheckBoxWidgetState();

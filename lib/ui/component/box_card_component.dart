@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-
-import '../../shared/theme/green_theme.dart';
+import 'package:team_draw/shared/theme/green_theme.dart';
 
 class BoxCardComponent extends StatelessWidget {
   final Widget boxCardBody;
 
   const BoxCardComponent({
-    Key? key,
+    super.key,
     required this.boxCardBody,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

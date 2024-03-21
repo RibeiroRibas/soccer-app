@@ -1,3 +1,5 @@
+import 'package:team_draw/shared/i18n/messages.dart';
+
 class ListHelper {
   static List<int> getListOfHours() {
     List<int> hours = [];
@@ -30,5 +32,15 @@ class ListHelper {
     }
     return values;
   }
-}
 
+  static List<String> getInformationDescription() {
+    return [
+      overall,
+      forward,
+      defense,
+      midfielder,
+      leftBack,
+      rightBack,
+    ];
+  }
+}

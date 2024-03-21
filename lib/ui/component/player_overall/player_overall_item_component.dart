@@ -5,16 +5,15 @@ import 'package:team_draw/shared/theme/theme_colors.dart';
 import 'package:team_draw/ui/component/player_overall/player_score_widget.dart';
 import 'package:team_draw/ui/component/player_position_component.dart';
 
-
 class PlayerOverallItemComponent extends StatelessWidget {
   final PlayerScore playerScore;
   final bool showPlayerScore;
 
   const PlayerOverallItemComponent({
-    Key? key,
+    super.key,
     required this.playerScore,
     this.showPlayerScore = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

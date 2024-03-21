@@ -9,8 +9,7 @@ class PlayerPrincipalPositionView extends StatelessWidget {
   final void Function(int) onActionPress;
 
   const PlayerPrincipalPositionView(
-      {Key? key, required this.player, required this.onActionPress})
-      : super(key: key);
+      {super.key, required this.player, required this.onActionPress});
 
   @override
   Widget build(BuildContext context) {

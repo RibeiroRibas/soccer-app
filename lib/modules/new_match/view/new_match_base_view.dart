@@ -13,18 +13,18 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 
-class NewMatchView extends StatefulWidget {
-  const NewMatchView({Key? key}) : super(key: key);
+class NewMatchBaseView extends StatefulWidget {
+  const NewMatchBaseView({super.key});
 
   @override
-  State<NewMatchView> createState() => _NewMatchViewState();
+  State<NewMatchBaseView> createState() => _NewMatchBaseViewState();
 }
 
-class _NewMatchViewState extends State<NewMatchView> {
+class _NewMatchBaseViewState extends State<NewMatchBaseView> {
   final NewMatchRoteNavigator navigator = Modular.get<NewMatchRoteNavigator>();
   final NewMatchViewModel viewModel = Modular.get<NewMatchViewModel>();
   late final void Function(int) onActionPress;
-  late final Map<Player, bool> selectedPlayers;
+  late final List<Player> selectedPlayers;
   final MatchSettings matchSettings = getMatchSettings;
 
   @override
@@ -50,16 +50,16 @@ class _NewMatchViewState extends State<NewMatchView> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onHorizontalDragEnd: (details){
-        if(details.primaryVelocity! > 0){
+      onHorizontalDragEnd: (details) {
+        if (details.primaryVelocity! > 0) {
           viewModel.changeCurrentView(-1);
-        } else if (details.primaryVelocity! < 0){
+        } else if (details.primaryVelocity! < 0) {
           viewModel.changeCurrentView(1);
         }
       },
       onTap: () => FocusNodeHelper.dismissKeyboard(context),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        extendBody: true,
         appBar: AppBar(
           title: const Text(
             newMatchTittle,
@@ -89,42 +89,46 @@ class _NewMatchViewState extends State<NewMatchView> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.only(
-              left: 16.0, right: 16.0, top: 32, bottom: 32.0),
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
           child: Column(
             children: [
               const Expanded(child: RouterOutlet()),
-              Observer(
-                builder: (BuildContext context) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      for (int index = 0; index < 4; index++) ...{
-                        Column(
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 4.5,
-                              height: 175,
-                              child: viewModel.currentView == index
-                                  ? Lottie.asset('assets/animations/foot.json')
-                                  : null,
-                            ),
-                            Container(
-                              width:
-                                  (MediaQuery.of(context).size.width / 4) / 3,
-                              height: 5,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: viewModel.currentView == index
-                                      ? ThemeColors.primary
-                                      : ThemeColors.table),
-                            ),
-                          ],
-                        ),
-                      },
-                    ],
-                  );
-                },
+              Container(
+                color: greenTheme.scaffoldBackgroundColor,
+                child: Observer(
+                  builder: (BuildContext context) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        for (int index = 0; index < 4; index++) ...{
+                          Column(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 4.5,
+                                height: 100,
+                                child: viewModel.currentView == index
+                                    ? Lottie.asset(
+                                        'assets/animations/foot.json')
+                                    : null,
+                              ),
+                              Container(
+                                width:
+                                    (MediaQuery.of(context).size.width / 4) / 3,
+                                height: 5,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: viewModel.currentView == index
+                                        ? ThemeColors.primary
+                                        : ThemeColors.table),
+                              ),
+                              const SizedBox(height: 32)
+                            ],
+                          ),
+                        },
+                      ],
+                    );
+                  },
+                ),
               ),
             ],
           ),

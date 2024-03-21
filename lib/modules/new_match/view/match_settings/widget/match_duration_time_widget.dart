@@ -10,12 +10,12 @@ class MatchDurationTimeWidget extends StatelessWidget {
   final Function(int) onDurationMinChange;
 
   const MatchDurationTimeWidget({
-    Key? key,
+    super.key,
     this.durationHr,
     this.durationMin,
     required this.onDurationHrChange,
     required this.onDurationMinChange,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -7,10 +7,10 @@ class QuestionSection extends StatelessWidget {
   final String subQuestionText;
 
   const QuestionSection({
-    Key? key,
+    super.key,
     required this.questionText,
     required this.subQuestionText,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,10 @@ class QuestionSection extends StatelessWidget {
             text: questionText,
             textStyle: greenTheme.textTheme.displayMedium,
           ),
-          Text("($subQuestionText)",textAlign: TextAlign.center,),
+          Text(
+            "($subQuestionText)",
+            textAlign: TextAlign.center,
+          ),
         ],
       ),
     );

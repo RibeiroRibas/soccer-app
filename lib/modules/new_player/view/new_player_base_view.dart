@@ -11,16 +11,16 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 
-class NewPlayerView extends StatefulWidget {
-  const NewPlayerView({
-    Key? key,
-  }) : super(key: key);
+class NewPlayerBaseView extends StatefulWidget {
+  const NewPlayerBaseView({
+    super.key,
+  });
 
   @override
-  State<NewPlayerView> createState() => _NewPlayerViewState();
+  State<NewPlayerBaseView> createState() => _NewPlayerBaseViewState();
 }
 
-class _NewPlayerViewState extends State<NewPlayerView> {
+class _NewPlayerBaseViewState extends State<NewPlayerBaseView> {
   final NewPlayerRoutes navigator = Modular.get<NewPlayerRoutes>();
   final PlayerViewModel viewModel = Modular.get<PlayerViewModel>();
   late final void Function(int) onActionPress;

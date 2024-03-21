@@ -25,7 +25,8 @@ class Player {
     List<TeamMatch> matches = [];
     matches.addAll(allMatches);
     matches.removeWhere((e) =>
-        !e.teamOne!.players!.contains(this) && !e.teamTwo!.players!.contains(this));
+        !e.teamOne!.players!.contains(this) &&
+        !e.teamTwo!.players!.contains(this));
     for (TeamMatch teamMatch in matches) {
       teamMatch.playerGoals!.forEach((key, value) {
         if (key == this) {
@@ -92,6 +93,4 @@ class Player {
   bool isRightBack() {
     return principalPosition == Position.rightBack;
   }
-  
-  
 }

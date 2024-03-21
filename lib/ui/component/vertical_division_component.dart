@@ -3,7 +3,7 @@ import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class VerticalDivisionComponent extends StatelessWidget {
   final double height;
-  const VerticalDivisionComponent({Key? key, required this.height}) : super(key: key);
+  const VerticalDivisionComponent({super.key, required this.height});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class VerticalDivisionComponent extends StatelessWidget {
       height: height,
       width: 1,
       decoration:
-      BoxDecoration(border: Border.all(color: ThemeColors.division)),
+          BoxDecoration(border: Border.all(color: ThemeColors.division)),
     );
   }
 }

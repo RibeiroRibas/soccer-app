@@ -4,8 +4,7 @@ import 'package:team_draw/shared/theme/theme_colors.dart';
 class TapToCloseFabWidget extends StatelessWidget {
   final VoidCallback onTapButton;
 
-  const TapToCloseFabWidget({Key? key, required this.onTapButton})
-      : super(key: key);
+  const TapToCloseFabWidget({super.key, required this.onTapButton});
 
   @override
   Widget build(BuildContext context) {

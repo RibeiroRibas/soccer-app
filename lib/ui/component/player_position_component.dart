@@ -7,10 +7,10 @@ class PlayerPositionComponent extends StatefulWidget {
   final Color positionColor;
 
   const PlayerPositionComponent({
-    Key? key,
+    super.key,
     required this.position,
     required this.positionColor,
-  }) : super(key: key);
+  });
 
   @override
   State<PlayerPositionComponent> createState() =>

@@ -6,19 +6,23 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/ui/section/tittle_section.dart';
 
 class PlayersLineupView extends StatelessWidget {
-  final Map<Player, bool> selectedPlayers;
+  final List<Player> selectedPlayers;
   final MatchSettings matchSettings;
 
   const PlayersLineupView({
-    Key? key,
+    super.key,
     required this.selectedPlayers,
     required this.matchSettings,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     void onSelectedPlayer(Player selectedPlayer) {
-      selectedPlayers[selectedPlayer] = !selectedPlayers[selectedPlayer]!;
+      if (selectedPlayers.contains(selectedPlayer)) {
+        selectedPlayers.remove(selectedPlayer);
+      } else {
+        selectedPlayers.add(selectedPlayer);
+      }
     }
 
     return SingleChildScrollView(
@@ -41,9 +45,9 @@ class PlayersLineupView extends StatelessWidget {
                 itemCount: selectedPlayers.length,
                 itemBuilder: (BuildContext context, int index) {
                   return PlayerCheckBoxWidget(
-                    player: selectedPlayers.keys.elementAt(index),
+                    player: selectedPlayers.elementAt(index),
                     onItemSelected: (player) => onSelectedPlayer(player),
-                    isChecked: selectedPlayers.values.elementAt(index),
+                    isChecked: selectedPlayers.elementAtOrNull(index) != null,
                   );
                 }),
           ),
