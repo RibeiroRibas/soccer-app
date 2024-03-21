@@ -19,15 +19,7 @@ List<TeamMatch> getAllMatches = [
   matchSixVSFour,
 ];
 
-MatchSettings getMatchSettings = MatchSettings(
-    durationHr: 1,
-    durationMin: 0,
-    hasChangeSide: false,
-    hasReservePlayer: true,
-    timeToChangePlayer: 10,
-    isDrawNewTeams: true,
-    numberOfStartingPlayers: 6,
-    numberOfTeams: 2);
+MatchSettings getMatchSettings = MatchSettings();
 
 TeamMatch matchOneVSTwo = TeamMatch(
   teamOne: getTeamOne,
