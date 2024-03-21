@@ -9,7 +9,9 @@ import 'package:team_draw/modules/new_match/view/match_settings/match_settings_v
 import 'package:team_draw/modules/new_match/view/new_match_base_view.dart';
 import 'package:team_draw/modules/new_match/view/player_lineup/players_lineup_view.dart';
 import 'package:team_draw/modules/new_match/view_model/draw_teams_view_model.dart';
+import 'package:team_draw/modules/new_match/view_model/match_settings_view_model.dart';
 import 'package:team_draw/modules/new_match/view_model/new_match_view_model.dart';
+import 'package:team_draw/modules/new_match/view_model/player_lineup_view_model.dart';
 import 'package:team_draw/modules/new_player/repository/new_player_repository.dart';
 
 class NewMatchModule extends Module {
@@ -24,6 +26,9 @@ class NewMatchModule extends Module {
     i.add(SortTeamsService.new);
     i.addSingleton(DrawTeamsViewModel.new);
     i.addLazySingleton(NewMatchRoteNavigator.new);
+    i.addLazySingleton(MatchSettingsViewModel.new);
+    i.addLazySingleton(PlayerLineupViewModel.new);
+
   }
 
   @override
@@ -31,7 +36,7 @@ class NewMatchModule extends Module {
     r.child(
       startRote,
       child: (context) => const NewMatchBaseView(),
-      transition: TransitionType.rightToLeft,
+      transition: TransitionType.noTransition,
       duration: const Duration(milliseconds: durationTransaction),
       children: [
         ChildRoute(

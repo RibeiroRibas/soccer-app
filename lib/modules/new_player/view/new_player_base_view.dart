@@ -78,7 +78,7 @@ class _NewPlayerBaseViewState extends State<NewPlayerBaseView> {
                             children: [
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 5.5,
-                                height: 175,
+                                height: 100,
                                 child: viewModel.currentView == index
                                     ? Lottie.asset(
                                         'assets/animations/ball.json')

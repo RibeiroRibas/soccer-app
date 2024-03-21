@@ -17,17 +17,18 @@ class ListHelper {
     return hours;
   }
 
-  static List<int> getListOfPlayers() {
+  static List<int> getListOfTotalPlayersPossibleByTeam(
+      int numberOfPlayersByTeam) {
     List<int> hours = [];
-    for (int i = 0; i < 100; i++) {
+    for (int i = 1; i <= numberOfPlayersByTeam; i++) {
       hours.add(i);
     }
     return hours;
   }
 
-  static List<int> getListOfTeams() {
+  static List<int> getListOfPossibleTeams(int numberOfTotalPlayers) {
     List<int> values = [];
-    for (int i = 0; i < 10; i++) {
+    for (int i = 1; i <= numberOfTotalPlayers; i++) {
       values.add(i);
     }
     return values;

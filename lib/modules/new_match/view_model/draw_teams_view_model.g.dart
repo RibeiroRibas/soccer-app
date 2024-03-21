@@ -30,9 +30,9 @@ mixin _$DrawTeamsViewModel on DrawTeamsViewModelBase, Store {
 
   @override
   Future<void> sortTeamsMatch(
-      List<Player> players, MatchSettings matchSettings) {
+      Map<Player, bool> selectedPlayers, MatchSettings matchSettings) {
     return _$sortTeamsMatchAsyncAction
-        .run(() => super.sortTeamsMatch(players, matchSettings));
+        .run(() => super.sortTeamsMatch(selectedPlayers, matchSettings));
   }
 
   @override

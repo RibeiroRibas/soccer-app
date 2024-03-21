@@ -64,32 +64,59 @@ class SortTeamsService {
     }
 
     while (players.isNotEmpty) {
-      Team? teamWithGoalKeeper = teams.firstWhere(
-          (team) =>
-              team.hasGoalKeeper() &&
-              teams.any((element) =>
-                  element != team &&
-                  element.players!.length >= team.players!.length),
-          orElse: () => Team());
-
-      if (teamWithGoalKeeper.players != null) {
-        int playerIndex = Random().nextInt(players.length);
-        teamWithGoalKeeper.players!.add(players.elementAt(playerIndex));
-        players.removeAt(playerIndex);
+      List<Team> teamsWithGoalKeeper = [];
+      List<Team> teamsWithoutGoalKeeper = [];
+      for (var team in teams) {
+        if (team.hasGoalKeeper()) {
+          teamsWithGoalKeeper.add(team);
+        } else {
+          teamsWithoutGoalKeeper.add(team);
+        }
       }
 
-      Team? teamWithoutGoalKeeper = teams.firstWhere(
-          (team) =>
-              !team.hasGoalKeeper() &&
-              teams.any((element) =>
-                  element != team &&
-                  element.players!.length >= team.players!.length),
+      Team? teamWithGoalKeeperAndMinusPlayers = teamsWithGoalKeeper.firstWhere(
+          (team) => teams.any((element) =>
+              element != team &&
+              element.players!.length >= team.players!.length),
           orElse: () => Team());
 
-      if (teamWithoutGoalKeeper.players != null && players.isNotEmpty) {
+      if (teamWithGoalKeeperAndMinusPlayers.players != null) {
         int playerIndex = Random().nextInt(players.length);
-        teamWithoutGoalKeeper.players!.add(players.elementAt(playerIndex));
+        teamWithGoalKeeperAndMinusPlayers.players!
+            .add(players.elementAt(playerIndex));
         players.removeAt(playerIndex);
+      } else {
+        for (var team in teamsWithGoalKeeper) {
+          if (players.isNotEmpty) {
+            int playerIndex = Random().nextInt(players.length);
+            team.players!.add(players.elementAt(playerIndex));
+            players.removeAt(playerIndex);
+          }
+        }
+      }
+
+      if (players.isNotEmpty) {
+        Team? teamWithoutGoalKeeperAndMinusPlayers =
+            teamsWithoutGoalKeeper.firstWhere(
+                (team) => teams.any((element) =>
+                    element != team &&
+                    element.players!.length >= team.players!.length),
+                orElse: () => Team());
+
+        if (teamWithoutGoalKeeperAndMinusPlayers.players != null) {
+          int playerIndex = Random().nextInt(players.length);
+          teamWithoutGoalKeeperAndMinusPlayers.players!
+              .add(players.elementAt(playerIndex));
+          players.removeAt(playerIndex);
+        } else {
+          for (var team in teamsWithoutGoalKeeper) {
+            if (players.isNotEmpty) {
+              int playerIndex = Random().nextInt(players.length);
+              team.players!.add(players.elementAt(playerIndex));
+              players.removeAt(playerIndex);
+            }
+          }
+        }
       }
     }
 

@@ -3,7 +3,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
-import 'package:team_draw/data/match_data.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/new_match/routes/new_match_rote_navigator.dart';
@@ -23,20 +22,13 @@ class NewMatchBaseView extends StatefulWidget {
 class _NewMatchBaseViewState extends State<NewMatchBaseView> {
   final NewMatchRoteNavigator navigator = Modular.get<NewMatchRoteNavigator>();
   final NewMatchViewModel viewModel = Modular.get<NewMatchViewModel>();
-  late final void Function(int) onActionPress;
-  late final List<Player> selectedPlayers;
-  final MatchSettings matchSettings = getMatchSettings;
+  final Map<Player, bool> selectedPlayers = {};
+  final MatchSettings matchSettings = MatchSettings();
 
   @override
   void initState() {
     super.initState();
-    _findAllPlayers().then((_) => _goToNextView(viewModel.currentView));
-    reaction((_) => viewModel.currentView,
-        (currentView) => _goToNextView(currentView));
-  }
-
-  Future _findAllPlayers() async {
-    selectedPlayers = await viewModel.findAllPlayers();
+    autorun((_) => _goToNextView(viewModel.currentView));
   }
 
   Future _goToNextView(int index) async {

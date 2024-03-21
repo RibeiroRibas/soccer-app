@@ -18,6 +18,8 @@ abstract class PlayerViewModelBase with Store {
   @observable
   PlayerState playerState = StartPlayerState();
 
+  late final List<Player> allPlayers;
+
   @action
   void changeCurrentView(int index) {
     if (index == -1) {
@@ -27,13 +29,21 @@ abstract class PlayerViewModelBase with Store {
     }
   }
 
-  Future<List<Player>> findAllPlayers() async {
-    return await _repository.findAllPlayers();
+  Future<void> findAllPlayers() async {
+    allPlayers = await _repository.findAllPlayers();
   }
 
   @action
   Future savePlayer(Player player) async {
     await _repository.addPlayer(player);
     playerState = SuccessPlayerState();
+  }
+
+  bool playerNameAlreadyExist(String name) {
+    return allPlayers.any((player) {
+      String playerName = name;
+      return player.name!.toLowerCase() ==
+          playerName.trimLeft().trimRight().toLowerCase();
+    });
   }
 }
