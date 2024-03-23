@@ -4,9 +4,23 @@ import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/modules/app/service/team_service.dart';
+import 'package:team_draw/modules/new_match/services/generate_team_name_service.dart';
+import 'package:team_draw/modules/new_match/services/generate_team_shield_service.dart';
 
 class SortTeamsService {
-  List<TeamMatch> sortTeamsMatch(List<Player> players, MatchSettings settings) {
+  final TeamService teamService;
+  final GenerateTeamNameService generateTeamNameService;
+  final GenerateTeamShieldService generateTeamShieldService;
+
+  SortTeamsService(
+    this.teamService,
+    this.generateTeamNameService,
+    this.generateTeamShieldService,
+  );
+
+  Future<List<Team>> sortTeamsMatch(
+      List<Player> players, MatchSettings settings) async {
     List<Player> goalKeepers = [];
     List<Player> forwards = [];
     List<Player> midfielders = [];
@@ -120,7 +134,27 @@ class SortTeamsService {
       }
     }
 
+    List<Team> allTeams = await teamService.findAllTeams();
+    for (Team team in teams) {
+      Team repeatTeam = await teamService.findByPlayers(team.players!);
+      if (repeatTeam.isPresent()) {
+        team.name = repeatTeam.name;
+        team.acronym = repeatTeam.acronym;
+        team.shield = repeatTeam.shield;
+        team.numberOfStartingPlayers = repeatTeam.numberOfStartingPlayers;
+      } else {
+        team.name = await generateTeamNameService.generateTeamName(allTeams);
+        team.shield = generateTeamShieldService.generateTeamShield(allTeams);
+      }
+    }
+
+    return teams;
+  }
+
+  List<TeamMatch> generateTeamMatches(List<Team> sortedTeams) {
     List<TeamMatch> matches = [];
+    List<Team> teams = [];
+    teams.addAll(sortedTeams);
     while (teams.length > 1) {
       Team team1 = teams.first;
       teams.remove(team1);
@@ -129,7 +163,6 @@ class SortTeamsService {
         matches.add(teamMatch);
       }
     }
-
     return matches;
   }
 
