@@ -6,6 +6,7 @@ import 'package:team_draw/shared/theme/theme_colors.dart';
 class TeamOverallWidget extends StatelessWidget {
   final Team team;
   final double teamOverall;
+
   const TeamOverallWidget({
     super.key,
     required this.team,
@@ -26,7 +27,7 @@ class TeamOverallWidget extends StatelessWidget {
         ),
         Expanded(
           child: Text(
-            team.name ?? "Flamengo",
+            team.name!,
             softWrap: false,
             overflow: TextOverflow.fade,
             style: greenTheme.textTheme.displaySmall,

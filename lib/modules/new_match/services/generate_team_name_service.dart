@@ -15,7 +15,8 @@ class GenerateTeamNameService {
   Future<String> generateTeamName(List<Team> allTeams) async {
     String? name;
 
-    final List<String> allCachedNames = getAllTeamNames;
+    final List<String> allCachedNames = [];
+    allCachedNames.addAll(getAllTeamNames);
 
     for (Team team in allTeams) {
       allCachedNames.removeWhere((teamName) => teamName == team.name);
