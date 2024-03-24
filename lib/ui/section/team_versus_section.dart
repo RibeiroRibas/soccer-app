@@ -1,41 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/ui/component/box_card_component.dart';
-
-import 'team_lineup/team_lineup_section.dart';
+import 'package:team_draw/shared/i18n/messages.dart';
 
 class TeamsVersusSection extends StatelessWidget {
-  final TeamMatch teamsMatch;
+  final TeamMatch teamMatch;
+
   const TeamsVersusSection({
     super.key,
-    required this.teamsMatch,
+    required this.teamMatch,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: BoxCardComponent(
-                  boxCardBody: TeamLineupSection(team: teamsMatch.teamOne!),
-                ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10, bottom: 8),
+              child: Image(
+                image: AssetImage(teamMatch.teamOne!.shield!),
+                height: 35,
               ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: BoxCardComponent(
-                  boxCardBody: TeamLineupSection(team: teamsMatch.teamTwo!),
-                ),
+            ),
+            Text(teamMatch.teamOne!.name!),
+          ],
+        ),
+        const Text(versus),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10, bottom: 8),
+              child: Image(
+                image: AssetImage(teamMatch.teamTwo!.shield!),
+                height: 35,
               ),
-            ],
-          ),
-        )
+            ),
+            Text(teamMatch.teamTwo!.name!),
+          ],
+        ),
       ],
     );
   }

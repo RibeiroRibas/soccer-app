@@ -106,3 +106,22 @@ List<Player> getAllPlayers = [
   bruno,
   guilherme
 ];
+
+List<Player> players1 = [
+  rodrigo,
+  cris,
+  helder,
+  galdino,
+  guilherme,
+  jodir,
+  cleber,
+];
+
+List<Player> players2 = [
+  helton,
+  sid,
+  cris,
+  neny,
+  diego,
+  bruno,
+];

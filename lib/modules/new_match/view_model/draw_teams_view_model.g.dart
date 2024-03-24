@@ -25,6 +25,38 @@ mixin _$DrawTeamsViewModel on DrawTeamsViewModelBase, Store {
     });
   }
 
+  late final _$teamsInformationAtom =
+      Atom(name: 'DrawTeamsViewModelBase.teamsInformation', context: context);
+
+  @override
+  List<TeamInformation> get teamsInformation {
+    _$teamsInformationAtom.reportRead();
+    return super.teamsInformation;
+  }
+
+  @override
+  set teamsInformation(List<TeamInformation> value) {
+    _$teamsInformationAtom.reportWrite(value, super.teamsInformation, () {
+      super.teamsInformation = value;
+    });
+  }
+
+  late final _$sortedTeamsAtom =
+      Atom(name: 'DrawTeamsViewModelBase.sortedTeams', context: context);
+
+  @override
+  List<Team> get sortedTeams {
+    _$sortedTeamsAtom.reportRead();
+    return super.sortedTeams;
+  }
+
+  @override
+  set sortedTeams(List<Team> value) {
+    _$sortedTeamsAtom.reportWrite(value, super.sortedTeams, () {
+      super.sortedTeams = value;
+    });
+  }
+
   late final _$sortTeamsMatchAsyncAction =
       AsyncAction('DrawTeamsViewModelBase.sortTeamsMatch', context: context);
 
@@ -38,7 +70,9 @@ mixin _$DrawTeamsViewModel on DrawTeamsViewModelBase, Store {
   @override
   String toString() {
     return '''
-teamMatches: ${teamMatches}
+teamMatches: ${teamMatches},
+teamsInformation: ${teamsInformation},
+sortedTeams: ${sortedTeams}
     ''';
   }
 }

@@ -4,7 +4,6 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/app/repository/team_repository.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
 import 'package:team_draw/modules/new_match/services/sort_teams_service.dart';
 
@@ -14,21 +13,30 @@ class DrawTeamsViewModel = DrawTeamsViewModelBase with _$DrawTeamsViewModel;
 
 abstract class DrawTeamsViewModelBase with Store {
   final SortTeamsService service;
-  final TeamRepository teamRepository;
 
-  DrawTeamsViewModelBase(this.service, this.teamRepository);
+  DrawTeamsViewModelBase(this.service);
 
   @observable
   List<TeamMatch> teamMatches = [];
+
+  @observable
   List<TeamInformation> teamsInformation = [];
+
+  @observable
+  List<Team> sortedTeams = [];
 
   @action
   Future<void> sortTeamsMatch(
       Map<Player, bool> selectedPlayers, MatchSettings matchSettings) async {
     List<Player> players = _getSelectedPlayers(selectedPlayers);
-    final teamMatches = service.sortTeamsMatch(players, matchSettings);
+
+    sortedTeams.clear();
+    sortedTeams = await service.sortTeamsMatch(players, matchSettings);
+    final List<TeamMatch> teamMatches =
+        service.generateTeamMatches(sortedTeams);
+
     teamsInformation = [];
-    for (var teamMatch in teamMatches) {
+    for (TeamMatch teamMatch in teamMatches) {
       List<String> teamOneInformation = _getTeamInformation(teamMatch.teamOne!);
       List<String> teamTwoInformation = _getTeamInformation(teamMatch.teamTwo!);
       final teamInformation =
@@ -36,19 +44,9 @@ abstract class DrawTeamsViewModelBase with Store {
       teamsInformation.add(teamInformation);
     }
 
-    // List<Team> allTeams = await teamRepository.findAllTeams();
-    // for(TeamMatch teamMatch in this.teamMatches){
-    //   // if(teamExists(teamMatch.teamOne!, allTeams)){
-    //   //   teamMatch.teamOne.
-    //   // }
-    // }
     this.teamMatches = teamMatches;
   }
 
-  //
-  // Team? teamExists(Team team, List<Team> teams){
-  //  return teams.firstOrNull!;
-  // }
   List<String> _getTeamInformation(Team team) {
     List<String> teamInformation = [];
     teamInformation.add(team.teamOverall.value.toStringAsFixed(1));
