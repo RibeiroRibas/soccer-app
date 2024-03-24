@@ -67,6 +67,21 @@ mixin _$DrawTeamsViewModel on DrawTeamsViewModelBase, Store {
         .run(() => super.sortTeamsMatch(selectedPlayers, matchSettings));
   }
 
+  late final _$DrawTeamsViewModelBaseActionController =
+      ActionController(name: 'DrawTeamsViewModelBase', context: context);
+
+  @override
+  void onTeamNameOrShieldChange(
+      String oldNameOrShield, String newNameOrShield) {
+    final _$actionInfo = _$DrawTeamsViewModelBaseActionController.startAction(
+        name: 'DrawTeamsViewModelBase.onTeamNameAdShieldChange');
+    try {
+      return super.onTeamNameOrShieldChange(oldNameOrShield, newNameOrShield);
+    } finally {
+      _$DrawTeamsViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

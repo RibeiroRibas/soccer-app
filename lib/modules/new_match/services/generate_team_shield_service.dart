@@ -7,7 +7,8 @@ class GenerateTeamShieldService {
   String generateTeamShield(List<Team> allTeams) {
     String? shield;
 
-    final List<String> allCachedShields = getAllShields;
+    final List<String> allCachedShields = [];
+    allCachedShields.addAll(getAllShields);
 
     for (Team team in allTeams) {
       allCachedShields.removeWhere((shield) => shield == team.shield);

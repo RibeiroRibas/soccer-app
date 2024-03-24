@@ -3,13 +3,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/modules/new_match/view/draw_teams/team_name_and_shield_widget.dart';
 import 'package:team_draw/modules/new_match/view/draw_teams/teams_information_widget.dart';
 import 'package:team_draw/modules/new_match/view_model/draw_teams_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/ui/component/box_card_component.dart';
 import 'package:team_draw/ui/component/elevated_button_component.dart';
 import 'package:team_draw/ui/section/team_lineup/team_lineup_section.dart';
-import 'package:team_draw/ui/section/team_versus_section.dart';
 
 class DrawnTeamsView extends StatefulWidget {
   final Map<Player, bool> selectedPlayers;
@@ -53,8 +53,28 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
               (context, index) {
                 return Column(
                   children: [
-                    TeamsVersusSection(
-                        teamMatch: controller.teamMatches.elementAt(index)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TeamNameAndShieldWidget(
+                            team: controller.teamMatches
+                                .elementAt(index)
+                                .teamOne!,
+                            onChange: (oldNameOrShield, newNameOrShield) {
+                              controller.onTeamNameOrShieldChange(
+                                  oldNameOrShield, newNameOrShield);
+                            }),
+                        const Text(versus),
+                        TeamNameAndShieldWidget(
+                            team: controller.teamMatches
+                                .elementAt(index)
+                                .teamTwo!,
+                            onChange: (oldNameOrShield, newNameOrShield) {
+                              controller.onTeamNameOrShieldChange(
+                                  oldNameOrShield, newNameOrShield);
+                            }),
+                      ],
+                    ),
                     BoxCardComponent(
                       boxCardBody: TeamsInformationWidget(
                         teamsInformation:
@@ -64,7 +84,7 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
                   ],
                 );
               },
-              childCount: controller.teamsInformation.length,
+              childCount: controller.teamMatches.length,
             ),
           ),
         ),
@@ -75,8 +95,9 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
                 return Padding(
                   padding: const EdgeInsets.only(top: 30.0),
                   child: BoxCardComponent(
-                    boxCardBody:
-                        TeamLineupSection(team: controller.sortedTeams[index]),
+                    boxCardBody: TeamLineupSection(
+                      team: controller.sortedTeams[index],
+                    ),
                   ),
                 );
               },
