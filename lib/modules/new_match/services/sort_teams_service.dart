@@ -19,64 +19,45 @@ class SortTeamsService {
     this.generateTeamShieldService,
   );
 
+  late List<Player> _goalKeepers;
+  late List<Player> _forwards;
+  late List<Player> _midfielders;
+  late List<Player> _defenders;
+  late List<Player> _leftBacks;
+  late List<Player> _rightBacks;
+
   Future<List<Team>> sortTeamsMatch(
       List<Player> players, MatchSettings settings) async {
-    List<Player> goalKeepers = [];
-    List<Player> forwards = [];
-    List<Player> midfielders = [];
-    List<Player> defenders = [];
-    List<Player> leftBacks = [];
-    List<Player> rightBacks = [];
-    for (Player player in players) {
-      if (player.isGoalKeeper()) {
-        goalKeepers.add(player);
-      } else if (player.isForward()) {
-        forwards.add(player);
-      } else if (player.isMidfielder()) {
-        midfielders.add(player);
-      } else if (player.isDefender()) {
-        defenders.add(player);
-      } else if (player.isLeftBack()) {
-        leftBacks.add(player);
-      } else if (player.isRightBack()) {
-        rightBacks.add(player);
-      }
-    }
+    _initializeListsOfPlayersByPosition(players);
 
     List<Team> teams = [];
-    for (int i = 0; i < settings.numberOfTeams!; i++) {
-      Team team = Team();
-      team.players = [];
-      do {
-        if (!team.hasGoalKeeper() && goalKeepers.isNotEmpty) {
-          _addPlayer(goalKeepers, team, players);
-        }
-        if (forwards.isNotEmpty &&
-            team.players!.length < settings.numberOfStartingPlayers!) {
-          _addPlayer(forwards, team, players);
-        }
-        if (midfielders.isNotEmpty &&
-            team.players!.length < settings.numberOfStartingPlayers!) {
-          _addPlayer(midfielders, team, players);
-        }
-        if (defenders.isNotEmpty &&
-            team.players!.length < settings.numberOfStartingPlayers!) {
-          _addPlayer(defenders, team, players);
-        }
-        if (leftBacks.isNotEmpty &&
-            team.players!.length < settings.numberOfStartingPlayers!) {
-          _addPlayer(leftBacks, team, players);
-        }
-        if (rightBacks.isNotEmpty &&
-            team.players!.length < settings.numberOfStartingPlayers!) {
-          _addPlayer(rightBacks, team, players);
-        }
-      } while (team.players!.length < settings.numberOfStartingPlayers!);
-      team.numberOfStartingPlayers = settings.numberOfStartingPlayers;
-      team.calculateTeamOverall();
-      teams.add(team);
-    }
 
+    _generateTeamsByPlayerPosition(settings, players, teams);
+
+    _addReservePlayers(players, teams);
+
+    await _generateTeamNameAndShield(teams);
+
+    return teams;
+  }
+
+  Future<void> _generateTeamNameAndShield(List<Team> teams) async {
+    List<Team> allTeams = await teamService.findAllTeams();
+    for (Team team in teams) {
+      Team repeatTeam = await teamService.findByPlayers(team.players!);
+      if (repeatTeam.isPresent()) {
+        team.name = repeatTeam.name;
+        team.acronym = repeatTeam.acronym;
+        team.shield = repeatTeam.shield;
+        team.numberOfStartingPlayers = repeatTeam.numberOfStartingPlayers;
+      } else {
+        team.name = await generateTeamNameService.generateTeamName(allTeams);
+        team.shield = generateTeamShieldService.generateTeamShield(allTeams);
+      }
+    }
+  }
+
+  void _addReservePlayers(List<Player> players, List<Team> teams) {
     while (players.isNotEmpty) {
       List<Team> teamsWithGoalKeeper = [];
       List<Team> teamsWithoutGoalKeeper = [];
@@ -133,22 +114,45 @@ class SortTeamsService {
         }
       }
     }
+  }
 
-    List<Team> allTeams = await teamService.findAllTeams();
-    for (Team team in teams) {
-      Team repeatTeam = await teamService.findByPlayers(team.players!);
-      if (repeatTeam.isPresent()) {
-        team.name = repeatTeam.name;
-        team.acronym = repeatTeam.acronym;
-        team.shield = repeatTeam.shield;
-        team.numberOfStartingPlayers = repeatTeam.numberOfStartingPlayers;
-      } else {
-        team.name = await generateTeamNameService.generateTeamName(allTeams);
-        team.shield = generateTeamShieldService.generateTeamShield(allTeams);
-      }
+  void _generateTeamsByPlayerPosition(
+    MatchSettings settings,
+    List<Player> players,
+    List<Team> teams,
+  ) {
+    for (int i = 0; i < settings.numberOfTeams!; i++) {
+      Team team = Team();
+      team.players = [];
+      do {
+        if (!team.hasGoalKeeper() && _goalKeepers.isNotEmpty) {
+          _addPlayer(_goalKeepers, team, players);
+        }
+        if (_forwards.isNotEmpty &&
+            team.players!.length < settings.numberOfStartingPlayers!) {
+          _addPlayer(_forwards, team, players);
+        }
+        if (_midfielders.isNotEmpty &&
+            team.players!.length < settings.numberOfStartingPlayers!) {
+          _addPlayer(_midfielders, team, players);
+        }
+        if (_defenders.isNotEmpty &&
+            team.players!.length < settings.numberOfStartingPlayers!) {
+          _addPlayer(_defenders, team, players);
+        }
+        if (_leftBacks.isNotEmpty &&
+            team.players!.length < settings.numberOfStartingPlayers!) {
+          _addPlayer(_leftBacks, team, players);
+        }
+        if (_rightBacks.isNotEmpty &&
+            team.players!.length < settings.numberOfStartingPlayers!) {
+          _addPlayer(_rightBacks, team, players);
+        }
+      } while (team.players!.length < settings.numberOfStartingPlayers!);
+      team.numberOfStartingPlayers = settings.numberOfStartingPlayers;
+      team.calculateTeamOverall();
+      teams.add(team);
     }
-
-    return teams;
   }
 
   List<TeamMatch> generateTeamMatches(List<Team> sortedTeams) {
@@ -172,5 +176,29 @@ class SortTeamsService {
     team.players!.add(playersByPosition.elementAt(playerIndex));
     players.remove(playersByPosition.elementAt(playerIndex));
     playersByPosition.removeAt(playerIndex);
+  }
+
+  void _initializeListsOfPlayersByPosition(List<Player> players) {
+    _goalKeepers = [];
+    _forwards = [];
+    _midfielders = [];
+    _defenders = [];
+    _leftBacks = [];
+    _rightBacks = [];
+    for (Player player in players) {
+      if (player.isGoalKeeper()) {
+        _goalKeepers.add(player);
+      } else if (player.isForward()) {
+        _forwards.add(player);
+      } else if (player.isMidfielder()) {
+        _midfielders.add(player);
+      } else if (player.isDefender()) {
+        _defenders.add(player);
+      } else if (player.isLeftBack()) {
+        _leftBacks.add(player);
+      } else if (player.isRightBack()) {
+        _rightBacks.add(player);
+      }
+    }
   }
 }
