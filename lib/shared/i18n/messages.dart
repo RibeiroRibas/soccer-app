@@ -53,6 +53,7 @@ const nameConfirm = "Nome: ";
 const principalPositionConfirm = "Posição principal: ";
 const secondaryPositionConfirm = "Posição auxiliar: ";
 const overallConfirm = "Overall: ";
+const ok = "OK";
 
 //new match
 const newMatchTittle = "NOVA PARTIDA";
@@ -72,6 +73,8 @@ const quantity = "qtd";
 const numberOfTeams = "Número de times";
 const sortTeams = "Sortear Equipes";
 const requestTeamName = "Nome do time é obrigatório";
+const selectName = "Informe o novo nome do time ou selecione na lista abaixo";
+const typeTeamName = "Informe o nome do time!";
 
 // teams information
 const forward = "Ataque";
