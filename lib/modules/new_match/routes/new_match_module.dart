@@ -1,8 +1,12 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:team_draw/modules/app/repository/local_storage_repository.dart';
 import 'package:team_draw/modules/app/repository/team_repository.dart';
 import 'package:team_draw/modules/app/route_named.dart';
+import 'package:team_draw/modules/app/service/team_service.dart';
 import 'package:team_draw/modules/new_match/repository/new_match_repository.dart';
 import 'package:team_draw/modules/new_match/routes/new_match_rote_navigator.dart';
+import 'package:team_draw/modules/new_match/services/generate_team_name_service.dart';
+import 'package:team_draw/modules/new_match/services/generate_team_shield_service.dart';
 import 'package:team_draw/modules/new_match/services/sort_teams_service.dart';
 import 'package:team_draw/modules/new_match/view/draw_teams/draw_teams_view.dart';
 import 'package:team_draw/modules/new_match/view/match_settings/match_settings_view.dart';
@@ -22,13 +26,16 @@ class NewMatchModule extends Module {
     i.add(PlayerRepository.new);
     i.add(TeamRepository.new);
     i.add(NewMatchRepository.new);
-    i.add(NewMatchViewModel.new);
     i.add(SortTeamsService.new);
-    i.addSingleton(DrawTeamsViewModel.new);
+    i.add(TeamService.new);
+    i.add(GenerateTeamNameService.new);
+    i.add(GenerateTeamShieldService.new);
+    i.add(LocalStorageRepository.new);
     i.addLazySingleton(NewMatchRoteNavigator.new);
+    i.addLazySingleton(NewMatchViewModel.new);
+    i.addLazySingleton(DrawTeamsViewModel.new);
     i.addLazySingleton(MatchSettingsViewModel.new);
     i.addLazySingleton(PlayerLineupViewModel.new);
-
   }
 
   @override

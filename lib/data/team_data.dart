@@ -7,13 +7,13 @@ Team getTeamOne = Team(
     name: 'Bar sem Lona',
     acronym: "BSL",
     shield: "$_imageInitialPath/logo-barcelona-256.png",
-    players: getAllPlayers.getRange(0, 7).toList(),
+    players: players1,
     numberOfStartingPlayers: 6);
 Team getTeamTwo = Team(
     name: 'Unidos da Bicuda',
     acronym: "UDB",
     shield: "$_imageInitialPath/logo-flamengo-256.png",
-    players: getAllPlayers.getRange(7, 14).toList(),
+    players: players2,
     numberOfStartingPlayers: 6);
 Team getTeamTree = Team(
     name: 'Farofas FC',

@@ -131,4 +131,19 @@ class Team {
       players!.firstWhere((player) => player.isGoalKeeper());
 
   int getNumberOfPlayerBackup() => players!.length - numberOfStartingPlayers!;
+
+  bool isSameTeam(List<Player> otherPlayers) {
+    for (Player player in players!) {
+      bool match =
+          otherPlayers.any((otherPlayer) => otherPlayer.name == player.name);
+      if (!match) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  bool isPresent() {
+    return name != null && shield != null;
+  }
 }

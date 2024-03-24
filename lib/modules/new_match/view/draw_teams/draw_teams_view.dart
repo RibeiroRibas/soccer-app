@@ -9,6 +9,7 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/ui/component/box_card_component.dart';
 import 'package:team_draw/ui/component/elevated_button_component.dart';
 import 'package:team_draw/ui/section/team_lineup/team_lineup_section.dart';
+import 'package:team_draw/ui/section/team_versus_section.dart';
 
 class DrawnTeamsView extends StatefulWidget {
   final Map<Player, bool> selectedPlayers;
@@ -35,71 +36,25 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) => CustomScrollView(
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 25),
-              child: ElevatedButtonComponent(
-                onButtonPressed: () => _sortTeams(),
-                text: sortTeams,
-              ),
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 25),
+            child: ElevatedButtonComponent(
+              onButtonPressed: () => _sortTeams(),
+              text: sortTeams,
             ),
           ),
-          SliverList(
+        ),
+        Observer(
+          builder: (_) => SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 10, bottom: 8),
-                              child: Image(
-                                image: AssetImage(controller.teamMatches
-                                        .elementAt(index)
-                                        .teamOne!
-                                        .shield ??
-                                    "assets/images/empty-shield.png"),
-                                height: 35,
-                              ),
-                            ),
-                            Text(controller.teamMatches
-                                    .elementAt(index)
-                                    .teamOne!
-                                    .name ??
-                                "Equipe 1"),
-                          ],
-                        ),
-                        const Text(versus),
-                        Row(
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 10, bottom: 8),
-                              child: Image(
-                                image: AssetImage(controller.teamMatches
-                                        .elementAt(index)
-                                        .teamTwo!
-                                        .shield ??
-                                    "assets/images/empty-shield.png"),
-                                height: 35,
-                              ),
-                            ),
-                            Text(controller.teamMatches
-                                    .elementAt(index)
-                                    .teamTwo!
-                                    .name ??
-                                "Equipe 2"),
-                          ],
-                        ),
-                      ],
-                    ),
+                    TeamsVersusSection(
+                        teamMatch: controller.teamMatches.elementAt(index)),
                     BoxCardComponent(
                       boxCardBody: TeamsInformationWidget(
                         teamsInformation:
@@ -112,31 +67,24 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
               childCount: controller.teamsInformation.length,
             ),
           ),
-          SliverList(
+        ),
+        Observer(
+          builder: (_) => SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(top: 30.0),
-                  child: Column(
-                    children: [
-                      BoxCardComponent(
-                        boxCardBody: TeamLineupSection(
-                            team: controller.teamMatches[index].teamOne!),
-                      ),
-                      const SizedBox(height: 20),
-                      BoxCardComponent(
-                        boxCardBody: TeamLineupSection(
-                            team: controller.teamMatches[index].teamTwo!),
-                      ),
-                    ],
+                  child: BoxCardComponent(
+                    boxCardBody:
+                        TeamLineupSection(team: controller.sortedTeams[index]),
                   ),
                 );
               },
-              childCount: controller.teamMatches.length,
+              childCount: controller.sortedTeams.length,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

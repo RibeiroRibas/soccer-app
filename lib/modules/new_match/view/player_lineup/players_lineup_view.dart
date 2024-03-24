@@ -47,16 +47,16 @@ class _PlayersLineupViewState extends State<PlayersLineupView> {
     await viewModel.findAndSetAllPlayers(widget.selectedPlayers);
   }
 
+  void _onSelectedPlayer(Player selectedPlayer) {
+    if (widget.selectedPlayers[selectedPlayer] == true) {
+      widget.selectedPlayers[selectedPlayer] = false;
+    } else {
+      widget.selectedPlayers[selectedPlayer] = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    void onSelectedPlayer(Player selectedPlayer) {
-      if (widget.selectedPlayers[selectedPlayer] == true) {
-        widget.selectedPlayers[selectedPlayer] = false;
-      } else {
-        widget.selectedPlayers[selectedPlayer] = true;
-      }
-    }
-
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -79,7 +79,7 @@ class _PlayersLineupViewState extends State<PlayersLineupView> {
                   itemBuilder: (BuildContext context, int index) {
                     return PlayerCheckBoxWidget(
                       player: viewModel.selectedPlayers.keys.elementAt(index),
-                      onItemSelected: (player) => onSelectedPlayer(player),
+                      onItemSelected: (player) => _onSelectedPlayer(player),
                       isChecked:
                           viewModel.selectedPlayers.values.elementAt(index),
                     );
