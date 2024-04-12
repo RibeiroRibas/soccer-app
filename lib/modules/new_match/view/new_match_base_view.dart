@@ -9,7 +9,6 @@ import 'package:team_draw/modules/new_match/routes/new_match_rote_navigator.dart
 import 'package:team_draw/modules/new_match/view_model/new_match_view_model.dart';
 import 'package:team_draw/shared/helper/focus_node_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class NewMatchBaseView extends StatefulWidget {
@@ -64,7 +63,7 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
             },
             icon: Icon(
               Icons.arrow_back,
-              color: greenTheme.primaryColor,
+              color: Theme.of(context).primaryColor,
             ),
           ),
           actions: <Widget>[
@@ -75,7 +74,7 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
               icon: Icon(
                 Icons.arrow_forward,
                 weight: 0.5,
-                color: greenTheme.primaryColor,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ],
@@ -86,7 +85,7 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
             children: [
               const Expanded(child: RouterOutlet()),
               Container(
-                color: greenTheme.scaffoldBackgroundColor,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 child: Observer(
                   builder: (BuildContext context) {
                     return Row(
@@ -110,8 +109,8 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: viewModel.currentView == index
-                                        ? ThemeColors.primary
-                                        : ThemeColors.table),
+                                        ? Theme.of(context).primaryColor
+                                        : ThemeColors.shadowAnimationColor),
                               ),
                               const SizedBox(height: 32)
                             ],

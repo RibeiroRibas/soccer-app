@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/ui/component/text_with_border_component.dart';
 
 class QuestionSection extends StatelessWidget {
@@ -20,7 +19,7 @@ class QuestionSection extends StatelessWidget {
         children: [
           TextWithBorderComponent(
             text: questionText,
-            textStyle: greenTheme.textTheme.displayMedium,
+            textStyle: Theme.of(context).textTheme.bodyLarge!,
           ),
           Text(
             "($subQuestionText)",

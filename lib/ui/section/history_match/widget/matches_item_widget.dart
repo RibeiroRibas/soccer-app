@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/shared/helper/date_format_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class MatchesItemWidget extends StatefulWidget {
   final TeamMatch match;
@@ -56,11 +55,9 @@ class _MatchesItemWidgetState extends State<MatchesItemWidget> {
               ],
             ),
           ),
-          Container(
-            height: 1,
+          const SizedBox(
             width: 10,
-            decoration:
-                BoxDecoration(border: Border.all(color: ThemeColors.division)),
+            child: Divider(),
           ),
           Container(
             alignment: Alignment.center,

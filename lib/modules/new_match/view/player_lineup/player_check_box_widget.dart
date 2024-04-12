@@ -32,6 +32,7 @@ class _CheckBoxPlayerState extends State<PlayerCheckBoxWidget> {
       title: Text(
         widget.player.name!,
         softWrap: false,
+        style: const TextStyle(fontSize: 14),
       ),
       value: isChecked,
       onChanged: (value) {

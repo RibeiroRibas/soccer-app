@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 
 class TextWithBorderComponent extends StatelessWidget {
   final String text;
-  final TextStyle? textStyle;
+  final TextStyle textStyle;
 
   const TextWithBorderComponent({
     super.key,
@@ -17,16 +16,18 @@ class TextWithBorderComponent extends StatelessWidget {
       children: [
         Text(
           text,
-          style: textStyle!.copyWith(
+          textAlign: TextAlign.center,
+          style: textStyle.copyWith(
             foreground: Paint()
               ..style = PaintingStyle.stroke
               ..strokeWidth = 0.5
-              ..color = greenTheme.primaryColor,
+              ..color = Theme.of(context).primaryColor,
           ),
           softWrap: true,
         ),
         Text(
           text,
+          textAlign: TextAlign.center,
           style: textStyle,
           softWrap: true,
         )

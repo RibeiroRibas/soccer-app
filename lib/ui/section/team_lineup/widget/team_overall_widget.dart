@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class TeamOverallWidget extends StatelessWidget {
@@ -30,7 +29,7 @@ class TeamOverallWidget extends StatelessWidget {
             team.name!,
             softWrap: false,
             overflow: TextOverflow.fade,
-            style: greenTheme.textTheme.displaySmall,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
         Container(
@@ -41,7 +40,7 @@ class TeamOverallWidget extends StatelessWidget {
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: ThemeColors.primary,
+              color: ThemeColors.overall,
             ),
           ),
         ),

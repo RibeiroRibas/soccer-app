@@ -21,7 +21,7 @@ class SelectOneOptionWidget extends StatelessWidget {
           child: CheckboxListTile(
             title: const Text(
               yes,
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: 14),
             ),
             controlAffinity: ListTileControlAffinity.leading,
             value: value,
@@ -35,7 +35,7 @@ class SelectOneOptionWidget extends StatelessWidget {
           child: CheckboxListTile(
             title: const Text(
               no,
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: 14),
             ),
             value: !value,
             contentPadding: const EdgeInsets.symmetric(horizontal: 2.0),

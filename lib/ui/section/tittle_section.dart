@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/ui/component/text_with_border_component.dart';
 
 class TittleSection extends StatelessWidget {
@@ -19,9 +18,10 @@ class TittleSection extends StatelessWidget {
       children: [
         TextWithBorderComponent(
           text: tittle,
-          textStyle: greenTheme.textTheme.displayMedium,
+          textStyle: Theme.of(context).textTheme.bodyLarge!,
         ),
-        if (icon != null) Icon(icon, size: 32, color: greenTheme.primaryColor),
+        if (icon != null)
+          Icon(icon, size: 32, color: Theme.of(context).primaryColor),
       ],
     );
   }

@@ -1,6 +1,10 @@
 const String startRote = '/';
 
-// app_navigator_module named routes
+//theme_module
+const String selectThemeRoute = "/select_theme";
+
+// home_module named routes
+const String homeNavBarRoute = "/navigator";
 const String homeRoute = '/home';
 const String teamsRoute = '/teams';
 const String playersRoute = '/players';

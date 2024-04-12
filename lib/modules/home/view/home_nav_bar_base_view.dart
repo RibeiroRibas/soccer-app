@@ -1,57 +1,69 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/modules/app/route_named.dart';
-import 'package:team_draw/modules/home/routes/app_navigator_routes.dart';
+import 'package:team_draw/modules/home/routes/home_navigator_routes.dart';
 import 'package:team_draw/modules/home/view/expandable_fab/action_button_widget.dart';
 import 'package:team_draw/modules/home/view/expandable_fab/expandable_fab_widget.dart';
 import 'package:team_draw/modules/home/view_model/home_view_model.dart';
 import 'package:team_draw/presentation/custom_icons.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 
-class AppNavigatorBaseView extends StatelessWidget {
-  const AppNavigatorBaseView({super.key});
+class HomeNavBarBaseView extends StatelessWidget {
+  const HomeNavBarBaseView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final AppNavigatorRoutes navigator = Modular.get<AppNavigatorRoutes>();
+    final HomeNavigatorRoutes navigator = Modular.get<HomeNavigatorRoutes>();
     final HomeViewModel controller = Modular.get<HomeViewModel>();
 
-    void goToHomeView() {
+    void goToHomeView(int index) {
       Map<String, dynamic> arguments = {
         "teamsScore": controller.calculateTeamScore(),
         "allMatches": controller.allMatches,
       };
-      navigator.goTo(homeRoute, arguments);
+      navigator.nextRouteFromIndex(index, arguments);
     }
 
-    goToTeamsView() {
+    goToTeamsView(int index) {
       Map<String, dynamic> arguments = {
         "teams": controller.teams,
         "allMatches": controller.allMatches,
       };
-      navigator.goTo(teamsRoute, arguments);
+      navigator.nextRouteFromIndex(index, arguments);
     }
 
-    goToPlayersView() {
+    goToPlayersView(int index) {
       Map<String, dynamic> arguments = {
         "playersScore": controller.calculatePlayerScore()
       };
-      navigator.goTo(playersRoute, arguments);
+      navigator.nextRouteFromIndex(index, arguments);
     }
 
-    controller.findAllData().then((_) => goToHomeView());
+    controller.findAllData().then((_) => goToHomeView(0));
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
           appName,
-          style: greenTheme.textTheme.displayLarge,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         centerTitle: true,
       ),
-      drawer: const Drawer(),
+      drawer: Drawer(
+        child: TextButton(
+            onPressed: () {
+              Modular.to.popUntil(
+                  ModalRoute.withName(Modular.to.navigateHistory.first.name));
+              Modular.to.popUntil(
+                  ModalRoute.withName(Modular.to.navigateHistory.first.name));
+              //Modular.to.navigate("/redirect");
+            },
+            child: Text(
+              "Temas",
+              style: Theme.of(context).textTheme.bodyMedium,
+            )),
+      ),
       floatingActionButton: ExpandableFabWidget(
         distance: 80,
         children: [
@@ -81,17 +93,17 @@ class AppNavigatorBaseView extends StatelessWidget {
               label: players,
             ),
           ],
-          selectedItemColor: greenTheme.primaryColor,
+          selectedItemColor: Theme.of(context).primaryColor,
           currentIndex: controller.currentPageIndex,
           onTap: (index) {
             controller.changeIndex(index);
             switch (index) {
               case 0:
-                goToHomeView();
+                goToHomeView(index);
               case 1:
-                goToTeamsView();
+                goToTeamsView(index);
               case 2:
-                goToPlayersView();
+                goToPlayersView(index);
             }
           },
         ),

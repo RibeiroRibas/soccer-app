@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class DropDownButtonComponent extends StatelessWidget {
   final int? value;
@@ -22,23 +21,11 @@ class DropDownButtonComponent extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 4,
       child: DropdownButtonFormField<int>(
-        dropdownColor: ThemeColors.backgroundColor,
+        dropdownColor: Theme.of(context).colorScheme.surface,
         decoration: InputDecoration(
           labelText: labelText,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: ThemeColors.white,
-              width: 2.0,
-            ),
-          ),
-          border: const OutlineInputBorder(
-            borderSide: BorderSide(
-              color: ThemeColors.white,
-              width: 2.0,
-            ),
-          ),
         ),
         value: value ?? 0,
         items: values

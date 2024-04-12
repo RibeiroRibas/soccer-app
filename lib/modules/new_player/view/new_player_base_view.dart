@@ -8,7 +8,6 @@ import 'package:team_draw/modules/new_player/routes/new_player_rote_navigator.da
 import 'package:team_draw/modules/new_player/view_model/player_view_model.dart';
 import 'package:team_draw/shared/helper/focus_node_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class NewPlayerBaseView extends StatefulWidget {
@@ -58,7 +57,7 @@ class _NewPlayerBaseViewState extends State<NewPlayerBaseView> {
               onPressed: () => viewModel.changeCurrentView(-1),
               icon: Icon(
                 Icons.arrow_back,
-                color: greenTheme.primaryColor,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ),
@@ -91,8 +90,8 @@ class _NewPlayerBaseViewState extends State<NewPlayerBaseView> {
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     color: viewModel.currentView == index
-                                        ? ThemeColors.primary
-                                        : ThemeColors.table),
+                                        ? Theme.of(context).primaryColor
+                                        : ThemeColors.shadowAnimationColor),
                               ),
                             ],
                           ),

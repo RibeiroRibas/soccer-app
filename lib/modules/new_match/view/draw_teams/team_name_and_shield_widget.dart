@@ -3,7 +3,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/modules/new_match/view/draw_teams/select_name_modal.dart';
 import 'package:team_draw/modules/new_match/view/draw_teams/select_shield_modal.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 
 class TeamNameAndShieldWidget extends StatelessWidget {
   final Team team;
@@ -28,7 +27,7 @@ class TeamNameAndShieldWidget extends StatelessWidget {
             ),
           ),
           onTap: () => showBarModalBottomSheet(
-            backgroundColor: greenTheme.scaffoldBackgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             context: context,
             builder: (context) => SingleChildScrollView(
               controller: ModalScrollController.of(context),
@@ -41,7 +40,7 @@ class TeamNameAndShieldWidget extends StatelessWidget {
         GestureDetector(
           child: Text(team.name!),
           onTap: () => showBarModalBottomSheet(
-            backgroundColor: greenTheme.scaffoldBackgroundColor,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             context: context,
             builder: (context) => SingleChildScrollView(
               controller: ModalScrollController.of(context),

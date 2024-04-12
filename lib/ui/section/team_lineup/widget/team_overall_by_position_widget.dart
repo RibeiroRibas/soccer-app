@@ -38,7 +38,7 @@ class _TeamOverallByPositionWidgetState
           height: 30,
           child: ListView.builder(
             itemBuilder: (context, index) {
-              Color overallColor = _getColorByPosition(
+              Color? overallColor = _getColorByPosition(
                   widget.overallByPosition.values.elementAt(index));
               return Column(
                 children: [
@@ -46,7 +46,10 @@ class _TeamOverallByPositionWidgetState
                     children: [
                       Text(
                         _getOverallByPosition(index),
-                        style: TextStyle(fontSize: 12, color: overallColor),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .copyWith(color: overallColor),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 2.0, right: 20.0),
@@ -84,7 +87,7 @@ class _TeamOverallByPositionWidgetState
         return ThemeColors.secondaryPosition;
       }
     }
-    return ThemeColors.white;
+    return ThemeColors.neutralPosition;
   }
 
   Map<Position, double> _sortOverall() {

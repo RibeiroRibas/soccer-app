@@ -5,7 +5,7 @@ const next = "Continuar";
 const nextRecommended = "Continuar (recomendado)";
 const playFontFamily = "Play";
 const historyMatches = "Histórico de jogos";
-const appName = "Sorteia meu time!";
+const appName = "Sagrado Fut - Time Equilibrado";
 const players = "Jogadores";
 const teams = "Times";
 const home = "Início";
@@ -20,6 +20,10 @@ const goals = "Gols";
 const defeats = "Derrotas";
 const victories = "Vitórias";
 const draws = "Empates";
+
+//theme
+const welcome = "Bem vindo ao \n $appName.";
+const selectTheme = "Escolha um tema de sua preferência.";
 
 // new player
 const newPLayer = "NOVO JOGADOR";

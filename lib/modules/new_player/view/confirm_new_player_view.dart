@@ -7,7 +7,6 @@ import 'package:team_draw/modules/new_player/routes/new_player_rote_navigator.da
 import 'package:team_draw/modules/new_player/state/player_state.dart';
 import 'package:team_draw/modules/new_player/view_model/player_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/ui/component/elevated_button_component.dart';
 import 'package:team_draw/ui/section/tittle_section.dart';
 
@@ -47,7 +46,7 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
             const Text(nameConfirm),
             Text(
               widget.player.name!,
-              style: greenTheme.textTheme.labelMedium,
+              style: Theme.of(context).textTheme.labelMedium,
             ),
           ],
         ),
@@ -56,7 +55,7 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
             const Text(principalPositionConfirm),
             Text(
               widget.player.principalPosition!.name,
-              style: greenTheme.textTheme.labelMedium,
+              style: Theme.of(context).textTheme.labelMedium,
             )
           ],
         ),
@@ -67,7 +66,7 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
               widget.player.secondaryPosition != null
                   ? widget.player.secondaryPosition!.name
                   : "",
-              style: greenTheme.textTheme.labelMedium,
+              style: Theme.of(context).textTheme.labelMedium,
             ),
           ],
         ),
@@ -76,7 +75,7 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
             const Text(overallConfirm),
             Text(
               widget.player.overall!.toStringAsFixed(1),
-              style: greenTheme.textTheme.labelMedium,
+              style: Theme.of(context).textTheme.labelMedium,
             )
           ],
         ),
