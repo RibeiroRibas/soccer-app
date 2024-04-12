@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/data/team_name_data.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class SelectNameModal extends StatefulWidget {
@@ -44,7 +43,7 @@ class _SelectNameModalState extends State<SelectNameModal> {
                 Text(
                   selectName,
                   textAlign: TextAlign.center,
-                  style: greenTheme.textTheme.displayMedium,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 10),
                 Row(
@@ -71,8 +70,8 @@ class _SelectNameModalState extends State<SelectNameModal> {
                                   : null,
                           decoration: InputDecoration(
                             enabledBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: greenTheme.primaryColor)),
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).primaryColor)),
                           ),
                         ),
                       ),
@@ -94,21 +93,21 @@ class _SelectNameModalState extends State<SelectNameModal> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                const Divider(color: ThemeColors.division),
+                const Divider(),
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      splashColor: ThemeColors.primary,
+                      splashColor: ThemeColors.overall,
                       title: Text(
                         getAllTeamNames.elementAt(index),
-                        style: greenTheme.textTheme.displaySmall,
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       tileColor:
                           _selectedIndex != null && _selectedIndex == index
-                              ? ThemeColors.backgroundColor
-                              : ThemeColors.cardColor,
+                              ? ThemeColors.blueDark
+                              : ThemeColors.grayDark,
                       onTap: () => setState(() {
                         _selectedName = getAllTeamNames.elementAt(index);
                         _textController.text = _selectedName;
@@ -118,7 +117,7 @@ class _SelectNameModalState extends State<SelectNameModal> {
                   },
                   itemCount: getAllTeamNames.length,
                 ),
-                const Divider(color: ThemeColors.division),
+                const Divider(),
               ],
             ),
           ),

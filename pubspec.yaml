@@ -42,6 +42,8 @@ dependencies:
   analyzer: ^6.4.1
   localstorage: ^4.0.1+4
   modal_bottom_sheet: ^3.0.0
+  flutter_native_splash: ^2.4.0
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -55,6 +57,13 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.1
+
+flutter_native_splash:
+  color: "#00A859"
+  image: assets/images/sagrado-fut-splash.png
+  android_12:
+    image: assets/images/sagrado-fut-splash-android-12.png
+    color: "#00A859"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

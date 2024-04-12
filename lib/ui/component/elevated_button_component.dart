@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 
 class ElevatedButtonComponent extends StatelessWidget {
   final String text;
@@ -18,7 +17,7 @@ class ElevatedButtonComponent extends StatelessWidget {
     return FilledButton(
       style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(
-              backgroundColor ?? greenTheme.primaryColor)),
+              backgroundColor ?? Theme.of(context).primaryColor)),
       onPressed: onButtonPressed,
       child: Text(
         text,

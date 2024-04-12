@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/position.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 
 class PlayerPositionComponent extends StatefulWidget {
   final Position? position;
@@ -29,7 +28,7 @@ class _PlayerPositionComponentState extends State<PlayerPositionComponent> {
           border: Border.all(
             color: widget.position != null
                 ? widget.positionColor
-                : greenTheme.cardColor,
+                : Colors.transparent,
           )),
       child: widget.position != null
           ? Text(

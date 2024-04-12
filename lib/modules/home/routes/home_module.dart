@@ -1,15 +1,15 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/modules/app/route_named.dart';
 import 'package:team_draw/modules/home/repository/home_repository.dart';
-import 'package:team_draw/modules/home/routes/app_navigator_routes.dart';
-import 'package:team_draw/modules/home/view/app_navigator_base_view.dart';
+import 'package:team_draw/modules/home/routes/home_navigator_routes.dart';
+import 'package:team_draw/modules/home/view/home_nav_bar_base_view.dart';
 import 'package:team_draw/modules/home/view/home_view.dart';
 import 'package:team_draw/modules/home/view/players/players_view.dart';
 import 'package:team_draw/modules/home/view/teams_view.dart';
 import 'package:team_draw/modules/home/view_model/expandable_button_controller.dart';
 import 'package:team_draw/modules/home/view_model/home_view_model.dart';
 
-class AppNavigatorModule extends Module {
+class HomeModule extends Module {
   static const durationTransaction = 200;
 
   @override
@@ -17,14 +17,14 @@ class AppNavigatorModule extends Module {
     i.add(HomeRepository.new);
     i.addSingleton(HomeViewModel.new);
     i.addSingleton(ExpandableButtonController.new);
-    i.addLazySingleton(AppNavigatorRoutes.new);
+    i.addLazySingleton(HomeNavigatorRoutes.new);
   }
 
   @override
   void routes(r) {
     r.child(
       startRote,
-      child: (context) => const AppNavigatorBaseView(),
+      child: (context) => const HomeNavBarBaseView(),
       children: [
         ChildRoute(
           homeRoute,
@@ -54,5 +54,6 @@ class AppNavigatorModule extends Module {
         ),
       ],
     );
+    r.redirect('/redirect', to: selectThemeRoute);
   }
 }

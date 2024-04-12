@@ -11,7 +11,7 @@ class ColumnPositionAndNameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const int numberOfColumns = 7;
-    Color lineColorTable = Colors.white12;
+    Color lineColorTable = Theme.of(context).colorScheme.secondary;
 
     double calculateCellWidth() =>
         (_getScreenWidthHalf(context)) / numberOfColumns;
@@ -19,7 +19,9 @@ class ColumnPositionAndNameWidget extends StatelessWidget {
     Color getTableCellColor({bool changeColor = true}) {
       if (changeColor) {
         lineColorTable =
-            lineColorTable == Colors.white12 ? Colors.white24 : Colors.white12;
+            lineColorTable == Theme.of(context).colorScheme.secondary
+                ? Theme.of(context).colorScheme.surface
+                : Theme.of(context).colorScheme.secondary;
       }
       return lineColorTable;
     }

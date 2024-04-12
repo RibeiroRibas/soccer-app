@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 import 'package:team_draw/ui/component/player_overall/player_score_widget.dart';
 import 'package:team_draw/ui/component/player_position_component.dart';
@@ -53,9 +52,9 @@ class PlayerOverallItemComponent extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   playerScore.player.overall!.toStringAsFixed(1),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
-                    color: greenTheme.primaryColor,
+                    color: ThemeColors.overall,
                   ),
                 ),
               ),

@@ -13,7 +13,7 @@ class ColumnTeamScoresWidget extends StatelessWidget {
     const int numberOfColumns = 7;
     int finalCell = 6;
     int countCell = 0;
-    Color tableCellColor = Colors.white24;
+    Color tableCellColor = Theme.of(context).colorScheme.surface;
 
     double calculateCellWidth(BuildContext context) =>
         (_getScreenWidthHalf(context)) / numberOfColumns;
@@ -21,7 +21,9 @@ class ColumnTeamScoresWidget extends StatelessWidget {
     Color getTableCellColor() {
       if (countCell > finalCell) {
         tableCellColor =
-            tableCellColor == Colors.white12 ? Colors.white24 : Colors.white12;
+            tableCellColor == Theme.of(context).colorScheme.secondary
+                ? Theme.of(context).colorScheme.surface
+                : Theme.of(context).colorScheme.secondary;
         finalCell += 7;
       }
       countCell++;

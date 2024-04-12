@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
-import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/modules/new_player/view/player_position/player_position_view.dart';
-import 'package:team_draw/shared/theme/green_theme.dart';
+import 'package:team_draw/shared/i18n/messages.dart';
 
 class PlayerSecondaryPositionView extends StatelessWidget {
   final Player player;
@@ -15,7 +14,6 @@ class PlayerSecondaryPositionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Position> positions = Position.allPositions();
-
     return Column(
       children: [
         PlayerPositionView(
@@ -48,8 +46,10 @@ class PlayerSecondaryPositionView extends StatelessWidget {
           },
           child: Text(
             markAsUndefined,
-            style: greenTheme.textTheme.displayMedium!
-                .copyWith(color: greenTheme.primaryColor),
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(color: Theme.of(context).primaryColor),
           ),
         ),
       ],

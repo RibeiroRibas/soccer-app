@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class TapToCloseFabWidget extends StatelessWidget {
   final VoidCallback onTapButton;
@@ -13,7 +12,7 @@ class TapToCloseFabWidget extends StatelessWidget {
       height: 56,
       child: Center(
         child: Material(
-          color: ThemeColors.backgroundColor,
+          color: Theme.of(context).primaryColor,
           shape: const CircleBorder(),
           clipBehavior: Clip.antiAlias,
           elevation: 4,
@@ -23,7 +22,7 @@ class TapToCloseFabWidget extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               child: Icon(
                 Icons.close,
-                color: Theme.of(context).primaryColor,
+                color: Theme.of(context).colorScheme.onPrimary,
               ),
             ),
           ),

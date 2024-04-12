@@ -23,7 +23,7 @@ class PlayerOverallSubtitleSection extends StatelessWidget {
           ),
           PlayerOverallSubtitleWidget(
             text: overall,
-            color: ThemeColors.primary,
+            color: ThemeColors.overall,
           ),
         ],
       ),
