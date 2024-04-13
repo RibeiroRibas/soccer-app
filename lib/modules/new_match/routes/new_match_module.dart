@@ -16,7 +16,7 @@ import 'package:team_draw/modules/new_match/view_model/draw_teams_view_model.dar
 import 'package:team_draw/modules/new_match/view_model/match_settings_view_model.dart';
 import 'package:team_draw/modules/new_match/view_model/new_match_view_model.dart';
 import 'package:team_draw/modules/new_match/view_model/player_lineup_view_model.dart';
-import 'package:team_draw/modules/new_player/repository/new_player_repository.dart';
+import 'package:team_draw/modules/new_player/repository/player_repository.dart';
 
 class NewMatchModule extends Module {
   static const durationTransaction = 500;
