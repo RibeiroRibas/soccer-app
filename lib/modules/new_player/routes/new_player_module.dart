@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/modules/app/route_named.dart';
-import 'package:team_draw/modules/new_player/repository/new_player_repository.dart';
+import 'package:team_draw/modules/new_player/repository/player_repository.dart';
 import 'package:team_draw/modules/new_player/routes/new_player_rote_navigator.dart';
 import 'package:team_draw/modules/new_player/view/confirm_new_player_view.dart';
 import 'package:team_draw/modules/new_player/view/new_player_base_view.dart';
