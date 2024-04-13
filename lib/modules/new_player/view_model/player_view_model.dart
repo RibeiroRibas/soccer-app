@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/modules/new_player/repository/new_player_repository.dart';
+import 'package:team_draw/modules/new_player/repository/player_repository.dart';
 import 'package:team_draw/modules/new_player/state/player_state.dart';
 
 part 'player_view_model.g.dart';
