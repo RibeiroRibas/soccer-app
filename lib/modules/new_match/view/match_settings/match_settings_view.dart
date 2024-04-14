@@ -8,7 +8,7 @@ import 'package:team_draw/modules/new_match/view/match_settings/widget/select_bo
 import 'package:team_draw/modules/new_match/view_model/match_settings_view_model.dart';
 import 'package:team_draw/shared/helper/list_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/section/tittle_section.dart';
+import 'package:team_draw/shared/view/section/tittle_section.dart';
 import 'widget/select_one_option_widget.dart';
 
 class MatchSettingsView extends StatefulWidget {

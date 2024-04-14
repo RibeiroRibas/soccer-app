@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
-import 'package:team_draw/ui/component/player_overall/player_overall_item_component.dart';
-import 'package:team_draw/ui/section/subtitle/player_overall_subtitle_section.dart';
+import 'package:team_draw/shared/view/component/player_overall/player_overall_item_component.dart';
+import 'package:team_draw/shared/view/section/subtitle/player_overall_subtitle_section.dart';
 
 import 'player_score_subtitle_widget.dart';
 

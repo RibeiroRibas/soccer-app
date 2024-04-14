@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/ui/component/text_with_border_component.dart';
+import 'package:team_draw/shared/view/component/text_with_border_component.dart';
 
 class TittleSection extends StatelessWidget {
   final IconData? icon;

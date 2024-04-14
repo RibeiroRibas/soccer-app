@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/ui/section/question_section.dart';
+import 'package:team_draw/shared/view/section/question_section.dart';
 
 class PlayerPositionView extends StatelessWidget {
   final String questionText;

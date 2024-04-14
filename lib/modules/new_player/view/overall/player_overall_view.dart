@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/section/question_section.dart';
+import 'package:team_draw/shared/view/section/question_section.dart';
 import 'slider_overall_widget.dart';
 
 class PlayerOverallView extends StatelessWidget {

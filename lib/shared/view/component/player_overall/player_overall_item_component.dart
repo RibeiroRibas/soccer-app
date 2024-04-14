@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
-import 'package:team_draw/ui/component/player_overall/player_score_widget.dart';
-import 'package:team_draw/ui/component/player_position_component.dart';
+import 'package:team_draw/shared/view/component/player_overall/player_score_widget.dart';
+import 'package:team_draw/shared/view/component/player_position_component.dart';
 
 class PlayerOverallItemComponent extends StatelessWidget {
   final PlayerScore playerScore;

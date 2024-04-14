@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
-import 'package:team_draw/ui/component/player_position_component.dart';
+import 'package:team_draw/shared/view/component/player_position_component.dart';
 
 class TeamOverallByPositionWidget extends StatefulWidget {
   final Map<Position, double> overallByPosition;

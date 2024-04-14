@@ -11,7 +11,7 @@ import 'package:team_draw/modules/new_match/view/player_lineup/players_lineup_vi
 import 'package:team_draw/modules/new_match/view_model/new_match_view_model.dart';
 import 'package:team_draw/shared/helper/focus_node_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/view/page_index_animation_component.dart';
+import 'package:team_draw/shared/view/component/page_index_animation_component.dart';
 
 class NewMatchBaseView extends StatefulWidget {
   const NewMatchBaseView({super.key});

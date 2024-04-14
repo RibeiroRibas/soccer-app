@@ -12,7 +12,7 @@ import 'package:team_draw/modules/new_player/view/player_position/player_princip
 import 'package:team_draw/modules/new_player/view/player_position/player_secondary_position_view.dart';
 import 'package:team_draw/modules/new_player/view_model/player_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/view/page_index_animation_component.dart';
+import 'package:team_draw/shared/view/component/page_index_animation_component.dart';
 
 class NewPlayerBaseView extends StatefulWidget {
   const NewPlayerBaseView({

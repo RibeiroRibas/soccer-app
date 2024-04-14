@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/component/elevated_button_component.dart';
-import 'package:team_draw/ui/section/tittle_section.dart';
+import 'package:team_draw/shared/view/component/elevated_button_component.dart';
+import 'package:team_draw/shared/view/section/tittle_section.dart';
 
 class ConfirmNewPlayerView extends StatelessWidget {
   final Player player;

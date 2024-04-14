@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
-import 'package:team_draw/ui/section/subtitle/player_overall_subtitle_widget.dart';
+import 'package:team_draw/shared/view/section/subtitle/player_overall_subtitle_widget.dart';
 
 class PlayerOverallSubtitleSection extends StatelessWidget {
   const PlayerOverallSubtitleSection({super.key});

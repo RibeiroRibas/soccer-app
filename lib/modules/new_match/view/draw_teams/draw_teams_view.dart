@@ -7,9 +7,9 @@ import 'package:team_draw/modules/new_match/view/draw_teams/team_name_and_shield
 import 'package:team_draw/modules/new_match/view/draw_teams/teams_information_widget.dart';
 import 'package:team_draw/modules/new_match/view_model/draw_teams_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/component/box_card_component.dart';
-import 'package:team_draw/ui/component/elevated_button_component.dart';
-import 'package:team_draw/ui/section/team_lineup/team_lineup_section.dart';
+import 'package:team_draw/shared/view/component/box_card_component.dart';
+import 'package:team_draw/shared/view/component/elevated_button_component.dart';
+import 'package:team_draw/shared/view/section/team_lineup/team_lineup_section.dart';
 
 class DrawnTeamsView extends StatefulWidget {
   final Map<Player, bool> selectedPlayers;
