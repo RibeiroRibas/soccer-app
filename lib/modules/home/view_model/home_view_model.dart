@@ -4,19 +4,30 @@ import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
 import 'package:team_draw/modules/home/model/team_score.dart';
-import 'package:team_draw/modules/home/repository/home_repository.dart';
+import 'package:team_draw/services/player_service.dart';
+import 'package:team_draw/services/team_match_service.dart';
+import 'package:team_draw/services/team_service.dart';
 
 part 'home_view_model.g.dart';
 
 class HomeViewModel = HomeViewModelBase with _$HomeViewModel;
 
 abstract class HomeViewModelBase with Store {
-  final HomeRepository _repository;
+  final PlayerService _playerService;
+  final TeamMatchService _teamMatchService;
+  final TeamService teamService;
 
-  HomeViewModelBase(this._repository);
+  HomeViewModelBase(
+    this._playerService,
+    this._teamMatchService,
+    this.teamService,
+  );
 
   @observable
   int currentPageIndex = 0;
+
+  @observable
+  bool isLoading = true;
 
   List<Team> teams = <Team>[];
   List<Player> players = <Player>[];
@@ -27,26 +38,18 @@ abstract class HomeViewModelBase with Store {
     currentPageIndex = index;
   }
 
+  @action
   Future<void> findAllData() async {
-    teams = await _repository
+    teams = await teamService
         .findAllTeams()
         .then((value) => calculateTeamOverall(value));
-    players = await _repository.findAllPlayers();
-    allMatches = await _repository.findAllMatches();
+    players = await _playerService.findAllPlayers();
+    allMatches = await _teamMatchService.findAllMatches();
+    isLoading = false;
   }
 
   List<TeamScore> calculateTeamScore() {
-    List<TeamScore> teamsScore = [];
-    for (Team team in teams) {
-      List<TeamMatch> teamMatches = [];
-      teamMatches.addAll(allMatches);
-      teamMatches.removeWhere(
-          (element) => element.teamOne != team && element.teamTwo != team);
-      TeamScore teamScore = TeamScore(team: team, matches: teamMatches);
-      teamsScore.add(teamScore);
-    }
-    teamsScore.sort((e1, e2) => e1.compareTo(e2));
-    return teamsScore;
+    return teamService.calculateTeamScore(teams, allMatches);
   }
 
   Future<List<Team>> calculateTeamOverall(List<Team> teams) async {
@@ -57,10 +60,6 @@ abstract class HomeViewModelBase with Store {
   }
 
   List<PlayerScore> calculatePlayerScore() {
-    List<PlayerScore> playersScore = [];
-    for (Player player in players) {
-      playersScore.add(player.calculateScore(allMatches));
-    }
-    return playersScore;
+    return _playerService.calculatePlayerScore(players, allMatches);
   }
 }

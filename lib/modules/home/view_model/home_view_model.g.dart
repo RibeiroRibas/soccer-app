@@ -25,6 +25,30 @@ mixin _$HomeViewModel on HomeViewModelBase, Store {
     });
   }
 
+  late final _$isLoadingAtom =
+      Atom(name: 'HomeViewModelBase.isLoading', context: context);
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
+  late final _$findAllDataAsyncAction =
+      AsyncAction('HomeViewModelBase.findAllData', context: context);
+
+  @override
+  Future<void> findAllData() {
+    return _$findAllDataAsyncAction.run(() => super.findAllData());
+  }
+
   late final _$HomeViewModelBaseActionController =
       ActionController(name: 'HomeViewModelBase', context: context);
 
@@ -42,7 +66,8 @@ mixin _$HomeViewModel on HomeViewModelBase, Store {
   @override
   String toString() {
     return '''
-currentPageIndex: ${currentPageIndex}
+currentPageIndex: ${currentPageIndex},
+isLoading: ${isLoading}
     ''';
   }
 }

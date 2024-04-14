@@ -4,7 +4,7 @@ import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/app/service/team_service.dart';
+import 'package:team_draw/services/team_service.dart';
 import 'package:team_draw/modules/new_match/services/generate_team_name_service.dart';
 import 'package:team_draw/modules/new_match/services/generate_team_shield_service.dart';
 

@@ -62,14 +62,12 @@ class _SelectThemeViewState extends State<SelectThemeView> {
             const SizedBox(height: 50),
             const Padding(
               padding: EdgeInsets.all(8.0),
-              child: TextWithBorderWidget(
-                  text: welcome, fontSize: 24),
+              child: TextWithBorderWidget(text: welcome, fontSize: 24),
             ),
             const SizedBox(height: 10),
             const Padding(
               padding: EdgeInsets.only(right: 8.0, left: 8.0),
-              child: TextWithBorderWidget(
-                  text: selectTheme, fontSize: 18),
+              child: TextWithBorderWidget(text: selectTheme, fontSize: 18),
             ),
             CarouselSlider(
               options: CarouselOptions(

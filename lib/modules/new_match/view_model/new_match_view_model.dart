@@ -6,14 +6,14 @@ class NewMatchViewModel = NewMatchViewModelBase with _$NewMatchViewModel;
 
 abstract class NewMatchViewModelBase with Store {
   @observable
-  int currentView = 0;
+  int currentPageIndex = 0;
 
   @action
-  void changeCurrentView(int index) {
+  void changeCurrentPageIndex(int index) {
     if (index == -1) {
-      currentView = currentView - 1;
+      currentPageIndex = currentPageIndex - 1;
     } else {
-      currentView++;
+      currentPageIndex++;
     }
   }
 }
