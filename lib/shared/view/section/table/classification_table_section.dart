@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/modules/home/model/team_score.dart';
 import 'package:team_draw/shared/extensions/team_score_list_extension.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/component/text_with_border_component.dart';
+import 'package:team_draw/shared/view/component/text_with_border_component.dart';
 
 import 'widget/column_position_and_name_widget.dart';
 import 'widget/column_team_scores_widget.dart';

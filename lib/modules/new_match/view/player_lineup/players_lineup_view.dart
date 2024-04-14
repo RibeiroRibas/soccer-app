@@ -7,7 +7,7 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/new_match/view/player_lineup/player_check_box_widget.dart';
 import 'package:team_draw/modules/new_match/view_model/player_lineup_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/section/tittle_section.dart';
+import 'package:team_draw/shared/view/section/tittle_section.dart';
 
 class PlayersLineupView extends StatefulWidget {
   final Map<Player, bool> selectedPlayers;

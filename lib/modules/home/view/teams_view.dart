@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/ui/component/box_card_component.dart';
-import 'package:team_draw/ui/section/subtitle/player_overall_subtitle_section.dart';
-import 'package:team_draw/ui/section/team_lineup/team_lineup_section.dart';
+import 'package:team_draw/shared/view/component/box_card_component.dart';
+import 'package:team_draw/shared/view/section/subtitle/player_overall_subtitle_section.dart';
+import 'package:team_draw/shared/view/section/team_lineup/team_lineup_section.dart';
 
 class TeamsView extends StatelessWidget {
   final List<Team> teams;

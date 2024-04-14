@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/component/box_card_component.dart';
-import 'package:team_draw/ui/section/tittle_section.dart';
+import 'package:team_draw/shared/view/component/box_card_component.dart';
+import 'package:team_draw/shared/view/section/tittle_section.dart';
 
 import 'widget/all_matches_widget.dart';
 

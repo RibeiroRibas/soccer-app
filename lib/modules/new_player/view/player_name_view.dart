@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/component/outlined_text_field_component.dart';
-import 'package:team_draw/ui/section/question_section.dart';
+import 'package:team_draw/shared/view/component/outlined_text_field_component.dart';
+import 'package:team_draw/shared/view/section/question_section.dart';
 
 class PlayerNameView extends StatelessWidget {
   final Player player;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/shared/helper/list_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/component/drop_down_button_component.dart';
+import 'package:team_draw/shared/view/component/drop_down_button_component.dart';
 
 class MatchDurationTimeWidget extends StatelessWidget {
   final int? durationHr;

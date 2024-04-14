@@ -6,7 +6,7 @@ import 'package:team_draw/modules/home/model/player_score.dart';
 import 'package:team_draw/modules/home/view/players/players_view.dart';
 import 'package:team_draw/modules/new_player/routes/new_player_rote_navigator.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/ui/component/elevated_button_component.dart';
+import 'package:team_draw/shared/view/component/elevated_button_component.dart';
 
 class SuccessView extends StatefulWidget {
   final List<PlayerScore> playersScore;
