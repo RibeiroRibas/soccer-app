@@ -26,11 +26,11 @@ class _InitialViewState extends State<InitialView> {
       if (isGoToSelectTheme!) {
         navigator.goTo(selectThemeRoute, null);
       } else {
-        navigator.goTo(homeNavBarRoute, null);
+        navigator.goTo('$homeNavBarRoute/', null);
       }
     });
     reaction((_) => themeViewModel.onThemeChange, (_) {
-      navigator.goTo(homeNavBarRoute, null);
+      navigator.goTo('$homeNavBarRoute/', null);
     });
   }
 
@@ -68,7 +68,8 @@ class _InitialViewState extends State<InitialView> {
                   Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Image(
-                      image: AssetImage("$imageInitialPath/sagrado-fut-splash.png"),
+                      image: AssetImage(
+                          "$imageInitialPath/sagrado-fut-splash.png"),
                       height: 100,
                     ),
                   ),

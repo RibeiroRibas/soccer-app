@@ -1,35 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/modules/new_player/view_model/player_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/ui/component/outlined_text_field_component.dart';
 import 'package:team_draw/ui/section/question_section.dart';
 
-class PlayerNameView extends StatefulWidget {
+class PlayerNameView extends StatelessWidget {
   final Player player;
   final void Function(int) onActionPress;
+  final List<Player>? allPlayers;
 
-  const PlayerNameView(
-      {super.key, required this.player, required this.onActionPress});
+  PlayerNameView({
+    super.key,
+    required this.player,
+    required this.onActionPress,
+    required this.allPlayers,
+  });
 
-  @override
-  State<PlayerNameView> createState() => _PlayerNameViewState();
-}
-
-class _PlayerNameViewState extends State<PlayerNameView> {
-  final PlayerViewModel viewModel = Modular.get<PlayerViewModel>();
   final _formKey = GlobalKey<FormState>();
   final _focusNode = FocusNode();
 
-  @override
-  void initState() {
-    super.initState();
-    _findAllPLayers();
-  }
-
-  Future _findAllPLayers() async {
-    await viewModel.findAllPlayers();
+  bool existPlayerName(String name) {
+    return allPlayers!.any((player) {
+      String playerName = name;
+      return player.name!.toLowerCase() ==
+          playerName.trimLeft().trimRight().toLowerCase();
+    });
   }
 
   @override
@@ -46,18 +41,17 @@ class _PlayerNameViewState extends State<PlayerNameView> {
             focusNode: _focusNode,
             validator: (String? value) => value == null || value.isEmpty
                 ? requestTeamName
-                : viewModel.playerNameAlreadyExist(value)
+                : existPlayerName(value)
                     ? playerAlreadyExist
                     : null,
             labelText: name,
-            initialValue: widget.player.name ?? "",
+            initialValue: player.name ?? "",
             onChanged: (String value) {
-              widget.player.name = value;
+              player.name = value;
               _formKey.currentState!.validate();
             },
-            onFieldSubmitted: (_) => _formKey.currentState!.validate()
-                ? widget.onActionPress(1)
-                : null,
+            onFieldSubmitted: (_) =>
+                _formKey.currentState!.validate() ? onActionPress(1) : null,
           ),
         ),
         const Expanded(child: SizedBox()),
