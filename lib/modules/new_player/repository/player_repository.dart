@@ -7,6 +7,7 @@ class PlayerRepository {
   }
 
   Future<List<Player>> findAllPlayers() async {
+    //TODO: return empty when plays is null
     return getAllPlayers;
   }
 }

@@ -1,37 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/modules/app/route_named.dart';
-import 'package:team_draw/modules/new_player/routes/new_player_rote_navigator.dart';
-import 'package:team_draw/modules/new_player/state/player_state.dart';
-import 'package:team_draw/modules/new_player/view_model/player_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/ui/component/elevated_button_component.dart';
 import 'package:team_draw/ui/section/tittle_section.dart';
 
-class ConfirmNewPlayerView extends StatefulWidget {
+class ConfirmNewPlayerView extends StatelessWidget {
   final Player player;
+  final void Function(int) onActionPress;
 
-  const ConfirmNewPlayerView({super.key, required this.player});
-
-  @override
-  State<ConfirmNewPlayerView> createState() => _ConfirmNewPlayerViewState();
-}
-
-class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
-  final NewPlayerRoutes navigator = Modular.get<NewPlayerRoutes>();
-  final PlayerViewModel viewModel = Modular.get<PlayerViewModel>();
-
-  @override
-  void initState() {
-    super.initState();
-    reaction((_) => viewModel.playerState, (playerState) {
-      if (playerState is SuccessPlayerState) {
-        navigator.goTo('$newPlayerRote$successNewPlayerRote', null);
-      }
-    });
-  }
+  const ConfirmNewPlayerView({
+    super.key,
+    required this.player,
+    required this.onActionPress,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +26,7 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
           children: [
             const Text(nameConfirm),
             Text(
-              widget.player.name!,
+              player.name!,
               style: Theme.of(context).textTheme.labelMedium,
             ),
           ],
@@ -54,7 +35,7 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
           children: [
             const Text(principalPositionConfirm),
             Text(
-              widget.player.principalPosition!.name,
+              player.principalPosition!.name,
               style: Theme.of(context).textTheme.labelMedium,
             )
           ],
@@ -63,8 +44,8 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
           children: [
             const Text(secondaryPositionConfirm),
             Text(
-              widget.player.secondaryPosition != null
-                  ? widget.player.secondaryPosition!.name
+              player.secondaryPosition != null
+                  ? player.secondaryPosition!.name
                   : "",
               style: Theme.of(context).textTheme.labelMedium,
             ),
@@ -74,7 +55,7 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
           children: [
             const Text(overallConfirm),
             Text(
-              widget.player.overall!.toStringAsFixed(1),
+              player.overall!.toStringAsFixed(1),
               style: Theme.of(context).textTheme.labelMedium,
             )
           ],
@@ -85,9 +66,7 @@ class _ConfirmNewPlayerViewState extends State<ConfirmNewPlayerView> {
           child: Row(
             children: [
               ElevatedButtonComponent(
-                onButtonPressed: () {
-                  viewModel.savePlayer(widget.player);
-                },
+                onButtonPressed: () => onActionPress(5),
                 text: savePlayer,
               ),
             ],

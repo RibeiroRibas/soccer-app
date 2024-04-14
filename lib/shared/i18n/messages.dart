@@ -34,6 +34,9 @@ const secondaryPositionQuestion = "Qual a SEGUNDA posição MAIS atuante?";
 const principalPositionSubQuestion = "Aquela que o jogador se garante";
 const secondaryPositionSubQuestion =
     "Aquela que o jogador se apresenta de vez em quando";
+const allPlayers = "Todos os jogadores";
+const finish = "CONCLUIR";
+
 const goalkeeperPosition = "GOLEIRO";
 const forwardPosition = "ATACANTE";
 const midfielderPosition = "MEIO CAMPO";

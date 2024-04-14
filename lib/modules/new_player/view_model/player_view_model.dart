@@ -1,49 +1,51 @@
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/modules/new_player/repository/player_repository.dart';
-import 'package:team_draw/modules/new_player/state/player_state.dart';
+import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/modules/home/model/player_score.dart';
+import 'package:team_draw/services/player_service.dart';
+import 'package:team_draw/services/team_match_service.dart';
 
 part 'player_view_model.g.dart';
 
 class PlayerViewModel = PlayerViewModelBase with _$PlayerViewModel;
 
 abstract class PlayerViewModelBase with Store {
-  final PlayerRepository _repository;
+  final PlayerService _playerService;
+  final TeamMatchService _teamMatchService;
 
-  PlayerViewModelBase(this._repository);
-
-  @observable
-  int currentView = 0;
+  PlayerViewModelBase(this._playerService, this._teamMatchService);
 
   @observable
-  PlayerState playerState = StartPlayerState();
+  int currentPageIndex = 0;
 
-  late final List<Player> allPlayers;
+  @observable
+  List<Player>? allPlayers;
 
   @action
-  void changeCurrentView(int index) {
+  void changeCurrentPageIndex(int index) {
     if (index == -1) {
-      currentView = currentView - 1;
+      currentPageIndex = currentPageIndex - 1;
     } else {
-      currentView = index;
+      currentPageIndex = index;
     }
   }
 
+  @action
   Future<void> findAllPlayers() async {
-    allPlayers = await _repository.findAllPlayers();
+    allPlayers = await _playerService.findAllPlayers();
   }
 
   @action
-  Future savePlayer(Player player) async {
-    await _repository.addPlayer(player);
-    playerState = SuccessPlayerState();
+  Future<void> savePlayer(Player player) async {
+    await _playerService.addPlayer(player);
   }
 
-  bool playerNameAlreadyExist(String name) {
-    return allPlayers.any((player) {
-      String playerName = name;
-      return player.name!.toLowerCase() ==
-          playerName.trimLeft().trimRight().toLowerCase();
-    });
+  Future<List<PlayerScore>> calculatePlayerScore() async {
+    return _playerService.calculatePlayerScore(
+        allPlayers!, await findAllMatches());
+  }
+
+  Future<List<TeamMatch>> findAllMatches() async {
+    return await _teamMatchService.findAllMatches();
   }
 }

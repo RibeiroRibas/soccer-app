@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:lottie/lottie.dart';
-import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/modules/app/route_named.dart';
 import 'package:team_draw/modules/new_match/routes/new_match_rote_navigator.dart';
+import 'package:team_draw/modules/new_match/view/draw_teams/draw_teams_view.dart';
+import 'package:team_draw/modules/new_match/view/match_settings/match_settings_view.dart';
+import 'package:team_draw/modules/new_match/view/player_lineup/players_lineup_view.dart';
 import 'package:team_draw/modules/new_match/view_model/new_match_view_model.dart';
 import 'package:team_draw/shared/helper/focus_node_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/theme/theme_colors.dart';
+import 'package:team_draw/shared/view/page_index_animation_component.dart';
 
 class NewMatchBaseView extends StatefulWidget {
   const NewMatchBaseView({super.key});
@@ -20,32 +22,41 @@ class NewMatchBaseView extends StatefulWidget {
 
 class _NewMatchBaseViewState extends State<NewMatchBaseView> {
   final NewMatchRoteNavigator navigator = Modular.get<NewMatchRoteNavigator>();
-  final NewMatchViewModel viewModel = Modular.get<NewMatchViewModel>();
+  final NewMatchViewModel controller = Modular.get<NewMatchViewModel>();
+  late PageController pageViewController;
   final Map<Player, bool> selectedPlayers = {};
   final MatchSettings matchSettings = MatchSettings();
 
   @override
   void initState() {
     super.initState();
-    autorun((_) => _goToNextView(viewModel.currentView));
+    pageViewController =
+        PageController(initialPage: controller.currentPageIndex);
   }
 
-  Future _goToNextView(int index) async {
-    Map<String, dynamic> arguments = {
-      "selectedPlayers": selectedPlayers,
-      "matchSettings": matchSettings,
-    };
-    navigator.nextRouteFromIndex(index, arguments);
-  }
+  List<Widget> allPagesView() => [
+        PlayersLineupView(
+          selectedPlayers: selectedPlayers,
+          matchSettings: matchSettings,
+        ),
+        MatchSettingsView(
+          selectedPlayers: selectedPlayers,
+          matchSettings: matchSettings,
+        ),
+        DrawnTeamsView(
+          selectedPlayers: selectedPlayers,
+          matchSettings: matchSettings,
+        ),
+      ];
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onHorizontalDragEnd: (details) {
         if (details.primaryVelocity! > 0) {
-          viewModel.changeCurrentView(-1);
+          controller.changeCurrentPageIndex(-1);
         } else if (details.primaryVelocity! < 0) {
-          viewModel.changeCurrentView(1);
+          controller.changeCurrentPageIndex(1);
         }
       },
       onTap: () => FocusNodeHelper.dismissKeyboard(context),
@@ -59,7 +70,15 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
           centerTitle: true,
           leading: IconButton(
             onPressed: () {
-              viewModel.changeCurrentView(-1);
+              controller.changeCurrentPageIndex(-1);
+              if (controller.currentPageIndex == -1) {
+                navigator.goTo('$homeNavBarRoute/', null);
+              } else {
+                pageViewController.previousPage(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.ease,
+                );
+              }
             },
             icon: Icon(
               Icons.arrow_back,
@@ -69,7 +88,12 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
           actions: <Widget>[
             IconButton(
               onPressed: () {
-                viewModel.changeCurrentView(1);
+                controller.changeCurrentPageIndex(1);
+                pageViewController.animateToPage(
+                  controller.currentPageIndex,
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.ease,
+                );
               },
               icon: Icon(
                 Icons.arrow_forward,
@@ -80,46 +104,23 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 32.0),
           child: Column(
             children: [
-              const Expanded(child: RouterOutlet()),
-              Container(
-                color: Theme.of(context).scaffoldBackgroundColor,
-                child: Observer(
-                  builder: (BuildContext context) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        for (int index = 0; index < 4; index++) ...{
-                          Column(
-                            children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 4.5,
-                                height: 100,
-                                child: viewModel.currentView == index
-                                    ? Lottie.asset(
-                                        'assets/animations/foot.json')
-                                    : null,
-                              ),
-                              Container(
-                                width:
-                                    (MediaQuery.of(context).size.width / 4) / 3,
-                                height: 5,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: viewModel.currentView == index
-                                        ? Theme.of(context).primaryColor
-                                        : ThemeColors.shadowAnimationColor),
-                              ),
-                              const SizedBox(height: 32)
-                            ],
-                          ),
-                        },
-                      ],
-                    );
-                  },
+              Expanded(
+                child: PageView(
+                  physics: const NeverScrollableScrollPhysics(),
+                  controller: pageViewController,
+                  children: allPagesView(),
                 ),
+              ),
+              Observer(
+                builder: (BuildContext context) {
+                  return PageIndexAnimationComponent(
+                      pagesLength: allPagesView().length,
+                      currentPageIndex: controller.currentPageIndex,
+                      animationPath: 'assets/animations/foot.json');
+                },
               ),
             ],
           ),
