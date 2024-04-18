@@ -1,4 +1,6 @@
 import 'package:team_draw/model/match_result.dart';
+import 'package:team_draw/model/player_strengths.dart';
+import 'package:team_draw/model/player_weak_points.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
@@ -8,13 +10,16 @@ class Player {
   Position? principalPosition;
   Position? secondaryPosition;
   double? overall;
+  List<PlayerStrengths> strengths = [];
+  List<PlayerWeakPoints> weakPoints = [];
 
-  Player({
-    this.name,
-    this.overall,
-    this.principalPosition,
-    this.secondaryPosition,
-  });
+  final _maxStrengthsAndWeakPointsAllowed = 2;
+
+  Player(
+      {this.name,
+      this.overall,
+      this.principalPosition,
+      this.secondaryPosition});
 
   bool isGoalKeeper() {
     return principalPosition == Position.goalkeeper;
@@ -92,5 +97,29 @@ class Player {
 
   bool isRightBack() {
     return principalPosition == Position.rightBack;
+  }
+
+  bool isWeakPointNotSelected(PlayerWeakPoints playerWeakPoints) {
+    return !weakPoints.any((element) => element == playerWeakPoints);
+  }
+
+  bool isMaxWeakPointsSelected() {
+    return weakPoints.length == _maxStrengthsAndWeakPointsAllowed;
+  }
+
+  bool isLastWeakPointAllowed() {
+    return weakPoints.length == _maxStrengthsAndWeakPointsAllowed - 1;
+  }
+
+  bool isStrengthsNotSelected(PlayerStrengths playerStrengths) {
+    return !strengths.any((element) => element == playerStrengths);
+  }
+
+  bool isMaxStrengthsSelected() {
+    return strengths.length == _maxStrengthsAndWeakPointsAllowed;
+  }
+
+  bool isLastStrengthsAllowed() {
+    return strengths.length == _maxStrengthsAndWeakPointsAllowed - 1;
   }
 }

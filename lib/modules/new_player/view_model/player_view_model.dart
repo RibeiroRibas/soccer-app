@@ -16,19 +16,7 @@ abstract class PlayerViewModelBase with Store {
   PlayerViewModelBase(this._playerService, this._teamMatchService);
 
   @observable
-  int currentPageIndex = 0;
-
-  @observable
   List<Player>? allPlayers;
-
-  @action
-  void changeCurrentPageIndex(int index) {
-    if (index == -1) {
-      currentPageIndex = currentPageIndex - 1;
-    } else {
-      currentPageIndex = index;
-    }
-  }
 
   @action
   Future<void> findAllPlayers() async {

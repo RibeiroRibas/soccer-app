@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/modules/new_player/view/helper/new_player_page_view.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/view/component/outlined_text_field_component.dart';
 import 'package:team_draw/shared/view/section/question_section.dart';
 
 class PlayerNameView extends StatelessWidget {
   final Player player;
-  final void Function(int) onActionPress;
+  final void Function(NewPlayerPageView) goToNextPageView;
   final List<Player>? allPlayers;
 
   PlayerNameView({
     super.key,
     required this.player,
-    required this.onActionPress,
+    required this.goToNextPageView,
     required this.allPlayers,
   });
 
@@ -50,8 +51,9 @@ class PlayerNameView extends StatelessWidget {
               player.name = value;
               _formKey.currentState!.validate();
             },
-            onFieldSubmitted: (_) =>
-                _formKey.currentState!.validate() ? onActionPress(1) : null,
+            onFieldSubmitted: (_) => _formKey.currentState!.validate()
+                ? goToNextPageView(NewPlayerPageView.principalPosition)
+                : null,
           ),
         ),
         const Expanded(child: SizedBox()),

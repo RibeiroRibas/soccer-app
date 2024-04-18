@@ -24,19 +24,11 @@ abstract class HomeViewModelBase with Store {
   );
 
   @observable
-  int currentPageIndex = 0;
-
-  @observable
   bool isLoading = true;
 
   List<Team> teams = <Team>[];
   List<Player> players = <Player>[];
   List<TeamMatch> allMatches = <TeamMatch>[];
-
-  @action
-  void changeIndex(int index) {
-    currentPageIndex = index;
-  }
 
   @action
   Future<void> findAllData() async {

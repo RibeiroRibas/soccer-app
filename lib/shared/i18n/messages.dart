@@ -36,6 +36,9 @@ const secondaryPositionSubQuestion =
     "Aquela que o jogador se apresenta de vez em quando";
 const allPlayers = "Todos os jogadores";
 const finish = "CONCLUIR";
+const strengths = "Pontos fortes";
+const weakPoints = "Pontos fracos";
+const selectUpToTwoOptions = "Selecione até duas opções";
 
 const goalkeeperPosition = "GOLEIRO";
 const forwardPosition = "ATACANTE";
@@ -90,3 +93,14 @@ const midfielder = "Meio-Campo";
 const leftBack = "Lateral Esquerdo";
 const rightBack = "Lateral Direito";
 const matches = "Jogos";
+
+// player characteristics
+const playerVelocity = "Veloz";
+const playerTackle = "Desarme";
+const playerPass = "Bom passe";
+const playerKick = "Bom chute";
+const playerPositioning = "Posicionamento";
+const playerSkill = "Habilidoso";
+const playerPhysical = "Prep. Físico";
+const playerScorer = "Goleador";
+const playerOverweight = "Acima do peso";

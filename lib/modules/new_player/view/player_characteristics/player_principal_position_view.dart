@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
+import 'package:team_draw/modules/new_player/view/helper/new_player_page_view.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/modules/new_player/view/player_position/player_position_view.dart';
+import 'package:team_draw/modules/new_player/view/player_characteristics/player_characteristics_view.dart';
 
 class PlayerPrincipalPositionView extends StatelessWidget {
   final Player player;
-  final void Function(int) onActionPress;
+  final void Function(NewPlayerPageView) goToNextPageView;
 
   const PlayerPrincipalPositionView(
-      {super.key, required this.player, required this.onActionPress});
+      {super.key, required this.player, required this.goToNextPageView});
 
   @override
   Widget build(BuildContext context) {
     final List<Position> positions = Position.allPositions();
 
-    return PlayerPositionView(
+    return PlayerCharacteristicsView(
       questionText: principalPositionQuestion,
       subQuestionText: principalPositionSubQuestion,
       positions: List.generate(
@@ -32,7 +33,7 @@ class PlayerPrincipalPositionView extends StatelessWidget {
                 : false,
             onChanged: (_) {
               player.principalPosition = Position.fromIndex(index);
-              onActionPress(2);
+              goToNextPageView(NewPlayerPageView.strengths);
             },
           );
         },
