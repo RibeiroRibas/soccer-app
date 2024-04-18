@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:team_draw/modules/app/repository/local_storage_repository.dart';
-import 'package:team_draw/modules/theme/repository/theme_repository.dart';
-import 'package:team_draw/modules/theme/theme_view_model/theme_view_model.dart';
+import 'package:team_draw/modules/new_player/repository/player_repository.dart';
+import 'package:team_draw/services/player_service.dart';
+import 'package:team_draw/shared/controller/page_view_controller.dart';
 
 class CoreModule extends Module {
   @override
   void exportedBinds(i) {
-    i.add(LocalStorageRepository.new);
-    i.add(ThemeRepository.new);
-    i.addSingleton(ThemeViewModel.new);
+    i.addLazySingleton(PlayerRepository.new);
+    i.addLazySingleton(PlayerService.new);
+    i.add(PageController.new);
+    i.add(PageViewController.new);
   }
 }

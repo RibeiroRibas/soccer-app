@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/modules/new_player/view/helper/new_player_page_view.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/view/component/elevated_button_component.dart';
 import 'package:team_draw/shared/view/section/tittle_section.dart';
 
 class ConfirmNewPlayerView extends StatelessWidget {
   final Player player;
-  final void Function(int) onActionPress;
+  final void Function(NewPlayerPageView) goToNextPageView;
 
   const ConfirmNewPlayerView({
     super.key,
     required this.player,
-    required this.onActionPress,
+    required this.goToNextPageView,
   });
 
   @override
@@ -66,7 +67,8 @@ class ConfirmNewPlayerView extends StatelessWidget {
           child: Row(
             children: [
               ElevatedButtonComponent(
-                onButtonPressed: () => onActionPress(5),
+                onButtonPressed: () =>
+                    goToNextPageView(NewPlayerPageView.finish),
                 text: savePlayer,
               ),
             ],

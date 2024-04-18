@@ -1,21 +1,24 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:team_draw/modules/app/repository/local_storage_repository.dart';
 import 'package:team_draw/modules/app/route_named.dart';
-import 'package:team_draw/modules/core/core_module.dart';
-import 'package:team_draw/modules/home/routes/home_module.dart';
-import 'package:team_draw/modules/new_match/routes/new_match_module.dart';
-import 'package:team_draw/modules/new_player/routes/new_player_module.dart';
+import 'package:team_draw/modules/home/home_module.dart';
+import 'package:team_draw/modules/new_match/new_match_module.dart';
+import 'package:team_draw/modules/new_player/new_player_module.dart';
+import 'package:team_draw/modules/theme/repository/theme_repository.dart';
 import 'package:team_draw/modules/theme/theme_module.dart';
+import 'package:team_draw/modules/theme/theme_view_model/theme_view_model.dart';
 
 class AppModule extends Module {
   @override
-  List<Module> get imports => [
-        CoreModule(),
-      ];
+  void binds(i) {
+    i.addSingleton(LocalStorageRepository.new);
+    i.addSingleton(ThemeRepository.new);
+    i.addSingleton(ThemeViewModel.new);
+  }
 
   @override
   void routes(r) {
     r.module(startRote, module: ThemeModule());
-    //   r.module(startRote, module: HomeModule());
     r.module(homeNavBarRoute, module: HomeModule());
     r.module(newPlayerRote, module: NewPlayerModule());
     r.module(newMatchRote, module: NewMatchModule());
