@@ -14,7 +14,7 @@ enum PlayerStrengths {
 
   final String characteristic;
 
-  static List<PlayerStrengths> allPlayerStrengths = [
+  static List<PlayerStrengths> all = [
     velocity,
     tackle,
     pass,

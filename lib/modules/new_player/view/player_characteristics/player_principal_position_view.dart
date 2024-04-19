@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
-import 'package:team_draw/modules/new_player/view/helper/new_player_page_view.dart';
+import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/modules/new_player/view/player_characteristics/player_characteristics_view.dart';
 

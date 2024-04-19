@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/player_strengths.dart';
-import 'package:team_draw/modules/new_player/view/helper/new_player_page_view.dart';
+import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
 import 'package:team_draw/modules/new_player/view/player_characteristics/player_characteristics_view.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 
@@ -19,14 +19,10 @@ class PlayerStrengthsView extends StatefulWidget {
 class _PlayerStrengthsViewState extends State<PlayerStrengthsView> {
   @override
   Widget build(BuildContext context) {
-    final List<PlayerStrengths> playerStrengths =
-        PlayerStrengths.allPlayerStrengths;
+    final List<PlayerStrengths> playerStrengths = PlayerStrengths.all;
 
     void setStrengthsPoints(int index) {
       if (widget.player.isStrengthsNotSelected(playerStrengths[index])) {
-        if (widget.player.isMaxStrengthsSelected()) {
-          return;
-        }
         if (widget.player.isLastStrengthsAllowed()) {
           widget.player.strengths.add(playerStrengths[index]);
           widget.goToNextPageView(NewPlayerPageView.weakPoints);

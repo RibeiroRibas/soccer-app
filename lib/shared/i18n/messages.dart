@@ -63,6 +63,8 @@ const nameConfirm = "Nome: ";
 const principalPositionConfirm = "Posição principal: ";
 const secondaryPositionConfirm = "Posição auxiliar: ";
 const overallConfirm = "Overall: ";
+const strengthsConfirm = "Pontos fortes: ";
+const weakPointsConfirm = "Pontos fracos: ";
 const ok = "OK";
 
 //new match
@@ -95,7 +97,7 @@ const rightBack = "Lateral Direito";
 const matches = "Jogos";
 
 // player characteristics
-const playerVelocity = "Veloz";
+const playerVelocity = "Velocidade";
 const playerTackle = "Desarme";
 const playerPass = "Bom passe";
 const playerKick = "Bom chute";
@@ -103,4 +105,4 @@ const playerPositioning = "Posicionamento";
 const playerSkill = "Habilidoso";
 const playerPhysical = "Prep. Físico";
 const playerScorer = "Goleador";
-const playerOverweight = "Acima do peso";
+const playerOverweight = "Sobrepeso";

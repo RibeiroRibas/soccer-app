@@ -76,10 +76,8 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
           tittle: newPLayer,
           onBackAction: () => _goToPreviousPage(),
           forwardButtonAction: <Widget>[
-            Observer(
-              builder: (_) => ForwardButtonComponent(
-                onPressed: () => pageViewController.animateToNextPage(),
-              ),
+            ForwardButtonComponent(
+              onPressed: () => pageViewController.animateToNextPage(),
             ),
           ],
         ),
