@@ -39,13 +39,6 @@ class PlayerOverallItemComponent extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: PlayerPositionComponent(
-                position: playerScore.player.secondaryPosition,
-                positionColor: ThemeColors.secondaryPosition,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
               child: Container(
                 width: 25,
                 height: 25,

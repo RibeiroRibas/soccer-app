@@ -150,7 +150,7 @@ class SortTeamsService {
         }
       } while (team.players!.length < settings.numberOfStartingPlayers!);
       team.numberOfStartingPlayers = settings.numberOfStartingPlayers;
-      team.calculateTeamOverall();
+      team.calculateOverall();
       teams.add(team);
     }
   }

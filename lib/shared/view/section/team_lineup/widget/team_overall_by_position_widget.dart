@@ -4,23 +4,35 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 import 'package:team_draw/shared/view/component/player_position_component.dart';
 
-class TeamOverallByPositionWidget extends StatefulWidget {
+class TeamOverallByPositionWidget extends StatelessWidget {
   final Map<Position, double> overallByPosition;
 
   const TeamOverallByPositionWidget(
       {super.key, required this.overallByPosition});
 
   @override
-  State<TeamOverallByPositionWidget> createState() =>
-      _TeamOverallByPositionWidgetState();
-}
-
-class _TeamOverallByPositionWidgetState
-    extends State<TeamOverallByPositionWidget> {
-  late Map<Position, double> sortedOverall = _sortOverall();
-
-  @override
   Widget build(BuildContext context) {
+    Map<Position, double> sortOverall() {
+      return Map.fromEntries(overallByPosition.entries.toList()
+        ..sort((e1, e2) => e2.value.compareTo(e1.value)));
+    }
+
+    late Map<Position, double> sortedOverall = sortOverall();
+
+    String getOverallByPosition(int index) {
+      return overallByPosition.values.elementAt(index).toStringAsFixed(1);
+    }
+
+    Color getColorByPosition(double overall) {
+      for (var i = 0; i < sortedOverall.length; i++) {
+        double overallElement = sortedOverall.values.elementAt(i);
+        if (overall == overallElement && i == 0) {
+          return ThemeColors.principalPosition;
+        }
+      }
+      return ThemeColors.neutralPosition;
+    }
+
     return Column(
       children: [
         const SingleChildScrollView(
@@ -38,14 +50,14 @@ class _TeamOverallByPositionWidgetState
           height: 30,
           child: ListView.builder(
             itemBuilder: (context, index) {
-              Color? overallColor = _getColorByPosition(
-                  widget.overallByPosition.values.elementAt(index));
+              Color? overallColor =
+                  getColorByPosition(overallByPosition.values.elementAt(index));
               return Column(
                 children: [
                   Row(
                     children: [
                       Text(
-                        _getOverallByPosition(index),
+                        getOverallByPosition(index),
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall!
@@ -54,8 +66,7 @@ class _TeamOverallByPositionWidgetState
                       Padding(
                         padding: const EdgeInsets.only(left: 2.0, right: 20.0),
                         child: PlayerPositionComponent(
-                          position:
-                              widget.overallByPosition.keys.elementAt(index),
+                          position: overallByPosition.keys.elementAt(index),
                           positionColor: overallColor,
                         ),
                       ),
@@ -64,34 +75,12 @@ class _TeamOverallByPositionWidgetState
                 ],
               );
             },
-            itemCount: widget.overallByPosition.length,
+            itemCount: overallByPosition.length,
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.only(left: 2.0),
           ),
         ),
       ],
     );
-  }
-
-  String _getOverallByPosition(int index) {
-    return widget.overallByPosition.values.elementAt(index).toStringAsFixed(1);
-  }
-
-  Color _getColorByPosition(double overall) {
-    for (var i = 0; i < sortedOverall.length; i++) {
-      double overallElement = sortedOverall.values.elementAt(i);
-      if (overall == overallElement && i == 0) {
-        return ThemeColors.principalPosition;
-      }
-      if (overall == overallElement && i == 1) {
-        return ThemeColors.secondaryPosition;
-      }
-    }
-    return ThemeColors.neutralPosition;
-  }
-
-  Map<Position, double> _sortOverall() {
-    return Map.fromEntries(widget.overallByPosition.entries.toList()
-      ..sort((e1, e2) => e2.value.compareTo(e1.value)));
   }
 }

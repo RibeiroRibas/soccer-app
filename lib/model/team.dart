@@ -28,31 +28,19 @@ class Team {
         .any((element) => element.principalPosition == Position.goalkeeper);
   }
 
-  void calculateTeamOverall() async {
+  void calculateOverall() async {
     if (hasGoalKeeper()) {
       _calculateWithGoalKeeper();
     } else {
       _calculateWithoutGoalKeeper();
     }
+    _calculateCharacteristics();
   }
 
   void _calculateOverall() {
     for (Player player in players!) {
       _increaseOverallPrincipalPosition(player);
-      if (player.secondaryPosition != null) {
-        _increaseOverallSecondaryPosition(player);
-      }
     }
-  }
-
-  void _increaseOverallSecondaryPosition(Player player) {
-    const int secondaryPositionWeight = 2;
-    double playerOverall = player.overall! / secondaryPositionWeight;
-    teamOverall.overallByPosition.increaseOverallByPosition(
-      player.secondaryPosition!,
-      playerOverall,
-    );
-    teamOverall.value += playerOverall;
   }
 
   void _increaseOverallPrincipalPosition(Player player) {
@@ -145,5 +133,12 @@ class Team {
 
   bool isPresent() {
     return name != null && shield != null;
+  }
+
+  void _calculateCharacteristics() {
+    for (var player in players!) {
+      teamOverall.value += (player.strengths.length * 0.1);
+      teamOverall.value -= (player.weakPoints.length * 0.1);
+    }
   }
 }

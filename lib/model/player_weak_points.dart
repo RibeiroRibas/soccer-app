@@ -12,7 +12,7 @@ enum PlayerWeakPoints {
 
   final String characteristic;
 
-  static List<PlayerWeakPoints> allPlayerWeakPoints = [
+  static List<PlayerWeakPoints> all = [
     velocity,
     overweight,
     pass,

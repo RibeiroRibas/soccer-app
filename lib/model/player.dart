@@ -8,18 +8,11 @@ import 'package:team_draw/modules/home/model/player_score.dart';
 class Player {
   String? name;
   Position? principalPosition;
-  Position? secondaryPosition;
   double? overall;
   List<PlayerStrengths> strengths = [];
   List<PlayerWeakPoints> weakPoints = [];
 
-  final _maxStrengthsAndWeakPointsAllowed = 2;
-
-  Player(
-      {this.name,
-      this.overall,
-      this.principalPosition,
-      this.secondaryPosition});
+  Player({this.name, this.overall, this.principalPosition});
 
   bool isGoalKeeper() {
     return principalPosition == Position.goalkeeper;
@@ -103,23 +96,15 @@ class Player {
     return !weakPoints.any((element) => element == playerWeakPoints);
   }
 
-  bool isMaxWeakPointsSelected() {
-    return weakPoints.length == _maxStrengthsAndWeakPointsAllowed;
-  }
-
   bool isLastWeakPointAllowed() {
-    return weakPoints.length == _maxStrengthsAndWeakPointsAllowed - 1;
+    return weakPoints.length == PlayerWeakPoints.all.length - 1;
   }
 
   bool isStrengthsNotSelected(PlayerStrengths playerStrengths) {
     return !strengths.any((element) => element == playerStrengths);
   }
 
-  bool isMaxStrengthsSelected() {
-    return strengths.length == _maxStrengthsAndWeakPointsAllowed;
-  }
-
   bool isLastStrengthsAllowed() {
-    return strengths.length == _maxStrengthsAndWeakPointsAllowed - 1;
+    return strengths.length == PlayerStrengths.all.length - 1;
   }
 }

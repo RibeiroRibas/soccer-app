@@ -46,7 +46,7 @@ abstract class HomeViewModelBase with Store {
 
   Future<List<Team>> calculateTeamOverall(List<Team> teams) async {
     for (Team team in teams) {
-      team.calculateTeamOverall();
+      team.calculateOverall();
     }
     return teams;
   }

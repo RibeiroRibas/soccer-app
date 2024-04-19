@@ -37,7 +37,10 @@ class _SuccessViewState extends State<SuccessView> {
           )
         : Scaffold(
             appBar: AppBar(title: const Center(child: Text(allPlayers))),
-            body: PlayersView(playersScore: widget.playersScore),
+            body: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: PlayersView(playersScore: widget.playersScore),
+            ),
             bottomNavigationBar: Row(
               children: [
                 Expanded(
