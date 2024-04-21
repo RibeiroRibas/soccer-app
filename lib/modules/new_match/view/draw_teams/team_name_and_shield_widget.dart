@@ -19,8 +19,10 @@ class TeamNameAndShieldWidget extends StatelessWidget {
     return Row(
       children: [
         GestureDetector(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 10, bottom: 8),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.11,
+            height: 45,
+            padding: const EdgeInsets.only(right: 10, bottom: 8, top: 4),
             child: Image(
               image: AssetImage(team.shield!),
               height: 35,
@@ -38,7 +40,18 @@ class TeamNameAndShieldWidget extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          child: Text(team.name!),
+          child: Container(
+            padding: const EdgeInsets.only(top: 6),
+            width: MediaQuery.of(context).size.width * 0.3,
+            height: 40,
+            child: Text(
+              team.name!,
+              overflow: TextOverflow.fade,
+              maxLines: 1,
+              softWrap: false,
+              textAlign: TextAlign.start,
+            ),
+          ),
           onTap: () => showBarModalBottomSheet(
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             context: context,

@@ -9,6 +9,7 @@ import 'package:team_draw/modules/new_match/routes/new_match_rote_navigator.dart
 import 'package:team_draw/modules/new_match/view/draw_teams/draw_teams_view.dart';
 import 'package:team_draw/modules/new_match/view/match_settings/match_settings_view.dart';
 import 'package:team_draw/modules/new_match/view/player_lineup/players_lineup_view.dart';
+import 'package:team_draw/modules/new_match/view_model/new_match_base_view_model.dart';
 import 'package:team_draw/shared/controller/page_view_controller.dart';
 import 'package:team_draw/shared/helper/focus_node_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
@@ -27,8 +28,18 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
   final NewMatchRoteNavigator navigator = Modular.get<NewMatchRoteNavigator>();
   final PageViewController pageViewController =
       Modular.get<PageViewController>();
+  final NewMatchBaseViewModel viewModel = Modular.get<NewMatchBaseViewModel>();
   final Map<Player, bool> selectedPlayers = {};
   final MatchSettings matchSettings = MatchSettings();
+  late final Function(bool) _onShowForwardButton;
+
+  @override
+  void initState() {
+    super.initState();
+    _onShowForwardButton = (isShowForwardButton) {
+      viewModel.showForwardButton(isShowForwardButton);
+    };
+  }
 
   List<Widget> allPagesView() {
     List<Widget> allPages = [
@@ -43,6 +54,7 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
       DrawnTeamsView(
         selectedPlayers: selectedPlayers,
         matchSettings: matchSettings,
+        onShowForwardButton: _onShowForwardButton,
       ),
     ];
     assert(NewMatchPageView.getTotalPages() == allPages.length);
@@ -73,11 +85,14 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
       child: Scaffold(
         extendBody: true,
         appBar: AppBarTittleAndArrowsComponent(
-          tittle: newPLayer,
+          tittle: newMatch,
           onBackAction: () => _goToPreviousPage(),
           forwardButtonAction: <Widget>[
-            ForwardButtonComponent(
-              onPressed: () => pageViewController.animateToNextPage(),
+            Observer(
+              builder: (_) => ForwardButtonComponent(
+                onPressed: () => pageViewController.animateToNextPage(),
+                isShowButton: viewModel.isShowForwardButton,
+              ),
             ),
           ],
         ),

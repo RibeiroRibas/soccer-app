@@ -87,6 +87,7 @@ const sortTeams = "Sortear Equipes";
 const requestTeamName = "Nome do time é obrigatório";
 const selectName = "Informe o novo nome do time ou selecione na lista abaixo";
 const typeTeamName = "Informe o nome do time!";
+const tapOnShieldOrNameToEdit = "Toque no escudo ou nome do time para editar";
 
 // teams information
 const forward = "Ataque";
