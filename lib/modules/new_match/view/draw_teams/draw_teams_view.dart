@@ -9,14 +9,19 @@ import 'package:team_draw/modules/new_match/view_model/draw_teams_view_model.dar
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/view/component/box_card_component.dart';
 import 'package:team_draw/shared/view/component/elevated_button_component.dart';
+import 'package:team_draw/shared/view/component/text_with_border_component.dart';
 import 'package:team_draw/shared/view/section/team_lineup/team_lineup_section.dart';
 
 class DrawnTeamsView extends StatefulWidget {
   final Map<Player, bool> selectedPlayers;
   final MatchSettings matchSettings;
+  final Function(bool) onShowForwardButton;
 
   const DrawnTeamsView(
-      {super.key, required this.selectedPlayers, required this.matchSettings});
+      {super.key,
+      required this.selectedPlayers,
+      required this.matchSettings,
+      required this.onShowForwardButton});
 
   @override
   State<DrawnTeamsView> createState() => _DrawnTeamsViewState();
@@ -28,10 +33,14 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
   @override
   void initState() {
     super.initState();
+    if (controller.teamMatches.isEmpty) {
+      widget.onShowForwardButton(false);
+    }
   }
 
   void _sortTeams() {
     controller.sortTeamsMatch(widget.selectedPlayers, widget.matchSettings);
+    widget.onShowForwardButton.call(true);
   }
 
   @override
@@ -53,27 +62,43 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
               (context, index) {
                 return Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        TeamNameAndShieldWidget(
-                            team: controller.teamMatches
-                                .elementAt(index)
-                                .teamOne!,
-                            onChange: (oldNameOrShield, newNameOrShield) {
-                              controller.onTeamNameOrShieldChange(
-                                  oldNameOrShield, newNameOrShield);
-                            }),
-                        const Text(versus),
-                        TeamNameAndShieldWidget(
-                            team: controller.teamMatches
-                                .elementAt(index)
-                                .teamTwo!,
-                            onChange: (oldNameOrShield, newNameOrShield) {
-                              controller.onTeamNameOrShieldChange(
-                                  oldNameOrShield, newNameOrShield);
-                            }),
-                      ],
+                    Container(
+                      padding: const EdgeInsets.only(left: 4, right: 4, top: 4),
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Theme.of(context).primaryColor),
+                      ),
+                      child: Column(
+                        children: [
+                          TextWithBorderComponent(
+                            text: tapOnShieldOrNameToEdit,
+                            textStyle: Theme.of(context).textTheme.bodyMedium!,
+                          ),
+                          const SizedBox(height: 4),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              TeamNameAndShieldWidget(
+                                  team: controller.teamMatches
+                                      .elementAt(index)
+                                      .teamOne!,
+                                  onChange: (oldNameOrShield, newNameOrShield) {
+                                    controller.onTeamNameOrShieldChange(
+                                        oldNameOrShield, newNameOrShield);
+                                  }),
+                              const Text(versus),
+                              TeamNameAndShieldWidget(
+                                  team: controller.teamMatches
+                                      .elementAt(index)
+                                      .teamTwo!,
+                                  onChange: (oldNameOrShield, newNameOrShield) {
+                                    controller.onTeamNameOrShieldChange(
+                                        oldNameOrShield, newNameOrShield);
+                                  }),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     BoxCardComponent(
                       boxCardBody: TeamsInformationWidget(

@@ -4,5 +4,18 @@ List<String> getAllTeamNames = [
   'Capivaras FC',
   'Super Saiyajins',
   'Pisadinha FC',
-  'Unidos da Bicuda'
+  'Unidos da Bicuda',
+  'Boca Seniors',
+  'Real Matismo',
+  'Inter de Meião',
+  'Meia Boca Juniors',
+  'Red Boi Brangantino',
+  'Patético de Madrid',
+  'Bayer de Favela',
+  'Irreal Madrid',
+  'Barões da Perdidinha',
+  'Chora Não FC',
+  'Leões Sem Juba',
+  'Vasco da Gula',
+  'Real Bacon'
 ];

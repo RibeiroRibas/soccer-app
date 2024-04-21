@@ -10,6 +10,7 @@ import 'package:team_draw/modules/new_match/services/sort_teams_service.dart';
 import 'package:team_draw/modules/new_match/view/new_match_base_view.dart';
 import 'package:team_draw/modules/new_match/view_model/draw_teams_view_model.dart';
 import 'package:team_draw/modules/new_match/view_model/match_settings_view_model.dart';
+import 'package:team_draw/modules/new_match/view_model/new_match_base_view_model.dart';
 import 'package:team_draw/modules/new_match/view_model/player_lineup_view_model.dart';
 import 'package:team_draw/services/team_service.dart';
 
@@ -30,6 +31,7 @@ class NewMatchModule extends Module {
     i.addLazySingleton(GenerateTeamShieldService.new);
     i.addLazySingleton(LocalStorageRepository.new);
     i.addLazySingleton(NewMatchRoteNavigator.new);
+    i.addLazySingleton(NewMatchBaseViewModel.new);
     i.addLazySingleton(DrawTeamsViewModel.new);
     i.addSingleton(MatchSettingsViewModel.new);
     i.addSingleton(PlayerLineupViewModel.new);
