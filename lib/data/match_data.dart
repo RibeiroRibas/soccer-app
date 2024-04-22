@@ -4,19 +4,19 @@ import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/team_match.dart';
 
 List<TeamMatch> getAllMatches = [
-  matchOneVSTwo,
-  matchOneVSTree,
-  matchTwoVSTree,
-  matchFiveVSSix,
-  matchFourVSTree,
-  matchSixVSFour,
-  matchTwoVSFour,
-  matchOneVSTwo,
-  matchOneVSTree,
-  matchTwoVSTree,
-  matchFiveVSSix,
-  matchFourVSTree,
-  matchSixVSFour,
+  // matchOneVSTwo,
+  // matchOneVSTree,
+  // matchTwoVSTree,
+  // matchFiveVSSix,
+  // matchFourVSTree,
+  // matchSixVSFour,
+  // matchTwoVSFour,
+  // matchOneVSTwo,
+  // matchOneVSTree,
+  // matchTwoVSTree,
+  // matchFiveVSSix,
+  // matchFourVSTree,
+  // matchSixVSFour,
 ];
 
 MatchSettings getMatchSettings = MatchSettings();
