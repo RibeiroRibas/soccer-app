@@ -43,7 +43,10 @@ class _HomeNavBarBaseViewState extends State<HomeNavBarBaseView> {
         teams: controller.teams,
         allMatches: controller.allMatches,
       ),
-      PlayersView(playersScore: controller.calculatePlayerScore())
+      PlayersView(
+        playersScore: controller.calculatePlayerScore(),
+        goToNextRoute: (route) => navigator.goTo('$route/', null),
+      )
     ];
     assert(HomePageView.getTotalPages() == allPages.length);
     return allPages;

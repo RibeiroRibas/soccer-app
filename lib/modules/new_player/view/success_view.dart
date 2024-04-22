@@ -39,7 +39,10 @@ class _SuccessViewState extends State<SuccessView> {
             appBar: AppBar(title: const Center(child: Text(allPlayers))),
             body: Padding(
               padding: const EdgeInsets.all(12.0),
-              child: PlayersView(playersScore: widget.playersScore),
+              child: PlayersView(
+                playersScore: widget.playersScore,
+                goToNextRoute: (route) => navigator.goTo('$route/', null),
+              ),
             ),
             bottomNavigationBar: Row(
               children: [

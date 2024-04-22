@@ -41,10 +41,10 @@ Team getTeamSix = Team(
     numberOfStartingPlayers: 6);
 
 List<Team> getAllTeams = [
-  getTeamOne,
-  getTeamTwo,
-  getTeamTree,
-  getTeamFour,
-  getTeamFive,
-  getTeamSix
+  // getTeamOne,
+  // getTeamTwo,
+  // getTeamTree,
+  // getTeamFour,
+  // getTeamFive,
+  // getTeamSix
 ];

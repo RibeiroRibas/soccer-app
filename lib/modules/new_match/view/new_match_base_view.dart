@@ -46,6 +46,7 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
       PlayersLineupView(
         selectedPlayers: selectedPlayers,
         matchSettings: matchSettings,
+        onShowForwardButton: _onShowForwardButton,
       ),
       MatchSettingsView(
         selectedPlayers: selectedPlayers,
