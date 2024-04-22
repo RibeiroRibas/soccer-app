@@ -12,7 +12,6 @@ const home = "Início";
 const versus = "x";
 const name = "Nome";
 const principalPosition = "Posição atuante";
-const secondaryPosition = "Posição auxiliar";
 const overall = "Overall";
 const classificationTable = "Tabela de classificação";
 const teamAmount = "Overall do time divido por posições";
@@ -29,9 +28,8 @@ const selectTheme = "Escolha um tema de sua preferência.";
 const newPLayer = "NOVO JOGADOR";
 const whatIsPlayerName = "Qual o nome do craque?";
 const orNickname = "ou apelido";
-const principalPositionQuestion = "Qual a posição MAIS atuante?";
-const secondaryPositionQuestion = "Qual a SEGUNDA posição MAIS atuante?";
-const principalPositionSubQuestion = "Aquela que o jogador se garante";
+const principalPositionQuestion = "Qual a posição do jogador?";
+const principalPositionSubQuestion = "A mais atuante...";
 const secondaryPositionSubQuestion =
     "Aquela que o jogador se apresenta de vez em quando";
 const allPlayers = "Todos os jogadores";
@@ -60,8 +58,7 @@ const markAsUndefined = "Marcar como indefinido";
 const requestPlayerName = "Nome do jogador é obrigatório";
 const playerAlreadyExist = "Já existe um jogador com esse nome";
 const nameConfirm = "Nome: ";
-const principalPositionConfirm = "Posição principal: ";
-const secondaryPositionConfirm = "Posição auxiliar: ";
+const principalPositionConfirm = "Posição: ";
 const overallConfirm = "Overall: ";
 const strengthsConfirm = "Pontos fortes: ";
 const weakPointsConfirm = "Pontos fracos: ";
@@ -107,3 +104,11 @@ const playerSkill = "Habilidoso";
 const playerPhysical = "Prep. Físico";
 const playerScorer = "Goleador";
 const playerOverweight = "Sobrepeso";
+
+//messages
+const emptyMatchMessage = "Você ainda não registrou nenhuma partida.\n"
+    "Faça o registro dos jogadores antes de iniciar uma nova partida!";
+const emptyTeamMessage = "Você ainda não registrou nenhum time.\n"
+    "Faça o registro dos jogadores antes de iniciar uma nova partida!";
+const emptyPlayerMessage = "Você precisa registrar no mínimo 2 jogadores.\n"
+    "Faça o registro de novos jogadores no botão abaixo!";

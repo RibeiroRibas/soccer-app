@@ -7,7 +7,7 @@ class NewMatchBaseViewModel = NewMatchBaseViewModelBase
 
 abstract class NewMatchBaseViewModelBase with Store {
   @observable
-  bool isShowForwardButton = true;
+  bool isShowForwardButton = false;
 
   @action
   void showForwardButton(bool isShowButton) {
