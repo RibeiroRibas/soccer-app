@@ -42,8 +42,8 @@ class GenerateTeamNameService {
       return "$_time $_lastGeneratedSequentialNumber";
     }
 
-    int? lastSavedSequentialNumber =
-        await counterTeamRepository.read<int>(_counterTeamRepositoryKey);
+    String? lastSavedSequentialNumber =
+        await counterTeamRepository.read(_counterTeamRepositoryKey);
 
     if (lastSavedSequentialNumber != null) {
       _lastGeneratedSequentialNumber = _lastGeneratedSequentialNumber + 1;

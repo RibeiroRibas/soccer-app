@@ -11,11 +11,11 @@ class ThemeRepository {
   final _themeRepositoryKey = "theme";
 
   Future<ThemeData?> loadFromStorage() async {
-    String? theme = await themeRepository.read<String>(_themeRepositoryKey);
+    String? theme = await themeRepository.read(_themeRepositoryKey);
     return theme != null ? ThemeResolve.fromName(theme) : null;
   }
 
   Future<void> writeData(ThemeName themeName) async {
-    await themeRepository.write<String>(_themeRepositoryKey, themeName.name);
+    await themeRepository.write(_themeRepositoryKey, themeName.name);
   }
 }
