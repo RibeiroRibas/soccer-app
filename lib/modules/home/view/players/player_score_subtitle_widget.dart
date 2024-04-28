@@ -21,13 +21,21 @@ class _PlayerScoreSubtitleWidgetState extends State<PlayerScoreSubtitleWidget> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           tapped
-              ? const Padding(
-                  padding: EdgeInsets.all(2.0),
-                  child: Icon(Icons.keyboard_arrow_right, size: 20),
+              ? Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Icon(
+                    Icons.keyboard_arrow_right,
+                    size: 20,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 )
-              : const Padding(
-                  padding: EdgeInsets.all(4.0),
-                  child: Icon(Icons.keyboard_arrow_left, size: 20),
+              : Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(
+                    Icons.keyboard_arrow_left,
+                    size: 20,
+                    color: Theme.of(context).primaryColor,
+                  ),
                 ),
           const Padding(
             padding: EdgeInsets.all(4.0),

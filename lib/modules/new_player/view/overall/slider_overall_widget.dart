@@ -27,7 +27,7 @@ class _SliderOverallWidgetState extends State<SliderOverallWidget> {
   Widget build(BuildContext context) {
     return Slider(
       value: _currentSliderValue,
-      max: 5,
+      max: 10,
       divisions: 10,
       label: _currentSliderValue.toString(),
       onChanged: (double value) => setState(

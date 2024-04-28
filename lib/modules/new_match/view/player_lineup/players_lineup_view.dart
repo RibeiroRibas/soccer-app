@@ -57,7 +57,7 @@ class _PlayersLineupViewState extends State<PlayersLineupView> {
     Iterable<bool> selectedPlayers = widget.selectedPlayers.values
         .map((isSelected) => isSelected)
         .where((element) => element);
-    if (selectedPlayers.length == 2) {
+    if (selectedPlayers.length > 1) {
       widget.onShowForwardButton(true);
     } else {
       widget.onShowForwardButton(false);

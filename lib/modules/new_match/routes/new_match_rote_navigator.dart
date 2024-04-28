@@ -1,5 +1,4 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:team_draw/modules/app/route_named.dart';
 import 'package:team_draw/shared/route_navigator.dart';
 
 class NewMatchRoteNavigator extends RouteNavigator {
@@ -8,21 +7,14 @@ class NewMatchRoteNavigator extends RouteNavigator {
     Modular.to.navigate(routeName, arguments: arguments);
   }
 
-  void nextRouteFromIndex(int index, Map<String, dynamic> arguments) {
-    String routeName = startRote;
-    switch (index) {
-      case -1:
-        routeName = startRote;
-      case 0:
-        routeName = '$newMatchRote$playerLineupRote';
-        break;
-      case 1:
-        routeName = '$newMatchRote$matchSettingsRoute';
-        break;
-      case 2:
-        routeName = '$newMatchRote$drawnTeamsRote';
-        break;
-    }
-    goTo(routeName, arguments);
+  @override
+  Future<void> pushNamed(
+      String routeName, Map<String, dynamic>? arguments) async {
+    await Modular.to.pushNamed(routeName, arguments: arguments);
+  }
+
+  @override
+  Future<void> pop() async {
+    Modular.to.pop();
   }
 }

@@ -44,6 +44,11 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   flutter_native_splash: ^2.4.0
   carousel_slider: ^4.2.1
+  image_picker: ^1.1.0
+  permission_handler: ^11.3.1
+  video_player: ^2.8.6
+  video_thumbnail: ^0.5.3
+  flick_video_player: ^0.7.0
 
 dev_dependencies:
   flutter_test:
