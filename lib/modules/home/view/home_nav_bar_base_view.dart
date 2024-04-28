@@ -4,6 +4,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/modules/app/route_named.dart';
 import 'package:team_draw/modules/home/helper/home_page_view.dart';
 import 'package:team_draw/modules/home/routes/home_navigator_routes.dart';
+import 'package:team_draw/modules/home/view/drawer_view.dart';
 import 'package:team_draw/modules/home/view/expandable_fab/action_button_widget.dart';
 import 'package:team_draw/modules/home/view/expandable_fab/expandable_fab_widget.dart';
 import 'package:team_draw/modules/home/view/home_view.dart';
@@ -62,14 +63,7 @@ class _HomeNavBarBaseViewState extends State<HomeNavBarBaseView> {
         ),
         centerTitle: true,
       ),
-      drawer: Drawer(
-        child: TextButton(
-            onPressed: () => navigator.goTo(selectThemeRoute, null),
-            child: Text(
-              "Temas",
-              style: Theme.of(context).textTheme.bodyMedium,
-            )),
-      ),
+      drawer: const Drawer(width: 200, child: DrawerView()),
       floatingActionButton: ExpandableFabWidget(
         distance: 80,
         children: [

@@ -112,3 +112,12 @@ const emptyTeamMessage = "Você ainda não registrou nenhum time.\n"
     "Faça o registro dos jogadores antes de iniciar uma nova partida!";
 const emptyPlayerMessage = "Você precisa registrar no mínimo 2 jogadores.\n"
     "Faça o registro de novos jogadores no botão abaixo!";
+
+//permissions
+const accessMediaLocationDenied = 'O acesso a fotos e vídeos foi negado.';
+const thePermissionShouldBeGranted =
+    'Para utilizar esse recurso é preciso conceder a permissão.';
+const setPermissionGrantedToAccessMediaLocation =
+    'Dê a permissão para acessar fotos e vídeos do seu dispositivo.';
+const grantPermission = 'Conceder Permissão';
+const notPermission = 'Não permitir';

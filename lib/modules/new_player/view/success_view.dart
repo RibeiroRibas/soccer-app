@@ -6,6 +6,7 @@ import 'package:team_draw/modules/home/model/player_score.dart';
 import 'package:team_draw/modules/home/view/players/players_view.dart';
 import 'package:team_draw/modules/new_player/routes/new_player_rote_navigator.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/view/component/app_bar_tittle_with_close_button_component.dart';
 import 'package:team_draw/shared/view/component/elevated_button_component.dart';
 
 class SuccessView extends StatefulWidget {
@@ -24,7 +25,7 @@ class _SuccessViewState extends State<SuccessView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2))
+    Future.delayed(const Duration(milliseconds: 1500))
         .then((_) => setState(() => isShowSuccess = false));
   }
 
@@ -36,7 +37,10 @@ class _SuccessViewState extends State<SuccessView> {
             body: Center(child: Lottie.asset('assets/animations/success.json')),
           )
         : Scaffold(
-            appBar: AppBar(title: const Center(child: Text(allPlayers))),
+            appBar: AppBarTittleWithCloseButtonComponent(
+              tittle: allPlayers,
+              onCloseAction: () => navigator.goTo('$homeNavBarRoute/', null),
+            ),
             body: Padding(
               padding: const EdgeInsets.all(12.0),
               child: PlayersView(
@@ -61,8 +65,8 @@ class _SuccessViewState extends State<SuccessView> {
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButtonComponent(
                       onButtonPressed: () =>
-                          navigator.goTo('$homeNavBarRoute/', null),
-                      text: finish,
+                          navigator.goTo('$newMatchRote/', null),
+                      text: newMatch,
                     ),
                   ),
                 ),
