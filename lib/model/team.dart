@@ -137,8 +137,8 @@ class Team {
 
   void _calculateCharacteristics() {
     for (var player in players!) {
-      teamOverall.value += (player.strengths.length * 0.1);
-      teamOverall.value -= (player.weakPoints.length * 0.1);
+      teamOverall.value += (player.strengths.length * 0.5);
+      teamOverall.value -= (player.weakPoints.length * 0.5);
     }
   }
 }

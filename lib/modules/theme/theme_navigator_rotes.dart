@@ -6,4 +6,15 @@ class ThemeNavigatorRotes extends RouteNavigator {
   Future<void> goTo(String routeName, Map<String, dynamic>? arguments) async {
     Modular.to.navigate(routeName, arguments: arguments);
   }
+
+  @override
+  Future<void> pushNamed(
+      String routeName, Map<String, dynamic>? arguments) async {
+    await Modular.to.pushNamed(routeName, arguments: arguments);
+  }
+
+  @override
+  Future<void> pop() async {
+    Modular.to.pop();
+  }
 }
