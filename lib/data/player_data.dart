@@ -75,21 +75,21 @@ Player guilherme = Player(
   overall: 2,
 );
 List<Player> getAllPlayers = [
-  // ribeiro,
-  // pedro,
-  // jodir,
-  // rodrigo,
-  // helton,
-  // cris,
-  // cleber,
-  // helder,
-  // douglas,
-  // sid,
-  // neny,
-  // diego,
-  // galdino,
-  // bruno,
-  // guilherme
+  ribeiro,
+  pedro,
+  jodir,
+  rodrigo,
+  helton,
+  cris,
+  cleber,
+  helder,
+  douglas,
+  sid,
+  neny,
+  diego,
+  galdino,
+  bruno,
+  guilherme
 ];
 
 List<Player> players1 = [

@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:team_draw/data/team_name_data.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
@@ -25,15 +26,20 @@ abstract class DrawTeamsViewModelBase with Store {
   @observable
   List<Team> sortedTeams = [];
 
+  List<String> availableNames = [];
+
   @action
   Future<void> sortTeamsMatch(
       Map<Player, bool> selectedPlayers, MatchSettings matchSettings) async {
     List<Player> players = _getSelectedPlayers(selectedPlayers);
 
     sortedTeams.clear();
+    availableNames.clear();
     sortedTeams = await service.sortTeamsMatch(players, matchSettings);
     final List<TeamMatch> teamMatches =
         service.generateTeamMatches(sortedTeams);
+
+    _setAvailableNames();
 
     teamsInformation = [];
     for (TeamMatch teamMatch in teamMatches) {
@@ -42,6 +48,8 @@ abstract class DrawTeamsViewModelBase with Store {
       final teamInformation =
           TeamInformation(teamOneInformation, teamTwoInformation);
       teamsInformation.add(teamInformation);
+      availableNames.removeWhere((name) => teamMatch.teamOne!.name == name);
+      availableNames.removeWhere((name) => teamMatch.teamTwo!.name == name);
     }
 
     this.teamMatches = teamMatches;
@@ -50,22 +58,30 @@ abstract class DrawTeamsViewModelBase with Store {
   @action
   void onTeamNameOrShieldChange(String oldName, String newNameOrShield) {
     for (TeamMatch teamMatch in teamMatches) {
+      if (teamMatch.teamOne!.name == oldName &&
+              teamMatch.teamTwo!.name == newNameOrShield ||
+          teamMatch.teamTwo!.name == oldName &&
+              teamMatch.teamOne!.name == newNameOrShield) {
+        return;
+      }
+
       if (teamMatch.teamOne!.name == oldName) {
         if (newNameOrShield.contains(".png")) {
           teamMatch.teamOne!.shield = newNameOrShield;
         } else {
           teamMatch.teamOne!.name = newNameOrShield;
+          availableNames.add(oldName);
+          availableNames.remove(newNameOrShield);
         }
-        break;
       }
 
       if (teamMatch.teamTwo!.name == oldName) {
         if (newNameOrShield.contains(".png")) {
           teamMatch.teamTwo!.shield = newNameOrShield;
-          break;
         } else {
           teamMatch.teamTwo!.name = newNameOrShield;
-          break;
+          availableNames.add(oldName);
+          availableNames.remove(newNameOrShield);
         }
       }
     }
@@ -114,5 +130,21 @@ abstract class DrawTeamsViewModelBase with Store {
       }
     });
     return players;
+  }
+
+  void _setAvailableNames() {
+    // final List<String> allCachedNames = [];
+    // allCachedNames.addAll(getAllTeamNames);
+    //
+    // for (Team team in service.allTeams) {
+    //   allCachedNames.removeWhere((teamName) => teamName == team.name);
+    // }
+    //
+    // availableNames.addAll(allCachedNames);
+    for (var teamName in getAllTeamNames) {
+      if (!service.allTeams.any((team) => team.name == teamName)) {
+        availableNames.add(teamName);
+      }
+    }
   }
 }

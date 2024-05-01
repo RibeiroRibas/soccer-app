@@ -27,6 +27,20 @@ class MediaService {
     return null;
   }
 
+  Future<String?> pickImageFomDevice() async {
+    await Permission.accessMediaLocation.request();
+    if (await Permission.accessMediaLocation.isGranted) {
+      final XFile? xFile = await _picker.pickImage(source: ImageSource.gallery);
+      if (xFile != null) {
+        File file = File(xFile.path);
+        List<int> imageBytes = file.readAsBytesSync();
+        String base64Image = base64Encode(imageBytes);
+        return base64Image;
+      }
+    }
+    return null;
+  }
+
   Future<File?> pickVideoFromDevice() async {
     await Permission.accessMediaLocation.request();
     if (await Permission.accessMediaLocation.isGranted) {

@@ -34,7 +34,7 @@ class VideoListItem extends StatelessWidget {
                     const Icon(Icons.play_arrow)
                   ]),
                   onTap: () => navigator.pushNamed(
-                      '$homeNavBarRoute$videoPlayerRoute', {"video": video}),
+                      '$galleryRoute$videoPlayerRoute', {"video": video}),
                 )
               : const SizedBox();
         });

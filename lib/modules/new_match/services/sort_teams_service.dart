@@ -25,6 +25,7 @@ class SortTeamsService {
   late List<Player> _defenders;
   late List<Player> _leftBacks;
   late List<Player> _rightBacks;
+  late List<Team> allTeams;
 
   Future<List<Team>> sortTeamsMatch(
       List<Player> players, MatchSettings settings) async {
@@ -42,7 +43,7 @@ class SortTeamsService {
   }
 
   Future<void> _generateTeamNameAndShield(List<Team> teams) async {
-    List<Team> allTeams = await teamService.findAllTeams();
+    allTeams = await teamService.findAllTeams();
     for (Team team in teams) {
       Team repeatTeam = await teamService.findByPlayers(team.players!);
       if (repeatTeam.isPresent()) {

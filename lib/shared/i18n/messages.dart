@@ -121,3 +121,7 @@ const setPermissionGrantedToAccessMediaLocation =
     'Dê a permissão para acessar fotos e vídeos do seu dispositivo.';
 const grantPermission = 'Conceder Permissão';
 const notPermission = 'Não permitir';
+
+// menu (drawer)
+const gallery = "Galeria";
+const themes = "Temas";
