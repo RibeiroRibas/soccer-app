@@ -5,8 +5,11 @@ const String selectThemeRoute = "/select_theme";
 
 // home_module named routes
 const String homeNavBarRoute = "/navigator";
+
+//gallery
 const String galleryRoute = "/gallery";
 const String videoPlayerRoute = "/video_player";
+const String imageViewerRoute = "/image_viewer";
 
 // new_player_module named routes
 const String newPlayerRote = '/new_player';

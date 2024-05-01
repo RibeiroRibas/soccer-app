@@ -85,16 +85,19 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
                                   onChange: (oldNameOrShield, newNameOrShield) {
                                     controller.onTeamNameOrShieldChange(
                                         oldNameOrShield, newNameOrShield);
-                                  }),
+                                  },
+                                  availableNames: controller.availableNames),
                               const Text(versus),
                               TeamNameAndShieldWidget(
-                                  team: controller.teamMatches
-                                      .elementAt(index)
-                                      .teamTwo!,
-                                  onChange: (oldNameOrShield, newNameOrShield) {
-                                    controller.onTeamNameOrShieldChange(
-                                        oldNameOrShield, newNameOrShield);
-                                  }),
+                                team: controller.teamMatches
+                                    .elementAt(index)
+                                    .teamTwo!,
+                                onChange: (oldNameOrShield, newNameOrShield) {
+                                  controller.onTeamNameOrShieldChange(
+                                      oldNameOrShield, newNameOrShield);
+                                },
+                                availableNames: controller.availableNames,
+                              ),
                             ],
                           ),
                         ],

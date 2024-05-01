@@ -22,14 +22,12 @@ class GenerateTeamNameService {
       allCachedNames.removeWhere((teamName) => teamName == team.name);
     }
 
-    if (allCachedNames.isNotEmpty) {
-      for (String cachedName in allCachedNames) {
-        if (!_temporaryUsedNames
-            .any((temporaryName) => temporaryName == cachedName)) {
-          name = cachedName;
-          _temporaryUsedNames.add(cachedName);
-          break;
-        }
+    for (String cachedName in allCachedNames) {
+      if (!_temporaryUsedNames
+          .any((temporaryName) => temporaryName == cachedName)) {
+        name = cachedName;
+        _temporaryUsedNames.add(cachedName);
+        break;
       }
     }
 
@@ -38,7 +36,7 @@ class GenerateTeamNameService {
 
   Future<String> generateSequentialName() async {
     if (_lastGeneratedSequentialNumber > 0) {
-      _lastGeneratedSequentialNumber = _lastGeneratedSequentialNumber + 1;
+      _lastGeneratedSequentialNumber += 1;
       return "$_time $_lastGeneratedSequentialNumber";
     }
 
@@ -46,7 +44,7 @@ class GenerateTeamNameService {
         await counterTeamRepository.read(_counterTeamRepositoryKey);
 
     if (lastSavedSequentialNumber != null) {
-      _lastGeneratedSequentialNumber = _lastGeneratedSequentialNumber + 1;
+      _lastGeneratedSequentialNumber += 1;
       return "$_time $_lastGeneratedSequentialNumber";
     }
 

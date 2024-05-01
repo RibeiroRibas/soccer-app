@@ -7,11 +7,13 @@ import 'package:team_draw/modules/new_match/view/draw_teams/select_shield_modal.
 class TeamNameAndShieldWidget extends StatelessWidget {
   final Team team;
   final Function(String, String) onChange;
+  final List<String> availableNames;
 
   const TeamNameAndShieldWidget({
     super.key,
     required this.team,
     required this.onChange,
+    required this.availableNames,
   });
 
   @override
@@ -63,6 +65,7 @@ class TeamNameAndShieldWidget extends StatelessWidget {
                   team.name!,
                   newName,
                 ),
+                availableNames: availableNames,
               ),
             ),
           ),

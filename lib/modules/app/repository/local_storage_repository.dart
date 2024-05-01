@@ -4,7 +4,6 @@ import 'package:team_draw/modules/app/repository/local_repository.dart';
 const localRepositoryKey = "team_data";
 
 class LocalStorageRepository extends ILocalRepository {
-
   @override
   Future<String?> read(String key) async {
     await initLocalStorage();
