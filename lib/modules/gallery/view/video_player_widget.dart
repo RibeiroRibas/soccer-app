@@ -3,8 +3,7 @@ import 'dart:io';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:team_draw/modules/home/routes/home_navigator_routes.dart';
-
+import 'package:team_draw/modules/gallery/gallery_navigator_rotes.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
@@ -18,7 +17,8 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late FlickManager flickManager;
-  final HomeNavigatorRoutes navigator = Modular.get<HomeNavigatorRoutes>();
+  final GalleryNavigatorRoutes navigator =
+      Modular.get<GalleryNavigatorRoutes>();
 
   @override
   void initState() {

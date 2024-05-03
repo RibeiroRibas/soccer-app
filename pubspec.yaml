@@ -40,7 +40,7 @@ dependencies:
   flutter_mobx: ^2.0.6+5
   lottie: ^3.1.0
   analyzer: ^6.4.1
-  localstorage: ^4.0.1+4
+  localstorage: ^5.0.0
   modal_bottom_sheet: ^3.0.0
   flutter_native_splash: ^2.4.0
   carousel_slider: ^4.2.1

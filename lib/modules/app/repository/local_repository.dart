@@ -1,5 +1,5 @@
 abstract class ILocalRepository {
-  Future<V?> read<V>(String key);
+  Future<String?> read(String key);
 
-  Future<void> write<V>(String key, V value);
+  Future<void> write(String key, String value);
 }

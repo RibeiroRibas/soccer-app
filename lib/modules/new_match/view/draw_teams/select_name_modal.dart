@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/data/team_name_data.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class SelectNameModal extends StatefulWidget {
   final String name;
   final Function(String) onNameChanged;
+  final List<String> availableNames;
 
   const SelectNameModal(
-      {super.key, required this.name, required this.onNameChanged});
+      {super.key,
+      required this.name,
+      required this.onNameChanged,
+      required this.availableNames});
 
   @override
   State<SelectNameModal> createState() => _SelectNameModalState();
@@ -19,7 +22,6 @@ class _SelectNameModalState extends State<SelectNameModal> {
   final _focusNode = FocusNode();
   late final TextEditingController _textController;
   late String _selectedName;
-  int? _selectedIndex;
 
   @override
   void initState() {
@@ -63,7 +65,6 @@ class _SelectNameModalState extends State<SelectNameModal> {
                               _selectedName = text;
                             }
                           },
-                          keyboardType: TextInputType.number,
                           validator: (String? value) =>
                               value == null || value.isEmpty
                                   ? typeTeamName
@@ -101,21 +102,18 @@ class _SelectNameModalState extends State<SelectNameModal> {
                     return ListTile(
                       splashColor: ThemeColors.overall,
                       title: Text(
-                        getAllTeamNames.elementAt(index),
+                        widget.availableNames.elementAt(index),
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      tileColor:
-                          _selectedIndex != null && _selectedIndex == index
-                              ? ThemeColors.blueDark
-                              : ThemeColors.grayDark,
-                      onTap: () => setState(() {
-                        _selectedName = getAllTeamNames.elementAt(index);
-                        _textController.text = _selectedName;
-                        _selectedIndex = index;
-                      }),
+                      tileColor: ThemeColors.grayDark,
+                      onTap: () {
+                        widget.onNameChanged(
+                            widget.availableNames.elementAt(index));
+                        Navigator.pop(context);
+                      },
                     );
                   },
-                  itemCount: getAllTeamNames.length,
+                  itemCount: widget.availableNames.length,
                 ),
                 const Divider(),
               ],

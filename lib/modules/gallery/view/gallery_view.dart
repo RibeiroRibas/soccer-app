@@ -3,11 +3,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:team_draw/modules/home/routes/home_navigator_routes.dart';
-import 'package:team_draw/modules/home/view/gallery/image_list_item.dart';
-import 'package:team_draw/modules/home/view/gallery/video_list_item.dart';
-import 'package:team_draw/modules/home/view_model/gallery_view_model.dart';
-import 'package:team_draw/services/media_service.dart';
+import 'package:team_draw/modules/app/route_named.dart';
+import 'package:team_draw/modules/gallery/gallery_navigator_rotes.dart';
+import 'package:team_draw/modules/gallery/view/image_list_item.dart';
+import 'package:team_draw/modules/gallery/view/video_list_item.dart';
+import 'package:team_draw/modules/gallery/view_model/gallery_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/view/component/app_bar_tittle_with_close_button_component.dart';
 
@@ -19,7 +19,8 @@ class GalleryView extends StatefulWidget {
 }
 
 class _GalleryViewState extends State<GalleryView> {
-  final HomeNavigatorRoutes navigator = Modular.get<HomeNavigatorRoutes>();
+  final GalleryNavigatorRoutes navigator =
+      Modular.get<GalleryNavigatorRoutes>();
   final GalleryViewModel viewModel = Modular.get<GalleryViewModel>();
 
   @override
@@ -77,7 +78,7 @@ class _GalleryViewState extends State<GalleryView> {
     return Scaffold(
       appBar: AppBarTittleWithCloseButtonComponent(
         tittle: "Galeria",
-        onCloseAction: () => navigator.pop(),
+        onCloseAction: () => navigator.goTo(homeNavBarRoute, null),
       ),
       floatingActionButton: Builder(
         builder: (_) {
@@ -105,7 +106,11 @@ class _GalleryViewState extends State<GalleryView> {
                   ),
                   itemCount: viewModel.images.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return ImageListItem(image: viewModel.images[index]);
+                    return GestureDetector(
+                        onTap: () => navigator.pushNamed(
+                            '$galleryRoute$imageViewerRoute',
+                            {"images": viewModel.images, "imageIndex": index}),
+                        child: ImageListItem(image: viewModel.images[index]));
                   },
                 )
               : GridView.builder(
@@ -141,12 +146,5 @@ class _GalleryViewState extends State<GalleryView> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    Modular.dispose<GalleryViewModel>();
-    Modular.dispose<MediaService>();
-    super.dispose();
   }
 }

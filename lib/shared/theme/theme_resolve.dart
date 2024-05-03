@@ -4,7 +4,7 @@ import 'package:team_draw/modules/theme/theme_name.dart';
 import 'package:team_draw/shared/theme/default_theme.dart';
 import 'package:team_draw/shared/theme/flamengo_theme.dart';
 
-const String flamengo = "Flamengo";
+const String flamengo = "flamengo";
 
 class ThemeResolve {
   static ThemeData fromName(String themeName) {
@@ -21,9 +21,9 @@ class ThemeResolve {
       case ThemeName.default_:
         return "$imageInitialPath/default-theme.png";
       case ThemeName.flamengo:
-        return "$imageInitialPath/default-theme.png";
+        return "$imageInitialPath/flamengo-theme.png";
       default:
-        return "$imageInitialPath/empty-shield.png";
+        return "$imageInitialPath/default-theme.png";
     }
   }
 
