@@ -15,10 +15,10 @@ const principalPosition = "Posição atuante";
 const overall = "Overall";
 const classificationTable = "Tabela de classificação";
 const teamAmount = "Overall do time divido por posições";
-const goals = "Gols";
-const defeats = "Derrotas";
-const victories = "Vitórias";
-const draws = "Empates";
+const goals = "Gol";
+const defeats = "Derrota";
+const victories = "Vitória";
+const draws = "Empate";
 
 //theme
 const welcome = "Bem vindo ao \n $appName.";

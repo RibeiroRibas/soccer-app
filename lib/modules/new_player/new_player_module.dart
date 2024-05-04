@@ -26,10 +26,8 @@ class NewPlayerModule extends Module {
 
   @override
   void routes(r) {
-    r.child(
-      startRote,
-      child: (context) => const NewPlayerBaseView(),
-    );
+    r.child(startRote,
+        child: (context) => NewPlayerBaseView(player: r.args.data["player"]));
     r.child(successNewPlayerRote,
         transition: TransitionType.upToDown,
         child: (_) => SuccessView(playersScore: r.args.data["playersScore"]));

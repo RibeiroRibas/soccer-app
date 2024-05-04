@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 import 'package:team_draw/shared/view/component/player_overall/player_score_widget.dart';
@@ -7,11 +8,13 @@ import 'package:team_draw/shared/view/component/player_position_component.dart';
 class PlayerOverallItemComponent extends StatelessWidget {
   final PlayerScore playerScore;
   final bool showPlayerScore;
+  final Function(Player)? goToUpdatePlayerRoute;
 
   const PlayerOverallItemComponent({
     super.key,
     required this.playerScore,
     this.showPlayerScore = false,
+    this.goToUpdatePlayerRoute,
   });
 
   @override
@@ -30,6 +33,14 @@ class PlayerOverallItemComponent extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            if (goToUpdatePlayerRoute != null)
+              GestureDetector(
+                onTap: () => goToUpdatePlayerRoute!(playerScore.player),
+                child: const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Icon(Icons.edit, size: 20),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: PlayerPositionComponent(

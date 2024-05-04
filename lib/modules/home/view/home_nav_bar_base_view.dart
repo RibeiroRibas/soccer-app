@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/app/route_named.dart';
 import 'package:team_draw/modules/home/helper/home_page_view.dart';
 import 'package:team_draw/modules/home/routes/home_navigator_routes.dart';
@@ -47,6 +48,8 @@ class _HomeNavBarBaseViewState extends State<HomeNavBarBaseView> {
       PlayersView(
         playersScore: controller.calculatePlayerScore(),
         goToNextRoute: (route) => navigator.goTo('$route/', null),
+        goToUpdatePlayerRoute: (player) =>
+            navigator.goTo("$newPlayerRote/", {"player": player}),
       )
     ];
     assert(HomePageView.getTotalPages() == allPages.length);
@@ -68,7 +71,8 @@ class _HomeNavBarBaseViewState extends State<HomeNavBarBaseView> {
         distance: 80,
         children: [
           ActionButtonWidget(
-            onPressed: () => navigator.goTo('$newPlayerRote/', null),
+            onPressed: () =>
+                navigator.goTo('$newPlayerRote/', {"player": Player()}),
             icon: const Icon(Icons.person_add),
           ),
           ActionButtonWidget(

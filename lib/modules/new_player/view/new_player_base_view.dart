@@ -20,9 +20,9 @@ import 'package:team_draw/shared/view/component/forward_button_component.dart';
 import 'package:team_draw/shared/view/component/page_index_animation_component.dart';
 
 class NewPlayerBaseView extends StatefulWidget {
-  const NewPlayerBaseView({
-    super.key,
-  });
+  final Player player;
+
+  const NewPlayerBaseView({super.key, required this.player});
 
   @override
   State<NewPlayerBaseView> createState() => _NewPlayerBaseViewState();
@@ -34,7 +34,6 @@ class _NewPlayerBaseViewState extends State<NewPlayerBaseView> {
   final PageViewController pageViewController =
       Modular.get<PageViewController>();
   late final void Function(NewPlayerPageView) goToNextPageView;
-  final Player player = Player();
 
   @override
   void initState() {
@@ -98,7 +97,7 @@ class _NewPlayerBaseViewState extends State<NewPlayerBaseView> {
   }
 
   void _savePlayerAndGoToSuccessView() {
-    controller.savePlayer(player).then((_) => controller
+    controller.savePlayer(widget.player).then((_) => controller
             .calculatePlayerScore()
             .then((playersScore) => _goToSuccessView(playersScore))
             .then((_) async {
@@ -131,28 +130,28 @@ class _NewPlayerBaseViewState extends State<NewPlayerBaseView> {
   List<Widget> _allPagesView() {
     List<Widget> allPages = [
       PlayerNameView(
-        player: player,
+        player: widget.player,
         goToNextPageView: goToNextPageView,
         allPlayers: controller.allPlayers,
       ),
       PlayerPrincipalPositionView(
-        player: player,
+        player: widget.player,
         goToNextPageView: goToNextPageView,
       ),
       PlayerStrengthsView(
-        player: player,
+        player: widget.player,
         goToNextPageView: goToNextPageView,
       ),
       PlayerWeakPointsView(
-        player: player,
+        player: widget.player,
         goToNextPageVIew: goToNextPageView,
       ),
       PlayerOverallView(
-        player: player,
+        player: widget.player,
         goToNextPageView: goToNextPageView,
       ),
       ConfirmNewPlayerView(
-        player: player,
+        player: widget.player,
         goToNextPageView: goToNextPageView,
       )
     ];
