@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/modules/app/route_named.dart';
-import 'package:team_draw/modules/home/routes/home_navigator_routes.dart';
+import 'package:team_draw/modules/gallery/gallery_navigator_rotes.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class VideoListItem extends StatelessWidget {
@@ -14,7 +14,8 @@ class VideoListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final HomeNavigatorRoutes navigator = Modular.get<HomeNavigatorRoutes>();
+    final GalleryNavigatorRoutes navigator =
+        Modular.get<GalleryNavigatorRoutes>();
 
     return FutureBuilder(
         future: initialize(context),

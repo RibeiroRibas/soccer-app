@@ -6,13 +6,14 @@ import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
 
 class Player {
+  int id;
   String? name;
   Position? principalPosition;
   double? overall;
   List<PlayerStrengths> strengths = [];
   List<PlayerWeakPoints> weakPoints = [];
 
-  Player({this.name, this.overall, this.principalPosition});
+  Player({this.id = 0, this.name, this.overall, this.principalPosition});
 
   bool isGoalKeeper() {
     return principalPosition == Position.goalkeeper;
