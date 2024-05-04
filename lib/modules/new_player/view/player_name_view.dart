@@ -49,11 +49,19 @@ class PlayerNameView extends StatelessWidget {
             initialValue: player.name ?? "",
             onChanged: (String value) {
               player.name = value;
-              _formKey.currentState!.validate();
+              if (player.id == 0) {
+                _formKey.currentState!.validate();
+              }
             },
-            onFieldSubmitted: (_) => _formKey.currentState!.validate()
-                ? goToNextPageView(NewPlayerPageView.principalPosition)
-                : null,
+            onFieldSubmitted: (_) {
+              if (player.id == 0) {
+                _formKey.currentState!.validate()
+                    ? goToNextPageView(NewPlayerPageView.principalPosition)
+                    : null;
+              } else {
+                goToNextPageView(NewPlayerPageView.principalPosition);
+              }
+            },
           ),
         ),
         const Expanded(child: SizedBox()),

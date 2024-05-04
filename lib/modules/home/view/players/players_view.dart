@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/view/component/new_player_and_match_component.dart';
@@ -10,11 +12,13 @@ import 'player_score_subtitle_widget.dart';
 class PlayersView extends StatelessWidget {
   final List<PlayerScore> playersScore;
   final Function(String) goToNextRoute;
+  final Function(Player) goToUpdatePlayerRoute;
 
   const PlayersView({
     super.key,
     required this.playersScore,
     required this.goToNextRoute,
+    required this.goToUpdatePlayerRoute,
   });
 
   @override
@@ -39,7 +43,10 @@ class PlayersView extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: PlayerOverallItemComponent(
-                      playerScore: playersScore[index], showPlayerScore: true),
+                    playerScore: playersScore[index],
+                    showPlayerScore: true,
+                    goToUpdatePlayerRoute: goToUpdatePlayerRoute,
+                  ),
                 );
               },
               itemCount: playersScore.length,

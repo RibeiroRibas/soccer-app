@@ -24,4 +24,13 @@ class PlayerService {
   addPlayer(Player player) async {
     await _repository.addPlayer(player);
   }
+
+  Future<void> updatePlayer(Player player) async {
+    List<Player> players = await findAllPlayers();
+    for (var playerFromDatabase in players) {
+      if (playerFromDatabase.id == player.id) {
+        playerFromDatabase = player;
+      }
+    }
+  }
 }

@@ -46,6 +46,8 @@ class _SuccessViewState extends State<SuccessView> {
               child: PlayersView(
                 playersScore: widget.playersScore,
                 goToNextRoute: (route) => navigator.goTo('$route/', null),
+                goToUpdatePlayerRoute: (player) =>
+                    navigator.goTo("$newPlayerRote/", {"player": player}),
               ),
             ),
             bottomNavigationBar: Row(

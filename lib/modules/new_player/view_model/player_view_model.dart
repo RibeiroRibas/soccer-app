@@ -25,7 +25,11 @@ abstract class PlayerViewModelBase with Store {
 
   @action
   Future<void> savePlayer(Player player) async {
-    await _playerService.addPlayer(player);
+    if (player.id == 0) {
+      await _playerService.addPlayer(player);
+    } else {
+      await _playerService.updatePlayer(player);
+    }
   }
 
   Future<List<PlayerScore>> calculatePlayerScore() async {
