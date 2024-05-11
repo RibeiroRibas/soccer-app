@@ -3,6 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/modules/app/route_named.dart';
+import 'package:team_draw/modules/new_match/routes/new_match_rote_navigator.dart';
 import 'package:team_draw/modules/new_match/view/draw_teams/team_name_and_shield_widget.dart';
 import 'package:team_draw/modules/new_match/view/draw_teams/teams_information_widget.dart';
 import 'package:team_draw/modules/new_match/view_model/draw_teams_view_model.dart';
@@ -28,36 +30,55 @@ class DrawnTeamsView extends StatefulWidget {
 }
 
 class _DrawnTeamsViewState extends State<DrawnTeamsView> {
-  final DrawTeamsViewModel controller = Modular.get<DrawTeamsViewModel>();
+  final DrawTeamsViewModel viewModel = Modular.get<DrawTeamsViewModel>();
+  final NewMatchRoteNavigator navigator = Modular.get<NewMatchRoteNavigator>();
 
   @override
   void initState() {
     super.initState();
-    if (controller.teamMatches.isEmpty) {
-      widget.onShowForwardButton(false);
-    }
+    widget.onShowForwardButton(false);
   }
 
   void _sortTeams() {
-    controller.sortTeamsMatch(widget.selectedPlayers, widget.matchSettings);
-    widget.onShowForwardButton.call(true);
+    viewModel.sortTeamsMatch(widget.selectedPlayers, widget.matchSettings);
   }
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 25),
-            child: ElevatedButtonComponent(
-              onButtonPressed: () => _sortTeams(),
-              text: sortTeams,
-            ),
+    return Observer(
+      builder: (_) => CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: viewModel.teamMatches.isEmpty
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 25),
+                    child: ElevatedButtonComponent(
+                      onButtonPressed: () => _sortTeams(),
+                      text: sortTeams,
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(bottom: 25, top: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButtonComponent(
+                          onButtonPressed: () => _sortTeams(),
+                          text: sortTeams,
+                        ),
+                        ElevatedButtonComponent(
+                          onButtonPressed: () => navigator.goTo(matchRote, {
+                            "matches": viewModel.teamMatches,
+                            "matchSettings": widget.matchSettings
+                          }),
+                          text: "Iniciar Partida",
+                        ),
+                      ],
+                    ),
+                  ),
           ),
-        ),
-        Observer(
-          builder: (_) => SliverList(
+          SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return Column(
@@ -79,24 +100,33 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TeamNameAndShieldWidget(
-                                  team: controller.teamMatches
-                                      .elementAt(index)
-                                      .teamOne!,
-                                  onChange: (oldNameOrShield, newNameOrShield) {
-                                    controller.onTeamNameOrShieldChange(
-                                        oldNameOrShield, newNameOrShield);
-                                  },
-                                  availableNames: controller.availableNames),
+                                team: viewModel.teamMatches
+                                    .elementAt(index)
+                                    .teamOne!,
+                                onTeamNameChange: (oldTeamName, newTeamName) {
+                                  viewModel.onTeamNameChange(
+                                      oldTeamName, newTeamName);
+                                },
+                                availableNames: viewModel.availableNames,
+                                onChangeTeamShield:
+                                    (oldTeamShield, newTeamShield) =>
+                                        viewModel.onTeamShieldChange(
+                                            oldTeamShield, newTeamShield),
+                              ),
                               const Text(versus),
                               TeamNameAndShieldWidget(
-                                team: controller.teamMatches
+                                team: viewModel.teamMatches
                                     .elementAt(index)
                                     .teamTwo!,
-                                onChange: (oldNameOrShield, newNameOrShield) {
-                                  controller.onTeamNameOrShieldChange(
-                                      oldNameOrShield, newNameOrShield);
+                                onTeamNameChange: (oldTeamName, newTeamName) {
+                                  viewModel.onTeamNameChange(
+                                      oldTeamName, newTeamName);
                                 },
-                                availableNames: controller.availableNames,
+                                availableNames: viewModel.availableNames,
+                                onChangeTeamShield:
+                                    (oldTeamShield, newTeamShield) =>
+                                        viewModel.onTeamShieldChange(
+                                            oldTeamShield, newTeamShield),
                               ),
                             ],
                           ),
@@ -106,34 +136,32 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
                     BoxCardComponent(
                       boxCardBody: TeamsInformationWidget(
                         teamsInformation:
-                            controller.teamsInformation.elementAt(index),
+                            viewModel.teamsInformation.elementAt(index),
                       ),
                     ),
                   ],
                 );
               },
-              childCount: controller.teamMatches.length,
+              childCount: viewModel.teamMatches.length,
             ),
           ),
-        ),
-        Observer(
-          builder: (_) => SliverList(
+          SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(top: 30.0),
                   child: BoxCardComponent(
                     boxCardBody: TeamLineupSection(
-                      team: controller.sortedTeams[index],
+                      team: viewModel.sortedTeams[index],
                     ),
                   ),
                 );
               },
-              childCount: controller.sortedTeams.length,
+              childCount: viewModel.sortedTeams.length,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

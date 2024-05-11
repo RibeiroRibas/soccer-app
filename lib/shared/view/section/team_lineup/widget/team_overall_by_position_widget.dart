@@ -65,7 +65,7 @@ class TeamOverallByPositionWidget extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 2.0, right: 20.0),
-                        child: PlayerPositionComponent(
+                        child: PlayerNameAndPositionComponent(
                           position: overallByPosition.keys.elementAt(index),
                           positionColor: overallColor,
                         ),

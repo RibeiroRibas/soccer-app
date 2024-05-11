@@ -1,17 +1,20 @@
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/model/team_shield.dart';
 import 'package:team_draw/modules/home/model/team_overall.dart';
 import 'package:team_draw/shared/extensions/team_overall_map_extension.dart';
 
 class Team {
+  int? id;
   String? name;
   String? acronym;
-  String? shield;
+  TeamShield? shield;
   List<Player>? players;
   int? numberOfStartingPlayers;
   TeamOverall teamOverall = TeamOverall();
 
   Team({
+    this.id = 0,
     this.name,
     this.acronym,
     this.shield,
@@ -29,12 +32,14 @@ class Team {
   }
 
   void calculateOverall() async {
-    if (hasGoalKeeper()) {
-      _calculateWithGoalKeeper();
-    } else {
-      _calculateWithoutGoalKeeper();
+    if (teamOverall.value == 0) {
+      if (hasGoalKeeper()) {
+        _calculateWithGoalKeeper();
+      } else {
+        _calculateWithoutGoalKeeper();
+      }
+      _calculateCharacteristics();
     }
-    _calculateCharacteristics();
   }
 
   void _calculateOverall() {

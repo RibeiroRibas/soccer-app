@@ -1,44 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/position.dart';
 
-class PlayerPositionComponent extends StatefulWidget {
+class PlayerNameAndPositionComponent extends StatelessWidget {
   final Position? position;
-  final Color positionColor;
+  final Color? positionColor;
+  final String? playerName;
 
-  const PlayerPositionComponent({
+  const PlayerNameAndPositionComponent({
     super.key,
     required this.position,
-    required this.positionColor,
+    this.positionColor,
+    this.playerName,
   });
 
   @override
-  State<PlayerPositionComponent> createState() =>
-      _PlayerPositionComponentState();
-}
-
-class _PlayerPositionComponentState extends State<PlayerPositionComponent> {
-  @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 25,
-      width: 25,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: widget.position != null
-                ? widget.positionColor
-                : Colors.transparent,
-          )),
-      child: widget.position != null
-          ? Text(
-              widget.position!.acronym,
-              style: TextStyle(
-                fontSize: 12,
-                color: widget.positionColor,
-              ),
-            )
-          : null,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          height: 25,
+          width: 25,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                width: 2,
+                color: positionColor == null
+                    ? Theme.of(context).primaryColor
+                    : position != null
+                        ? positionColor!
+                        : Colors.transparent,
+              )),
+          child: position != null
+              ? Text(
+                  position!.acronym,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: positionColor, fontWeight: FontWeight.bold),
+                )
+              : null,
+        ),
+        if (playerName != null)
+          Text(
+            playerName!,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .copyWith(color: positionColor, fontWeight: FontWeight.bold),
+          )
+      ],
     );
   }
 }

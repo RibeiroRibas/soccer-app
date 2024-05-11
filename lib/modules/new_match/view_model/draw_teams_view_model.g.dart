@@ -71,11 +71,22 @@ mixin _$DrawTeamsViewModel on DrawTeamsViewModelBase, Store {
       ActionController(name: 'DrawTeamsViewModelBase', context: context);
 
   @override
-  void onTeamNameOrShieldChange(String oldName, String newNameOrShield) {
+  void _updateTeamObservables() {
     final _$actionInfo = _$DrawTeamsViewModelBaseActionController.startAction(
-        name: 'DrawTeamsViewModelBase.onTeamNameOrShieldChange');
+        name: 'DrawTeamsViewModelBase._updateTeamObservables');
     try {
-      return super.onTeamNameOrShieldChange(oldName, newNameOrShield);
+      return super._updateTeamObservables();
+    } finally {
+      _$DrawTeamsViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void onTeamShieldChange(TeamShield oldTeamShield, TeamShield newTeamShield) {
+    final _$actionInfo = _$DrawTeamsViewModelBaseActionController.startAction(
+        name: 'DrawTeamsViewModelBase.onTeamShieldChange');
+    try {
+      return super.onTeamShieldChange(oldTeamShield, newTeamShield);
     } finally {
       _$DrawTeamsViewModelBaseActionController.endAction(_$actionInfo);
     }
