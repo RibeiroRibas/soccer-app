@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:team_draw/data/shield_data.dart';
 import 'package:team_draw/model/team.dart';
+import 'package:team_draw/model/team_shield.dart';
 
 class GenerateTeamShieldService {
-  final List<String> _temporaryUsedShields = [];
+  final List<TeamShield> _temporaryUsedShields = [];
 
-  String generateTeamShield(List<Team> allTeams) {
-    String? shield;
+  TeamShield generateTeamShield(List<Team> allTeams) {
+    TeamShield? shield;
 
-    final List<String> allCachedShields = [];
+    final List<TeamShield> allCachedShields = [];
     allCachedShields.addAll(getAllShields);
 
     for (Team team in allTeams) {
@@ -15,7 +17,7 @@ class GenerateTeamShieldService {
     }
 
     if (allCachedShields.isNotEmpty) {
-      for (String cachedShield in allCachedShields) {
+      for (TeamShield cachedShield in allCachedShields) {
         if (!_temporaryUsedShields
             .any((temporaryShield) => temporaryShield == cachedShield)) {
           shield = cachedShield;
@@ -25,6 +27,10 @@ class GenerateTeamShieldService {
       }
     }
 
-    return shield ?? "$imageInitialPath/empty-shield.png";
+    return shield ??
+        TeamShield(
+            resourcePath: "$imageInitialPath/empty-shield.png",
+            primaryColor: Colors.white,
+            secondaryColor: Colors.black);
   }
 }

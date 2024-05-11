@@ -17,3 +17,6 @@ const String successNewPlayerRote = '/success';
 
 // new_match_module named routes
 const String newMatchRote = '/new_match';
+
+// match_module named routes
+const String matchRote = '/match';

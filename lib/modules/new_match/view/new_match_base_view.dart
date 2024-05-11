@@ -67,6 +67,7 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
       navigator.goTo('$homeNavBarRoute/', null);
     } else {
       pageViewController.previousPage();
+      viewModel.showForwardButton(true);
     }
   }
 
@@ -98,10 +99,10 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 32.0),
-          child: Column(
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+          child: Stack(
             children: [
-              Expanded(
+              Positioned.fill(
                 child: PageView(
                   physics: const NeverScrollableScrollPhysics(),
                   controller: pageViewController.pageController,
@@ -110,10 +111,15 @@ class _NewMatchBaseViewState extends State<NewMatchBaseView> {
               ),
               Observer(
                 builder: (BuildContext context) {
-                  return PageIndexAnimationComponent(
-                      pagesLength: allPagesView().length,
-                      currentPageIndex: pageViewController.currentPageIndex,
-                      animationPath: 'assets/animations/foot.json');
+                  return Positioned(
+                    bottom: 20.0,
+                    left: 0.0,
+                    right: 0.0,
+                    child: PageIndexAnimationComponent(
+                        pagesLength: allPagesView().length,
+                        currentPageIndex: pageViewController.currentPageIndex,
+                        animationPath: 'assets/animations/foot.json'),
+                  );
                 },
               ),
             ],

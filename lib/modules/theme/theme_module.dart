@@ -4,8 +4,8 @@ import 'package:team_draw/modules/app/route_named.dart';
 import 'package:team_draw/modules/theme/repository/theme_repository.dart';
 import 'package:team_draw/modules/theme/theme_navigator_rotes.dart';
 import 'package:team_draw/modules/theme/theme_view_model/theme_view_model.dart';
-import 'package:team_draw/modules/theme/ui/initial_view.dart';
-import 'package:team_draw/modules/theme/ui/select_theme_view.dart';
+import 'package:team_draw/modules/theme/view/initial_view.dart';
+import 'package:team_draw/modules/theme/view/select_theme_view.dart';
 
 class ThemeModule extends Module {
   @override

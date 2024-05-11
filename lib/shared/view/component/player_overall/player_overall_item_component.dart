@@ -43,7 +43,7 @@ class PlayerOverallItemComponent extends StatelessWidget {
               ),
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: PlayerPositionComponent(
+              child: PlayerNameAndPositionComponent(
                 position: playerScore.player.principalPosition,
                 positionColor: ThemeColors.principalPosition,
               ),

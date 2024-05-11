@@ -5,6 +5,7 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/team_shield.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
 import 'package:team_draw/modules/new_match/services/sort_teams_service.dart';
 
@@ -55,48 +56,32 @@ abstract class DrawTeamsViewModelBase with Store {
     this.teamMatches = teamMatches;
   }
 
-  @action
-  void onTeamNameOrShieldChange(String oldName, String newNameOrShield) {
-    for (TeamMatch teamMatch in teamMatches) {
-      if (teamMatch.teamOne!.name == oldName &&
-              teamMatch.teamTwo!.name == newNameOrShield ||
-          teamMatch.teamTwo!.name == oldName &&
-              teamMatch.teamOne!.name == newNameOrShield) {
-        return;
-      }
-
-      if (teamMatch.teamOne!.name == oldName) {
-        if (newNameOrShield.contains(".png")) {
-          teamMatch.teamOne!.shield = newNameOrShield;
-        } else {
-          teamMatch.teamOne!.name = newNameOrShield;
-          availableNames.add(oldName);
-          availableNames.remove(newNameOrShield);
-        }
-      }
-
-      if (teamMatch.teamTwo!.name == oldName) {
-        if (newNameOrShield.contains(".png")) {
-          teamMatch.teamTwo!.shield = newNameOrShield;
-        } else {
-          teamMatch.teamTwo!.name = newNameOrShield;
-          availableNames.add(oldName);
-          availableNames.remove(newNameOrShield);
-        }
-      }
+  void onTeamNameChange(String oldTeamName, String newTeamName) {
+    if (sortedTeams.any((team) => team.name == newTeamName)) {
+      return;
     }
 
     for (Team team in sortedTeams) {
-      if (team.name == oldName) {
-        if (newNameOrShield.contains(".png")) {
-          team.shield = newNameOrShield;
-          break;
-        } else {
-          team.name = newNameOrShield;
-          break;
+      if (team.name == oldTeamName) {
+        team.name = newTeamName;
+        for (TeamMatch teamMatch in teamMatches) {
+          if (teamMatch.teamOne!.name == team.name) {
+            teamMatch.teamOne = team;
+          }
+          if (teamMatch.teamTwo!.name == team.name) {
+            teamMatch.teamTwo = team;
+          }
         }
+        availableNames.add(oldTeamName);
+        availableNames.remove(newTeamName);
+        break;
       }
     }
+    _updateTeamObservables();
+  }
+
+  @action
+  void _updateTeamObservables() {
     List<TeamMatch> matches = [];
     matches.addAll(teamMatches);
     teamMatches = matches;
@@ -104,6 +89,29 @@ abstract class DrawTeamsViewModelBase with Store {
     List<Team> teams = [];
     teams.addAll(sortedTeams);
     sortedTeams = teams;
+  }
+
+  @action
+  void onTeamShieldChange(TeamShield oldTeamShield, TeamShield newTeamShield) {
+    if (sortedTeams.any((team) => team.shield! == newTeamShield)) {
+      return;
+    }
+
+    for (Team team in sortedTeams) {
+      if (team.shield == oldTeamShield) {
+        team.shield = newTeamShield;
+        for (TeamMatch teamMatch in teamMatches) {
+          if (teamMatch.teamOne!.name == team.name) {
+            teamMatch.teamOne = team;
+          }
+          if (teamMatch.teamTwo!.name == team.name) {
+            teamMatch.teamTwo = team;
+          }
+        }
+        break;
+      }
+    }
+    _updateTeamObservables();
   }
 
   List<String> _getTeamInformation(Team team) {

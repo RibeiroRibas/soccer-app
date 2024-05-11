@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:team_draw/model/team.dart';
+import 'package:team_draw/model/team_shield.dart';
 import 'package:team_draw/modules/new_match/view/draw_teams/select_name_modal.dart';
 import 'package:team_draw/modules/new_match/view/draw_teams/select_shield_modal.dart';
 
 class TeamNameAndShieldWidget extends StatelessWidget {
   final Team team;
-  final Function(String, String) onChange;
+  final Function(String, String) onTeamNameChange;
+  final Function(TeamShield, TeamShield) onChangeTeamShield;
   final List<String> availableNames;
 
   const TeamNameAndShieldWidget({
     super.key,
     required this.team,
-    required this.onChange,
+    required this.onTeamNameChange,
+    required this.onChangeTeamShield,
     required this.availableNames,
   });
 
@@ -26,7 +29,7 @@ class TeamNameAndShieldWidget extends StatelessWidget {
             height: 45,
             padding: const EdgeInsets.only(right: 10, bottom: 8, top: 4),
             child: Image(
-              image: AssetImage(team.shield!),
+              image: AssetImage(team.shield!.resourcePath),
               height: 35,
             ),
           ),
@@ -36,7 +39,8 @@ class TeamNameAndShieldWidget extends StatelessWidget {
             builder: (context) => SingleChildScrollView(
               controller: ModalScrollController.of(context),
               child: ModalSelectShieldWidget(
-                onShieldSelected: (shield) => onChange.call(team.name!, shield),
+                onShieldSelected: (shield) =>
+                    onChangeTeamShield.call(team.shield!, shield),
               ),
             ),
           ),
@@ -61,7 +65,7 @@ class TeamNameAndShieldWidget extends StatelessWidget {
               controller: ModalScrollController.of(context),
               child: SelectNameModal(
                 name: team.name!,
-                onNameChanged: (newName) => onChange.call(
+                onNameChanged: (newName) => onTeamNameChange.call(
                   team.name!,
                   newName,
                 ),
