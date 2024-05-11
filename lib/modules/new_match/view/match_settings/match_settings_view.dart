@@ -86,15 +86,13 @@ class _MatchSettingsViewState extends State<MatchSettingsView> {
               labelText: quantity,
             ),
             const Divider(),
-            Observer(
-              builder: (_) => SelectOneOptionWidget(
-                  question: hasChangeSideQuestion,
-                  value: viewModel.hasChangeSide!,
-                  onValueSelected: (value) {
-                    viewModel.changeSide(value);
-                    widget.matchSettings.hasChangeSide = value;
-                  }),
-            ),
+            SelectOneOptionWidget(
+                question: hasChangeSideQuestion,
+                value: viewModel.hasChangeSide!,
+                onValueSelected: (value) {
+                  viewModel.changeSide(value);
+                  widget.matchSettings.hasChangeSide = value;
+                }),
             const Divider(),
             SelectBoxWidget(
               value: widget.matchSettings.timeToChangePlayer,
@@ -105,15 +103,13 @@ class _MatchSettingsViewState extends State<MatchSettingsView> {
               labelText: minute,
             ),
             const Divider(),
-            Observer(
-              builder: (_) => SelectOneOptionWidget(
-                  question: newTeamsQuestion,
-                  value: viewModel.isDrawNewTeams!,
-                  onValueSelected: (value) {
-                    viewModel.drawNewTeams(value);
-                    widget.matchSettings.isDrawNewTeams = value;
-                  }),
-            ),
+            SelectOneOptionWidget(
+                question: newTeamsQuestion,
+                value: viewModel.isDrawNewTeams!,
+                onValueSelected: (value) {
+                  viewModel.drawNewTeams(value);
+                  widget.matchSettings.isDrawNewTeams = value;
+                }),
             const Text(newTeamsSubTittle),
           ],
         ),

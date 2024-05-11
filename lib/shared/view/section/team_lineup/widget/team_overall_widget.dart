@@ -19,8 +19,9 @@ class TeamOverallWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(4.0),
           child: Image(
-            image: AssetImage(
-                team.shield ?? "assets/images/logo-barcelona-256.png"),
+            image: AssetImage(team.shield != null
+                ? team.shield!.resourcePath
+                : "assets/images/logo-barcelona-256.png"),
             height: 35,
           ),
         ),
