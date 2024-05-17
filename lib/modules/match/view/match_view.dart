@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:team_draw/data/shield_data.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/match/match_view_model.dart';
+import 'package:team_draw/modules/match/view/reserve_players_modal.dart';
+import 'package:team_draw/modules/match/view_model/match_view_model.dart';
 import 'package:team_draw/modules/match/view/match_score_widget.dart';
 import 'package:team_draw/modules/match/view/reserve_players_widget.dart';
 import 'package:team_draw/modules/match/view/starting_players_widget.dart';
@@ -74,7 +76,20 @@ class _MatchViewState extends State<MatchView> {
               isTeamLeftSide: false,
               players: viewModel.playersTeamTwo,
               teamColor: viewModel.resolveColorTeamTwo()),
-          const ReservePlayersWidget(),
+          GestureDetector(
+              onTap: () => showBarModalBottomSheet(
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                    context: context,
+                    builder: (context) => SingleChildScrollView(
+                      controller: ModalScrollController.of(context),
+                      child: ReservePlayersModal(
+                        startingPlayers: viewModel.playersTeamOne,
+                        reservePlayers: viewModel.reservePlayersTeamOne,
+                        matchSettings: widget.matchSettings,
+                      ),
+                    ),
+                  ),
+              child: const ReserveBenchPlayersComponent()),
         ],
       ),
     );

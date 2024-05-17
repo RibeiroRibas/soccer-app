@@ -32,7 +32,9 @@ class TeamLineupSection extends StatelessWidget {
               const Divider(),
               for (Player player in team.players!) ...{
                 PlayerOverallItemComponent(
-                    playerScore: player.calculateScore(allMatches ?? [])),
+                  playerScore: player.calculateScore(allMatches ?? []),
+                  player: player,
+                ),
               },
               const Divider(),
               TeamOverallByPositionWidget(
