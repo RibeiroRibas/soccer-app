@@ -31,13 +31,7 @@ abstract class MatchViewModelBase with Store {
   List<Player> reservePlayersTeamOne = [];
 
   @observable
-  List<Player> playersAlreadyGoneToReserveTeamOne = [];
-
-  @observable
   List<Player> reservePlayersTeamTwo = [];
-
-  @observable
-  List<Player> playersAlreadyGoneToReserveTeamTwo = [];
 
   bool existsAnotherMatchInQueue = false;
 
@@ -55,13 +49,11 @@ abstract class MatchViewModelBase with Store {
       match.teamOne!,
       playersTeamOne,
       reservePlayersTeamOne,
-      playersAlreadyGoneToReserveTeamOne,
     );
     _setStartingAndReservePlayers(
       match.teamTwo!,
       playersTeamTwo,
       reservePlayersTeamTwo,
-      playersAlreadyGoneToReserveTeamTwo,
     );
   }
 
@@ -92,8 +84,8 @@ abstract class MatchViewModelBase with Store {
   late List<Player> _leftBacks;
   late List<Player> _rightBacks;
 
-  void _setStartingAndReservePlayers(Team team, List<Player> startingPlayers,
-      List<Player> reservePlayers, List<Player> playersAlreadyGoneToReserve) {
+  void _setStartingAndReservePlayers(
+      Team team, List<Player> startingPlayers, List<Player> reservePlayers) {
     List<Player> players = [];
     players.addAll(team.players!);
 
@@ -134,10 +126,10 @@ abstract class MatchViewModelBase with Store {
       }
     } while (startingPlayers.length < settings.numberOfStartingPlayers!);
 
-    for (Player player in players) {
-      reservePlayers.add(player);
-      playersAlreadyGoneToReserve.add(player);
-    }
+    reservePlayers.addAll(_goalKeepers);
+    reservePlayers.addAll(_defenders);
+    reservePlayers.addAll(_midfielders);
+    reservePlayers.addAll(_forwards);
   }
 
   bool _hasNotStartingGoalKeeper(List<Player> startingPlayers) =>

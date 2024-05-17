@@ -1,6 +1,5 @@
 const newMatch = "NOVA PARTIDA";
 const selectPlayers = "Selecione os Jogadores";
-const drawTeam = "SORTEAR EQUIPES";
 const next = "Continuar";
 const nextRecommended = "Continuar (recomendado)";
 const playFontFamily = "Play";
@@ -125,3 +124,17 @@ const notPermission = 'Não permitir';
 // menu (drawer)
 const gallery = "Galeria";
 const themes = "Temas";
+
+// match
+const cancel = "Cancelar";
+const reserves = "Reservas";
+const willBeNextPlayerToGetOut = "será o próximo jogador a entrar.";
+const willBeNextPlayerToGetIn = "será o próximo jogador a sair.";
+const playing = "Jogando";
+const nextChangeIn = "Próxima troca em:";
+const changeNow = "Trocar agora";
+const turnOffChange = "Desativar a troca";
+const whoToGetIn = "Quem entra";
+const whoToGetOut = "Quem sai";
+const willBeContinuousInReserve = "vai continuar na reserva.";
+const willBeContinuousPlaying = "vai continuar jogando.";

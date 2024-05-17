@@ -6,25 +6,36 @@ import 'package:team_draw/shared/view/component/player_overall/player_score_widg
 import 'package:team_draw/shared/view/component/player_position_component.dart';
 
 class PlayerOverallItemComponent extends StatelessWidget {
-  final PlayerScore playerScore;
-  final bool showPlayerScore;
+  final PlayerScore? playerScore;
+  final Player player;
   final Function(Player)? goToUpdatePlayerRoute;
+  final Function(Player)? moveToColumnRight;
+  final Function(Player)? moveToColumnLeft;
 
-  const PlayerOverallItemComponent({
-    super.key,
-    required this.playerScore,
-    this.showPlayerScore = false,
-    this.goToUpdatePlayerRoute,
-  });
+  const PlayerOverallItemComponent(
+      {super.key,
+      this.playerScore,
+      this.goToUpdatePlayerRoute,
+      required this.player,
+      this.moveToColumnRight,
+      this.moveToColumnLeft});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        if (moveToColumnLeft != null)
+          IconButton(
+            onPressed: () => moveToColumnLeft!(player),
+            icon: Icon(
+              Icons.arrow_back,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
         Expanded(
           child: Text(
-            playerScore.player.name!,
+            player.name!,
             softWrap: false,
             overflow: TextOverflow.fade,
             style: const TextStyle(fontSize: 12),
@@ -35,7 +46,7 @@ class PlayerOverallItemComponent extends StatelessWidget {
           children: [
             if (goToUpdatePlayerRoute != null)
               GestureDetector(
-                onTap: () => goToUpdatePlayerRoute!(playerScore.player),
+                onTap: () => goToUpdatePlayerRoute!(player),
                 child: const Padding(
                   padding: EdgeInsets.all(4.0),
                   child: Icon(Icons.edit, size: 20),
@@ -44,7 +55,7 @@ class PlayerOverallItemComponent extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(4.0),
               child: PlayerNameAndPositionComponent(
-                position: playerScore.player.principalPosition,
+                position: player.principalPosition,
                 positionColor: ThemeColors.principalPosition,
               ),
             ),
@@ -55,7 +66,7 @@ class PlayerOverallItemComponent extends StatelessWidget {
                 height: 25,
                 alignment: Alignment.center,
                 child: Text(
-                  playerScore.player.overall!.toStringAsFixed(1),
+                  player.overall!.toStringAsFixed(1),
                   style: const TextStyle(
                     fontSize: 12,
                     color: ThemeColors.overall,
@@ -63,14 +74,22 @@ class PlayerOverallItemComponent extends StatelessWidget {
                 ),
               ),
             ),
-            if (showPlayerScore)
+            if (playerScore != null)
               Row(
                 children: [
-                  PlayerScoreWidget(score: playerScore.goals.toString()),
-                  PlayerScoreWidget(score: playerScore.victories.toString()),
-                  PlayerScoreWidget(score: playerScore.defeats.toString()),
-                  PlayerScoreWidget(score: playerScore.draws.toString()),
+                  PlayerScoreWidget(score: playerScore!.goals.toString()),
+                  PlayerScoreWidget(score: playerScore!.victories.toString()),
+                  PlayerScoreWidget(score: playerScore!.defeats.toString()),
+                  PlayerScoreWidget(score: playerScore!.draws.toString()),
                 ],
+              ),
+            if (moveToColumnRight != null)
+              IconButton(
+                onPressed: () => moveToColumnRight!(player),
+                icon: Icon(
+                  Icons.arrow_forward,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
           ],
         ),
