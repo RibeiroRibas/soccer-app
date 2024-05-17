@@ -110,24 +110,6 @@ mixin _$MatchViewModel on MatchViewModelBase, Store {
     });
   }
 
-  late final _$playersAlreadyGoneToReserveTeamOneAtom = Atom(
-      name: 'MatchViewModelBase.playersAlreadyGoneToReserveTeamOne',
-      context: context);
-
-  @override
-  List<Player> get playersAlreadyGoneToReserveTeamOne {
-    _$playersAlreadyGoneToReserveTeamOneAtom.reportRead();
-    return super.playersAlreadyGoneToReserveTeamOne;
-  }
-
-  @override
-  set playersAlreadyGoneToReserveTeamOne(List<Player> value) {
-    _$playersAlreadyGoneToReserveTeamOneAtom
-        .reportWrite(value, super.playersAlreadyGoneToReserveTeamOne, () {
-      super.playersAlreadyGoneToReserveTeamOne = value;
-    });
-  }
-
   late final _$reservePlayersTeamTwoAtom =
       Atom(name: 'MatchViewModelBase.reservePlayersTeamTwo', context: context);
 
@@ -142,24 +124,6 @@ mixin _$MatchViewModel on MatchViewModelBase, Store {
     _$reservePlayersTeamTwoAtom.reportWrite(value, super.reservePlayersTeamTwo,
         () {
       super.reservePlayersTeamTwo = value;
-    });
-  }
-
-  late final _$playersAlreadyGoneToReserveTeamTwoAtom = Atom(
-      name: 'MatchViewModelBase.playersAlreadyGoneToReserveTeamTwo',
-      context: context);
-
-  @override
-  List<Player> get playersAlreadyGoneToReserveTeamTwo {
-    _$playersAlreadyGoneToReserveTeamTwoAtom.reportRead();
-    return super.playersAlreadyGoneToReserveTeamTwo;
-  }
-
-  @override
-  set playersAlreadyGoneToReserveTeamTwo(List<Player> value) {
-    _$playersAlreadyGoneToReserveTeamTwoAtom
-        .reportWrite(value, super.playersAlreadyGoneToReserveTeamTwo, () {
-      super.playersAlreadyGoneToReserveTeamTwo = value;
     });
   }
 
@@ -219,9 +183,7 @@ scoreTeamTwo: ${scoreTeamTwo},
 playersTeamOne: ${playersTeamOne},
 playersTeamTwo: ${playersTeamTwo},
 reservePlayersTeamOne: ${reservePlayersTeamOne},
-playersAlreadyGoneToReserveTeamOne: ${playersAlreadyGoneToReserveTeamOne},
-reservePlayersTeamTwo: ${reservePlayersTeamTwo},
-playersAlreadyGoneToReserveTeamTwo: ${playersAlreadyGoneToReserveTeamTwo}
+reservePlayersTeamTwo: ${reservePlayersTeamTwo}
     ''';
   }
 }

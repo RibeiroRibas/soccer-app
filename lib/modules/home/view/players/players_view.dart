@@ -44,7 +44,7 @@ class PlayersView extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 12.0),
                   child: PlayerOverallItemComponent(
                     playerScore: playersScore[index],
-                    showPlayerScore: true,
+                    player: playersScore[index].player,
                     goToUpdatePlayerRoute: goToUpdatePlayerRoute,
                   ),
                 );

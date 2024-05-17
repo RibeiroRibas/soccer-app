@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/data/shield_data.dart';
 
-class ReservePlayersWidget extends StatelessWidget {
-  const ReservePlayersWidget({super.key});
+class ReserveBenchPlayersComponent extends StatelessWidget {
+  const ReserveBenchPlayersComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
