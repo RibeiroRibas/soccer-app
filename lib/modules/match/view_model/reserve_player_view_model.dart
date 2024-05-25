@@ -1,8 +1,9 @@
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
+import 'package:team_draw/model/team.dart';
 
-part 'reserve_players_view_model.g.dart';
+part 'reserve_player_view_model.g.dart';
 
 class ReservePlayerViewModel = ReservePlayerViewModelBase
     with _$ReservePlayerViewModel;
@@ -10,22 +11,31 @@ class ReservePlayerViewModel = ReservePlayerViewModelBase
 abstract class ReservePlayerViewModelBase with Store {
   List<Player> playersAlreadyGoneToReserve = [];
 
-  ObservableList<Player> playersToGetIn = ObservableList<Player>();
+  @observable
+  List<Player> playersToGetIn = [];
 
-  ObservableList<Player> playersToGetOut = ObservableList<Player>();
+  @observable
+  List<Player> playersToGetOut = [];
+
+  List<Player> startingPlayers = [];
 
   List<Player> reservePlayers = [];
 
-  void init(List<Player> startingPlayers, List<Player> reservePlayers) {
+  late Team team;
+
+  void init(
+      List<Player> startingPlayers, List<Player> reservePlayers, Team team) {
     if (this.reservePlayers.isEmpty) {
+      this.team = team;
       this.reservePlayers.addAll(reservePlayers);
       playersToGetIn.addAll(reservePlayers);
       playersAlreadyGoneToReserve.addAll(reservePlayers);
-      setPlayersToGetOut(startingPlayers);
+      this.startingPlayers.addAll(startingPlayers);
+      setPlayersToGetOut();
     }
   }
 
-  void setPlayersToGetOut(List<Player> startingPlayers) {
+  void setPlayersToGetOut() {
     List<Player> playersThatNotGetOut = [];
     playersThatNotGetOut.addAll(startingPlayers);
     for (Player player in playersAlreadyGoneToReserve) {
@@ -120,20 +130,32 @@ abstract class ReservePlayerViewModelBase with Store {
   @action
   void addPlayerToPlayersToGetIn(Player player) {
     playersToGetIn.add(player);
+    List<Player> players = [];
+    players.addAll(playersToGetIn);
+    playersToGetIn = players;
   }
 
   @action
   void addPlayerToPlayersToGetOut(Player player) {
     playersToGetOut.add(player);
+    List<Player> players = [];
+    players.addAll(playersToGetOut);
+    playersToGetOut = players;
   }
 
   @action
   void removePlayerToPlayerToGetIn(Player player) {
     playersToGetIn.remove(player);
+    List<Player> players = [];
+    players.addAll(playersToGetIn);
+    playersToGetIn = players;
   }
 
   @action
   void removePlayerToPlayerToGetOut(Player player) {
     playersToGetOut.remove(player);
+    List<Player> players = [];
+    players.addAll(playersToGetOut);
+    playersToGetOut = players;
   }
 }

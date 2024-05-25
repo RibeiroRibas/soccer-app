@@ -14,10 +14,10 @@ const principalPosition = "Posição atuante";
 const overall = "Overall";
 const classificationTable = "Tabela de classificação";
 const teamAmount = "Overall do time divido por posições";
-const goals = "Gol";
-const defeats = "Derrota";
-const victories = "Vitória";
-const draws = "Empate";
+const goals = "Gols";
+const defeats = "Der.";
+const victories = "Vit.";
+const draws = "Emp.";
 
 //theme
 const welcome = "Bem vindo ao \n $appName.";
@@ -133,8 +133,10 @@ const willBeNextPlayerToGetIn = "será o próximo jogador a sair.";
 const playing = "Jogando";
 const nextChangeIn = "Próxima troca em:";
 const changeNow = "Trocar agora";
-const turnOffChange = "Desativar a troca";
+const disableChange = "Desativar a troca";
 const whoToGetIn = "Quem entra";
 const whoToGetOut = "Quem sai";
 const willBeContinuousInReserve = "vai continuar na reserva.";
 const willBeContinuousPlaying = "vai continuar jogando.";
+const start = "Iniciar";
+const whoAlreadyGoToReserve = "Quem já foi pra reserva";

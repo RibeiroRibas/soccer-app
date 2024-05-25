@@ -2,7 +2,7 @@ class MatchSettings {
   int durationHr = 1;
   int durationMin = 0;
   bool hasChangeSide = false;
-  int timeToChangePlayer = 10;
+  int timeToChangePlayer = 2;
   bool isDrawNewTeams = false;
   int? numberOfStartingPlayers;
   int? numberOfTeams;

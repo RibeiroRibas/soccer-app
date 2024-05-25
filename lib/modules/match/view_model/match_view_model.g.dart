@@ -127,48 +127,42 @@ mixin _$MatchViewModel on MatchViewModelBase, Store {
     });
   }
 
+  late final _$isMatchStartedAtom =
+      Atom(name: 'MatchViewModelBase.isMatchStarted', context: context);
+
+  @override
+  bool get isMatchStarted {
+    _$isMatchStartedAtom.reportRead();
+    return super.isMatchStarted;
+  }
+
+  @override
+  set isMatchStarted(bool value) {
+    _$isMatchStartedAtom.reportWrite(value, super.isMatchStarted, () {
+      super.isMatchStarted = value;
+    });
+  }
+
   late final _$MatchViewModelBaseActionController =
       ActionController(name: 'MatchViewModelBase', context: context);
 
   @override
-  void increaseScoreTeamOne() {
+  void startMatch() {
     final _$actionInfo = _$MatchViewModelBaseActionController.startAction(
-        name: 'MatchViewModelBase.increaseScoreTeamOne');
+        name: 'MatchViewModelBase.startMatch');
     try {
-      return super.increaseScoreTeamOne();
+      return super.startMatch();
     } finally {
       _$MatchViewModelBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void increaseScoreTeamTwo() {
+  void changeScore(bool isScoreTeamOne, bool isIncreaseScore) {
     final _$actionInfo = _$MatchViewModelBaseActionController.startAction(
-        name: 'MatchViewModelBase.increaseScoreTeamTwo');
+        name: 'MatchViewModelBase.changeScore');
     try {
-      return super.increaseScoreTeamTwo();
-    } finally {
-      _$MatchViewModelBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void decreaseScoreTeamOne() {
-    final _$actionInfo = _$MatchViewModelBaseActionController.startAction(
-        name: 'MatchViewModelBase.decreaseScoreTeamOne');
-    try {
-      return super.decreaseScoreTeamOne();
-    } finally {
-      _$MatchViewModelBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void decreaseScoreTeamTwo() {
-    final _$actionInfo = _$MatchViewModelBaseActionController.startAction(
-        name: 'MatchViewModelBase.decreaseScoreTeamTwo');
-    try {
-      return super.decreaseScoreTeamTwo();
+      return super.changeScore(isScoreTeamOne, isIncreaseScore);
     } finally {
       _$MatchViewModelBaseActionController.endAction(_$actionInfo);
     }
@@ -183,7 +177,8 @@ scoreTeamTwo: ${scoreTeamTwo},
 playersTeamOne: ${playersTeamOne},
 playersTeamTwo: ${playersTeamTwo},
 reservePlayersTeamOne: ${reservePlayersTeamOne},
-reservePlayersTeamTwo: ${reservePlayersTeamTwo}
+reservePlayersTeamTwo: ${reservePlayersTeamTwo},
+isMatchStarted: ${isMatchStarted}
     ''';
   }
 }

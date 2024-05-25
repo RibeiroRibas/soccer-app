@@ -146,4 +146,20 @@ class Team {
       teamOverall.value -= (player.weakPoints.length * 0.5);
     }
   }
+
+  List<String> getTeamInformation() {
+    List<String> teamInformation = [];
+    teamInformation.add(teamOverall.value.toStringAsFixed(1));
+    teamInformation.add(
+        teamOverall.overallByPosition[Position.forward]!.toStringAsFixed(1));
+    teamInformation.add(
+        teamOverall.overallByPosition[Position.defender]!.toStringAsFixed(1));
+    teamInformation.add(
+        teamOverall.overallByPosition[Position.midfielder]!.toStringAsFixed(1));
+    teamInformation.add(
+        teamOverall.overallByPosition[Position.leftBack]!.toStringAsFixed(1));
+    teamInformation.add(
+        teamOverall.overallByPosition[Position.rightBack]!.toStringAsFixed(1));
+    return teamInformation;
+  }
 }

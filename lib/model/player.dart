@@ -1,3 +1,4 @@
+import 'package:team_draw/model/match_goals.dart';
 import 'package:team_draw/model/match_result.dart';
 import 'package:team_draw/model/player_strengths.dart';
 import 'package:team_draw/model/player_weak_points.dart';
@@ -27,11 +28,13 @@ class Player {
         !e.teamOne!.players!.contains(this) &&
         !e.teamTwo!.players!.contains(this));
     for (TeamMatch teamMatch in matches) {
-      teamMatch.playerGoals!.forEach((key, value) {
-        if (key == this) {
-          playerScore.goals += value;
+      if (teamMatch.matchGoals != null) {
+        for (PlayerGoals playerGoals in teamMatch.matchGoals!) {
+          if (playerGoals.player == this) {
+            playerScore.goals += playerGoals.goalTime.length;
+          }
         }
-      });
+      }
       _setScore(teamMatch, playerScore);
     }
     return playerScore;

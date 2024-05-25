@@ -1,5 +1,6 @@
 import 'package:team_draw/data/player_data.dart';
 import 'package:team_draw/data/team_data.dart';
+import 'package:team_draw/model/match_goals.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/team_match.dart';
 
@@ -27,22 +28,13 @@ TeamMatch matchOneVSTwo = TeamMatch(
   scoreTeamOne: 9,
   scoreTeamTwo: 8,
   matchDate: DateTime.now(),
-  playerGoals: {
-    ribeiro: 3,
-    rodrigo: 2,
-    helton: 2,
-    neny: 5,
-    sid: 3,
-    guilherme: 1,
-    douglas: 1,
-    pedro: 1,
-    helder: 2,
-    jodir: 1,
-    cris: 3,
-    cleber: 1,
-    diego: 3,
-    bruno: 2
-  },
+  matchGoals: [
+    PlayerGoals(player: rodrigo, goalTime: [000500, 001200, 004501]),
+    PlayerGoals(player: cris, goalTime: [001000, 005000]),
+    PlayerGoals(player: helder, goalTime: [000300, 001400]),
+    PlayerGoals(player: jodir, goalTime: [0003000, 003550]),
+    PlayerGoals(player: guilherme, goalTime: [002533, 001559]),
+  ],
 );
 
 TeamMatch matchOneVSTree = TeamMatch(
@@ -51,22 +43,13 @@ TeamMatch matchOneVSTree = TeamMatch(
   scoreTeamOne: 15,
   scoreTeamTwo: 10,
   matchDate: DateTime.now(),
-  playerGoals: {
-    ribeiro: 3,
-    rodrigo: 2,
-    helton: 2,
-    neny: 5,
-    sid: 3,
-    guilherme: 1,
-    douglas: 1,
-    pedro: 1,
-    helder: 2,
-    jodir: 1,
-    cris: 3,
-    cleber: 1,
-    diego: 3,
-    bruno: 2
-  },
+  matchGoals: [
+    PlayerGoals(player: rodrigo, goalTime: [000500, 001200, 004501]),
+    PlayerGoals(player: cris, goalTime: [001000, 005000]),
+    PlayerGoals(player: helder, goalTime: [000300, 001400]),
+    PlayerGoals(player: jodir, goalTime: [0003000, 003550]),
+    PlayerGoals(player: guilherme, goalTime: [002533, 001559]),
+  ],
 );
 
 TeamMatch matchTwoVSTree = TeamMatch(
@@ -75,22 +58,13 @@ TeamMatch matchTwoVSTree = TeamMatch(
   scoreTeamOne: 9,
   scoreTeamTwo: 9,
   matchDate: DateTime.now(),
-  playerGoals: {
-    ribeiro: 3,
-    rodrigo: 2,
-    helton: 2,
-    neny: 5,
-    sid: 3,
-    guilherme: 1,
-    douglas: 1,
-    pedro: 1,
-    helder: 2,
-    jodir: 1,
-    cris: 3,
-    cleber: 1,
-    diego: 3,
-    bruno: 2
-  },
+  matchGoals: [
+    PlayerGoals(player: rodrigo, goalTime: [000500, 001200, 004501]),
+    PlayerGoals(player: cris, goalTime: [001000, 005000]),
+    PlayerGoals(player: helder, goalTime: [000300, 001400]),
+    PlayerGoals(player: jodir, goalTime: [0003000, 003550]),
+    PlayerGoals(player: guilherme, goalTime: [002533, 001559]),
+  ],
 );
 TeamMatch matchTwoVSFour = TeamMatch(
   teamOne: getTeamTwo,
@@ -98,22 +72,13 @@ TeamMatch matchTwoVSFour = TeamMatch(
   scoreTeamOne: 4,
   scoreTeamTwo: 8,
   matchDate: DateTime.now(),
-  playerGoals: {
-    ribeiro: 3,
-    rodrigo: 2,
-    helton: 2,
-    neny: 5,
-    sid: 3,
-    guilherme: 1,
-    douglas: 1,
-    pedro: 1,
-    helder: 2,
-    jodir: 1,
-    cris: 3,
-    cleber: 1,
-    diego: 3,
-    bruno: 2
-  },
+  matchGoals: [
+    PlayerGoals(player: rodrigo, goalTime: [000500, 001200, 004501]),
+    PlayerGoals(player: cris, goalTime: [001000, 005000]),
+    PlayerGoals(player: helder, goalTime: [000300, 001400]),
+    PlayerGoals(player: jodir, goalTime: [0003000, 003550]),
+    PlayerGoals(player: guilherme, goalTime: [002533, 001559]),
+  ],
 );
 TeamMatch matchFourVSTree = TeamMatch(
   teamOne: getTeamFour,
@@ -121,22 +86,13 @@ TeamMatch matchFourVSTree = TeamMatch(
   scoreTeamOne: 5,
   scoreTeamTwo: 7,
   matchDate: DateTime.now(),
-  playerGoals: {
-    ribeiro: 3,
-    rodrigo: 2,
-    helton: 2,
-    neny: 5,
-    sid: 3,
-    guilherme: 1,
-    douglas: 1,
-    pedro: 1,
-    helder: 2,
-    jodir: 1,
-    cris: 3,
-    cleber: 1,
-    diego: 3,
-    bruno: 2
-  },
+  matchGoals: [
+    PlayerGoals(player: rodrigo, goalTime: [000500, 001200, 004501]),
+    PlayerGoals(player: cris, goalTime: [001000, 005000]),
+    PlayerGoals(player: helder, goalTime: [000300, 001400]),
+    PlayerGoals(player: jodir, goalTime: [0003000, 003550]),
+    PlayerGoals(player: guilherme, goalTime: [002533, 001559]),
+  ],
 );
 TeamMatch matchFiveVSSix = TeamMatch(
   teamOne: getTeamFive,
@@ -144,22 +100,13 @@ TeamMatch matchFiveVSSix = TeamMatch(
   scoreTeamOne: 9,
   scoreTeamTwo: 9,
   matchDate: DateTime.now(),
-  playerGoals: {
-    ribeiro: 3,
-    rodrigo: 2,
-    helton: 2,
-    neny: 5,
-    sid: 3,
-    guilherme: 1,
-    douglas: 1,
-    pedro: 1,
-    helder: 2,
-    jodir: 1,
-    cris: 3,
-    cleber: 1,
-    diego: 3,
-    bruno: 2
-  },
+  matchGoals: [
+    PlayerGoals(player: rodrigo, goalTime: [000500, 001200, 004501]),
+    PlayerGoals(player: cris, goalTime: [001000, 005000]),
+    PlayerGoals(player: helder, goalTime: [000300, 001400]),
+    PlayerGoals(player: jodir, goalTime: [0003000, 003550]),
+    PlayerGoals(player: guilherme, goalTime: [002533, 001559]),
+  ],
 );
 TeamMatch matchSixVSFour = TeamMatch(
   teamOne: getTeamSix,
@@ -167,20 +114,11 @@ TeamMatch matchSixVSFour = TeamMatch(
   scoreTeamOne: 15,
   scoreTeamTwo: 12,
   matchDate: DateTime.now(),
-  playerGoals: {
-    ribeiro: 3,
-    rodrigo: 2,
-    helton: 2,
-    neny: 5,
-    sid: 3,
-    guilherme: 1,
-    douglas: 1,
-    pedro: 1,
-    helder: 2,
-    jodir: 1,
-    cris: 3,
-    cleber: 1,
-    diego: 3,
-    bruno: 2
-  },
+  matchGoals: [
+    PlayerGoals(player: rodrigo, goalTime: [000500, 001200, 004501]),
+    PlayerGoals(player: cris, goalTime: [001000, 005000]),
+    PlayerGoals(player: helder, goalTime: [000300, 001400]),
+    PlayerGoals(player: jodir, goalTime: [0003000, 003550]),
+    PlayerGoals(player: guilherme, goalTime: [002533, 001559]),
+  ],
 );
