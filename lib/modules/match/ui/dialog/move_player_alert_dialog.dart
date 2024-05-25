@@ -16,7 +16,7 @@ class MovePlayerAlertDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       title: Text(tittle),
       actions: <Widget>[
         TextButton(
@@ -25,14 +25,14 @@ class MovePlayerAlertDialog extends StatelessWidget {
                   Navigator.of(context).pop(),
                 },
             style: Theme.of(context).textButtonTheme.style!.copyWith(
-                foregroundColor: MaterialStateProperty.all(
-                    Theme.of(context).colorScheme.onBackground)),
+                foregroundColor: WidgetStateProperty.all(
+                    Theme.of(context).colorScheme.onSecondary)),
             child: const Text(ok)),
         TextButton(
             onPressed: () => Navigator.of(context).pop(),
             style: Theme.of(context).textButtonTheme.style!.copyWith(
-                foregroundColor: MaterialStateProperty.all(
-                    Theme.of(context).colorScheme.onBackground)),
+                foregroundColor: WidgetStateProperty.all(
+                    Theme.of(context).colorScheme.onSecondary)),
             child: const Text(cancel)),
       ],
     );

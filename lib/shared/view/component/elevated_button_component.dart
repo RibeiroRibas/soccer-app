@@ -16,7 +16,7 @@ class ElevatedButtonComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilledButton(
       style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(
+          backgroundColor: WidgetStateProperty.all(
               backgroundColor ?? Theme.of(context).primaryColor)),
       onPressed: onButtonPressed,
       child: Text(

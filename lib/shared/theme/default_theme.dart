@@ -19,11 +19,9 @@ ThemeData defaultTheme = ThemeData(
     onTertiary: ThemeColors.grayLight2,
     error: Colors.red,
     onError: Colors.white,
-    background: ThemeColors.blueDark,
-    onBackground: Colors.white,
     surface: ThemeColors.grayDark,
     onSurface: Colors.white,
-    surfaceVariant: ThemeColors.grayLight2,
+    surfaceContainerHighest: ThemeColors.grayLight2,
     onSurfaceVariant: ThemeColors.grayLight3,
   ),
   textTheme: const TextTheme(
