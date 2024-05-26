@@ -6,7 +6,7 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/app/route_named.dart';
 import 'package:team_draw/modules/new_match/routes/new_match_rote_navigator.dart';
 import 'package:team_draw/modules/new_match/view/draw_teams/team_name_and_shield_widget.dart';
-import 'package:team_draw/modules/new_match/view/draw_teams/teams_information_widget.dart';
+import 'package:team_draw/shared/view/component/teams_info_component.dart';
 import 'package:team_draw/modules/new_match/view_model/draw_teams_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/view/component/box_card_component.dart';
@@ -134,7 +134,7 @@ class _DrawnTeamsViewState extends State<DrawnTeamsView> {
                       ),
                     ),
                     BoxCardComponent(
-                      boxCardBody: TeamsInformationWidget(
+                      boxCardBody: TeamsInformationComponent(
                         teamsInformation:
                             viewModel.teamsInformation.elementAt(index),
                       ),

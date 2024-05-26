@@ -43,7 +43,6 @@ class _HomeNavBarBaseViewState extends State<HomeNavBarBaseView> {
       ),
       TeamsView(
         teams: controller.teams,
-        allMatches: controller.allMatches,
       ),
       PlayersView(
         playersScore: controller.calculatePlayerScore(),

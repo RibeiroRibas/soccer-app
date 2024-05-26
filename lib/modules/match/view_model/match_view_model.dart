@@ -6,12 +6,21 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/modules/home/model/player_score.dart';
+import 'package:team_draw/modules/new_match/model/team_information.dart';
+import 'package:team_draw/services/player_service.dart';
+import 'package:team_draw/services/team_match_service.dart';
 
 part 'match_view_model.g.dart';
 
 class MatchViewModel = MatchViewModelBase with _$MatchViewModel;
 
 abstract class MatchViewModelBase with Store {
+  final PlayerService _playerService;
+  final TeamMatchService _teamMatchService;
+
+  MatchViewModelBase(this._playerService, this._teamMatchService);
+
   @observable
   late TeamMatch match;
 
@@ -33,7 +42,17 @@ abstract class MatchViewModelBase with Store {
   @observable
   List<Player> reservePlayersTeamTwo = [];
 
+  @observable
+  bool isMatchStarted = false;
+
   bool existsAnotherMatchInQueue = false;
+
+  List<TeamMatch> allMatches = [];
+
+  List<PlayerScore> playersScoreTeamOne = [];
+  List<PlayerScore> playersScoreTeamTwo = [];
+
+  late TeamInformation teamsInformation;
 
   late MatchSettings settings;
 
@@ -55,26 +74,10 @@ abstract class MatchViewModelBase with Store {
       playersTeamTwo,
       reservePlayersTeamTwo,
     );
-  }
 
-  @action
-  void increaseScoreTeamOne() {
-    scoreTeamOne = scoreTeamOne + 1;
-  }
-
-  @action
-  void increaseScoreTeamTwo() {
-    scoreTeamTwo += 1;
-  }
-
-  @action
-  void decreaseScoreTeamOne() {
-    scoreTeamOne -= 1;
-  }
-
-  @action
-  void decreaseScoreTeamTwo() {
-    scoreTeamTwo -= 1;
+    List<String> teamOneInformation = match.teamOne!.getTeamInformation();
+    List<String> teamTwoInformation = match.teamTwo!.getTeamInformation();
+    teamsInformation = TeamInformation(teamOneInformation, teamTwoInformation);
   }
 
   late List<Player> _goalKeepers;
@@ -182,5 +185,36 @@ abstract class MatchViewModelBase with Store {
 
   Color resolveColorTeamOne() {
     return match.teamOne!.shield!.primaryColor;
+  }
+
+  Future<void> calculatePlayerScore() async {
+    if (allMatches.isEmpty) {
+      allMatches = await _teamMatchService.findAllMatches();
+    }
+    playersScoreTeamOne = _playerService.calculatePlayerScore(
+        match.teamOne!.players!, allMatches);
+    playersScoreTeamTwo = _playerService.calculatePlayerScore(
+        match.teamTwo!.players!, allMatches);
+  }
+
+  @action
+  void startMatch() {
+    isMatchStarted = true;
+  }
+
+  @action
+  void changeScore(bool isScoreTeamOne, bool isIncreaseScore) {
+    if (isScoreTeamOne && isIncreaseScore) {
+      scoreTeamOne += 1;
+    } else if (isScoreTeamOne && !isIncreaseScore) {
+      scoreTeamOne -= 1;
+    } else if (!isScoreTeamOne && isIncreaseScore) {
+      scoreTeamTwo += 1;
+    } else {
+      scoreTeamTwo -= 1;
+    }
+
+    match.scoreTeamOne = scoreTeamOne;
+    match.scoreTeamTwo = scoreTeamTwo;
   }
 }
