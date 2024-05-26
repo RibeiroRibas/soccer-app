@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
 import 'package:team_draw/shared/helper/list_helper.dart';
 
-class TeamsInformationWidget extends StatelessWidget {
+class TeamsInformationComponent extends StatelessWidget {
   final TeamInformation teamsInformation;
 
-  const TeamsInformationWidget({super.key, required this.teamsInformation});
+  const TeamsInformationComponent({super.key, required this.teamsInformation});
 
   @override
   Widget build(BuildContext context) {

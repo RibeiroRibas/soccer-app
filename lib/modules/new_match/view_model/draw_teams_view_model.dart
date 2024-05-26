@@ -2,7 +2,6 @@ import 'package:mobx/mobx.dart';
 import 'package:team_draw/data/team_name_data.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/model/team_shield.dart';
@@ -44,8 +43,8 @@ abstract class DrawTeamsViewModelBase with Store {
 
     teamsInformation = [];
     for (TeamMatch teamMatch in teamMatches) {
-      List<String> teamOneInformation = _getTeamInformation(teamMatch.teamOne!);
-      List<String> teamTwoInformation = _getTeamInformation(teamMatch.teamTwo!);
+      List<String> teamOneInformation = teamMatch.teamOne!.getTeamInformation();
+      List<String> teamTwoInformation = teamMatch.teamTwo!.getTeamInformation();
       final teamInformation =
           TeamInformation(teamOneInformation, teamTwoInformation);
       teamsInformation.add(teamInformation);
@@ -114,22 +113,6 @@ abstract class DrawTeamsViewModelBase with Store {
     _updateTeamObservables();
   }
 
-  List<String> _getTeamInformation(Team team) {
-    List<String> teamInformation = [];
-    teamInformation.add(team.teamOverall.value.toStringAsFixed(1));
-    teamInformation.add(team.teamOverall.overallByPosition[Position.forward]!
-        .toStringAsFixed(1));
-    teamInformation.add(team.teamOverall.overallByPosition[Position.defender]!
-        .toStringAsFixed(1));
-    teamInformation.add(team.teamOverall.overallByPosition[Position.midfielder]!
-        .toStringAsFixed(1));
-    teamInformation.add(team.teamOverall.overallByPosition[Position.leftBack]!
-        .toStringAsFixed(1));
-    teamInformation.add(team.teamOverall.overallByPosition[Position.rightBack]!
-        .toStringAsFixed(1));
-    return teamInformation;
-  }
-
   List<Player> _getSelectedPlayers(Map<Player, bool> selectedPlayers) {
     List<Player> players = [];
     selectedPlayers.forEach((player, isSelected) {
@@ -141,14 +124,6 @@ abstract class DrawTeamsViewModelBase with Store {
   }
 
   void _setAvailableNames() {
-    // final List<String> allCachedNames = [];
-    // allCachedNames.addAll(getAllTeamNames);
-    //
-    // for (Team team in service.allTeams) {
-    //   allCachedNames.removeWhere((teamName) => teamName == team.name);
-    // }
-    //
-    // availableNames.addAll(allCachedNames);
     for (var teamName in getAllTeamNames) {
       if (!service.allTeams.any((team) => team.name == teamName)) {
         availableNames.add(teamName);

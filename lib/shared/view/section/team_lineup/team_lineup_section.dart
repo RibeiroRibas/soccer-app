@@ -10,11 +10,7 @@ class TeamLineupSection extends StatelessWidget {
   final Team team;
   final List<TeamMatch>? allMatches;
 
-  const TeamLineupSection({
-    super.key,
-    required this.team,
-    this.allMatches,
-  });
+  const TeamLineupSection({super.key, required this.team, this.allMatches});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +28,9 @@ class TeamLineupSection extends StatelessWidget {
               const Divider(),
               for (Player player in team.players!) ...{
                 PlayerOverallItemComponent(
-                  playerScore: player.calculateScore(allMatches ?? []),
+                  playerScore: allMatches != null
+                      ? player.calculateScore(allMatches!)
+                      : null,
                   player: player,
                 ),
               },

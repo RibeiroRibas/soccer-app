@@ -40,7 +40,7 @@ class _DrawerViewState extends State<DrawerView> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           title: const Text(accessMediaLocationDenied),
           content: const SingleChildScrollView(
             child: ListBody(
@@ -57,8 +57,8 @@ class _DrawerViewState extends State<DrawerView> {
                 navigator.pop();
               },
               style: Theme.of(context).textButtonTheme.style!.copyWith(
-                  foregroundColor: MaterialStateProperty.all(
-                      Theme.of(context).colorScheme.onBackground)),
+                  foregroundColor: WidgetStateProperty.all(
+                      Theme.of(context).colorScheme.onSecondary)),
               child: const Text(grantPermission),
             ),
             TextButton(
@@ -66,8 +66,8 @@ class _DrawerViewState extends State<DrawerView> {
                 navigator.pop();
               },
               style: Theme.of(context).textButtonTheme.style!.copyWith(
-                  foregroundColor: MaterialStateProperty.all(
-                      Theme.of(context).colorScheme.onBackground)),
+                  foregroundColor: WidgetStateProperty.all(
+                      Theme.of(context).colorScheme.onSecondary)),
               child: const Text(notPermission),
             ),
           ],

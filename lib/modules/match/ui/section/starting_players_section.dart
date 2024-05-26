@@ -3,12 +3,12 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/shared/view/component/player_position_component.dart';
 
-class StartingPlayersWidget extends StatelessWidget {
+class StartingPlayersSection extends StatelessWidget {
   final bool isTeamLeftSide;
   final List<Player> players;
   final Color teamColor;
 
-  const StartingPlayersWidget(
+  const StartingPlayersSection(
       {super.key,
       required this.isTeamLeftSide,
       required this.players,
@@ -19,7 +19,7 @@ class StartingPlayersWidget extends StatelessWidget {
     return isTeamLeftSide
         ? SizedBox(
             height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width * 0.45,
+            width: MediaQuery.of(context).size.width * 0.40,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,24 +29,20 @@ class StartingPlayersWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     PlayerNameAndPositionComponent(
-                      position: players.first.principalPosition,
-                      playerName: players.first.name,
-                      positionColor: teamColor,
-                    ),
+                        position: players.first.principalPosition,
+                        playerName: _formatName(players.first.name!),
+                        positionColor: teamColor)
                   ],
                 ),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: _buildDefendersList(),
-                ),
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: _buildDefendersList()),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: _buildMidfielderList(),
-                ),
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: _buildMidfielderList()),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: _buildForwardsList(),
-                ),
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: _buildForwardsList()),
               ],
             ),
           )
@@ -54,31 +50,27 @@ class StartingPlayersWidget extends StatelessWidget {
             right: 0.0,
             child: SizedBox(
               height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width * 0.45,
+              width: MediaQuery.of(context).size.width * 0.40,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _buildForwardsList(),
-                  ),
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: _buildForwardsList()),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _buildMidfielderList(),
-                  ),
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: _buildMidfielderList()),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _buildDefendersListRightSide(),
-                  ),
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: _buildDefendersListRightSide()),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       PlayerNameAndPositionComponent(
-                        position: players.first.principalPosition,
-                        playerName: players.first.name,
-                        positionColor: teamColor,
-                      ),
+                          position: players.first.principalPosition,
+                          playerName: _formatName(players.first.name!),
+                          positionColor: teamColor),
                     ],
                   ),
                 ],
@@ -97,10 +89,9 @@ class StartingPlayersWidget extends StatelessWidget {
           (player) => player.principalPosition == Position.rightBack);
 
       playersComponent.add(PlayerNameAndPositionComponent(
-        position: Position.rightBack,
-        playerName: player.name,
-        positionColor: teamColor,
-      ));
+          position: Position.rightBack,
+          playerName: _formatName(player.name!),
+          positionColor: teamColor));
 
       playersAux.remove(player);
     }
@@ -111,10 +102,9 @@ class StartingPlayersWidget extends StatelessWidget {
             (player) => player.principalPosition == Position.defender);
 
         playersComponent.add(PlayerNameAndPositionComponent(
-          position: Position.defender,
-          playerName: player.name,
-          positionColor: teamColor,
-        ));
+            position: Position.defender,
+            playerName: _formatName(player.name!),
+            positionColor: teamColor));
 
         playersAux.remove(player);
       }
@@ -125,10 +115,9 @@ class StartingPlayersWidget extends StatelessWidget {
           (player) => player.principalPosition == Position.leftBack);
 
       playersComponent.add(PlayerNameAndPositionComponent(
-        position: Position.leftBack,
-        playerName: player.name,
-        positionColor: teamColor,
-      ));
+          position: Position.leftBack,
+          playerName: _formatName(player.name!),
+          positionColor: teamColor));
 
       playersAux.remove(player);
     }
@@ -145,10 +134,9 @@ class StartingPlayersWidget extends StatelessWidget {
           (player) => player.principalPosition == Position.leftBack);
 
       playersComponent.add(PlayerNameAndPositionComponent(
-        position: Position.leftBack,
-        playerName: player.name,
-        positionColor: teamColor,
-      ));
+          position: Position.leftBack,
+          playerName: _formatName(player.name!),
+          positionColor: teamColor));
 
       playersAux.remove(player);
     }
@@ -159,10 +147,9 @@ class StartingPlayersWidget extends StatelessWidget {
             (player) => player.principalPosition == Position.defender);
 
         playersComponent.add(PlayerNameAndPositionComponent(
-          position: Position.defender,
-          playerName: player.name,
-          positionColor: teamColor,
-        ));
+            position: Position.defender,
+            playerName: _formatName(player.name!),
+            positionColor: teamColor));
 
         playersAux.remove(player);
       }
@@ -173,10 +160,9 @@ class StartingPlayersWidget extends StatelessWidget {
           (player) => player.principalPosition == Position.rightBack);
 
       playersComponent.add(PlayerNameAndPositionComponent(
-        position: Position.rightBack,
-        playerName: player.name,
-        positionColor: teamColor,
-      ));
+          position: Position.rightBack,
+          playerName: _formatName(player.name!),
+          positionColor: teamColor));
 
       playersAux.remove(player);
     }
@@ -199,10 +185,9 @@ class StartingPlayersWidget extends StatelessWidget {
             (player) => player.principalPosition == Position.midfielder);
 
         playersComponent.add(PlayerNameAndPositionComponent(
-          position: Position.midfielder,
-          playerName: player.name,
-          positionColor: teamColor,
-        ));
+            position: Position.midfielder,
+            playerName: _formatName(player.name!),
+            positionColor: teamColor));
 
         playersAux.remove(player);
       }
@@ -226,10 +211,9 @@ class StartingPlayersWidget extends StatelessWidget {
             (player) => player.principalPosition == Position.forward);
 
         playersComponent.add(PlayerNameAndPositionComponent(
-          position: Position.forward,
-          playerName: player.name,
-          positionColor: teamColor,
-        ));
+            position: Position.forward,
+            playerName: _formatName(player.name!),
+            positionColor: teamColor));
 
         playersAux.remove(player);
       }
@@ -240,5 +224,12 @@ class StartingPlayersWidget extends StatelessWidget {
   bool _isAllForwardsSet(List<Player> playersAux) {
     return playersAux
         .any((player) => player.principalPosition == Position.forward);
+  }
+
+  String _formatName(String name) {
+    if (name.length > 6) {
+      return name.substring(0, 6);
+    }
+    return name;
   }
 }
