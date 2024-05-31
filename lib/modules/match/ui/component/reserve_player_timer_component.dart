@@ -71,7 +71,7 @@ class _ReservePlayerTimerComponentState
                                 .textTheme
                                 .titleLarge!
                                 .copyWith(fontSize: 26)),
-                        const Text(":"),
+                        Text(":", style: Theme.of(context).textTheme.bodyLarge),
                         Text(
                             _formatIntToString(viewModel.secondsToSwitchPlayer),
                             style: Theme.of(context)

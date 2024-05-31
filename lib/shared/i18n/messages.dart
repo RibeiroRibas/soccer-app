@@ -143,3 +143,7 @@ const willBeContinuousInReserve = "vai continuar na reserva.";
 const willBeContinuousPlaying = "vai continuar jogando.";
 const start = "Iniciar";
 const whoAlreadyGoToReserve = "Quem já foi pra reserva";
+const theMatchIsAlmostStart = "A partida já vai começar!";
+const preMatchMessage =
+    "Organize os jogadores em campo. Quando o Juiz apitar você já pode iniciar a partida.";
+const okIGetIt = "Ok Entendi!";
