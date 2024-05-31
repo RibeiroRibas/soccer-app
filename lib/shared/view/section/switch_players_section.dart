@@ -12,6 +12,7 @@ class SwitchPlayersSection extends StatelessWidget {
   final Function(Player)? removePlayerToPlayerToGetOut;
   final String? teamName;
   final String? teamShield;
+  final List<Player> playersAlreadyGoneToReserve;
 
   const SwitchPlayersSection(
       {super.key,
@@ -20,7 +21,8 @@ class SwitchPlayersSection extends StatelessWidget {
       required this.playersToGetOut,
       this.removePlayerToPlayerToGetOut,
       this.teamName,
-      this.teamShield});
+      this.teamShield,
+      required this.playersAlreadyGoneToReserve});
 
   Future<void> movePlayerDialog(
     Player player,
@@ -111,6 +113,18 @@ class SwitchPlayersSection extends StatelessWidget {
                             : null);
                   },
                   itemCount: playersToGetOut.length),
+              TextWithBorderComponent(
+                  text: whoAlreadyGoToReserve,
+                  textStyle: Theme.of(context).textTheme.bodyLarge!),
+              const SizedBox(height: 30),
+              ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return PlayerOverallItemComponent(
+                        player: playersAlreadyGoneToReserve.elementAt(index));
+                  },
+                  itemCount: playersAlreadyGoneToReserve.length),
             ],
           ),
         ),

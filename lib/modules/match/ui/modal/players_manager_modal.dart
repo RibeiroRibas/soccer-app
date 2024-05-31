@@ -4,9 +4,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/modules/match/ui/section/players_manager_actions_section.dart';
 import 'package:team_draw/modules/match/ui/section/players_manager_app_bar_section.dart';
 import 'package:team_draw/modules/match/ui/section/starting_and_reserve_players_section.dart';
-import 'package:team_draw/modules/match/view_model/reserve_player_view_model.dart';
-import 'package:team_draw/modules/match/view_model/reserve_players_one_view_model.dart';
-import 'package:team_draw/modules/match/view_model/reserve_players_two_view_model.dart';
+import 'package:team_draw/modules/match/view_model/players_view_model.dart';
+import 'package:team_draw/modules/match/view_model/players_one_view_model.dart';
+import 'package:team_draw/modules/match/view_model/players_two_view_model.dart';
 import 'package:team_draw/shared/view/section/switch_players_section.dart';
 
 class PlayersManagerModal extends StatefulWidget {
@@ -17,7 +17,7 @@ class PlayersManagerModal extends StatefulWidget {
 }
 
 class _PlayersManagerModalState extends State<PlayersManagerModal> {
-  late ReservePlayerViewModel viewModel;
+  late PlayersViewModel viewModel;
   bool isTeamOne = true;
 
   @override
@@ -28,9 +28,9 @@ class _PlayersManagerModalState extends State<PlayersManagerModal> {
 
   void _initViewModel() {
     if (isTeamOne) {
-      viewModel = Modular.get<ReservePlayerOneViewModel>();
+      viewModel = Modular.get<PlayersOneViewModel>();
     } else {
-      viewModel = Modular.get<ReservePlayerTwoViewModel>();
+      viewModel = Modular.get<PlayersTwoViewModel>();
     }
   }
 
@@ -55,18 +55,17 @@ class _PlayersManagerModalState extends State<PlayersManagerModal> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StartingAndReservePlayersSection(
-                    startingPlayers: viewModel.startingPlayers,
-                    reservePlayers: viewModel.reservePlayers,
-                    onPlayersToGetInTap: (player) =>
-                        viewModel.addPlayerToPlayersToGetIn(player),
-                    onPlayersToGetOutTap: (player) =>
-                        viewModel.addPlayerToPlayersToGetOut(player)),
+                Observer(
+                  builder: (_) => StartingAndReservePlayersSection(
+                      startingPlayers: viewModel.startingPlayers,
+                      reservePlayers: viewModel.reservePlayers,
+                      onPlayersToGetInTap: (player) =>
+                          viewModel.addPlayerToPlayersToGetIn(player),
+                      onPlayersToGetOutTap: (player) =>
+                          viewModel.addPlayerToPlayersToGetOut(player)),
+                ),
                 PlayersManagerActionsSection(
-                    playersAlreadyGoneToReserve:
-                        viewModel.playersAlreadyGoneToReserve,
-                    onChangeNowTap: () => {},
-                    onDisableChange: () => {}),
+                    onSwitchPlayer: () => viewModel.switchPlayers()),
                 Observer(
                   builder: (_) => SwitchPlayersSection(
                       playersToGetIn: viewModel.playersToGetIn,
@@ -74,7 +73,9 @@ class _PlayersManagerModalState extends State<PlayersManagerModal> {
                           viewModel.removePlayerToPlayerToGetIn(player),
                       playersToGetOut: viewModel.playersToGetOut,
                       removePlayerToPlayerToGetOut: (player) =>
-                          viewModel.removePlayerToPlayerToGetOut(player)),
+                          viewModel.removePlayerToPlayerToGetOut(player),
+                      playersAlreadyGoneToReserve:
+                          viewModel.playersAlreadyGoneToReserve),
                 )
               ],
             ),

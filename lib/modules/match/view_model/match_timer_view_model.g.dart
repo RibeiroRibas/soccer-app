@@ -89,72 +89,90 @@ mixin _$MatchTimerViewModel on MatchTimerViewModelBase, Store {
     });
   }
 
-  late final _$minutesToChangePlayerAtom = Atom(
-      name: 'MatchTimerViewModelBase.minutesToChangePlayer', context: context);
+  late final _$minutesToSwitchPlayerAtom = Atom(
+      name: 'MatchTimerViewModelBase.minutesToSwitchPlayer', context: context);
 
   @override
-  int get minutesToChangePlayer {
-    _$minutesToChangePlayerAtom.reportRead();
-    return super.minutesToChangePlayer;
+  int get minutesToSwitchPlayer {
+    _$minutesToSwitchPlayerAtom.reportRead();
+    return super.minutesToSwitchPlayer;
   }
 
   @override
-  set minutesToChangePlayer(int value) {
-    _$minutesToChangePlayerAtom.reportWrite(value, super.minutesToChangePlayer,
+  set minutesToSwitchPlayer(int value) {
+    _$minutesToSwitchPlayerAtom.reportWrite(value, super.minutesToSwitchPlayer,
         () {
-      super.minutesToChangePlayer = value;
+      super.minutesToSwitchPlayer = value;
     });
   }
 
-  late final _$secondsToChangePlayerAtom = Atom(
-      name: 'MatchTimerViewModelBase.secondsToChangePlayer', context: context);
+  late final _$secondsToSwitchPlayerAtom = Atom(
+      name: 'MatchTimerViewModelBase.secondsToSwitchPlayer', context: context);
 
   @override
-  int get secondsToChangePlayer {
-    _$secondsToChangePlayerAtom.reportRead();
-    return super.secondsToChangePlayer;
+  int get secondsToSwitchPlayer {
+    _$secondsToSwitchPlayerAtom.reportRead();
+    return super.secondsToSwitchPlayer;
   }
 
   @override
-  set secondsToChangePlayer(int value) {
-    _$secondsToChangePlayerAtom.reportWrite(value, super.secondsToChangePlayer,
+  set secondsToSwitchPlayer(int value) {
+    _$secondsToSwitchPlayerAtom.reportWrite(value, super.secondsToSwitchPlayer,
         () {
-      super.secondsToChangePlayer = value;
+      super.secondsToSwitchPlayer = value;
     });
   }
 
-  late final _$isTimeToChangePlayerAtom = Atom(
-      name: 'MatchTimerViewModelBase.isTimeToChangePlayer', context: context);
+  late final _$isTimeToSwitchPlayerAtom = Atom(
+      name: 'MatchTimerViewModelBase.isTimeToSwitchPlayer', context: context);
 
   @override
-  bool get isTimeToChangePlayer {
-    _$isTimeToChangePlayerAtom.reportRead();
-    return super.isTimeToChangePlayer;
+  bool get isTimeToSwitchPlayer {
+    _$isTimeToSwitchPlayerAtom.reportRead();
+    return super.isTimeToSwitchPlayer;
   }
 
   @override
-  set isTimeToChangePlayer(bool value) {
-    _$isTimeToChangePlayerAtom.reportWrite(value, super.isTimeToChangePlayer,
+  set isTimeToSwitchPlayer(bool value) {
+    _$isTimeToSwitchPlayerAtom.reportWrite(value, super.isTimeToSwitchPlayer,
         () {
-      super.isTimeToChangePlayer = value;
+      super.isTimeToSwitchPlayer = value;
     });
   }
 
-  late final _$isAlmostTimeToChangePlayerAtom = Atom(
-      name: 'MatchTimerViewModelBase.isAlmostTimeToChangePlayer',
+  late final _$isAlmostTimeToSwitchPlayerAtom = Atom(
+      name: 'MatchTimerViewModelBase.isAlmostTimeToSwitchPlayer',
       context: context);
 
   @override
-  bool get isAlmostTimeToChangePlayer {
-    _$isAlmostTimeToChangePlayerAtom.reportRead();
-    return super.isAlmostTimeToChangePlayer;
+  bool get isAlmostTimeToSwitchPlayer {
+    _$isAlmostTimeToSwitchPlayerAtom.reportRead();
+    return super.isAlmostTimeToSwitchPlayer;
   }
 
   @override
-  set isAlmostTimeToChangePlayer(bool value) {
-    _$isAlmostTimeToChangePlayerAtom
-        .reportWrite(value, super.isAlmostTimeToChangePlayer, () {
-      super.isAlmostTimeToChangePlayer = value;
+  set isAlmostTimeToSwitchPlayer(bool value) {
+    _$isAlmostTimeToSwitchPlayerAtom
+        .reportWrite(value, super.isAlmostTimeToSwitchPlayer, () {
+      super.isAlmostTimeToSwitchPlayer = value;
+    });
+  }
+
+  late final _$isDisableAutomaticSwitchAtom = Atom(
+      name: 'MatchTimerViewModelBase.isDisableAutomaticSwitch',
+      context: context);
+
+  @override
+  bool get isDisableAutomaticSwitch {
+    _$isDisableAutomaticSwitchAtom.reportRead();
+    return super.isDisableAutomaticSwitch;
+  }
+
+  @override
+  set isDisableAutomaticSwitch(bool value) {
+    _$isDisableAutomaticSwitchAtom
+        .reportWrite(value, super.isDisableAutomaticSwitch, () {
+      super.isDisableAutomaticSwitch = value;
     });
   }
 
@@ -228,6 +246,17 @@ mixin _$MatchTimerViewModel on MatchTimerViewModelBase, Store {
   }
 
   @override
+  void onDisableAutomaticSwitch() {
+    final _$actionInfo = _$MatchTimerViewModelBaseActionController.startAction(
+        name: 'MatchTimerViewModelBase.onDisableAutomaticSwitch');
+    try {
+      return super.onDisableAutomaticSwitch();
+    } finally {
+      _$MatchTimerViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 hour: ${hour},
@@ -235,10 +264,11 @@ minutes: ${minutes},
 seconds: ${seconds},
 isPaused: ${isPaused},
 isStopped: ${isStopped},
-minutesToChangePlayer: ${minutesToChangePlayer},
-secondsToChangePlayer: ${secondsToChangePlayer},
-isTimeToChangePlayer: ${isTimeToChangePlayer},
-isAlmostTimeToChangePlayer: ${isAlmostTimeToChangePlayer}
+minutesToSwitchPlayer: ${minutesToSwitchPlayer},
+secondsToSwitchPlayer: ${secondsToSwitchPlayer},
+isTimeToSwitchPlayer: ${isTimeToSwitchPlayer},
+isAlmostTimeToSwitchPlayer: ${isAlmostTimeToSwitchPlayer},
+isDisableAutomaticSwitch: ${isDisableAutomaticSwitch}
     ''';
   }
 }

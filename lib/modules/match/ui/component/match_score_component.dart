@@ -20,9 +20,15 @@ class MatchScoreComponent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          _ScoreWidget(score: scoreTeamOne, onChangeScore: onChangeScore),
+          _ScoreWidget(
+              score: scoreTeamOne,
+              onChangeScore: onChangeScore,
+              isTeamOne: true),
           Text(versus, style: Theme.of(context).textTheme.titleLarge),
-          _ScoreWidget(score: scoreTeamTwo, onChangeScore: onChangeScore),
+          _ScoreWidget(
+              score: scoreTeamTwo,
+              onChangeScore: onChangeScore,
+              isTeamOne: false),
         ],
       ),
     );
@@ -32,8 +38,12 @@ class MatchScoreComponent extends StatelessWidget {
 class _ScoreWidget extends StatelessWidget {
   final int score;
   final Function(bool, bool) onChangeScore;
+  final bool isTeamOne;
 
-  const _ScoreWidget({required this.score, required this.onChangeScore});
+  const _ScoreWidget(
+      {required this.score,
+      required this.onChangeScore,
+      required this.isTeamOne});
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +51,12 @@ class _ScoreWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
-            onPressed: () => onChangeScore.call(true, true),
+            onPressed: () => onChangeScore.call(isTeamOne, true),
             icon: Icon(Icons.arrow_upward,
                 color: Theme.of(context).primaryColor)),
         Text(score.toString(), style: Theme.of(context).textTheme.titleLarge),
         IconButton(
-            onPressed: () => onChangeScore.call(true, false),
+            onPressed: () => onChangeScore.call(isTeamOne, false),
             icon: Icon(Icons.arrow_downward,
                 color: Theme.of(context).primaryColor)),
       ],

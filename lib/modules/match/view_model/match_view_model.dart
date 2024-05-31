@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:mobx/mobx.dart';
+import 'package:team_draw/model/match_goals.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
@@ -21,7 +22,6 @@ abstract class MatchViewModelBase with Store {
 
   MatchViewModelBase(this._playerService, this._teamMatchService);
 
-  @observable
   late TeamMatch match;
 
   @observable
@@ -30,20 +30,18 @@ abstract class MatchViewModelBase with Store {
   @observable
   int scoreTeamTwo = 0;
 
-  @observable
   List<Player> playersTeamOne = [];
 
-  @observable
   List<Player> playersTeamTwo = [];
 
-  @observable
   List<Player> reservePlayersTeamOne = [];
 
-  @observable
   List<Player> reservePlayersTeamTwo = [];
 
   @observable
   bool isMatchStarted = false;
+
+  String? playerGoalNotFundMessage;
 
   bool existsAnotherMatchInQueue = false;
 
@@ -203,18 +201,56 @@ abstract class MatchViewModelBase with Store {
   }
 
   @action
-  void changeScore(bool isScoreTeamOne, bool isIncreaseScore) {
-    if (isScoreTeamOne && isIncreaseScore) {
-      scoreTeamOne += 1;
-    } else if (isScoreTeamOne && !isIncreaseScore) {
-      scoreTeamOne -= 1;
-    } else if (!isScoreTeamOne && isIncreaseScore) {
-      scoreTeamTwo += 1;
-    } else {
-      scoreTeamTwo -= 1;
-    }
+  Future<void> changeScore(bool isScoreTeamOne, bool isIncreaseScore,
+      Player player, String goalTime) async {
+    _setPlayerGoal(isIncreaseScore, player, goalTime);
 
-    match.scoreTeamOne = scoreTeamOne;
-    match.scoreTeamTwo = scoreTeamTwo;
+    if (playerGoalNotFundMessage == null) {
+      if (isScoreTeamOne && isIncreaseScore) {
+        scoreTeamOne += 1;
+      } else if (isScoreTeamOne && !isIncreaseScore && scoreTeamOne > 0) {
+        scoreTeamOne -= 1;
+      } else if (!isScoreTeamOne && isIncreaseScore) {
+        scoreTeamTwo += 1;
+      } else if (scoreTeamTwo > 0) {
+        scoreTeamTwo -= 1;
+      }
+
+      match.scoreTeamOne = scoreTeamOne;
+      match.scoreTeamTwo = scoreTeamTwo;
+    }
+  }
+
+  bool verifyIfScoreIsNotEqualsZero(bool isScoreTeamOne, bool isIncreaseScore) {
+    return isIncreaseScore ||
+        isScoreTeamOne && !isIncreaseScore && scoreTeamOne > 0 ||
+        !isScoreTeamOne && !isIncreaseScore && scoreTeamTwo > 0;
+  }
+
+  void _setPlayerGoal(bool isIncreaseScore, Player player, String goalTime) {
+    playerGoalNotFundMessage = null;
+    match.matchGoals = match.matchGoals ?? [];
+    if (match.matchGoals!.any((playerGoal) => playerGoal.player == player)) {
+      for (int i = 0; i < match.matchGoals!.length; i++) {
+        if (match.matchGoals![i].player == player) {
+          if (isIncreaseScore) {
+            match.matchGoals![i].goalTime.add(goalTime);
+          } else {
+            match.matchGoals![i].goalTime.removeLast();
+            if (match.matchGoals![i].goalTime.isEmpty) {
+              match.matchGoals!.removeAt(i);
+            }
+          }
+        }
+      }
+    } else {
+      if (isIncreaseScore) {
+        match.matchGoals!
+            .add(PlayerGoals(player: player, goalTime: [goalTime]));
+      } else {
+        playerGoalNotFundMessage =
+            "Não foi possível remover o gol. O jogador selecionado não marcou um gol nessa partida, por favor escolha um jogador que já tenha marcado um gol para remover.";
+      }
+    }
   }
 }
