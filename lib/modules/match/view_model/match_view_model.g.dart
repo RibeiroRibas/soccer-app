@@ -9,26 +9,6 @@ part of 'match_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$MatchViewModel on MatchViewModelBase, Store {
-  late final _$matchAtom =
-      Atom(name: 'MatchViewModelBase.match', context: context);
-
-  @override
-  TeamMatch get match {
-    _$matchAtom.reportRead();
-    return super.match;
-  }
-
-  bool _matchIsInitialized = false;
-
-  @override
-  set match(TeamMatch value) {
-    _$matchAtom.reportWrite(value, _matchIsInitialized ? super.match : null,
-        () {
-      super.match = value;
-      _matchIsInitialized = true;
-    });
-  }
-
   late final _$scoreTeamOneAtom =
       Atom(name: 'MatchViewModelBase.scoreTeamOne', context: context);
 
@@ -61,72 +41,6 @@ mixin _$MatchViewModel on MatchViewModelBase, Store {
     });
   }
 
-  late final _$playersTeamOneAtom =
-      Atom(name: 'MatchViewModelBase.playersTeamOne', context: context);
-
-  @override
-  List<Player> get playersTeamOne {
-    _$playersTeamOneAtom.reportRead();
-    return super.playersTeamOne;
-  }
-
-  @override
-  set playersTeamOne(List<Player> value) {
-    _$playersTeamOneAtom.reportWrite(value, super.playersTeamOne, () {
-      super.playersTeamOne = value;
-    });
-  }
-
-  late final _$playersTeamTwoAtom =
-      Atom(name: 'MatchViewModelBase.playersTeamTwo', context: context);
-
-  @override
-  List<Player> get playersTeamTwo {
-    _$playersTeamTwoAtom.reportRead();
-    return super.playersTeamTwo;
-  }
-
-  @override
-  set playersTeamTwo(List<Player> value) {
-    _$playersTeamTwoAtom.reportWrite(value, super.playersTeamTwo, () {
-      super.playersTeamTwo = value;
-    });
-  }
-
-  late final _$reservePlayersTeamOneAtom =
-      Atom(name: 'MatchViewModelBase.reservePlayersTeamOne', context: context);
-
-  @override
-  List<Player> get reservePlayersTeamOne {
-    _$reservePlayersTeamOneAtom.reportRead();
-    return super.reservePlayersTeamOne;
-  }
-
-  @override
-  set reservePlayersTeamOne(List<Player> value) {
-    _$reservePlayersTeamOneAtom.reportWrite(value, super.reservePlayersTeamOne,
-        () {
-      super.reservePlayersTeamOne = value;
-    });
-  }
-
-  late final _$reservePlayersTeamTwoAtom =
-      Atom(name: 'MatchViewModelBase.reservePlayersTeamTwo', context: context);
-
-  @override
-  List<Player> get reservePlayersTeamTwo {
-    _$reservePlayersTeamTwoAtom.reportRead();
-    return super.reservePlayersTeamTwo;
-  }
-
-  @override
-  set reservePlayersTeamTwo(List<Player> value) {
-    _$reservePlayersTeamTwoAtom.reportWrite(value, super.reservePlayersTeamTwo,
-        () {
-      super.reservePlayersTeamTwo = value;
-    });
-  }
-
   late final _$isMatchStartedAtom =
       Atom(name: 'MatchViewModelBase.isMatchStarted', context: context);
 
@@ -141,6 +55,16 @@ mixin _$MatchViewModel on MatchViewModelBase, Store {
     _$isMatchStartedAtom.reportWrite(value, super.isMatchStarted, () {
       super.isMatchStarted = value;
     });
+  }
+
+  late final _$changeScoreAsyncAction =
+      AsyncAction('MatchViewModelBase.changeScore', context: context);
+
+  @override
+  Future<void> changeScore(bool isScoreTeamOne, bool isIncreaseScore,
+      Player player, String goalTime) {
+    return _$changeScoreAsyncAction.run(() =>
+        super.changeScore(isScoreTeamOne, isIncreaseScore, player, goalTime));
   }
 
   late final _$MatchViewModelBaseActionController =
@@ -158,26 +82,10 @@ mixin _$MatchViewModel on MatchViewModelBase, Store {
   }
 
   @override
-  void changeScore(bool isScoreTeamOne, bool isIncreaseScore) {
-    final _$actionInfo = _$MatchViewModelBaseActionController.startAction(
-        name: 'MatchViewModelBase.changeScore');
-    try {
-      return super.changeScore(isScoreTeamOne, isIncreaseScore);
-    } finally {
-      _$MatchViewModelBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
-match: ${match},
 scoreTeamOne: ${scoreTeamOne},
 scoreTeamTwo: ${scoreTeamTwo},
-playersTeamOne: ${playersTeamOne},
-playersTeamTwo: ${playersTeamTwo},
-reservePlayersTeamOne: ${reservePlayersTeamOne},
-reservePlayersTeamTwo: ${reservePlayersTeamTwo},
 isMatchStarted: ${isMatchStarted}
     ''';
   }

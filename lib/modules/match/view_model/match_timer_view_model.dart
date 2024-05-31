@@ -24,18 +24,23 @@ abstract class MatchTimerViewModelBase with Store {
   bool isStopped = false;
 
   @observable
-  int minutesToChangePlayer = 0;
+  int minutesToSwitchPlayer = 0;
 
   @observable
-  int secondsToChangePlayer = 0;
+  int secondsToSwitchPlayer = 0;
 
   @observable
-  bool isTimeToChangePlayer = false;
+  bool isTimeToSwitchPlayer = false;
 
   @observable
-  bool isAlmostTimeToChangePlayer = false;
+  bool isAlmostTimeToSwitchPlayer = false;
 
-  int timeToChangeInMinutes = 0;
+  @observable
+  bool isDisableAutomaticSwitch = false;
+
+  bool isNotShowingModal = true;
+
+  int timeToSwitchPlayersInMinutes = 0;
 
   Timer? _reservePlayerTimer;
   Timer? _matchTimer;
@@ -45,36 +50,37 @@ abstract class MatchTimerViewModelBase with Store {
   @action
   void init(TeamMatch match, int timeToChangePlayer) {
     this.match = match;
-    if (timeToChangeInMinutes == 0) {
-      timeToChangeInMinutes = timeToChangePlayer;
+    if (timeToSwitchPlayersInMinutes == 0) {
+      timeToSwitchPlayersInMinutes = timeToChangePlayer;
       resetTimer();
     }
   }
 
   @action
   void minusSeconds() {
-    if (minutesToChangePlayer == 1 && secondsToChangePlayer == 0) {
-      isAlmostTimeToChangePlayer = true;
+    if (minutesToSwitchPlayer == 1 && secondsToSwitchPlayer == 0) {
+      isAlmostTimeToSwitchPlayer = true;
     }
 
-    if (minutesToChangePlayer == 0 && secondsToChangePlayer == 0) {
-      isTimeToChangePlayer = true;
-      minutesToChangePlayer = timeToChangeInMinutes - 1;
-      secondsToChangePlayer = 59;
+    if (minutesToSwitchPlayer == 0 && secondsToSwitchPlayer == 0) {
+      isTimeToSwitchPlayer = !isTimeToSwitchPlayer;
+      isAlmostTimeToSwitchPlayer = false;
+      minutesToSwitchPlayer = timeToSwitchPlayersInMinutes - 1;
+      secondsToSwitchPlayer = 59;
     } else {
-      if (secondsToChangePlayer == 0) {
-        secondsToChangePlayer = 59;
-        minutesToChangePlayer--;
+      if (secondsToSwitchPlayer == 0) {
+        secondsToSwitchPlayer = 59;
+        minutesToSwitchPlayer--;
       } else {
-        secondsToChangePlayer--;
+        secondsToSwitchPlayer--;
       }
     }
   }
 
   @action
   void resetTimer() {
-    minutesToChangePlayer = timeToChangeInMinutes;
-    secondsToChangePlayer = 0;
+    minutesToSwitchPlayer = timeToSwitchPlayersInMinutes;
+    secondsToSwitchPlayer = 0;
   }
 
   @action
@@ -110,5 +116,10 @@ abstract class MatchTimerViewModelBase with Store {
                 const Duration(seconds: 1), (timer) => plusSeconds()),
           if (isPaused) {_matchTimer!.cancel(), _matchTimer = null}
         });
+  }
+
+  @action
+  void onDisableAutomaticSwitch() {
+    isDisableAutomaticSwitch = !isDisableAutomaticSwitch;
   }
 }
