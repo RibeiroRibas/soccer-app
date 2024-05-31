@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/shared/helper/date_format_helper.dart';
+import 'package:team_draw/shared/helper/date_time_format_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 
 class MatchesItemWidget extends StatefulWidget {
@@ -64,7 +64,8 @@ class _MatchesItemWidgetState extends State<MatchesItemWidget> {
             alignment: Alignment.center,
             width: _calculateCellWidth(context),
             child: Text(
-              DateFormatHelper.fromDateTimeToString(widget.match.matchDate!),
+              DateTimeFormatHelper.fromDateTimeToString(
+                  widget.match.matchDate!),
             ),
           ),
         ],

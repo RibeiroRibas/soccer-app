@@ -17,65 +17,63 @@ class StartingPlayersSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isTeamLeftSide
-        ? SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width * 0.40,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(width: 4),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PlayerNameAndPositionComponent(
-                        position: players.first.principalPosition,
-                        playerName: _formatName(players.first.name!),
-                        positionColor: teamColor)
-                  ],
-                ),
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _buildDefendersList()),
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _buildMidfielderList()),
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _buildForwardsList()),
-              ],
-            ),
-          )
-        : Positioned(
-            right: 0.0,
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width * 0.40,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
+        ? Flex(
+            direction: Axis.horizontal,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(width: 40),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: _buildForwardsList()),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: _buildMidfielderList()),
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: _buildDefendersListRightSide()),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PlayerNameAndPositionComponent(
-                          position: players.first.principalPosition,
-                          playerName: _formatName(players.first.name!),
-                          positionColor: teamColor),
-                    ],
-                  ),
+                  PlayerNameAndPositionComponent(
+                      position: players.first.principalPosition,
+                      playerName: _formatName(players.first.name!),
+                      positionColor: teamColor)
                 ],
               ),
-            ),
+              const SizedBox(width: 25),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: _buildDefendersList()),
+              const SizedBox(width: 25),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: _buildMidfielderList()),
+              const SizedBox(width: 25),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: _buildForwardsList()),
+            ],
+          )
+        : Flex(
+            direction: Axis.horizontal,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: _buildForwardsList()),
+              const SizedBox(width: 25),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: _buildMidfielderList()),
+              const SizedBox(width: 25),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: _buildDefendersListRightSide()),
+              const SizedBox(width: 25),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  PlayerNameAndPositionComponent(
+                      position: players.first.principalPosition,
+                      playerName: _formatName(players.first.name!),
+                      positionColor: teamColor),
+                ],
+              ),
+              const SizedBox(width: 40),
+            ],
           );
   }
 
