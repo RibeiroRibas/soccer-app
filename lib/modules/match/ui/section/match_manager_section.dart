@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:team_draw/data/shield_data.dart';
-import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/match/ui/component/match_score_component.dart';
 import 'package:team_draw/modules/match/ui/component/match_timer_component.dart';
 import 'package:team_draw/modules/match/ui/component/reserve_player_timer_component.dart';
@@ -12,15 +11,13 @@ class MatchManagerSection extends StatelessWidget {
   final int scoreTeamTwo;
   final Function(bool, bool) onChangeScore;
   final int timeToChangePlayer;
-  final TeamMatch match;
 
   const MatchManagerSection(
       {super.key,
       required this.scoreTeamOne,
       required this.scoreTeamTwo,
       required this.onChangeScore,
-      required this.timeToChangePlayer,
-      required this.match});
+      required this.timeToChangePlayer});
 
   @override
   Widget build(BuildContext context) {

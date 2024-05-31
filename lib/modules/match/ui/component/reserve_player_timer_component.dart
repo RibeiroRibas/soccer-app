@@ -22,21 +22,23 @@ class _ReservePlayerTimerComponentState
   void initState() {
     super.initState();
     viewModel.startReservePlayerTimer();
-    reaction((_) => viewModel.isAlmostTimeToChangePlayer,
+    reaction((_) => viewModel.isAlmostTimeToSwitchPlayer,
         (isAlmostTimeToChangePlayer) {
-      if (isAlmostTimeToChangePlayer) {
+      if (isAlmostTimeToChangePlayer && viewModel.isNotShowingModal) {
         _showSwitchPlayersModal();
       }
     });
   }
 
   Future<void> _showSwitchPlayersModal() {
+    viewModel.isNotShowingModal = false;
     return showBarModalBottomSheet(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         context: context,
         builder: (context) => SingleChildScrollView(
             controller: ModalScrollController.of(context),
-            child: const SwitchPlayerModal()));
+            child: SwitchPlayerModal(
+                onCloseModal: () => viewModel.isNotShowingModal = true)));
   }
 
   String _formatIntToString(int time) {
@@ -64,14 +66,14 @@ class _ReservePlayerTimerComponentState
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                            _formatIntToString(viewModel.minutesToChangePlayer),
+                            _formatIntToString(viewModel.minutesToSwitchPlayer),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
                                 .copyWith(fontSize: 26)),
                         const Text(":"),
                         Text(
-                            _formatIntToString(viewModel.secondsToChangePlayer),
+                            _formatIntToString(viewModel.secondsToSwitchPlayer),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!

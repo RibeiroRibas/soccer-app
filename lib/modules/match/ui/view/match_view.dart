@@ -2,18 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:team_draw/data/shield_data.dart';
 import 'package:team_draw/model/match_settings.dart';
+import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/match/ui/section/teams_and_match_info_section.dart';
+import 'package:team_draw/modules/match/ui/dialog/set_player_score_dialog.dart';
+import 'package:team_draw/modules/match/ui/modal/teams_and_match_info_modal.dart';
 import 'package:team_draw/modules/match/ui/section/match_manager_section.dart';
 import 'package:team_draw/modules/match/ui/section/starting_players_section.dart';
-import 'package:team_draw/modules/match/ui/modal/teams_and_match_info_modal.dart';
+import 'package:team_draw/modules/match/ui/section/teams_and_match_info_section.dart';
 import 'package:team_draw/modules/match/view_model/match_timer_view_model.dart';
 import 'package:team_draw/modules/match/view_model/match_view_model.dart';
-import 'package:team_draw/modules/match/view_model/reserve_players_one_view_model.dart';
-import 'package:team_draw/modules/match/view_model/reserve_players_two_view_model.dart';
+import 'package:team_draw/modules/match/view_model/players_one_view_model.dart';
+import 'package:team_draw/modules/match/view_model/players_two_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/view/component/elevated_button_component.dart';
 
@@ -29,26 +32,33 @@ class MatchView extends StatefulWidget {
 }
 
 class _MatchViewState extends State<MatchView> {
-  final MatchViewModel matchViewModel = Modular.get<MatchViewModel>();
-  final ReservePlayerOneViewModel reservePlayerOneViewModel =
-      Modular.get<ReservePlayerOneViewModel>();
-  final ReservePlayerTwoViewModel reservePlayerTwoViewModel =
-      Modular.get<ReservePlayerTwoViewModel>();
-  final MatchTimerViewModel matchTimerViewModel =
-      Modular.get<MatchTimerViewModel>();
+  final matchViewModel = Modular.get<MatchViewModel>();
+  final playersOneViewModel = Modular.get<PlayersOneViewModel>();
+  final playersTwoViewModel = Modular.get<PlayersTwoViewModel>();
+  final matchTimerViewModel = Modular.get<MatchTimerViewModel>();
 
   @override
   void initState() {
     super.initState();
     _initViewModels();
+    reaction((_) => matchTimerViewModel.isTimeToSwitchPlayer, (_) {
+      if (!matchTimerViewModel.isDisableAutomaticSwitch) {
+        _switchPlayers();
+      }
+    });
+  }
+
+  void _switchPlayers() {
+    playersOneViewModel.switchPlayers();
+    playersTwoViewModel.switchPlayers();
   }
 
   void _initViewModels() {
     matchViewModel.init(widget.matches, widget.matchSettings);
     _setOrientation();
-    reservePlayerOneViewModel.init(matchViewModel.playersTeamOne,
+    playersOneViewModel.init(matchViewModel.playersTeamOne,
         matchViewModel.reservePlayersTeamOne, matchViewModel.match.teamOne!);
-    reservePlayerTwoViewModel.init(matchViewModel.playersTeamTwo,
+    playersTwoViewModel.init(matchViewModel.playersTeamTwo,
         matchViewModel.reservePlayersTeamTwo, matchViewModel.match.teamTwo!);
     matchTimerViewModel.init(
         matchViewModel.match, widget.matchSettings.timeToChangePlayer);
@@ -74,6 +84,60 @@ class _MatchViewState extends State<MatchView> {
                     teamInformation: matchViewModel.teamsInformation))));
   }
 
+  Future<void> _showSetPlayerScoreDialog(BuildContext context,
+      bool isScoreTeamOne, bool isIncreaseScore, List<Player> players) async {
+    if (matchViewModel.verifyIfScoreIsNotEqualsZero(
+        isScoreTeamOne, isIncreaseScore)) {
+      return showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return SetPlayerScoreDialog(
+                isIncreaseScore: isIncreaseScore,
+                players: players,
+                onPlayerTap: (player) => matchViewModel
+                    .changeScore(isScoreTeamOne, isIncreaseScore, player,
+                        _buildGoalTime())
+                    .then((_) => _verifyErrorMessageAndDoDisposeDialog()));
+          });
+    }
+  }
+
+  String _buildGoalTime() {
+    return "${matchTimerViewModel.hour.toString().padLeft(2, '0')}"
+        "${matchTimerViewModel.minutes.toString().padLeft(2, '0')}"
+        "${matchTimerViewModel.seconds.toString().padLeft(2, '0')}";
+  }
+
+  Future<void> _showSelectedWrongPlayerAlertDialog(String tittle) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            title: Text(tittle),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  style: Theme.of(context).textButtonTheme.style!.copyWith(
+                      foregroundColor: WidgetStateProperty.all(
+                          Theme.of(context).colorScheme.onSecondary)),
+                  child: const Text(ok)),
+            ],
+          );
+        });
+  }
+
+  _verifyErrorMessageAndDoDisposeDialog() {
+    if (matchViewModel.playerGoalNotFundMessage != null) {
+      _showSelectedWrongPlayerAlertDialog(
+          matchViewModel.playerGoalNotFundMessage!);
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,25 +152,32 @@ class _MatchViewState extends State<MatchView> {
                       shieldTeamTwo:
                           matchViewModel.match.teamTwo!.shield!.resourcePath,
                       onShieldTap: () => _goToTeamsAndMatchInfoModal(context)),
-                  StartingPlayersSection(
-                      isTeamLeftSide: true,
-                      players: matchViewModel.playersTeamOne,
-                      teamColor: matchViewModel.resolveColorTeamOne()),
+                  Observer(
+                    builder: (_) => StartingPlayersSection(
+                        isTeamLeftSide: true,
+                        players: playersOneViewModel.startingPlayers,
+                        teamColor: matchViewModel.resolveColorTeamOne()),
+                  ),
                   Observer(
                       builder: (_) => MatchManagerSection(
-                            scoreTeamOne: matchViewModel.scoreTeamOne,
-                            scoreTeamTwo: matchViewModel.scoreTeamTwo,
-                            onChangeScore: (isScoreTeamOne, isIncreaseScore) =>
-                                matchViewModel.changeScore(
-                                    isScoreTeamOne, isIncreaseScore),
-                            timeToChangePlayer:
-                                widget.matchSettings.timeToChangePlayer,
-                            match: matchViewModel.match,
-                          )),
-                  StartingPlayersSection(
-                      isTeamLeftSide: false,
-                      players: matchViewModel.playersTeamTwo,
-                      teamColor: matchViewModel.resolveColorTeamTwo()),
+                          scoreTeamOne: matchViewModel.scoreTeamOne,
+                          scoreTeamTwo: matchViewModel.scoreTeamTwo,
+                          onChangeScore: (isScoreTeamOne, isIncreaseScore) =>
+                              _showSetPlayerScoreDialog(
+                                  context,
+                                  isScoreTeamOne,
+                                  isIncreaseScore,
+                                  isScoreTeamOne
+                                      ? matchViewModel.match.teamOne!.players!
+                                      : matchViewModel.match.teamTwo!.players!),
+                          timeToChangePlayer:
+                              matchViewModel.settings.timeToChangePlayer)),
+                  Observer(
+                    builder: (_) => StartingPlayersSection(
+                        isTeamLeftSide: false,
+                        players: playersTwoViewModel.startingPlayers,
+                        teamColor: matchViewModel.resolveColorTeamTwo()),
+                  ),
                 ],
               )
             : _StartMatchWidget(

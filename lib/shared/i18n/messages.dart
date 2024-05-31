@@ -131,9 +131,12 @@ const reserves = "Reservas";
 const willBeNextPlayerToGetOut = "será o próximo jogador a entrar.";
 const willBeNextPlayerToGetIn = "será o próximo jogador a sair.";
 const playing = "Jogando";
-const nextChangeIn = "Próxima troca em:";
-const changeNow = "Trocar agora";
-const disableChange = "Desativar a troca";
+const nextSwitchIn = "Próxima troca em:";
+const switchNow = "Trocar agora";
+const switchNowAndResetTimer = "Trocar agora e reiniciar o cronômetro.";
+const disableAutomaticSwitchToAllTeams =
+    "Desativar a troca automática para todos os times.";
+const enableAutomaticSwitch = "Ativar a troca automática.";
 const whoToGetIn = "Quem entra";
 const whoToGetOut = "Quem sai";
 const willBeContinuousInReserve = "vai continuar na reserva.";
