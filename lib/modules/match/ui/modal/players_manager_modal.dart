@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:team_draw/modules/match/ui/section/players_manager_actions_section.dart';
-import 'package:team_draw/modules/match/ui/section/players_manager_app_bar_section.dart';
-import 'package:team_draw/modules/match/ui/section/starting_and_reserve_players_section.dart';
-import 'package:team_draw/modules/match/view_model/players_view_model.dart';
-import 'package:team_draw/modules/match/view_model/players_one_view_model.dart';
-import 'package:team_draw/modules/match/view_model/players_two_view_model.dart';
-import 'package:team_draw/shared/view/section/switch_players_section.dart';
+import 'package:team_draw/modules/match/controllers/players_controller.dart';
+import 'package:team_draw/modules/match/ui/component/players_manager_actions_component.dart';
+import 'package:team_draw/modules/match/ui/component/players_manager_app_bar_component.dart';
+import 'package:team_draw/modules/match/ui/component/starting_and_reserve_players_component.dart';
+import 'package:team_draw/shared/ui/component/switch_players_component.dart';
 
 class PlayersManagerModal extends StatefulWidget {
   const PlayersManagerModal({super.key});
@@ -17,7 +15,7 @@ class PlayersManagerModal extends StatefulWidget {
 }
 
 class _PlayersManagerModalState extends State<PlayersManagerModal> {
-  late PlayersViewModel viewModel;
+  late PlayersController _controller;
   bool isTeamOne = true;
 
   @override
@@ -28,9 +26,9 @@ class _PlayersManagerModalState extends State<PlayersManagerModal> {
 
   void _initViewModel() {
     if (isTeamOne) {
-      viewModel = Modular.get<PlayersOneViewModel>();
+      _controller = Modular.get<PlayersOneController>();
     } else {
-      viewModel = Modular.get<PlayersTwoViewModel>();
+      _controller = Modular.get<PlayersTwoController>();
     }
   }
 
@@ -43,9 +41,9 @@ class _PlayersManagerModalState extends State<PlayersManagerModal> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            PlayersManagerAppBarSection(
-                teamName: viewModel.team.name!,
-                teamShield: viewModel.team.shield!.resourcePath,
+            PlayersManagerAppBarComponent(
+                teamName: _controller.team.name!,
+                teamShield: _controller.team.shield!.resourcePath,
                 onChangeTeamTap: () => setState(() {
                       isTeamOne = !isTeamOne;
                       _initViewModel();
@@ -56,26 +54,26 @@ class _PlayersManagerModalState extends State<PlayersManagerModal> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Observer(
-                  builder: (_) => StartingAndReservePlayersSection(
-                      startingPlayers: viewModel.startingPlayers,
-                      reservePlayers: viewModel.reservePlayers,
+                  builder: (_) => StartingAndReservePlayersComponent(
+                      startingPlayers: _controller.startingPlayers,
+                      reservePlayers: _controller.reservePlayers,
                       onPlayersToGetInTap: (player) =>
-                          viewModel.addPlayerToPlayersToGetIn(player),
+                          _controller.addPlayerToPlayersToGetIn(player),
                       onPlayersToGetOutTap: (player) =>
-                          viewModel.addPlayerToPlayersToGetOut(player)),
+                          _controller.addPlayerToPlayersToGetOut(player)),
                 ),
-                PlayersManagerActionsSection(
-                    onSwitchPlayer: () => viewModel.switchPlayers()),
+                PlayersManagerActionsComponent(
+                    onSwitchPlayer: () => _controller.switchPlayers()),
                 Observer(
-                  builder: (_) => SwitchPlayersSection(
-                      playersToGetIn: viewModel.playersToGetIn,
+                  builder: (_) => SwitchPlayersComponent(
+                      playersToGetIn: _controller.playersToGetIn,
                       removePlayerToPlayerToGetIn: (player) =>
-                          viewModel.removePlayerToPlayerToGetIn(player),
-                      playersToGetOut: viewModel.playersToGetOut,
+                          _controller.removePlayerToPlayerToGetIn(player),
+                      playersToGetOut: _controller.playersToGetOut,
                       removePlayerToPlayerToGetOut: (player) =>
-                          viewModel.removePlayerToPlayerToGetOut(player),
+                          _controller.removePlayerToPlayerToGetOut(player),
                       playersAlreadyGoneToReserve:
-                          viewModel.playersAlreadyGoneToReserve),
+                          _controller.playersAlreadyGoneToReserve),
                 )
               ],
             ),

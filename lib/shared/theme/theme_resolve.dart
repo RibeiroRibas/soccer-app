@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/data/shield_data.dart';
-import 'package:team_draw/modules/theme/theme_name.dart';
+import 'package:team_draw/modules/theme/model/theme_name.dart';
 import 'package:team_draw/shared/theme/default_theme.dart';
 import 'package:team_draw/shared/theme/flamengo_theme.dart';
 

@@ -1,6 +1,6 @@
 import 'package:team_draw/data/team_name_data.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/modules/app/repository/local_storage_repository.dart';
+import 'package:team_draw/shared/repositories/local_storage_repository.dart';
 
 class GenerateTeamNameService {
   final LocalStorageRepository counterTeamRepository;

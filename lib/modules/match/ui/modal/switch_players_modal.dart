@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:team_draw/modules/match/controllers/players_controller.dart';
 import 'package:team_draw/modules/match/ui/component/reserve_player_timer_component.dart';
-import 'package:team_draw/modules/match/view_model/match_view_model.dart';
-import 'package:team_draw/modules/match/view_model/players_one_view_model.dart';
-import 'package:team_draw/modules/match/view_model/players_two_view_model.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/view/component/text_with_border_component.dart';
-import 'package:team_draw/shared/view/section/switch_players_section.dart';
+import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
+import 'package:team_draw/shared/ui/component/switch_players_component.dart';
 
 class SwitchPlayerModal extends StatefulWidget {
   final Function onCloseModal;
@@ -19,11 +17,8 @@ class SwitchPlayerModal extends StatefulWidget {
 }
 
 class _SwitchPlayerModalState extends State<SwitchPlayerModal> {
-  final PlayersOneViewModel playerOneViewModel =
-      Modular.get<PlayersOneViewModel>();
-  final PlayersTwoViewModel playersTwoViewModel =
-      Modular.get<PlayersTwoViewModel>();
-  final MatchViewModel matchViewModel = Modular.get<MatchViewModel>();
+  final _playersOneController = Modular.get<PlayersOneController>();
+  final _playersTwoController = Modular.get<PlayersTwoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +31,13 @@ class _SwitchPlayerModalState extends State<SwitchPlayerModal> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Observer(
-            builder: (_) => SwitchPlayersSection(
-                playersToGetIn: playerOneViewModel.playersToGetIn,
-                playersToGetOut: playerOneViewModel.playersToGetOut,
-                teamName: playerOneViewModel.team.name!,
-                teamShield: playerOneViewModel.team.shield!.resourcePath,
+            builder: (_) => SwitchPlayersComponent(
+                playersToGetIn: _playersOneController.playersToGetIn,
+                playersToGetOut: _playersOneController.playersToGetOut,
+                teamName: _playersOneController.team.name!,
+                teamShield: _playersOneController.team.shield!.resourcePath,
                 playersAlreadyGoneToReserve:
-                    playerOneViewModel.playersAlreadyGoneToReserve),
+                    _playersOneController.playersAlreadyGoneToReserve),
           ),
           Expanded(
               child: SingleChildScrollView(
@@ -58,13 +53,13 @@ class _SwitchPlayerModalState extends State<SwitchPlayerModal> {
                         const ReservePlayerTimerComponent(),
                       ])))),
           Observer(
-            builder: (_) => SwitchPlayersSection(
-                playersToGetIn: playersTwoViewModel.playersToGetIn,
-                playersToGetOut: playersTwoViewModel.playersToGetOut,
-                teamName: playersTwoViewModel.team.name!,
-                teamShield: playersTwoViewModel.team.shield!.resourcePath,
+            builder: (_) => SwitchPlayersComponent(
+                playersToGetIn: _playersTwoController.playersToGetIn,
+                playersToGetOut: _playersTwoController.playersToGetOut,
+                teamName: _playersTwoController.team.name!,
+                teamShield: _playersTwoController.team.shield!.resourcePath,
                 playersAlreadyGoneToReserve:
-                    playersTwoViewModel.playersAlreadyGoneToReserve),
+                    _playersTwoController.playersAlreadyGoneToReserve),
           ),
         ],
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/modules/app/repository/local_storage_repository.dart';
-import 'package:team_draw/modules/theme/theme_name.dart';
+import 'package:team_draw/shared/repositories/local_storage_repository.dart';
+import 'package:team_draw/modules/theme/model/theme_name.dart';
 import 'package:team_draw/shared/theme/theme_resolve.dart';
 
 class ThemeRepository {
