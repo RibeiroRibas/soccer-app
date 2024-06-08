@@ -58,7 +58,7 @@ abstract class MatchTimerViewModelBase with Store {
 
   @action
   void minusSeconds() {
-    if (minutesToSwitchPlayer == 1 && secondsToSwitchPlayer == 0) {
+    if (minutesToSwitchPlayer == 0 && secondsToSwitchPlayer == 1) {
       isAlmostTimeToSwitchPlayer = true;
     }
 

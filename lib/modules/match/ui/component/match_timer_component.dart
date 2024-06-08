@@ -67,11 +67,11 @@ class _TimerWidget extends StatelessWidget {
         Text(_formatIntToString(hours),
             style:
                 Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 26)),
-        const Text(":"),
+        Text(":", style: Theme.of(context).textTheme.bodyLarge),
         Text(_formatIntToString(minutes),
             style:
                 Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 26)),
-        const Text(":"),
+        Text(":", style: Theme.of(context).textTheme.bodyLarge),
         Text(_formatIntToString(seconds),
             style:
                 Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 26)),

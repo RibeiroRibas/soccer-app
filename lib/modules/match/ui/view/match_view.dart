@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -8,6 +9,7 @@ import 'package:team_draw/data/shield_data.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/modules/match/ui/dialog/pre_match_dialog.dart';
 import 'package:team_draw/modules/match/ui/dialog/set_player_score_dialog.dart';
 import 'package:team_draw/modules/match/ui/modal/teams_and_match_info_modal.dart';
 import 'package:team_draw/modules/match/ui/section/match_manager_section.dart';
@@ -40,6 +42,8 @@ class _MatchViewState extends State<MatchView> {
   @override
   void initState() {
     super.initState();
+    SchedulerBinding.instance
+        .addPostFrameCallback((_) => _showPreMatchDialog());
     _initViewModels();
     reaction((_) => matchTimerViewModel.isTimeToSwitchPlayer, (_) {
       if (!matchTimerViewModel.isDisableAutomaticSwitch) {
@@ -104,8 +108,8 @@ class _MatchViewState extends State<MatchView> {
   }
 
   String _buildGoalTime() {
-    return "${matchTimerViewModel.hour.toString().padLeft(2, '0')}"
-        "${matchTimerViewModel.minutes.toString().padLeft(2, '0')}"
+    return "${matchTimerViewModel.hour.toString().padLeft(2, '0')}:"
+        "${matchTimerViewModel.minutes.toString().padLeft(2, '0')}:"
         "${matchTimerViewModel.seconds.toString().padLeft(2, '0')}";
   }
 
@@ -138,50 +142,59 @@ class _MatchViewState extends State<MatchView> {
     }
   }
 
+  Future<void> _showPreMatchDialog() async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const PreMatchDialog();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Observer(
-        builder: (_) => matchViewModel.isMatchStarted
-            ? Stack(
-                children: [
-                  const _BackGroundField(),
-                  TeamsAndMatchInfoSection(
-                      shieldTeamOne:
-                          matchViewModel.match.teamOne!.shield!.resourcePath,
-                      shieldTeamTwo:
-                          matchViewModel.match.teamTwo!.shield!.resourcePath,
-                      onShieldTap: () => _goToTeamsAndMatchInfoModal(context)),
-                  Observer(
-                    builder: (_) => StartingPlayersSection(
-                        isTeamLeftSide: true,
-                        players: playersOneViewModel.startingPlayers,
-                        teamColor: matchViewModel.resolveColorTeamOne()),
-                  ),
-                  Observer(
-                      builder: (_) => MatchManagerSection(
-                          scoreTeamOne: matchViewModel.scoreTeamOne,
-                          scoreTeamTwo: matchViewModel.scoreTeamTwo,
-                          onChangeScore: (isScoreTeamOne, isIncreaseScore) =>
-                              _showSetPlayerScoreDialog(
-                                  context,
-                                  isScoreTeamOne,
-                                  isIncreaseScore,
-                                  isScoreTeamOne
-                                      ? matchViewModel.match.teamOne!.players!
-                                      : matchViewModel.match.teamTwo!.players!),
-                          timeToChangePlayer:
-                              matchViewModel.settings.timeToChangePlayer)),
-                  Observer(
-                    builder: (_) => StartingPlayersSection(
-                        isTeamLeftSide: false,
-                        players: playersTwoViewModel.startingPlayers,
-                        teamColor: matchViewModel.resolveColorTeamTwo()),
-                  ),
-                ],
-              )
-            : _StartMatchWidget(
-                onButtonPressed: () => matchViewModel.startMatch()),
+    return Observer(
+      builder: (_) => Stack(
+        children: [
+          const _BackGroundField(),
+          TeamsAndMatchInfoSection(
+              shieldTeamOne: matchViewModel.match.teamOne!.shield!.resourcePath,
+              shieldTeamTwo: matchViewModel.match.teamTwo!.shield!.resourcePath,
+              onShieldTap: () => _goToTeamsAndMatchInfoModal(context)),
+          Observer(
+            builder: (_) => StartingPlayersSection(
+                isTeamLeftSide: true,
+                players: playersOneViewModel.startingPlayers,
+                teamColor: matchViewModel.resolveColorTeamOne()),
+          ),
+          if (!matchViewModel.isMatchStarted)
+            Center(
+                child: ElevatedButtonComponent(
+                    onButtonPressed: () => matchViewModel.startMatch(),
+                    text: start)),
+          if (matchViewModel.isMatchStarted)
+            Observer(
+                builder: (_) => MatchManagerSection(
+                      scoreTeamOne: matchViewModel.scoreTeamOne,
+                      scoreTeamTwo: matchViewModel.scoreTeamTwo,
+                      onChangeScore: (isScoreTeamOne, isIncreaseScore) =>
+                          _showSetPlayerScoreDialog(
+                              context,
+                              isScoreTeamOne,
+                              isIncreaseScore,
+                              isScoreTeamOne
+                                  ? matchViewModel.match.teamOne!.players!
+                                  : matchViewModel.match.teamTwo!.players!),
+                      timeToChangePlayer:
+                          matchViewModel.settings.timeToChangePlayer,
+                    )),
+          Observer(
+            builder: (_) => StartingPlayersSection(
+                isTeamLeftSide: false,
+                players: playersTwoViewModel.startingPlayers,
+                teamColor: matchViewModel.resolveColorTeamTwo()),
+          ),
+        ],
       ),
     );
   }
@@ -198,28 +211,5 @@ class _BackGroundField extends StatelessWidget {
                 image:
                     AssetImage("$imageInitialPath/soccer-field-landscape.jpg"),
                 fit: BoxFit.cover)));
-  }
-}
-
-class _StartMatchWidget extends StatelessWidget {
-  final Function onButtonPressed;
-
-  const _StartMatchWidget({required this.onButtonPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                        "$imageInitialPath/soccer-field-landscape.jpg"),
-                    fit: BoxFit.cover))),
-        Center(
-            child: ElevatedButtonComponent(
-                onButtonPressed: () => onButtonPressed.call(), text: start)),
-      ],
-    );
   }
 }
