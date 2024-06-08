@@ -1,6 +1,6 @@
 import 'package:team_draw/data/player_data.dart';
 import 'package:team_draw/data/team_data.dart';
-import 'package:team_draw/model/match_goals.dart';
+import 'package:team_draw/model/player_goals.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/team_match.dart';
 

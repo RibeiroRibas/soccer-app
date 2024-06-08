@@ -1,10 +1,9 @@
 import 'dart:ui';
 
 import 'package:mobx/mobx.dart';
-import 'package:team_draw/model/match_goals.dart';
+import 'package:team_draw/exceptions/players_goal_not_found_exception.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
@@ -78,99 +77,17 @@ abstract class MatchViewModelBase with Store {
     teamsInformation = TeamInformation(teamOneInformation, teamTwoInformation);
   }
 
-  late List<Player> _goalKeepers;
-  late List<Player> _forwards;
-  late List<Player> _midfielders;
-  late List<Player> _defenders;
-  late List<Player> _leftBacks;
-  late List<Player> _rightBacks;
-
   void _setStartingAndReservePlayers(
       Team team, List<Player> startingPlayers, List<Player> reservePlayers) {
     List<Player> players = [];
     players.addAll(team.players!);
 
-    _initializeListsOfPlayersByPosition(players);
+    _playerService.initPlayersByPosition(players);
 
-    do {
-      if (_hasNotStartingGoalKeeper(startingPlayers) &&
-          _goalKeepers.isNotEmpty) {
-        startingPlayers.add(_goalKeepers.first);
-        _goalKeepers.removeAt(0);
-      }
-      if (_leftBacks.isNotEmpty &&
-          _hasNotStartingLeftBack(startingPlayers) &&
-          startingPlayers.length < settings.numberOfStartingPlayers!) {
-        startingPlayers.add(_leftBacks.first);
-        _leftBacks.removeAt(0);
-      }
-      if (_rightBacks.isNotEmpty &&
-          _hasNotStartingRightBack(startingPlayers) &&
-          startingPlayers.length < settings.numberOfStartingPlayers!) {
-        startingPlayers.add(_rightBacks.first);
-        _rightBacks.removeAt(0);
-      }
-      if (_defenders.isNotEmpty &&
-          startingPlayers.length < settings.numberOfStartingPlayers!) {
-        startingPlayers.add(_defenders.first);
-        _defenders.removeAt(0);
-      }
-      if (_midfielders.isNotEmpty &&
-          startingPlayers.length < settings.numberOfStartingPlayers!) {
-        startingPlayers.add(_midfielders.first);
-        _midfielders.removeAt(0);
-      }
-      if (_forwards.isNotEmpty &&
-          startingPlayers.length < settings.numberOfStartingPlayers!) {
-        startingPlayers.add(_forwards.first);
-        _forwards.removeAt(0);
-      }
-    } while (startingPlayers.length < settings.numberOfStartingPlayers!);
+    _playerService.removePlayersByPosition(
+        team, startingPlayers, settings.numberOfStartingPlayers!);
 
-    reservePlayers.addAll(_goalKeepers);
-    reservePlayers.addAll(_defenders);
-    reservePlayers.addAll(_midfielders);
-    reservePlayers.addAll(_forwards);
-  }
-
-  bool _hasNotStartingGoalKeeper(List<Player> startingPlayers) =>
-      !startingPlayers
-          .any((player) => player.principalPosition! == Position.goalkeeper);
-
-  bool _hasNotStartingLeftBack(List<Player> startingPlayers) => !startingPlayers
-      .any((player) => player.principalPosition! == Position.leftBack);
-
-  bool _hasNotStartingRightBack(List<Player> startingPlayers) =>
-      !startingPlayers
-          .any((player) => player.principalPosition! == Position.rightBack);
-
-  void _initializeListsOfPlayersByPosition(List<Player> players) {
-    _goalKeepers = [];
-    _forwards = [];
-    _midfielders = [];
-    _defenders = [];
-    _leftBacks = [];
-    _rightBacks = [];
-    List<Player> playersAux = [];
-    for (Player player in players) {
-      if (player.isGoalKeeper()) {
-        _goalKeepers.add(player);
-      } else if (player.isForward()) {
-        _forwards.add(player);
-      } else if (player.isMidfielder()) {
-        _midfielders.add(player);
-      } else if (player.isDefender()) {
-        _defenders.add(player);
-      } else if (player.isLeftBack()) {
-        _leftBacks.add(player);
-      } else if (player.isRightBack()) {
-        _rightBacks.add(player);
-      }
-      playersAux.add(player);
-    }
-    for (Player player in playersAux) {
-      players.removeWhere((element) => element == player);
-    }
+    reservePlayers.addAll(_playerService.getAllPlayers());
   }
 
   Color resolveColorTeamTwo() {
@@ -229,28 +146,11 @@ abstract class MatchViewModelBase with Store {
 
   void _setPlayerGoal(bool isIncreaseScore, Player player, String goalTime) {
     playerGoalNotFundMessage = null;
-    match.matchGoals = match.matchGoals ?? [];
-    if (match.matchGoals!.any((playerGoal) => playerGoal.player == player)) {
-      for (int i = 0; i < match.matchGoals!.length; i++) {
-        if (match.matchGoals![i].player == player) {
-          if (isIncreaseScore) {
-            match.matchGoals![i].goalTime.add(goalTime);
-          } else {
-            match.matchGoals![i].goalTime.removeLast();
-            if (match.matchGoals![i].goalTime.isEmpty) {
-              match.matchGoals!.removeAt(i);
-            }
-          }
-        }
-      }
-    } else {
-      if (isIncreaseScore) {
-        match.matchGoals!
-            .add(PlayerGoals(player: player, goalTime: [goalTime]));
-      } else {
-        playerGoalNotFundMessage =
-            "Não foi possível remover o gol. O jogador selecionado não marcou um gol nessa partida, por favor escolha um jogador que já tenha marcado um gol para remover.";
-      }
+    try {
+      match.setPlayerGoal(isIncreaseScore, player, goalTime);
+    } on PlayersGoalNotFoundException {
+      playerGoalNotFundMessage =
+          "Não foi possível remover o gol. O jogador selecionado não marcou um gol nessa partida, por favor escolha um jogador que já tenha marcado um gol para remover.";
     }
   }
 }

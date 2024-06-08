@@ -4,33 +4,29 @@ import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/services/team_service.dart';
 import 'package:team_draw/modules/new_match/services/generate_team_name_service.dart';
 import 'package:team_draw/modules/new_match/services/generate_team_shield_service.dart';
+import 'package:team_draw/services/player_service.dart';
+import 'package:team_draw/services/team_service.dart';
 
 class SortTeamsService {
   final TeamService teamService;
   final GenerateTeamNameService generateTeamNameService;
   final GenerateTeamShieldService generateTeamShieldService;
+  final PlayerService _playerService;
 
   SortTeamsService(
     this.teamService,
     this.generateTeamNameService,
     this.generateTeamShieldService,
+    this._playerService,
   );
 
-  late List<Player> _goalKeepers;
-  late List<Player> _forwards;
-  late List<Player> _midfielders;
-  late List<Player> _defenders;
-  late List<Player> _leftBacks;
-  late List<Player> _rightBacks;
   late List<Team> allTeams;
 
   Future<List<Team>> sortTeamsMatch(
       List<Player> players, MatchSettings settings) async {
-    _initializeListsOfPlayersByPosition(players);
-
+    _playerService.initPlayersByPosition(players);
     List<Team> teams = [];
 
     _generateTeamsByPlayerPosition(settings, players, teams);
@@ -125,31 +121,8 @@ class SortTeamsService {
     for (int i = 0; i < settings.numberOfTeams!; i++) {
       Team team = Team();
       team.players = [];
-      do {
-        if (!team.hasGoalKeeper() && _goalKeepers.isNotEmpty) {
-          _addPlayer(_goalKeepers, team, players);
-        }
-        if (_forwards.isNotEmpty &&
-            team.players!.length < settings.numberOfStartingPlayers!) {
-          _addPlayer(_forwards, team, players);
-        }
-        if (_midfielders.isNotEmpty &&
-            team.players!.length < settings.numberOfStartingPlayers!) {
-          _addPlayer(_midfielders, team, players);
-        }
-        if (_defenders.isNotEmpty &&
-            team.players!.length < settings.numberOfStartingPlayers!) {
-          _addPlayer(_defenders, team, players);
-        }
-        if (_leftBacks.isNotEmpty &&
-            team.players!.length < settings.numberOfStartingPlayers!) {
-          _addPlayer(_leftBacks, team, players);
-        }
-        if (_rightBacks.isNotEmpty &&
-            team.players!.length < settings.numberOfStartingPlayers!) {
-          _addPlayer(_rightBacks, team, players);
-        }
-      } while (team.players!.length < settings.numberOfStartingPlayers!);
+      _playerService.addPlayersByPosition(
+          team, settings.numberOfStartingPlayers, players);
       team.numberOfStartingPlayers = settings.numberOfStartingPlayers;
       team.calculateOverall();
       teams.add(team);
@@ -169,37 +142,5 @@ class SortTeamsService {
       }
     }
     return matches;
-  }
-
-  void _addPlayer(
-      List<Player> playersByPosition, Team team, List<Player> players) {
-    int playerIndex = Random().nextInt(playersByPosition.length);
-    team.players!.add(playersByPosition.elementAt(playerIndex));
-    players.remove(playersByPosition.elementAt(playerIndex));
-    playersByPosition.removeAt(playerIndex);
-  }
-
-  void _initializeListsOfPlayersByPosition(List<Player> players) {
-    _goalKeepers = [];
-    _forwards = [];
-    _midfielders = [];
-    _defenders = [];
-    _leftBacks = [];
-    _rightBacks = [];
-    for (Player player in players) {
-      if (player.isGoalKeeper()) {
-        _goalKeepers.add(player);
-      } else if (player.isForward()) {
-        _forwards.add(player);
-      } else if (player.isMidfielder()) {
-        _midfielders.add(player);
-      } else if (player.isDefender()) {
-        _defenders.add(player);
-      } else if (player.isLeftBack()) {
-        _leftBacks.add(player);
-      } else if (player.isRightBack()) {
-        _rightBacks.add(player);
-      }
-    }
   }
 }

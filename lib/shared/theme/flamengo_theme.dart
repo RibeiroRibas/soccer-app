@@ -25,9 +25,11 @@ ThemeData flamengoTheme = ThemeData(
     onSurfaceVariant: ThemeColors.grayLight3,
   ),
   textTheme: const TextTheme(
-    bodyLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-    bodyMedium: TextStyle(fontSize: 16),
-    bodySmall: TextStyle(fontSize: 12, color: Colors.white),
+    bodyLarge: TextStyle(
+        fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.fade),
+    bodyMedium: TextStyle(fontSize: 16, overflow: TextOverflow.fade),
+    bodySmall: TextStyle(
+        fontSize: 12, color: Colors.white, overflow: TextOverflow.fade),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
@@ -38,32 +40,38 @@ ThemeData flamengoTheme = ThemeData(
       backgroundColor: ThemeColors.redDark,
       foregroundColor: Colors.white,
       textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-        fontFamily: playFontFamily,
-      ),
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          fontFamily: playFontFamily,
+          overflow: TextOverflow.fade),
     ),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: Colors.black,
     unselectedItemColor: ThemeColors.grayLight,
-    unselectedLabelStyle:
-        TextStyle(fontSize: 10, fontWeight: FontWeight.normal),
-    selectedLabelStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.normal),
+    unselectedLabelStyle: TextStyle(
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+        overflow: TextOverflow.fade),
+    selectedLabelStyle: TextStyle(
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+        overflow: TextOverflow.fade),
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-        fontFamily: playFontFamily,
-      ),
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          fontFamily: playFontFamily,
+          overflow: TextOverflow.fade),
       foregroundColor: Colors.black,
     ),
   ),
   iconTheme: const IconThemeData(color: Colors.white),
   inputDecorationTheme: const InputDecorationTheme(
-    labelStyle: TextStyle(color: Colors.white, fontSize: 16),
+    labelStyle: TextStyle(
+        color: Colors.white, fontSize: 16, overflow: TextOverflow.fade),
     enabledBorder: OutlineInputBorder(
       borderSide: BorderSide(color: Colors.white, width: 2.0),
     ),

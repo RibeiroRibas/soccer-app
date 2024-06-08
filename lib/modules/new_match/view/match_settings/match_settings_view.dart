@@ -103,14 +103,6 @@ class _MatchSettingsViewState extends State<MatchSettingsView> {
               labelText: minute,
             ),
             const Divider(),
-            SelectOneOptionWidget(
-                question: newTeamsQuestion,
-                value: viewModel.isDrawNewTeams!,
-                onValueSelected: (value) {
-                  viewModel.drawNewTeams(value);
-                  widget.matchSettings.isDrawNewTeams = value;
-                }),
-            const Text(newTeamsSubTittle),
           ],
         ),
       ),

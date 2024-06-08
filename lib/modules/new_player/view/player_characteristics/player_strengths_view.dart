@@ -19,7 +19,7 @@ class PlayerStrengthsView extends StatefulWidget {
 class _PlayerStrengthsViewState extends State<PlayerStrengthsView> {
   @override
   Widget build(BuildContext context) {
-    final List<PlayerStrengths> playerStrengths = PlayerStrengths.all;
+    final List<PlayerStrengths> playerStrengths = PlayerStrengths.all();
 
     void setStrengthsPoints(int index) {
       if (widget.player.isStrengthsNotSelected(playerStrengths[index])) {

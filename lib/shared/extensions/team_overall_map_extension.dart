@@ -29,6 +29,18 @@ extension TeamOverallExtension on Map<Position, double> {
     this[position] = this[position]! + overall;
   }
 
+  void clearValues() {
+    assert(Position.values.length == length);
+    this[Position.forward] = 0.0;
+    this[Position.defender] = 0.0;
+    this[Position.midfielder] = 0.0;
+    this[Position.goalkeeper] = 0.0;
+    this[Position.leftBack] = 0.0;
+    this[Position.rightBack] = 0.0;
+    this[Position.leftWinger] = 0.0;
+    this[Position.rightWinger] = 0.0;
+  }
+
   int _numberOfPlayerBackup(
     List<Player> players,
     int numberOfStartingPlayers,

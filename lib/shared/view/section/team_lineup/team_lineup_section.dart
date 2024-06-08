@@ -9,8 +9,10 @@ import 'package:team_draw/shared/view/section/team_lineup/widget/team_overall_wi
 class TeamLineupSection extends StatelessWidget {
   final Team team;
   final List<TeamMatch>? allMatches;
+  final Function(Player)? onSwitchPlayer;
 
-  const TeamLineupSection({super.key, required this.team, this.allMatches});
+  const TeamLineupSection(
+      {super.key, required this.team, this.allMatches, this.onSwitchPlayer});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class TeamLineupSection extends StatelessWidget {
                       ? player.calculateScore(allMatches!)
                       : null,
                   player: player,
+                  onSwitchPlayer: onSwitchPlayer,
                 ),
               },
               const Divider(),

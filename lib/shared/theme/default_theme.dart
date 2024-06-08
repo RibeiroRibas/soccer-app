@@ -26,11 +26,12 @@ ThemeData defaultTheme = ThemeData(
   ),
   textTheme: const TextTheme(
       bodyLarge: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-      ),
-      bodyMedium: TextStyle(fontSize: 16),
-      bodySmall: TextStyle(fontSize: 12, color: Colors.white)),
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          overflow: TextOverflow.fade),
+      bodyMedium: TextStyle(fontSize: 16, overflow: TextOverflow.fade),
+      bodySmall: TextStyle(
+          fontSize: 12, color: Colors.white, overflow: TextOverflow.fade)),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       shape: RoundedRectangleBorder(
@@ -40,34 +41,43 @@ ThemeData defaultTheme = ThemeData(
       backgroundColor: ThemeColors.overall,
       foregroundColor: Colors.white,
       textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-        fontFamily: playFontFamily,
-      ),
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          fontFamily: playFontFamily,
+          overflow: TextOverflow.fade),
     ),
   ),
   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
     backgroundColor: ThemeColors.blueDark,
     unselectedItemColor: ThemeColors.grayLight,
-    unselectedLabelStyle:
-        TextStyle(fontSize: 10, fontWeight: FontWeight.normal),
-    selectedLabelStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.normal),
+    unselectedLabelStyle: TextStyle(
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+        overflow: TextOverflow.fade),
+    selectedLabelStyle: TextStyle(
+        fontSize: 10,
+        fontWeight: FontWeight.normal,
+        overflow: TextOverflow.fade),
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       textStyle: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-        fontFamily: playFontFamily,
-      ),
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          fontFamily: playFontFamily,
+          overflow: TextOverflow.fade),
       foregroundColor: ThemeColors.grayDark,
     ),
   ),
   iconTheme: const IconThemeData(color: Colors.white),
   inputDecorationTheme: const InputDecorationTheme(
-    labelStyle: TextStyle(color: Colors.white, fontSize: 16),
+    labelStyle: TextStyle(
+        color: Colors.white, fontSize: 16, overflow: TextOverflow.fade),
     enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.white, width: 2.0),
+      borderSide: BorderSide(
+        color: Colors.white,
+        width: 2.0,
+      ),
     ),
     border: OutlineInputBorder(
       borderSide: BorderSide(color: Colors.white, width: 2.0),

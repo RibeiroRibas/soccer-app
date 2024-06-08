@@ -6,7 +6,9 @@ enum Position {
   midfielder(m, midfielderPosition),
   defender(d, defenderPosition),
   leftBack(lb, leftBackPosition),
-  rightBack(rb, rightBackPosition);
+  rightBack(rb, rightBackPosition),
+  leftWinger(lw, leftWingerPosition),
+  rightWinger(rw, rightWingerPosition);
 
   const Position(this.acronym, this.name);
 
@@ -14,6 +16,7 @@ enum Position {
   final String name;
 
   static Position fromIndex(int index) {
+    assert(values.length == 8);
     switch (index) {
       case 0:
         return goalkeeper;
@@ -25,18 +28,27 @@ enum Position {
         return defender;
       case 4:
         return leftBack;
+      case 5:
+        return rightBack;
+      case 6:
+        return leftWinger;
+      default:
+        return rightWinger;
     }
-    return rightBack;
   }
 
   static List<Position> allPositions() {
-    return [
+    List<Position> positions = [
       goalkeeper,
       forward,
       midfielder,
       defender,
       leftBack,
       rightBack,
+      leftWinger,
+      rightWinger,
     ];
+    assert(values.length == positions.length);
+    return positions;
   }
 }

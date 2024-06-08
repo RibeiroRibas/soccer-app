@@ -42,13 +42,17 @@ const forwardPosition = "ATACANTE";
 const midfielderPosition = "MEIO CAMPO";
 const defenderPosition = "DEFESA";
 const leftBackPosition = "LATERAL E";
-const rightBackPosition = "LATERAL R";
+const rightBackPosition = "LATERAL D";
+const leftWingerPosition = "PONTA E";
+const rightWingerPosition = "PONTA D";
 const gk = "G";
 const d = "D";
 const m = "M";
 const a = "A";
 const rb = "LD";
 const lb = "LE";
+const lw = "PE";
+const rw = "PD";
 const savePlayer = "Salvar Jogador";
 const playerConfirmData = "Confirme os dados do jogador:";
 const playerOverall = "Qual o overall desse jogador?";
@@ -74,9 +78,6 @@ const hasChangeSideQuestion = "Troca de lado?";
 const yes = "Sim";
 const no = "Não";
 const changePlayerEvery = "Troca jogador a cada:";
-const newTeamsQuestion = "Novos Times? **";
-const newTeamsSubTittle =
-    "** Evita a repetição de times e partidas que já aconteceram.";
 const quantity = "qtd";
 const numberOfTeams = "Número de times";
 const sortTeams = "Sortear Equipes";
@@ -91,6 +92,8 @@ const defense = "Defesa";
 const midfielder = "Meio-Campo";
 const leftBack = "Lateral Esquerdo";
 const rightBack = "Lateral Direito";
+const leftWinger = "Ponta Esquerda";
+const rightWinger = "Ponta Direita";
 const matches = "Jogos";
 
 // player characteristics
@@ -147,3 +150,4 @@ const theMatchIsAlmostStart = "A partida já vai começar!";
 const preMatchMessage =
     "Organize os jogadores em campo. Quando o Juiz apitar você já pode iniciar a partida.";
 const okIGetIt = "Ok Entendi!";
+const playersManager = "Gerenciador de jogadores";

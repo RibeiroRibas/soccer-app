@@ -1,5 +1,5 @@
-import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team_shield.dart';
 import 'package:team_draw/modules/home/model/team_overall.dart';
 import 'package:team_draw/shared/extensions/team_overall_map_extension.dart';
@@ -32,17 +32,17 @@ class Team {
   }
 
   void calculateOverall() async {
-    if (teamOverall.value == 0) {
-      if (hasGoalKeeper()) {
-        _calculateWithGoalKeeper();
-      } else {
-        _calculateWithoutGoalKeeper();
-      }
-      _calculateCharacteristics();
+    teamOverall = TeamOverall();
+    if (hasGoalKeeper()) {
+      _calculateWithGoalKeeper();
+    } else {
+      _calculateWithoutGoalKeeper();
     }
+    _calculateCharacteristics();
   }
 
   void _calculateOverall() {
+    teamOverall.overallByPosition.clearValues();
     for (Player player in players!) {
       _increaseOverallPrincipalPosition(player);
     }
@@ -150,16 +150,24 @@ class Team {
   List<String> getTeamInformation() {
     List<String> teamInformation = [];
     teamInformation.add(teamOverall.value.toStringAsFixed(1));
-    teamInformation.add(
-        teamOverall.overallByPosition[Position.forward]!.toStringAsFixed(1));
-    teamInformation.add(
-        teamOverall.overallByPosition[Position.defender]!.toStringAsFixed(1));
+    double forwardOverall = _calculateForwardOverall();
+    teamInformation.add(forwardOverall.toStringAsFixed(1));
+    double defenderOverall = _calculateDefenderOverall();
+    teamInformation.add(defenderOverall.toStringAsFixed(1));
     teamInformation.add(
         teamOverall.overallByPosition[Position.midfielder]!.toStringAsFixed(1));
-    teamInformation.add(
-        teamOverall.overallByPosition[Position.leftBack]!.toStringAsFixed(1));
-    teamInformation.add(
-        teamOverall.overallByPosition[Position.rightBack]!.toStringAsFixed(1));
     return teamInformation;
+  }
+
+  double _calculateDefenderOverall() {
+    return teamOverall.overallByPosition[Position.defender]! +
+        teamOverall.overallByPosition[Position.leftBack]! +
+        teamOverall.overallByPosition[Position.rightBack]!;
+  }
+
+  double _calculateForwardOverall() {
+    return teamOverall.overallByPosition[Position.forward]! +
+        teamOverall.overallByPosition[Position.leftWinger]! +
+        teamOverall.overallByPosition[Position.rightWinger]!;
   }
 }
