@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/modules/app/app_module.dart';
-import 'package:team_draw/modules/theme/theme_view_model/theme_view_model.dart';
+import 'package:team_draw/modules/theme/controllers/theme_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,14 +21,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ThemeViewModel themeModel = Modular.get<ThemeViewModel>();
+  final _themeController = Modular.get<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => MaterialApp.router(
         title: 'Só Pra Rir FC',
-        theme: themeModel.currentTheme,
+        theme: _themeController.currentTheme,
         routerConfig: Modular.routerConfig,
       ),
     );

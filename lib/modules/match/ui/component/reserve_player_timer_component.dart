@@ -3,8 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:team_draw/modules/match/controllers/match_timer_controller.dart';
 import 'package:team_draw/modules/match/ui/modal/switch_players_modal.dart';
-import 'package:team_draw/modules/match/view_model/match_timer_view_model.dart';
 
 class ReservePlayerTimerComponent extends StatefulWidget {
   const ReservePlayerTimerComponent({super.key});
@@ -16,29 +16,29 @@ class ReservePlayerTimerComponent extends StatefulWidget {
 
 class _ReservePlayerTimerComponentState
     extends State<ReservePlayerTimerComponent> {
-  MatchTimerViewModel viewModel = Modular.get<MatchTimerViewModel>();
+  final _controller = Modular.get<MatchTimerController>();
 
   @override
   void initState() {
     super.initState();
-    viewModel.startReservePlayerTimer();
-    reaction((_) => viewModel.isAlmostTimeToSwitchPlayer,
+    _controller.startReservePlayerTimer();
+    reaction((_) => _controller.isAlmostTimeToSwitchPlayer,
         (isAlmostTimeToChangePlayer) {
-      if (isAlmostTimeToChangePlayer && viewModel.isNotShowingModal) {
+      if (isAlmostTimeToChangePlayer && _controller.isNotShowingModal) {
         _showSwitchPlayersModal();
       }
     });
   }
 
   Future<void> _showSwitchPlayersModal() {
-    viewModel.isNotShowingModal = false;
+    _controller.isNotShowingModal = false;
     return showBarModalBottomSheet(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         context: context,
         builder: (context) => SingleChildScrollView(
             controller: ModalScrollController.of(context),
             child: SwitchPlayerModal(
-                onCloseModal: () => viewModel.isNotShowingModal = true)));
+                onCloseModal: () => _controller.isNotShowingModal = true)));
   }
 
   String _formatIntToString(int time) {
@@ -66,14 +66,16 @@ class _ReservePlayerTimerComponentState
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
-                            _formatIntToString(viewModel.minutesToSwitchPlayer),
+                            _formatIntToString(
+                                _controller.minutesToSwitchPlayer),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
                                 .copyWith(fontSize: 26)),
                         Text(":", style: Theme.of(context).textTheme.bodyLarge),
                         Text(
-                            _formatIntToString(viewModel.secondsToSwitchPlayer),
+                            _formatIntToString(
+                                _controller.secondsToSwitchPlayer),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!

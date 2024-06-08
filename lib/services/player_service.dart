@@ -5,7 +5,7 @@ import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
-import 'package:team_draw/modules/new_player/repository/player_repository.dart';
+import 'package:team_draw/repositories/player_repository.dart';
 
 class PlayerService {
   final PlayerRepository _repository;

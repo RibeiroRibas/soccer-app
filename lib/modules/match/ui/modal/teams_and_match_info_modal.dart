@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
-import 'package:team_draw/modules/match/ui/section/match_info_section.dart';
-import 'package:team_draw/modules/match/ui/section/team_info_section.dart';
+import 'package:team_draw/modules/match/ui/component/match_info_component.dart';
+import 'package:team_draw/modules/match/ui/component/team_info_component.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
 
 class TeamsAndMatchInfoModal extends StatelessWidget {
@@ -28,11 +28,11 @@ class TeamsAndMatchInfoModal extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TeamInfoSection(
+          TeamInfoComponent(
               playersScore: playersScoreTeamOne, team: teamMatch.teamOne!),
-          MatchInfoSection(
+          MatchInfoComponent(
               teamMatch: teamMatch, teamInformation: teamInformation),
-          TeamInfoSection(
+          TeamInfoComponent(
               playersScore: playersScoreTeamTwo, team: teamMatch.teamTwo!),
         ],
       ),
