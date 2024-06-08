@@ -2,7 +2,7 @@ import 'package:team_draw/data/team_data.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/app/repository/team_repository.dart';
+import 'package:team_draw/shared/repositories/team_repository.dart';
 import 'package:team_draw/modules/home/model/team_score.dart';
 
 class TeamService {

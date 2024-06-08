@@ -1,5 +1,5 @@
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/repository/match_repository.dart';
+import 'package:team_draw/repositories/team_match_repository.dart';
 
 class TeamMatchService {
   final TeamMatchRepository _repository;

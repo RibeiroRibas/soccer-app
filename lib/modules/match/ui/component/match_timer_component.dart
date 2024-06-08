@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:team_draw/modules/match/view_model/match_timer_view_model.dart';
+import 'package:team_draw/modules/match/controllers/match_timer_controller.dart';
 
 class MatchTimerComponent extends StatefulWidget {
   const MatchTimerComponent({super.key});
@@ -11,12 +11,12 @@ class MatchTimerComponent extends StatefulWidget {
 }
 
 class _MatchTimerComponentState extends State<MatchTimerComponent> {
-  MatchTimerViewModel viewModel = Modular.get<MatchTimerViewModel>();
+  final _controller = Modular.get<MatchTimerController>();
 
   @override
   void initState() {
     super.initState();
-    viewModel.startMatchTimer();
+    _controller.startMatchTimer();
   }
 
   @override
@@ -31,13 +31,14 @@ class _MatchTimerComponentState extends State<MatchTimerComponent> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 _TimerWidget(
-                    hours: viewModel.hour,
-                    minutes: viewModel.minutes,
-                    seconds: viewModel.seconds),
+                    hours: _controller.hour,
+                    minutes: _controller.minutes,
+                    seconds: _controller.seconds),
                 _TimerControllerWidget(
                     onPlayOrPauseTap: (isPaused) =>
-                        viewModel.isPaused = isPaused,
-                    onStopTap: (isStopped) => viewModel.isStopped = isStopped),
+                        _controller.isPaused = isPaused,
+                    onStopTap: (isStopped) =>
+                        _controller.isStopped = isStopped),
               ],
             ),
           ),
