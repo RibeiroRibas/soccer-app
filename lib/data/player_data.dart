@@ -1,98 +1,111 @@
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 
-Player ribeiro = Player(
+Player cezinha = Player(
   id: 1,
-  name: "Ribeiro",
-  principalPosition: Position.midfielder,
-  overall: 4,
+  name: "Cesinha",
+  principalPosition: Position.leftBack,
+  overall: 7,
 );
 Player pedro = Player(
   id: 2,
   name: "Pedro",
   principalPosition: Position.rightBack,
-  overall: 3,
+  overall: 5,
 );
 Player jodir = Player(
   id: 3,
   name: "Jodir",
   principalPosition: Position.defender,
-  overall: 3,
+  overall: 5,
 );
 Player rodrigo = Player(
   id: 4,
   name: "Rodrigo",
   principalPosition: Position.defender,
-  overall: 4,
+  overall: 6,
 );
 Player helton = Player(
   id: 5,
   name: "Helton",
   principalPosition: Position.defender,
-  overall: 5,
+  overall: 7,
 );
 Player cris = Player(
   id: 6,
   name: "Cris",
   principalPosition: Position.midfielder,
-  overall: 4,
+  overall: 7,
 );
 Player cleber = Player(
   id: 7,
   name: "Cleber",
   principalPosition: Position.defender,
-  overall: 4,
+  overall: 7,
 );
 Player helder = Player(
   id: 8,
   name: "Helder",
-  principalPosition: Position.forward,
-  overall: 3,
+  principalPosition: Position.defender,
+  overall: 5,
 );
 Player douglas = Player(
   id: 9,
   name: "Douglas",
-  principalPosition: Position.rightBack,
-  overall: 2,
+  principalPosition: Position.rightWinger,
+  overall: 3,
 );
 Player sid = Player(
   id: 10,
   name: "Sid",
   principalPosition: Position.forward,
-  overall: 1,
+  overall: 2,
 );
 Player neny = Player(
   id: 11,
   name: "Neny",
-  principalPosition: Position.forward,
-  overall: 3,
+  principalPosition: Position.leftWinger,
+  overall: 4,
 );
 Player diego = Player(
   id: 12,
   name: "Diego",
   principalPosition: Position.goalkeeper,
-  overall: 5,
+  overall: 8,
 );
 Player galdino = Player(
   id: 13,
   name: "Galdino",
   principalPosition: Position.goalkeeper,
-  overall: 5,
+  overall: 8,
 );
 Player bruno = Player(
   id: 14,
   name: "Bruno",
   principalPosition: Position.midfielder,
-  overall: 4,
+  overall: 7,
 );
 Player guilherme = Player(
   id: 15,
   name: "Guilherme",
-  principalPosition: Position.forward,
-  overall: 2,
+  principalPosition: Position.rightWinger,
+  overall: 6,
 );
+Player volnei = Player(
+  id: 16,
+  name: "Volnei",
+  principalPosition: Position.defender,
+  overall: 4,
+);
+Player ricardo = Player(
+  id: 17,
+  name: "Ricardo",
+  principalPosition: Position.defender,
+  overall: 7,
+);
+
 List<Player> getAllPlayers = [
-  ribeiro,
+  cezinha,
   pedro,
   jodir,
   rodrigo,
@@ -106,7 +119,9 @@ List<Player> getAllPlayers = [
   diego,
   galdino,
   bruno,
-  guilherme
+  guilherme,
+  volnei,
+  ricardo
 ];
 
 List<Player> players1 = [

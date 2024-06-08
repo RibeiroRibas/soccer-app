@@ -2,6 +2,11 @@ import 'package:team_draw/model/position.dart';
 
 class TeamOverall {
   double value = 0.0;
+
+  TeamOverall() {
+    assert(overallByPosition.length == Position.values.length);
+  }
+
   Map<Position, double> overallByPosition = {
     Position.forward: 0.0,
     Position.defender: 0.0,
@@ -9,5 +14,7 @@ class TeamOverall {
     Position.goalkeeper: 0.0,
     Position.leftBack: 0.0,
     Position.rightBack: 0.0,
+    Position.leftWinger: 0.0,
+    Position.rightWinger: 0.0,
   };
 }

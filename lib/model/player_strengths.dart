@@ -14,14 +14,18 @@ enum PlayerStrengths {
 
   final String characteristic;
 
-  static List<PlayerStrengths> all = [
-    velocity,
-    tackle,
-    pass,
-    kick,
-    positioning,
-    skill,
-    physical,
-    scorer,
-  ];
+  static List<PlayerStrengths> all() {
+    List<PlayerStrengths> strengths = [
+      velocity,
+      tackle,
+      pass,
+      kick,
+      positioning,
+      skill,
+      physical,
+      scorer,
+    ];
+    assert(values.length == strengths.length);
+    return strengths;
+  }
 }

@@ -19,7 +19,7 @@ class PlayerWeakPointsView extends StatefulWidget {
 class _PlayerWeakPointsViewState extends State<PlayerWeakPointsView> {
   @override
   Widget build(BuildContext context) {
-    final List<PlayerWeakPoints> playerWeakPoints = PlayerWeakPoints.all;
+    final List<PlayerWeakPoints> playerWeakPoints = PlayerWeakPoints.all();
 
     void setPlayerWeakPoints(int index) {
       if (widget.player.isWeakPointNotSelected(playerWeakPoints[index])) {

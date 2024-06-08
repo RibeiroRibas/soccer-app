@@ -3,14 +3,14 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 import 'package:team_draw/shared/view/component/text_with_border_component.dart';
 
-class SetPlayerScoreDialog extends StatelessWidget {
-  final bool isIncreaseScore;
+class SelectPlayerDialog extends StatelessWidget {
+  final bool? isIncreaseScore;
   final List<Player> players;
   final Function(Player) onPlayerTap;
 
-  const SetPlayerScoreDialog(
+  const SelectPlayerDialog(
       {super.key,
-      required this.isIncreaseScore,
+      this.isIncreaseScore,
       required this.players,
       required this.onPlayerTap});
 
@@ -27,9 +27,11 @@ class SetPlayerScoreDialog extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 10, left: 15, right: 15),
                   child: TextWithBorderComponent(
-                      text: isIncreaseScore
-                          ? "Quem fez o gol?"
-                          : "Parece que o var anulou o gol do jogador:",
+                      text: isIncreaseScore == null
+                          ? "Selecione um jogador de outro time para efetuar a troca."
+                          : isIncreaseScore!
+                              ? "Quem fez o gol?"
+                              : "Parece que o var anulou o gol do jogador:",
                       textStyle: Theme.of(context).textTheme.titleLarge!),
                 ),
                 ListView.builder(

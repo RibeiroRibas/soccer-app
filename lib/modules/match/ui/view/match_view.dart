@@ -10,7 +10,7 @@ import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/match/ui/dialog/pre_match_dialog.dart';
-import 'package:team_draw/modules/match/ui/dialog/set_player_score_dialog.dart';
+import 'package:team_draw/modules/match/ui/dialog/select_player_dialog.dart';
 import 'package:team_draw/modules/match/ui/modal/teams_and_match_info_modal.dart';
 import 'package:team_draw/modules/match/ui/section/match_manager_section.dart';
 import 'package:team_draw/modules/match/ui/section/starting_players_section.dart';
@@ -96,7 +96,7 @@ class _MatchViewState extends State<MatchView> {
           context: context,
           barrierDismissible: false,
           builder: (BuildContext context) {
-            return SetPlayerScoreDialog(
+            return SelectPlayerDialog(
                 isIncreaseScore: isIncreaseScore,
                 players: players,
                 onPlayerTap: (player) => matchViewModel

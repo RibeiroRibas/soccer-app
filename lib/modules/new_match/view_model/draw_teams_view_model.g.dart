@@ -9,51 +9,19 @@ part of 'draw_teams_view_model.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$DrawTeamsViewModel on DrawTeamsViewModelBase, Store {
-  late final _$teamMatchesAtom =
-      Atom(name: 'DrawTeamsViewModelBase.teamMatches', context: context);
+  late final _$onUpdateDateAtom =
+      Atom(name: 'DrawTeamsViewModelBase.onUpdateDate', context: context);
 
   @override
-  List<TeamMatch> get teamMatches {
-    _$teamMatchesAtom.reportRead();
-    return super.teamMatches;
+  bool get onUpdateDate {
+    _$onUpdateDateAtom.reportRead();
+    return super.onUpdateDate;
   }
 
   @override
-  set teamMatches(List<TeamMatch> value) {
-    _$teamMatchesAtom.reportWrite(value, super.teamMatches, () {
-      super.teamMatches = value;
-    });
-  }
-
-  late final _$teamsInformationAtom =
-      Atom(name: 'DrawTeamsViewModelBase.teamsInformation', context: context);
-
-  @override
-  List<TeamInformation> get teamsInformation {
-    _$teamsInformationAtom.reportRead();
-    return super.teamsInformation;
-  }
-
-  @override
-  set teamsInformation(List<TeamInformation> value) {
-    _$teamsInformationAtom.reportWrite(value, super.teamsInformation, () {
-      super.teamsInformation = value;
-    });
-  }
-
-  late final _$sortedTeamsAtom =
-      Atom(name: 'DrawTeamsViewModelBase.sortedTeams', context: context);
-
-  @override
-  List<Team> get sortedTeams {
-    _$sortedTeamsAtom.reportRead();
-    return super.sortedTeams;
-  }
-
-  @override
-  set sortedTeams(List<Team> value) {
-    _$sortedTeamsAtom.reportWrite(value, super.sortedTeams, () {
-      super.sortedTeams = value;
+  set onUpdateDate(bool value) {
+    _$onUpdateDateAtom.reportWrite(value, super.onUpdateDate, () {
+      super.onUpdateDate = value;
     });
   }
 
@@ -71,11 +39,11 @@ mixin _$DrawTeamsViewModel on DrawTeamsViewModelBase, Store {
       ActionController(name: 'DrawTeamsViewModelBase', context: context);
 
   @override
-  void _updateTeamObservables() {
+  void onTeamNameChange(String oldTeamName, String newTeamName) {
     final _$actionInfo = _$DrawTeamsViewModelBaseActionController.startAction(
-        name: 'DrawTeamsViewModelBase._updateTeamObservables');
+        name: 'DrawTeamsViewModelBase.onTeamNameChange');
     try {
-      return super._updateTeamObservables();
+      return super.onTeamNameChange(oldTeamName, newTeamName);
     } finally {
       _$DrawTeamsViewModelBaseActionController.endAction(_$actionInfo);
     }
@@ -93,11 +61,20 @@ mixin _$DrawTeamsViewModel on DrawTeamsViewModelBase, Store {
   }
 
   @override
+  void switchPlayers(Player player, Player anotherPlayer) {
+    final _$actionInfo = _$DrawTeamsViewModelBaseActionController.startAction(
+        name: 'DrawTeamsViewModelBase.switchPlayers');
+    try {
+      return super.switchPlayers(player, anotherPlayer);
+    } finally {
+      _$DrawTeamsViewModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-teamMatches: ${teamMatches},
-teamsInformation: ${teamsInformation},
-sortedTeams: ${sortedTeams}
+onUpdateDate: ${onUpdateDate}
     ''';
   }
 }

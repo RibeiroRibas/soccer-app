@@ -11,6 +11,7 @@ class PlayerOverallItemComponent extends StatelessWidget {
   final Function(Player)? goToUpdatePlayerRoute;
   final Function(Player)? moveToColumnRight;
   final Function(Player)? moveToColumnLeft;
+  final Function(Player)? onSwitchPlayer;
 
   const PlayerOverallItemComponent(
       {super.key,
@@ -18,7 +19,8 @@ class PlayerOverallItemComponent extends StatelessWidget {
       this.goToUpdatePlayerRoute,
       required this.player,
       this.moveToColumnRight,
-      this.moveToColumnLeft});
+      this.moveToColumnLeft,
+      this.onSwitchPlayer});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +51,16 @@ class PlayerOverallItemComponent extends StatelessWidget {
                 onTap: () => goToUpdatePlayerRoute!(player),
                 child: const Padding(
                   padding: EdgeInsets.all(4.0),
-                  child: Icon(Icons.edit, size: 20),
+                  child: Icon(Icons.edit, size: 25),
+                ),
+              ),
+            if (onSwitchPlayer != null)
+              GestureDetector(
+                onTap: () => onSwitchPlayer!(player),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Icon(Icons.change_circle,
+                      size: 20, color: Theme.of(context).primaryColor),
                 ),
               ),
             Padding(
