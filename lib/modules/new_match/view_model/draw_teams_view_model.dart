@@ -17,16 +17,16 @@ abstract class DrawTeamsViewModelBase with Store {
 
   DrawTeamsViewModelBase(this.service);
 
-  @observable
   List<TeamMatch> teamMatches = [];
 
-  @observable
   List<TeamInformation> teamsInformation = [];
 
-  @observable
   List<Team> sortedTeams = [];
 
   List<String> availableNames = [];
+
+  @observable
+  bool onUpdateDate = false;
 
   @action
   Future<void> sortTeamsMatch(
@@ -41,7 +41,14 @@ abstract class DrawTeamsViewModelBase with Store {
 
     _setAvailableNames();
 
-    teamsInformation = [];
+    _getTeamInformation(teamMatches);
+
+    this.teamMatches = teamMatches;
+    onUpdateDate = !onUpdateDate;
+  }
+
+  void _getTeamInformation(List<TeamMatch> teamMatches) {
+    List<TeamInformation> teamsInformation = [];
     for (TeamMatch teamMatch in teamMatches) {
       List<String> teamOneInformation = teamMatch.teamOne!.getTeamInformation();
       List<String> teamTwoInformation = teamMatch.teamTwo!.getTeamInformation();
@@ -51,10 +58,10 @@ abstract class DrawTeamsViewModelBase with Store {
       availableNames.removeWhere((name) => teamMatch.teamOne!.name == name);
       availableNames.removeWhere((name) => teamMatch.teamTwo!.name == name);
     }
-
-    this.teamMatches = teamMatches;
+    this.teamsInformation = teamsInformation;
   }
 
+  @action
   void onTeamNameChange(String oldTeamName, String newTeamName) {
     if (sortedTeams.any((team) => team.name == newTeamName)) {
       return;
@@ -76,18 +83,7 @@ abstract class DrawTeamsViewModelBase with Store {
         break;
       }
     }
-    _updateTeamObservables();
-  }
-
-  @action
-  void _updateTeamObservables() {
-    List<TeamMatch> matches = [];
-    matches.addAll(teamMatches);
-    teamMatches = matches;
-
-    List<Team> teams = [];
-    teams.addAll(sortedTeams);
-    sortedTeams = teams;
+    onUpdateDate = !onUpdateDate;
   }
 
   @action
@@ -110,7 +106,7 @@ abstract class DrawTeamsViewModelBase with Store {
         break;
       }
     }
-    _updateTeamObservables();
+    onUpdateDate = !onUpdateDate;
   }
 
   List<Player> _getSelectedPlayers(Map<Player, bool> selectedPlayers) {
@@ -129,5 +125,48 @@ abstract class DrawTeamsViewModelBase with Store {
         availableNames.add(teamName);
       }
     }
+  }
+
+  List<Player> getPlayersAnotherTeams(Player player) {
+    List<Player> players = [];
+    for (Team team in sortedTeams) {
+      if (!team.players!.any((p) => p == player)) {
+        players.addAll(team.players!);
+      }
+    }
+    return players;
+  }
+
+  @action
+  void switchPlayers(Player player, Player anotherPlayer) {
+    int indexOfTeam = 0;
+    int indexOfPlayer = 0;
+    int indexOfAnotherTeam = 0;
+    int indexOfAnotherPlayer = 0;
+    for (int index = 0; index < sortedTeams.length; index++) {
+      if (sortedTeams.elementAt(index).players!.any((p) => p == player)) {
+        indexOfTeam = index;
+        indexOfPlayer = sortedTeams.elementAt(index).players!.indexOf(player);
+      }
+      if (sortedTeams
+          .elementAt(index)
+          .players!
+          .any((p) => p == anotherPlayer)) {
+        indexOfAnotherTeam = index;
+        indexOfAnotherPlayer =
+            sortedTeams.elementAt(index).players!.indexOf(anotherPlayer);
+      }
+    }
+    sortedTeams.elementAt(indexOfTeam).players![indexOfPlayer] = anotherPlayer;
+    sortedTeams.elementAt(indexOfAnotherTeam).players![indexOfAnotherPlayer] =
+        player;
+    for (Team team in sortedTeams) {
+      team.calculateOverall();
+    }
+    final List<TeamMatch> teamMatches =
+        service.generateTeamMatches(sortedTeams);
+    _getTeamInformation(teamMatches);
+    this.teamMatches = teamMatches;
+    onUpdateDate = !onUpdateDate;
   }
 }

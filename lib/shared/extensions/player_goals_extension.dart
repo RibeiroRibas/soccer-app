@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:intl/intl.dart';
-import 'package:team_draw/model/match_goals.dart';
+import 'package:team_draw/model/player_goals.dart';
 import 'package:team_draw/shared/helper/date_time_format_helper.dart';
 
 extension PlayerGoalsExtension on List<PlayerGoals> {

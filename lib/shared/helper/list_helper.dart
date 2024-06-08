@@ -35,13 +35,12 @@ class ListHelper {
   }
 
   static List<String> getInformationDescription() {
-    return [
+    List<String> positions = [
       overall,
       forward,
       defense,
       midfielder,
-      leftBack,
-      rightBack,
     ];
+    return positions;
   }
 }

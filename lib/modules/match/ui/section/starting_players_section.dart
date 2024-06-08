@@ -122,6 +122,51 @@ class StartingPlayersSection extends StatelessWidget {
     return playersComponent;
   }
 
+  List<Widget> _buildForwardsList() {
+    List<Widget> playersComponent = [];
+    List<Player> playersAux = [];
+    playersAux.addAll(players);
+    if (playersAux
+        .any((player) => player.principalPosition == Position.leftWinger)) {
+      Player player = playersAux.firstWhere(
+          (player) => player.principalPosition == Position.leftWinger);
+
+      playersComponent.add(PlayerNameAndPositionComponent(
+          position: Position.leftWinger,
+          playerName: _formatName(player.name!),
+          positionColor: teamColor));
+
+      playersAux.remove(player);
+    }
+    do {
+      if (playersAux
+          .any((player) => player.principalPosition == Position.forward)) {
+        Player player = playersAux.firstWhere(
+            (player) => player.principalPosition == Position.forward);
+
+        playersComponent.add(PlayerNameAndPositionComponent(
+            position: Position.forward,
+            playerName: _formatName(player.name!),
+            positionColor: teamColor));
+
+        playersAux.remove(player);
+      }
+    } while (_isAllForwardsSet(playersAux));
+    if (playersAux
+        .any((player) => player.principalPosition == Position.rightWinger)) {
+      Player player = playersAux.firstWhere(
+          (player) => player.principalPosition == Position.rightWinger);
+
+      playersComponent.add(PlayerNameAndPositionComponent(
+          position: Position.rightWinger,
+          playerName: _formatName(player.name!),
+          positionColor: teamColor));
+
+      playersAux.remove(player);
+    }
+    return playersComponent;
+  }
+
   List<Widget> _buildDefendersList() {
     List<Widget> playersComponent = [];
     List<Player> playersAux = [];
@@ -196,27 +241,6 @@ class StartingPlayersSection extends StatelessWidget {
   bool _isAllMidfieldersSet(List<Player> playersAux) {
     return playersAux
         .any((player) => player.principalPosition == Position.midfielder);
-  }
-
-  List<Widget> _buildForwardsList() {
-    List<Widget> playersComponent = [];
-    List<Player> playersAux = [];
-    playersAux.addAll(players);
-    do {
-      if (playersAux
-          .any((player) => player.principalPosition == Position.forward)) {
-        Player player = playersAux.firstWhere(
-            (player) => player.principalPosition == Position.forward);
-
-        playersComponent.add(PlayerNameAndPositionComponent(
-            position: Position.forward,
-            playerName: _formatName(player.name!),
-            positionColor: teamColor));
-
-        playersAux.remove(player);
-      }
-    } while (_isAllForwardsSet(playersAux));
-    return playersComponent;
   }
 
   bool _isAllForwardsSet(List<Player> playersAux) {

@@ -1,4 +1,4 @@
-import 'package:team_draw/model/match_goals.dart';
+import 'package:team_draw/model/player_goals.dart';
 import 'package:team_draw/model/match_result.dart';
 import 'package:team_draw/model/player_strengths.dart';
 import 'package:team_draw/model/player_weak_points.dart';
@@ -101,7 +101,7 @@ class Player {
   }
 
   bool isLastWeakPointAllowed() {
-    return weakPoints.length == PlayerWeakPoints.all.length - 1;
+    return weakPoints.length == PlayerWeakPoints.all().length - 1;
   }
 
   bool isStrengthsNotSelected(PlayerStrengths playerStrengths) {
@@ -109,6 +109,14 @@ class Player {
   }
 
   bool isLastStrengthsAllowed() {
-    return strengths.length == PlayerStrengths.all.length - 1;
+    return strengths.length == PlayerStrengths.all().length - 1;
+  }
+
+  bool isLeftWinger() {
+    return principalPosition == Position.leftWinger;
+  }
+
+  bool isRightWinger() {
+    return principalPosition == Position.rightWinger;
   }
 }
