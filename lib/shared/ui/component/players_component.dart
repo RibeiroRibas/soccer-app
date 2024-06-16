@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
-import 'package:team_draw/modules/new_player/new_player_rote_navigator.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/ui/component/new_player_and_match_component.dart';
+import 'package:team_draw/shared/ui/component/player_overall_subtitle_component.dart';
 import 'package:team_draw/shared/ui/component/player_score_subtitle_component.dart';
 import 'package:team_draw/shared/ui/list_item/player_overall_list_item.dart';
-import 'package:team_draw/shared/ui/component/player_overall_subtitle_component.dart';
 
-class PlayersPage extends StatelessWidget {
+class PlayersComponent extends StatelessWidget {
   final List<PlayerScore> playersScore;
+  final Function(String) goToNextRoute;
+  final Function(Player) goToUpdatePlayerRoute;
 
-  const PlayersPage({super.key, required this.playersScore});
+  const PlayersComponent(
+      {super.key,
+      required this.playersScore,
+      required this.goToNextRoute,
+      required this.goToUpdatePlayerRoute});
 
   @override
   Widget build(BuildContext context) {
-    final navigator = Modular.get<NewPlayerRouteNavigator>();
-
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -27,8 +28,7 @@ class PlayersPage extends StatelessWidget {
           if (playersScore.isEmpty)
             NewPlayerAndMatchComponent(
               message: emptyPlayerMessage,
-              goToNextRoute: (route) => navigator.goTo('$route/',
-                  route == newPlayerRote ? {"player": Player()} : null),
+              goToNextRoute: goToNextRoute,
               isShowNewMatchButton: false,
             ),
           SizedBox(
@@ -42,8 +42,7 @@ class PlayersPage extends StatelessWidget {
                   child: PlayerOverallListItem(
                     playerScore: playersScore[index],
                     player: playersScore[index].player,
-                    goToUpdatePlayerRoute: (player) =>
-                        navigator.goTo("$newPlayerRote/", {"player": player}),
+                    goToUpdatePlayerRoute: goToUpdatePlayerRoute,
                   ),
                 );
               },

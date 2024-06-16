@@ -7,10 +7,10 @@ import 'package:team_draw/modules/home/helper/home_page_view.dart';
 import 'package:team_draw/modules/home/home_route_navigator.dart';
 import 'package:team_draw/modules/home/ui/expandable_fab/action_button_component.dart';
 import 'package:team_draw/modules/home/ui/expandable_fab/expandable_fab_section.dart';
-import 'package:team_draw/modules/home/ui/pages/drawer_menu_page.dart';
-import 'package:team_draw/modules/home/ui/pages/home_page.dart';
-import 'package:team_draw/modules/home/ui/pages/players_page.dart';
-import 'package:team_draw/modules/home/ui/pages/teams_page.dart';
+import 'package:team_draw/modules/home/ui/pages/drawer_menu.dart';
+import 'package:team_draw/modules/home/ui/pages/page_views/home_page_view.dart';
+import 'package:team_draw/modules/home/ui/pages/page_views/players_page_view.dart';
+import 'package:team_draw/modules/home/ui/pages/page_views/teams_page_view.dart';
 import 'package:team_draw/presentation/custom_icons.dart';
 import 'package:team_draw/shared/controller/page_view_controller.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
@@ -36,16 +36,16 @@ class _HomeNavBarState extends State<HomeNavBar> {
 
   List<Widget> allPagesView() {
     List<Widget> allPages = [
-      HomePage(
+      HomePageView(
         teamsScore: _controller.calculateTeamScore(),
         allMatches: _controller.allMatches,
       ),
-      TeamsPage(
+      TeamsPageView(
         teams: _controller.teams,
       ),
-      PlayersPage(playersScore: _controller.calculatePlayerScore())
+      PlayersPageView(playersScore: _controller.calculatePlayerScore())
     ];
-    assert(HomePageView.getTotalPages() == allPages.length);
+    assert(HomePageViewHelper.getTotalPages() == allPages.length);
     return allPages;
   }
 
@@ -59,17 +59,17 @@ class _HomeNavBarState extends State<HomeNavBar> {
         ),
         centerTitle: true,
       ),
-      drawer: const Drawer(width: 200, child: DrawerMenuPage()),
+      drawer: const Drawer(width: 200, child: DrawerMenu()),
       floatingActionButton: ExpandableFabSection(
         distance: 80,
         children: [
           ActionButtonComponent(
-            onPressed: () =>
-                _navigator.goTo('$newPlayerRote/', {"player": Player()}),
+            onPressed: () => _navigator
+                .goTo('$newPlayerRote/', arguments: {"player": Player()}),
             icon: const Icon(Icons.person_add),
           ),
           ActionButtonComponent(
-            onPressed: () => _navigator.goTo('$newMatchRote/', null),
+            onPressed: () => _navigator.goTo('$newMatchRote/'),
             icon: const Icon(CustomIcons.soccerBall),
           ),
         ],

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lottie/lottie.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/modules/new_player/ui/pages/players_page.dart';
+import 'package:team_draw/modules/new_player/ui/pages/page_views/players_page_view.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
 import 'package:team_draw/modules/new_player/new_player_rote_navigator.dart';
@@ -40,11 +40,11 @@ class _SuccessViewState extends State<SuccessView> {
         : Scaffold(
             appBar: AppBarTittleWithCloseButtonComponent(
               tittle: allPlayers,
-              onCloseAction: () => _navigator.goTo('$homeNavBarRoute/', null),
+              onCloseAction: () => _navigator.goTo('$homeNavBarRoute/'),
             ),
             body: Padding(
               padding: const EdgeInsets.all(12.0),
-              child: PlayersPage(playersScore: widget.playersScore),
+              child: PlayersPageView(playersScore: widget.playersScore),
             ),
             bottomNavigationBar: Row(
               children: [
@@ -52,8 +52,8 @@ class _SuccessViewState extends State<SuccessView> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButtonComponent(
-                      onButtonPressed: () => _navigator
-                          .goTo('$newPlayerRote/', {"player": Player()}),
+                      onButtonPressed: () => _navigator.goTo('$newPlayerRote/',
+                          arguments: {"player": Player()}),
                       text: newPLayer,
                     ),
                   ),
@@ -62,8 +62,7 @@ class _SuccessViewState extends State<SuccessView> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ElevatedButtonComponent(
-                      onButtonPressed: () =>
-                          _navigator.goTo('$newMatchRote/', null),
+                      onButtonPressed: () => _navigator.goTo('$newMatchRote/'),
                       text: newMatch,
                     ),
                   ),

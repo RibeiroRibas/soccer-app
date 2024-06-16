@@ -2,19 +2,14 @@ import 'package:flutter/material.dart';
 
 class BoxCardComponent extends StatelessWidget {
   final Widget boxCardBody;
-  final Color? color;
 
-  const BoxCardComponent({
-    super.key,
-    required this.boxCardBody,
-    this.color,
-  });
+  const BoxCardComponent({super.key, required this.boxCardBody});
 
   @override
   Widget build(BuildContext context) {
     return Ink(
       decoration: BoxDecoration(
-        color: color ?? Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).colorScheme.secondary,
         borderRadius: BorderRadius.circular(5),
         boxShadow: kElevationToShadow[2],
       ),

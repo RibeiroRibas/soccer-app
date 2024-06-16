@@ -5,12 +5,12 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/outlined_text_field_component.dart';
 import 'package:team_draw/shared/ui/component/question_component.dart';
 
-class PlayerNamePage extends StatelessWidget {
+class PlayerNamePageView extends StatelessWidget {
   final Player player;
   final void Function(NewPlayerPageView) goToNextPageView;
   final List<Player>? allPlayers;
 
-  PlayerNamePage({
+  PlayerNamePageView({
     super.key,
     required this.player,
     required this.goToNextPageView,

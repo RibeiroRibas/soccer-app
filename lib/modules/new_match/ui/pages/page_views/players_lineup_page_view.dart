@@ -11,12 +11,12 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/new_player_and_match_component.dart';
 import 'package:team_draw/shared/ui/component/tittle_component.dart';
 
-class PlayersLineupPage extends StatefulWidget {
+class PlayersLineupPageView extends StatefulWidget {
   final Map<Player, bool> selectedPlayers;
   final MatchSettings matchSettings;
   final Function(bool) onShowForwardButton;
 
-  const PlayersLineupPage({
+  const PlayersLineupPageView({
     super.key,
     required this.selectedPlayers,
     required this.matchSettings,
@@ -24,10 +24,10 @@ class PlayersLineupPage extends StatefulWidget {
   });
 
   @override
-  State<PlayersLineupPage> createState() => _PlayersLineupPageState();
+  State<PlayersLineupPageView> createState() => _PlayersLineupPageViewState();
 }
 
-class _PlayersLineupPageState extends State<PlayersLineupPage> {
+class _PlayersLineupPageViewState extends State<PlayersLineupPageView> {
   final _controller = Modular.get<PlayerLineupController>();
   final _navigator = Modular.get<NewMatchRoteNavigator>();
   late ReactionDisposer _disposer;
@@ -75,7 +75,7 @@ class _PlayersLineupPageState extends State<PlayersLineupPage> {
         builder: (_) => _controller.selectedPlayers.length < 2
             ? NewPlayerAndMatchComponent(
                 message: emptyPlayerMessage,
-                goToNextRoute: (route) => _navigator.goTo('$route/', null),
+                goToNextRoute: (route) => _navigator.goTo('$route/'),
                 isShowNewMatchButton: false,
               )
             : SingleChildScrollView(
