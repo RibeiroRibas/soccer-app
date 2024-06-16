@@ -23,9 +23,9 @@ abstract class NewPlayerControllerBase with Store {
     allPlayers = await _playerService.findAllPlayers();
   }
 
-  @action
   Future<void> savePlayer(Player player) async {
     if (player.id == 0) {
+      player.id = allPlayers!.length + 1;
       await _playerService.addPlayer(player);
     } else {
       await _playerService.updatePlayer(player);
@@ -34,7 +34,7 @@ abstract class NewPlayerControllerBase with Store {
 
   Future<List<PlayerScore>> calculatePlayerScore() async {
     return _playerService.calculatePlayerScore(
-        allPlayers!, await findAllMatches());
+        await _playerService.findAllPlayers(), await findAllMatches());
   }
 
   Future<List<TeamMatch>> findAllMatches() async {

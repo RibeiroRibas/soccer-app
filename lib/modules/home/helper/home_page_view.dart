@@ -1,4 +1,4 @@
-enum HomePageView {
+enum HomePageViewHelper {
   home(0),
   teams(1),
   players(2),
@@ -6,7 +6,7 @@ enum HomePageView {
 
   final int pageIndex;
 
-  const HomePageView(this.pageIndex);
+  const HomePageViewHelper(this.pageIndex);
 
-  static int getTotalPages() => HomePageView.values.length - 1;
+  static int getTotalPages() => HomePageViewHelper.values.length - 1;
 }

@@ -12,18 +12,18 @@ import 'package:team_draw/shared/helper/list_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/tittle_component.dart';
 
-class MatchSettingsView extends StatefulWidget {
+class MatchSettingsPageView extends StatefulWidget {
   final Map<Player, bool> selectedPlayers;
   final MatchSettings matchSettings;
 
-  const MatchSettingsView(
+  const MatchSettingsPageView(
       {super.key, required this.selectedPlayers, required this.matchSettings});
 
   @override
-  State<MatchSettingsView> createState() => _MatchSettingsViewState();
+  State<MatchSettingsPageView> createState() => _MatchSettingsPageViewState();
 }
 
-class _MatchSettingsViewState extends State<MatchSettingsView> {
+class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
   final _controller = Modular.get<MatchSettingsController>();
   late ReactionDisposer _disposerNumberOfTeams;
 

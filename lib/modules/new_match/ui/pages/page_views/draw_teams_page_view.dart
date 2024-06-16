@@ -13,30 +13,32 @@ import 'package:team_draw/shared/ui/component/box_card_component.dart';
 import 'package:team_draw/shared/ui/component/elevated_button_component.dart';
 import 'package:team_draw/shared/ui/component/team_lineup_component.dart';
 
-class DrawnTeamsPage extends StatefulWidget {
+class DrawnTeamsPageView extends StatefulWidget {
   final Map<Player, bool> selectedPlayers;
   final MatchSettings matchSettings;
   final Function(bool) onShowForwardButton;
 
-  const DrawnTeamsPage(
+  const DrawnTeamsPageView(
       {super.key,
       required this.selectedPlayers,
       required this.matchSettings,
       required this.onShowForwardButton});
 
   @override
-  State<DrawnTeamsPage> createState() => _DrawnTeamsPageState();
+  State<DrawnTeamsPageView> createState() => _DrawnTeamsPageViewState();
 }
 
-class _DrawnTeamsPageState extends State<DrawnTeamsPage> {
+class _DrawnTeamsPageViewState extends State<DrawnTeamsPageView> {
   final _controller = Modular.get<DrawTeamsController>();
   final _navigator = Modular.get<NewMatchRoteNavigator>();
+  late ReactionDisposer onUpdateDataDisposer;
 
   @override
   void initState() {
     super.initState();
     widget.onShowForwardButton(false);
-    reaction((_) => _controller.onUpdateData, (_) => setState(() {}));
+    onUpdateDataDisposer =
+        reaction((_) => _controller.onUpdateData, (_) => setState(() {}));
   }
 
   void _drawTeams() {
@@ -82,10 +84,11 @@ class _DrawnTeamsPageState extends State<DrawnTeamsPage> {
                         text: sortTeams,
                       ),
                       ElevatedButtonComponent(
-                        onButtonPressed: () => _navigator.goTo(matchRote, {
-                          "matches": _controller.teamMatches,
-                          "matchSettings": widget.matchSettings
-                        }),
+                        onButtonPressed: () => _navigator.goTo(matchRote,
+                            arguments: {
+                              "matches": _controller.teamMatches,
+                              "matchSettings": widget.matchSettings
+                            }),
                         text: startMatch,
                       ),
                     ],
@@ -125,5 +128,11 @@ class _DrawnTeamsPageState extends State<DrawnTeamsPage> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    onUpdateDataDisposer();
+    super.dispose();
   }
 }

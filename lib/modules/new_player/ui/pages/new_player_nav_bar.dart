@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/modules/new_player/controllers/new_player_controller.dart';
-import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
-import 'package:team_draw/modules/new_player/new_player_rote_navigator.dart';
-import 'package:team_draw/modules/new_player/ui/pages/confirm_new_player_page.dart';
+import 'package:team_draw/modules/new_player/controllers/new_player_controller.dart';
 import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
-import 'package:team_draw/modules/new_player/ui/pages/player_overall_page.dart';
-import 'package:team_draw/modules/new_player/ui/pages/player_strengths_page.dart';
-import 'package:team_draw/modules/new_player/ui/pages/player_weak_points_page.dart';
-import 'package:team_draw/modules/new_player/ui/pages/player_name_page.dart';
-import 'package:team_draw/modules/new_player/ui/pages/player_principal_position_page.dart';
+import 'package:team_draw/modules/new_player/new_player_rote_navigator.dart';
+import 'package:team_draw/modules/new_player/ui/pages/page_views/confirm_new_player_page_view.dart';
+import 'package:team_draw/modules/new_player/ui/pages/page_views/player_name_page_view.dart';
+import 'package:team_draw/modules/new_player/ui/pages/page_views/player_overall_page_view.dart';
+import 'package:team_draw/modules/new_player/ui/pages/page_views/player_position_page_view.dart';
+import 'package:team_draw/modules/new_player/ui/pages/page_views/player_strengths_page_view.dart';
+import 'package:team_draw/modules/new_player/ui/pages/page_views/player_weak_points_page_view.dart';
 import 'package:team_draw/shared/controller/page_view_controller.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/ui/component/app_bar_tittle_and_arrows_component.dart';
 import 'package:team_draw/shared/ui/component/forward_button_component.dart';
 import 'package:team_draw/shared/ui/component/page_index_animation_component.dart';
@@ -39,7 +39,7 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
     super.initState();
     goToNextPageView = (NewPlayerPageView newPlayerPageViewEnum) {
       if (_isLastPageView(newPlayerPageViewEnum)) {
-        _savePlayerAndGoToSuccessView();
+        _savePlayerAndGoToPlayersPage();
       } else {
         _gotoNextPageView(newPlayerPageViewEnum);
       }
@@ -51,19 +51,19 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
     _pageViewController.animateToPage(newPlayerPageViewEnum.pageIndex);
   }
 
-  void _savePlayerAndGoToSuccessView() {
+  void _savePlayerAndGoToPlayersPage() {
     _controller.savePlayer(widget.player).then((_) => _controller
             .calculatePlayerScore()
-            .then((playersScore) => _goToSuccessView(playersScore))
+            .then((playersScore) => _goToPlayersPage(playersScore))
             .then((_) async {
           await Future.delayed(const Duration(seconds: 1));
           _pageViewController.changeCurrentPageIndex(0);
         }));
   }
 
-  Future<void> _goToSuccessView(List<PlayerScore> playersScore) {
-    return _navigator.goTo(
-        '$newPlayerRote$successNewPlayerRote', {"playersScore": playersScore});
+  Future<void> _goToPlayersPage(List<PlayerScore> playersScore) {
+    return _navigator.goTo('$newPlayerRote$successNewPlayerRote',
+        arguments: {"playersScore": playersScore});
   }
 
   bool _isLastPageView(NewPlayerPageView newPlayerPageViewEnum) {
@@ -72,7 +72,7 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
 
   void _goToPreviousPage() {
     if (_pageViewController.isFirstPage()) {
-      _navigator.goTo('$homeNavBarRoute/', null);
+      _navigator.goTo('$homeNavBarRoute/');
     } else {
       _pageViewController.previousPage();
     }
@@ -80,28 +80,28 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
 
   List<Widget> _allPagesView() {
     List<Widget> allPages = [
-      PlayerNamePage(
+      PlayerNamePageView(
         player: widget.player,
         goToNextPageView: goToNextPageView,
         allPlayers: _controller.allPlayers,
       ),
-      PlayerPrincipalPositionPage(
+      PlayerPositionPageView(
         player: widget.player,
         goToNextPageView: goToNextPageView,
       ),
-      PlayerStrengthsPage(
+      PlayerStrengthsPageView(
         player: widget.player,
         goToNextPageView: goToNextPageView,
       ),
-      PlayerWeakPointsPage(
+      PlayerWeakPointsPageView(
         player: widget.player,
         goToNextPageVIew: goToNextPageView,
       ),
-      PlayerOverallPage(
+      PlayerOverallPageView(
         player: widget.player,
         goToNextPageView: goToNextPageView,
       ),
-      ConfirmNewPlayerPage(
+      ConfirmNewPlayerPageView(
         player: widget.player,
         goToNextPageView: goToNextPageView,
       )
@@ -111,10 +111,15 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
   }
 
   bool _isShowForwardButton() {
-    return _pageViewController.currentPageIndex ==
-            NewPlayerPageView.strengths.pageIndex ||
-        _pageViewController.currentPageIndex ==
-            NewPlayerPageView.weakPoints.pageIndex;
+    int currentPageIndex = _pageViewController.currentPageIndex;
+    return currentPageIndex == NewPlayerPageView.strengths.pageIndex ||
+        currentPageIndex == NewPlayerPageView.weakPoints.pageIndex ||
+        currentPageIndex == NewPlayerPageView.name.pageIndex &&
+            widget.player.name != null ||
+        currentPageIndex == NewPlayerPageView.principalPosition.pageIndex &&
+            widget.player.principalPosition != null ||
+        currentPageIndex == NewPlayerPageView.overall.pageIndex &&
+            widget.player.overall != null;
   }
 
   @override

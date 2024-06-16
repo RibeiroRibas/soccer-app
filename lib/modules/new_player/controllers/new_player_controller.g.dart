@@ -33,14 +33,6 @@ mixin _$NewPlayerController on NewPlayerControllerBase, Store {
     return _$findAllPlayersAsyncAction.run(() => super.findAllPlayers());
   }
 
-  late final _$savePlayerAsyncAction =
-      AsyncAction('NewPlayerControllerBase.savePlayer', context: context);
-
-  @override
-  Future<void> savePlayer(Player player) {
-    return _$savePlayerAsyncAction.run(() => super.savePlayer(player));
-  }
-
   @override
   String toString() {
     return '''

@@ -3,7 +3,7 @@ import 'package:team_draw/shared/routes/route_navigator.dart';
 
 class GalleryRouteNavigator extends RouteNavigator {
   @override
-  Future<void> goTo(String routeName, Map<String, dynamic>? arguments) async {
+  Future<void> goTo(String routeName, {Map<String, dynamic>? arguments}) async {
     Modular.to.navigate(routeName, arguments: arguments);
   }
 
@@ -13,8 +13,8 @@ class GalleryRouteNavigator extends RouteNavigator {
   }
 
   @override
-  Future<void> pushNamed(
-      String routeName, Map<String, dynamic>? arguments) async {
+  Future<void> pushNamed(String routeName,
+      {Map<String, dynamic>? arguments}) async {
     await Modular.to.pushNamed(routeName, arguments: arguments);
   }
 }

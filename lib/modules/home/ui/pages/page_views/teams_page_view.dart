@@ -8,10 +8,10 @@ import 'package:team_draw/shared/ui/component/new_player_and_match_component.dar
 import 'package:team_draw/shared/ui/component/player_overall_subtitle_component.dart';
 import 'package:team_draw/shared/ui/component/team_lineup_component.dart';
 
-class TeamsPage extends StatelessWidget {
+class TeamsPageView extends StatelessWidget {
   final List<Team> teams;
 
-  const TeamsPage({super.key, required this.teams});
+  const TeamsPageView({super.key, required this.teams});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class TeamsPage extends StatelessWidget {
           SliverToBoxAdapter(
             child: NewPlayerAndMatchComponent(
               message: emptyTeamMessage,
-              goToNextRoute: (route) => navigator.goTo('$route/', null),
+              goToNextRoute: (route) => navigator.goTo('$route/'),
             ),
           ),
         SliverList(

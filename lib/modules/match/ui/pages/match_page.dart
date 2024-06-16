@@ -37,14 +37,17 @@ class _MatchPageState extends State<MatchPage> {
   final _playersOneController = Modular.get<PlayersOneController>();
   final _playersTwoController = Modular.get<PlayersTwoController>();
   final _matchTimerController = Modular.get<MatchTimerController>();
+  late ReactionDisposer isTimeToSwitchPlayerDisposer;
 
   @override
   void initState() {
     super.initState();
     SchedulerBinding.instance
         .addPostFrameCallback((_) => _showPreMatchDialog());
+    _setOrientation();
     _initControllers();
-    reaction((_) => _matchTimerController.isTimeToSwitchPlayer, (_) {
+    isTimeToSwitchPlayerDisposer =
+        reaction((_) => _matchTimerController.isTimeToSwitchPlayer, (_) {
       if (!_matchTimerController.isDisableAutomaticSwitch) {
         _switchPlayers();
       }
@@ -58,7 +61,6 @@ class _MatchPageState extends State<MatchPage> {
 
   void _initControllers() {
     _matchController.init(widget.matches, widget.matchSettings);
-    _setOrientation();
     _playersOneController.init(
         _matchController.playersTeamOne,
         _matchController.reservePlayersTeamOne,
@@ -105,7 +107,7 @@ class _MatchPageState extends State<MatchPage> {
                 onPlayerTap: (player) => _matchController
                     .changeScore(isScoreTeamOne, isIncreaseScore, player,
                         _buildGoalTime())
-                    .then((_) => _verifyErrorMessageAndDoDisposeDialog()));
+                    .then((_) => _verifyErrorMessageOrDoDisposeDialog()));
           });
     }
   }
@@ -136,7 +138,7 @@ class _MatchPageState extends State<MatchPage> {
         });
   }
 
-  _verifyErrorMessageAndDoDisposeDialog() {
+  _verifyErrorMessageOrDoDisposeDialog() {
     if (_matchController.playerGoalNotFundMessage != null) {
       _showSelectedWrongPlayerAlertDialog(
           _matchController.playerGoalNotFundMessage!);
@@ -202,6 +204,12 @@ class _MatchPageState extends State<MatchPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    isTimeToSwitchPlayerDisposer();
+    super.dispose();
   }
 }
 

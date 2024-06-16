@@ -17,12 +17,13 @@ class ReservePlayerTimerComponent extends StatefulWidget {
 class _ReservePlayerTimerComponentState
     extends State<ReservePlayerTimerComponent> {
   final _controller = Modular.get<MatchTimerController>();
+  late ReactionDisposer disposer;
 
   @override
   void initState() {
     super.initState();
     _controller.startReservePlayerTimer();
-    reaction((_) => _controller.isAlmostTimeToSwitchPlayer,
+    disposer = reaction((_) => _controller.isAlmostTimeToSwitchPlayer,
         (isAlmostTimeToChangePlayer) {
       if (isAlmostTimeToChangePlayer && _controller.isNotShowingModal) {
         _showSwitchPlayersModal();
@@ -86,5 +87,11 @@ class _ReservePlayerTimerComponentState
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    disposer();
+    super.dispose();
   }
 }

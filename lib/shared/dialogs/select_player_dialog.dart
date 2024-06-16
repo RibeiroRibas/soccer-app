@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/shared/theme/theme_colors.dart';
 import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 
 class SelectPlayerDialog extends StatelessWidget {
@@ -44,7 +43,7 @@ class SelectPlayerDialog extends StatelessWidget {
                           players.elementAt(index).name!,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                        tileColor: ThemeColors.grayDark,
+                        tileColor: Theme.of(context).colorScheme.surface,
                         onTap: () => onPlayerTap.call(players.elementAt(index)),
                       );
                     },

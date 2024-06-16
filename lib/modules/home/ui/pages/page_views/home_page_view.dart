@@ -8,11 +8,11 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/modules/home/ui/components/history_matches_component.dart';
 import 'package:team_draw/modules/home/ui/components/classification_table_component.dart';
 
-class HomePage extends StatelessWidget {
+class HomePageView extends StatelessWidget {
   final List<TeamScore> teamsScore;
   final List<TeamMatch> allMatches;
 
-  const HomePage({
+  const HomePageView({
     super.key,
     required this.teamsScore,
     required this.allMatches,
@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
           if (allMatches.isEmpty)
             NewPlayerAndMatchComponent(
               message: emptyMatchMessage,
-              goToNextRoute: (route) => navigator.goTo('$route/', null),
+              goToNextRoute: (route) => navigator.goTo('$route/'),
             ),
         ],
       ),
