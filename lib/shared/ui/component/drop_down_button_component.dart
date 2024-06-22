@@ -20,14 +20,14 @@ class DropDownButtonComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 4,
-      child: DropdownButtonFormField<int>(
+      child: DropdownButtonFormField<int?>(
         dropdownColor: Theme.of(context).colorScheme.surface,
         decoration: InputDecoration(
           labelText: labelText,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 0, horizontal: 12),
         ),
-        value: value ?? 0,
+        value: value,
         items: values
             .map((hr) =>
                 DropdownMenuItem<int>(value: hr, child: Text(hr.toString())))

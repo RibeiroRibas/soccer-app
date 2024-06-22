@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/team_match.dart';
 
 part 'match_timer_controller.g.dart';
@@ -8,7 +10,7 @@ part 'match_timer_controller.g.dart';
 class MatchTimerController = MatchTimerControllerBase
     with _$MatchTimerController;
 
-abstract class MatchTimerControllerBase with Store {
+abstract class MatchTimerControllerBase with Store implements Disposable {
   @observable
   int hour = 0;
 
@@ -41,20 +43,21 @@ abstract class MatchTimerControllerBase with Store {
 
   bool isNotShowingModal = true;
 
-  int timeToSwitchPlayersInMinutes = 0;
+  late MatchSettings matchSettings;
 
   Timer? _reservePlayerTimer;
   Timer? _matchTimer;
 
   TeamMatch? match;
 
+  late ReactionDisposer reservePlayerTimerDisposer;
+  late ReactionDisposer matchTimerDisposer;
+
   @action
-  void init(TeamMatch match, int timeToChangePlayer) {
+  void init(TeamMatch match, MatchSettings matchSettings) {
     this.match = match;
-    if (timeToSwitchPlayersInMinutes == 0) {
-      timeToSwitchPlayersInMinutes = timeToChangePlayer;
-      resetTimer();
-    }
+    this.matchSettings = matchSettings;
+    resetTimer();
   }
 
   @action
@@ -66,7 +69,7 @@ abstract class MatchTimerControllerBase with Store {
     if (minutesToSwitchPlayer == 0 && secondsToSwitchPlayer == 0) {
       isTimeToSwitchPlayer = !isTimeToSwitchPlayer;
       isAlmostTimeToSwitchPlayer = false;
-      minutesToSwitchPlayer = timeToSwitchPlayersInMinutes - 1;
+      minutesToSwitchPlayer = matchSettings.timeToChangePlayer! - 1;
       secondsToSwitchPlayer = 59;
     } else {
       if (secondsToSwitchPlayer == 0) {
@@ -80,27 +83,39 @@ abstract class MatchTimerControllerBase with Store {
 
   @action
   void resetTimer() {
-    minutesToSwitchPlayer = timeToSwitchPlayersInMinutes;
+    minutesToSwitchPlayer = matchSettings.timeToChangePlayer!;
     secondsToSwitchPlayer = 0;
   }
 
   @action
   void plusSeconds() {
+    if (_isMatchTimeEnd()) {
+      isStopped = true;
+    }
+
     if (seconds == 59) {
       if (minutes == 59) {
         hour++;
+        minutes = 0;
+        seconds = 0;
       } else {
         seconds = 0;
         minutes++;
       }
     } else {
-      seconds = seconds + 1;
+      seconds++;
     }
+  }
+
+  bool _isMatchTimeEnd() {
+    return matchSettings.durationHr == hour &&
+        matchSettings.durationMin == minutes &&
+        seconds == 0;
   }
 
   @action
   void startReservePlayerTimer() {
-    autorun((_) => {
+    reservePlayerTimerDisposer = autorun((_) => {
           if (_reservePlayerTimer == null && !isPaused)
             _reservePlayerTimer = Timer.periodic(
                 const Duration(seconds: 1), (timer) => minusSeconds()),
@@ -111,7 +126,7 @@ abstract class MatchTimerControllerBase with Store {
 
   @action
   void startMatchTimer() {
-    autorun((_) => {
+    matchTimerDisposer = autorun((_) => {
           if (_matchTimer == null && !isPaused)
             _matchTimer = Timer.periodic(
                 const Duration(seconds: 1), (timer) => plusSeconds()),
@@ -122,5 +137,11 @@ abstract class MatchTimerControllerBase with Store {
   @action
   void onDisableAutomaticSwitch() {
     isDisableAutomaticSwitch = !isDisableAutomaticSwitch;
+  }
+
+  @override
+  void dispose() {
+    reservePlayerTimerDisposer();
+    matchTimerDisposer();
   }
 }

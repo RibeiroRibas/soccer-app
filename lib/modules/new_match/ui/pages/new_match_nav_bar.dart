@@ -51,6 +51,7 @@ class _NewMatchNavBarState extends State<NewMatchNavBar> {
       MatchSettingsPageView(
         selectedPlayers: selectedPlayers,
         matchSettings: matchSettings,
+        onShowForwardButton: _onShowForwardButton,
       ),
       DrawnTeamsPageView(
         selectedPlayers: selectedPlayers,

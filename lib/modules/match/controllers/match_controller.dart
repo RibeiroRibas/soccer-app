@@ -42,8 +42,6 @@ abstract class MatchControllerBase with Store {
 
   String? playerGoalNotFundMessage;
 
-  bool existsAnotherMatchInQueue = false;
-
   List<TeamMatch> allMatches = [];
 
   List<PlayerScore> playersScoreTeamOne = [];
@@ -56,11 +54,7 @@ abstract class MatchControllerBase with Store {
   void init(List<TeamMatch> matches, MatchSettings matchSettings) {
     settings = matchSettings;
 
-    if (matches.length > 1) {
-      existsAnotherMatchInQueue = true;
-    }
     match = matches.first;
-    matches.remove(match);
     _setStartingAndReservePlayers(
       match.teamOne!,
       playersTeamOne,
@@ -153,5 +147,9 @@ abstract class MatchControllerBase with Store {
           "Não foi possível remover o gol. O jogador selecionado não marcou um gol nessa partida,"
           " por favor escolha um jogador que já tenha marcado um gol para remover.";
     }
+  }
+
+  Future<void> save(List<TeamMatch> matches) async {
+    matches[0] = match;
   }
 }

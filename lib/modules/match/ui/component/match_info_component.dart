@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
-import 'package:team_draw/presentation/custom_icons.dart';
 import 'package:team_draw/shared/extensions/player_goals_extension.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/ui/component/teams_info_component.dart';
 import 'package:team_draw/shared/ui/component/box_card_component.dart';
+import 'package:team_draw/shared/ui/component/teams_info_component.dart';
+import 'package:team_draw/shared/ui/list_item/player_goals_list_item.dart';
 
 class MatchInfoComponent extends StatelessWidget {
   final TeamMatch teamMatch;
@@ -19,11 +19,6 @@ class MatchInfoComponent extends StatelessWidget {
     List<String> playersGoalAtTime = teamMatch.matchGoals != null
         ? teamMatch.matchGoals!.getPlayerGoalAtTime()
         : [];
-
-    bool isPLayerTeamOne(String playerName) {
-      return teamMatch.teamOne!.players!
-          .any((player) => playerName.contains(player.name!));
-    }
 
     return Expanded(
       child: SingleChildScrollView(
@@ -55,24 +50,9 @@ class MatchInfoComponent extends StatelessWidget {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      if (!isPLayerTeamOne(playersGoalAtTime[index])) ...{
-                        const Expanded(child: SizedBox())
-                      },
-                      const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: Icon(CustomIcons.soccerBall, size: 20),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Text(playersGoalAtTime.elementAt(index)),
-                      ),
-                      if (isPLayerTeamOne(playersGoalAtTime[index])) ...{
-                        const Expanded(child: SizedBox())
-                      },
-                    ],
-                  );
+                  return PlayerGoalsListItem(
+                      match: teamMatch,
+                      playerGoalAtTime: playersGoalAtTime[index]);
                 },
                 itemCount: playersGoalAtTime.length,
               ),

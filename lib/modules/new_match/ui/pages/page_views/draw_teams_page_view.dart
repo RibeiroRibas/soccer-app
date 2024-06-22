@@ -84,7 +84,7 @@ class _DrawnTeamsPageViewState extends State<DrawnTeamsPageView> {
                         text: sortTeams,
                       ),
                       ElevatedButtonComponent(
-                        onButtonPressed: () => _navigator.goTo(matchRote,
+                        onButtonPressed: () => _navigator.goTo("$matchRote/",
                             arguments: {
                               "matches": _controller.teamMatches,
                               "matchSettings": widget.matchSettings

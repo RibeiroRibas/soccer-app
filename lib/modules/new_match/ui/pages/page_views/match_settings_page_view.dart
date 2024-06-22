@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/modules/new_match/controllers/match_settings_controller.dart';
 import 'package:team_draw/modules/new_match/ui/components/match_duration_time_component.dart';
 import 'package:team_draw/modules/new_match/ui/components/select_box_component.dart';
-import 'package:team_draw/modules/new_match/controllers/match_settings_controller.dart';
 import 'package:team_draw/modules/new_match/ui/components/select_one_option_component.dart';
 import 'package:team_draw/shared/helper/list_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
@@ -15,9 +14,13 @@ import 'package:team_draw/shared/ui/component/tittle_component.dart';
 class MatchSettingsPageView extends StatefulWidget {
   final Map<Player, bool> selectedPlayers;
   final MatchSettings matchSettings;
+  final Function(bool) onShowForwardButton;
 
   const MatchSettingsPageView(
-      {super.key, required this.selectedPlayers, required this.matchSettings});
+      {super.key,
+      required this.selectedPlayers,
+      required this.matchSettings,
+      required this.onShowForwardButton});
 
   @override
   State<MatchSettingsPageView> createState() => _MatchSettingsPageViewState();
@@ -25,90 +28,105 @@ class MatchSettingsPageView extends StatefulWidget {
 
 class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
   final _controller = Modular.get<MatchSettingsController>();
-  late ReactionDisposer _disposerNumberOfTeams;
 
   @override
   void initState() {
     super.initState();
-    _controller.init(widget.selectedPlayers.values, widget.matchSettings);
+    widget.onShowForwardButton(false);
+    _controller
+        .init(widget.selectedPlayers.values, widget.matchSettings)
+        .then((_) => setState(() {
+              if (widget.matchSettings.isAllFieldsNotNull()) {
+                widget.onShowForwardButton(true);
+              }
+            }));
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _disposerNumberOfTeams = autorun((_) {
-      widget.matchSettings.numberOfTeams = _controller.numberOfTeams;
-      widget.matchSettings.numberOfStartingPlayers =
-          _controller.numberOfPlayersByTeam;
-    });
+  Future<void> _verifyCanShowForwardButton() async {
+    if (widget.matchSettings.isAllFieldsNotNull()) {
+      widget.onShowForwardButton(true);
+      _controller.save(widget.matchSettings);
+    } else {
+      widget.onShowForwardButton(false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) => SingleChildScrollView(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
-              child: TittleComponent(tittle: matchSettings),
-            ),
-            MatchDurationTimeComponent(
-              durationHr: widget.matchSettings.durationHr,
-              durationMin: widget.matchSettings.durationMin,
-              onDurationHrChange: (value) =>
-                  widget.matchSettings.durationHr = value,
-              onDurationMinChange: (value) =>
-                  widget.matchSettings.durationMin = value,
-            ),
-            const Divider(),
-            SelectBoxComponent(
-              value: _controller.numberOfTeams,
-              onValueChange: (value) {
-                _controller.changeNumberOfTeams(value);
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
+            child: TittleComponent(tittle: matchSettings),
+          ),
+          MatchDurationTimeComponent(
+            durationHr: widget.matchSettings.durationHr,
+            durationMin: widget.matchSettings.durationMin,
+            onDurationHrChange: (value) async {
+              widget.matchSettings.durationHr = value;
+              await _verifyCanShowForwardButton();
+            },
+            onDurationMinChange: (value) =>
+                widget.matchSettings.durationMin = value,
+          ),
+          const Divider(),
+          SelectBoxComponent(
+            value: widget.matchSettings.numberOfTeams,
+            onValueChange: (value) async {
+              if (value != widget.matchSettings.numberOfTeams) {
+                widget.matchSettings.numberOfTeams = value;
+                _controller.numberOfStartingPlayers = null;
+                widget.matchSettings.numberOfStartingPlayers = null;
+                await _verifyCanShowForwardButton();
+              }
+            },
+            values: ListHelper.getListOfPossibleTeams(
+                _controller.getTotalPlayers(widget.selectedPlayers.values)),
+            description: numberOfTeams,
+            labelText: quantity,
+          ),
+          const Divider(),
+          Observer(
+            builder: (_) => SelectBoxComponent(
+              value: _controller.numberOfStartingPlayers,
+              onValueChange: (value) async {
+                _controller.numberOfStartingPlayers = value;
+                widget.matchSettings.numberOfStartingPlayers = value;
+                await _verifyCanShowForwardButton();
               },
-              values: ListHelper.getListOfPossibleTeams(
-                  _controller.getTotalPlayers()),
-              description: numberOfTeams,
-              labelText: quantity,
-            ),
-            const Divider(),
-            SelectBoxComponent(
-              value: _controller.numberOfPlayersByTeam,
-              onValueChange: (value) =>
-                  widget.matchSettings.numberOfStartingPlayers = value,
-              values: ListHelper.getListOfTotalPlayersPossibleByTeam(
-                  _controller.numberOfPlayersByTeam),
+              values: _controller.getListOfTotalPlayersPossibleByTeam(
+                  widget.matchSettings.numberOfTeams,
+                  widget.selectedPlayers.values),
               description: numberOfPlayersByTeam,
               labelText: quantity,
             ),
-            const Divider(),
-            SelectOneOptionComponent(
+          ),
+          const Divider(),
+          Observer(
+            builder: (_) => SelectOneOptionComponent(
                 question: hasChangeSideQuestion,
-                value: _controller.hasChangeSide!,
-                onValueSelected: (value) {
+                value: _controller.hasChangeSide,
+                onValueSelected: (value) async {
                   _controller.changeSide(value);
                   widget.matchSettings.hasChangeSide = value;
+                  await _verifyCanShowForwardButton();
                 }),
-            const Divider(),
-            SelectBoxComponent(
-              value: widget.matchSettings.timeToChangePlayer,
-              onValueChange: (value) =>
-                  widget.matchSettings.timeToChangePlayer = value,
-              values: ListHelper.getListOfMinutes(),
-              description: changePlayerEvery,
-              labelText: minute,
-            ),
-            const Divider(),
-          ],
-        ),
+          ),
+          const Divider(),
+          SelectBoxComponent(
+            value: widget.matchSettings.timeToChangePlayer,
+            onValueChange: (value) async {
+              widget.matchSettings.timeToChangePlayer = value;
+              await _verifyCanShowForwardButton();
+            },
+            values: ListHelper.getListOfMinutes(),
+            description: changePlayerEvery,
+            labelText: minute,
+          ),
+          const Divider(),
+        ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _disposerNumberOfTeams();
   }
 }
