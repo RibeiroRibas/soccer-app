@@ -6,11 +6,11 @@ import 'package:team_draw/modules/home/controllers/drawer_menu_controller.dart';
 import 'package:team_draw/modules/home/controllers/home_controller.dart';
 import 'package:team_draw/modules/home/home_route_navigator.dart';
 import 'package:team_draw/modules/home/ui/pages/home_nav_bar.dart';
-import 'package:team_draw/repositories/team_match_repository.dart';
 import 'package:team_draw/services/media_service.dart';
 import 'package:team_draw/services/team_match_service.dart';
 import 'package:team_draw/services/team_service.dart';
 import 'package:team_draw/shared/repositories/local_storage_repository.dart';
+import 'package:team_draw/shared/repositories/team_match_repository.dart';
 import 'package:team_draw/shared/repositories/team_repository.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
 

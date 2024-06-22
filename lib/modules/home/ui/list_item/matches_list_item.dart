@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/shared/helper/date_time_format_helper.dart';
-import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/ui/component/result_match_component.dart';
 
 class MatchesListItem extends StatefulWidget {
   final TeamMatch match;
@@ -20,42 +20,9 @@ class _MatchesListItemState extends State<MatchesListItem> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(
-              width: _calculateCellWidth(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(widget.match.teamOne!.acronym!),
-                  Image(
-                    image:
-                        AssetImage(widget.match.teamOne!.shield!.resourcePath),
-                    height: 35,
-                  ),
-                ],
-              )),
-          SizedBox(
-              width: _calculateCellWidth(context),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(widget.match.scoreTeamOne.toString()),
-                  const Text(versus),
-                  Text(widget.match.scoreTeamTwo.toString()),
-                ],
-              )),
-          SizedBox(
-            width: _calculateCellWidth(context),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image(
-                  image: AssetImage(widget.match.teamTwo!.shield!.resourcePath),
-                  height: 35,
-                ),
-                Text(widget.match.teamTwo!.acronym!),
-              ],
-            ),
-          ),
+          Flexible(
+              child: ResultMatchComponent(
+                  match: widget.match, isShowTeamName: false)),
           const SizedBox(
             width: 10,
             child: Divider(),

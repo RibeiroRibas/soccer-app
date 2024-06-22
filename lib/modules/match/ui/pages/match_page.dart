@@ -12,13 +12,16 @@ import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/match/controllers/match_controller.dart';
 import 'package:team_draw/modules/match/controllers/match_timer_controller.dart';
 import 'package:team_draw/modules/match/controllers/players_controller.dart';
+import 'package:team_draw/modules/match/match_navigator.dart';
 import 'package:team_draw/modules/match/ui/component/match_manager_component.dart';
 import 'package:team_draw/modules/match/ui/component/starting_players_component.dart';
 import 'package:team_draw/modules/match/ui/component/teams_and_match_info_component.dart';
+import 'package:team_draw/modules/match/ui/dialog/end_match_alert_dialog.dart';
 import 'package:team_draw/modules/match/ui/dialog/pre_match_dialog.dart';
 import 'package:team_draw/modules/match/ui/modal/teams_and_match_info_modal.dart';
 import 'package:team_draw/shared/dialogs/select_player_dialog.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/ui/component/elevated_button_component.dart';
 
 class MatchPage extends StatefulWidget {
@@ -37,7 +40,9 @@ class _MatchPageState extends State<MatchPage> {
   final _playersOneController = Modular.get<PlayersOneController>();
   final _playersTwoController = Modular.get<PlayersTwoController>();
   final _matchTimerController = Modular.get<MatchTimerController>();
+  final _navigator = Modular.get<MatchNavigator>();
   late ReactionDisposer isTimeToSwitchPlayerDisposer;
+  late ReactionDisposer isMatchEndDisposer;
 
   @override
   void initState() {
@@ -52,6 +57,30 @@ class _MatchPageState extends State<MatchPage> {
         _switchPlayers();
       }
     });
+    isMatchEndDisposer =
+        reaction((_) => _matchTimerController.isStopped, (bool isMatchStopped) {
+      if (isMatchStopped) {
+        _showEndMatchDialog();
+      }
+    });
+  }
+
+  Future<void> _showEndMatchDialog() async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => EndMatchAlertDialog(
+            onContinueTap: () {
+              _matchTimerController.isStopped = false;
+              _navigator.pop();
+            },
+            onEndMatchTap: () =>
+                _matchController.save(widget.matches).then((_) {
+                  _navigator.goTo("$newMatchRote$resultMatchRoute", arguments: {
+                    "matches": widget.matches,
+                    "matchSettings": widget.matchSettings
+                  });
+                })));
   }
 
   void _switchPlayers() {
@@ -69,8 +98,7 @@ class _MatchPageState extends State<MatchPage> {
         _matchController.playersTeamTwo,
         _matchController.reservePlayersTeamTwo,
         _matchController.match.teamTwo!);
-    _matchTimerController.init(
-        _matchController.match, widget.matchSettings.timeToChangePlayer);
+    _matchTimerController.init(_matchController.match, widget.matchSettings);
   }
 
   Future<void> _setOrientation() async {
@@ -193,7 +221,7 @@ class _MatchPageState extends State<MatchPage> {
                                   ? _matchController.match.teamOne!.players!
                                   : _matchController.match.teamTwo!.players!),
                       timeToChangePlayer:
-                          _matchController.settings.timeToChangePlayer,
+                          _matchController.settings.timeToChangePlayer!,
                     )),
           Observer(
             builder: (_) => StartingPlayersComponent(
@@ -209,6 +237,7 @@ class _MatchPageState extends State<MatchPage> {
   @override
   void dispose() {
     isTimeToSwitchPlayerDisposer();
+    isMatchEndDisposer();
     super.dispose();
   }
 }

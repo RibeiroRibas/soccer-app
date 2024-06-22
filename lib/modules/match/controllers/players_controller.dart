@@ -31,14 +31,12 @@ abstract class PlayersControllerBase with Store {
 
   void init(
       List<Player> startingPlayers, List<Player> reservePlayers, Team team) {
-    if (this.reservePlayers.isEmpty) {
-      this.team = team;
-      this.reservePlayers.addAll(reservePlayers);
-      playersToGetIn.addAll(reservePlayers);
-      playersAlreadyGoneToReserve.addAll(reservePlayers);
-      this.startingPlayers.addAll(startingPlayers);
-      _setPlayersToGetOut();
-    }
+    this.team = team;
+    this.reservePlayers.addAll(reservePlayers);
+    playersToGetIn.addAll(reservePlayers);
+    playersAlreadyGoneToReserve.addAll(reservePlayers);
+    this.startingPlayers.addAll(startingPlayers);
+    _setPlayersToGetOut();
   }
 
   void _setPlayersToGetOut() {
