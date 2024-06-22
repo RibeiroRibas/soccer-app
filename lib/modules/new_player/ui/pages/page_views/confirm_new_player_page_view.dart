@@ -5,11 +5,11 @@ import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/elevated_button_component.dart';
 import 'package:team_draw/shared/ui/component/tittle_component.dart';
 
-class ConfirmNewPlayerPage extends StatelessWidget {
+class ConfirmNewPlayerPageView extends StatelessWidget {
   final Player player;
   final void Function(NewPlayerPageView) goToNextPageView;
 
-  const ConfirmNewPlayerPage({
+  const ConfirmNewPlayerPageView({
     super.key,
     required this.player,
     required this.goToNextPageView,

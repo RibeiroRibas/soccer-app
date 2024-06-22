@@ -6,9 +6,9 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/modules/new_match/helper/new_match_page_view.dart';
 import 'package:team_draw/modules/new_match/new_match_rote_navigator.dart';
-import 'package:team_draw/modules/new_match/ui/pages/draw_teams_page.dart';
-import 'package:team_draw/modules/new_match/ui/pages/match_settings_page.dart';
-import 'package:team_draw/modules/new_match/ui/pages/players_lineup_page.dart';
+import 'package:team_draw/modules/new_match/ui/pages/page_views/draw_teams_page_view.dart';
+import 'package:team_draw/modules/new_match/ui/pages/page_views/match_settings_page_view.dart';
+import 'package:team_draw/modules/new_match/ui/pages/page_views/players_lineup_page_view.dart';
 import 'package:team_draw/modules/new_match/controllers/new_match_nav_bar_controller.dart';
 import 'package:team_draw/shared/controller/page_view_controller.dart';
 import 'package:team_draw/shared/helper/focus_node_helper.dart';
@@ -43,16 +43,16 @@ class _NewMatchNavBarState extends State<NewMatchNavBar> {
 
   List<Widget> allPagesView() {
     List<Widget> allPages = [
-      PlayersLineupPage(
+      PlayersLineupPageView(
         selectedPlayers: selectedPlayers,
         matchSettings: matchSettings,
         onShowForwardButton: _onShowForwardButton,
       ),
-      MatchSettingsView(
+      MatchSettingsPageView(
         selectedPlayers: selectedPlayers,
         matchSettings: matchSettings,
       ),
-      DrawnTeamsPage(
+      DrawnTeamsPageView(
         selectedPlayers: selectedPlayers,
         matchSettings: matchSettings,
         onShowForwardButton: _onShowForwardButton,
@@ -64,7 +64,7 @@ class _NewMatchNavBarState extends State<NewMatchNavBar> {
 
   void _goToPreviousPage() {
     if (_pageViewController.isFirstPage()) {
-      _navigator.goTo('$homeNavBarRoute/', null);
+      _navigator.goTo('$homeNavBarRoute/');
     } else {
       _pageViewController.previousPage();
       _controller.showForwardButton(true);

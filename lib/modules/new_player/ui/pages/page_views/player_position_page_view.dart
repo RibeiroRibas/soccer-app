@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
-import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/modules/new_player/ui/components/player_characteristics_component.dart';
+import 'package:team_draw/shared/i18n/messages.dart';
 
-class PlayerPrincipalPositionPage extends StatelessWidget {
+class PlayerPositionPageView extends StatelessWidget {
   final Player player;
   final void Function(NewPlayerPageView) goToNextPageView;
 
-  PlayerPrincipalPositionPage(
+  PlayerPositionPageView(
       {super.key, required this.player, required this.goToNextPageView});
 
   final List<Position> positions = Position.allPositions();

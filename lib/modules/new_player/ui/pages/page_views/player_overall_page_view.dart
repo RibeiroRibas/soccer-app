@@ -5,11 +5,11 @@ import 'package:team_draw/modules/new_player/ui/components/slider_component.dart
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/question_component.dart';
 
-class PlayerOverallPage extends StatelessWidget {
+class PlayerOverallPageView extends StatelessWidget {
   final Player player;
   final void Function(NewPlayerPageView) goToNextPageView;
 
-  const PlayerOverallPage(
+  const PlayerOverallPageView(
       {super.key, required this.player, required this.goToNextPageView});
 
   @override

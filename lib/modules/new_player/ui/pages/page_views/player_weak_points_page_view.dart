@@ -5,18 +5,19 @@ import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
 import 'package:team_draw/modules/new_player/ui/components/player_characteristics_component.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 
-class PlayerWeakPointsPage extends StatefulWidget {
+class PlayerWeakPointsPageView extends StatefulWidget {
   final Player player;
   final void Function(NewPlayerPageView) goToNextPageVIew;
 
-  const PlayerWeakPointsPage(
+  const PlayerWeakPointsPageView(
       {super.key, required this.player, required this.goToNextPageVIew});
 
   @override
-  State<PlayerWeakPointsPage> createState() => _PlayerWeakPointsPageState();
+  State<PlayerWeakPointsPageView> createState() =>
+      _PlayerWeakPointsPageViewState();
 }
 
-class _PlayerWeakPointsPageState extends State<PlayerWeakPointsPage> {
+class _PlayerWeakPointsPageViewState extends State<PlayerWeakPointsPageView> {
   final List<PlayerWeakPoints> playerWeakPoints = PlayerWeakPoints.all();
 
   void setPlayerWeakPoints(int index) {

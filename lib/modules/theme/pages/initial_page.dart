@@ -4,8 +4,8 @@ import 'package:lottie/lottie.dart';
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/data/shield_data.dart';
 import 'package:team_draw/modules/theme/controllers/theme_controller.dart';
-import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/modules/theme/theme_route_navigator.dart';
+import 'package:team_draw/shared/routes/route_named.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -17,20 +17,24 @@ class InitialPage extends StatefulWidget {
 class _InitialPageState extends State<InitialPage> {
   final _themeController = Modular.get<ThemeController>();
   final _navigator = Modular.get<ThemeRouteNavigator>();
+  late ReactionDisposer isGoToSelectedThemeDisposer;
+  late ReactionDisposer onThemeChangeDisposer;
 
   @override
   void initState() {
     super.initState();
     _loadTheFromStorage();
-    reaction((_) => _themeController.isGoToSelectedTheme, (isGoToSelectTheme) {
+    isGoToSelectedThemeDisposer = reaction(
+        (_) => _themeController.isGoToSelectedTheme, (isGoToSelectTheme) {
       if (isGoToSelectTheme!) {
-        _navigator.goTo(selectThemeRoute, null);
+        _navigator.goTo(selectThemeRoute);
       } else {
-        _navigator.goTo('$homeNavBarRoute/', null);
+        _navigator.goTo('$homeNavBarRoute/');
       }
     });
-    reaction((_) => _themeController.onThemeChange, (_) {
-      _navigator.goTo('$homeNavBarRoute/', null);
+    onThemeChangeDisposer =
+        reaction((_) => _themeController.onThemeChange, (_) {
+      _navigator.goTo('$homeNavBarRoute/');
     });
   }
 
@@ -80,5 +84,12 @@ class _InitialPageState extends State<InitialPage> {
         ),
       ]),
     );
+  }
+
+  @override
+  void dispose() {
+    isGoToSelectedThemeDisposer();
+    onThemeChangeDisposer();
+    super.dispose();
   }
 }

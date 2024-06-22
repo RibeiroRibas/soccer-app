@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/modules/gallery/controllers/gallery_controller.dart';
 import 'package:team_draw/modules/gallery/gallery_route_navigator.dart';
-import 'package:team_draw/shared/ui/dialogs/permission_denied_dialog.dart';
 import 'package:team_draw/modules/gallery/ui/list_item/image_list_item.dart';
 import 'package:team_draw/modules/gallery/ui/list_item/video_list_item.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/ui/component/app_bar_tittle_with_close_button_component.dart';
+import 'package:team_draw/shared/ui/dialogs/permission_denied_dialog.dart';
 
 class GalleryPage extends StatefulWidget {
   const GalleryPage({super.key});
@@ -23,11 +23,13 @@ class GalleryPage extends StatefulWidget {
 class _GalleryPageState extends State<GalleryPage> {
   final _navigator = Modular.get<GalleryRouteNavigator>();
   final _controller = Modular.get<GalleryController>();
+  late ReactionDisposer disposer;
 
   @override
   void initState() {
     super.initState();
-    reaction((_) => _controller.isMediaLocationPermanentlyDenied, (_) {
+    disposer =
+        reaction((_) => _controller.isMediaLocationPermanentlyDenied, (_) {
       _showPermissionDeniedDialog();
     });
   }
@@ -42,12 +44,22 @@ class _GalleryPageState extends State<GalleryPage> {
     );
   }
 
+  Future<void> _goToVideoPlayerPage(File video) {
+    return _navigator.pushNamed('$galleryRoute$videoPlayerRoute',
+        arguments: {"video": video});
+  }
+
+  Future<void> _goToImageViewerPage(int index) {
+    return _navigator.pushNamed('$galleryRoute$imageViewerRoute',
+        arguments: {"images": _controller.images, "imageIndex": index});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarTittleWithCloseButtonComponent(
         tittle: gallery,
-        onCloseAction: () => _navigator.goTo(homeNavBarRoute, null),
+        onCloseAction: () => _navigator.goTo(homeNavBarRoute),
       ),
       floatingActionButton: Builder(
         builder: (_) {
@@ -119,13 +131,9 @@ class _GalleryPageState extends State<GalleryPage> {
     );
   }
 
-  Future<void> _goToVideoPlayerPage(File video) {
-    return _navigator
-        .pushNamed('$galleryRoute$videoPlayerRoute', {"video": video});
-  }
-
-  Future<void> _goToImageViewerPage(int index) {
-    return _navigator.pushNamed('$galleryRoute$imageViewerRoute',
-        {"images": _controller.images, "imageIndex": index});
+  @override
+  void dispose() {
+    disposer();
+    super.dispose();
   }
 }

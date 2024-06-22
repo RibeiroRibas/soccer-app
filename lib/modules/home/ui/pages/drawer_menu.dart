@@ -14,22 +14,24 @@ import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 import 'package:team_draw/shared/ui/dialogs/permission_denied_dialog.dart';
 
-class DrawerMenuPage extends StatefulWidget {
-  const DrawerMenuPage({super.key});
+class DrawerMenu extends StatefulWidget {
+  const DrawerMenu({super.key});
 
   @override
-  State<DrawerMenuPage> createState() => _DrawerMenuPageState();
+  State<DrawerMenu> createState() => _DrawerMenuState();
 }
 
-class _DrawerMenuPageState extends State<DrawerMenuPage> {
+class _DrawerMenuState extends State<DrawerMenu> {
   final _navigator = Modular.get<HomeRouteNavigator>();
   final _viewModel = Modular.get<DrawerMenuController>();
+  late ReactionDisposer disposer;
 
   @override
   void initState() {
     super.initState();
     _viewModel.init();
-    reaction((_) => _viewModel.isMediaLocationPermanentlyDenied, (_) {
+    disposer =
+        reaction((_) => _viewModel.isMediaLocationPermanentlyDenied, (_) {
       _showPermissionDeniedDialog();
     });
   }
@@ -79,14 +81,14 @@ class _DrawerMenuPageState extends State<DrawerMenuPage> {
           height: 10,
         ),
         TextButton(
-          onPressed: () => _navigator.goTo(selectThemeRoute, null),
+          onPressed: () => _navigator.goTo(selectThemeRoute),
           child: Text(
             themes,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ),
         TextButton(
-          onPressed: () => _navigator.goTo('$galleryRoute/', null),
+          onPressed: () => _navigator.goTo('$galleryRoute/'),
           child: Text(
             gallery,
             style: Theme.of(context).textTheme.bodyMedium,
@@ -109,6 +111,7 @@ class _DrawerMenuPageState extends State<DrawerMenuPage> {
 
   @override
   void dispose() {
+    disposer();
     Modular.dispose<MediaService>();
     super.dispose();
   }
