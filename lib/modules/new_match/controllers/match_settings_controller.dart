@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
-import 'package:team_draw/data/match_data.dart';
 import 'package:team_draw/model/match_settings.dart';
+import 'package:team_draw/modules/new_match/services/match_settings_service.dart';
+import 'package:team_draw/shared/helper/list_helper.dart';
 
 part 'match_settings_controller.g.dart';
 
@@ -8,40 +9,33 @@ class MatchSettingsController = MatchSettingsControllerBase
     with _$MatchSettingsController;
 
 abstract class MatchSettingsControllerBase with Store {
-  @observable
-  bool? hasChangeSide;
+  final MatchSettingsService matchSettingsService;
+
+  MatchSettingsControllerBase(this.matchSettingsService);
 
   @observable
-  bool? isDrawNewTeams;
+  bool hasChangeSide = false;
 
   @observable
-  int? numberOfTeams;
-
-  @observable
-  Iterable<bool> arePlayersSelected = [];
-
-  @computed
-  int get numberTotalOfPossibleTeams {
-    return getTotalPlayers();
-  }
-
-  @computed
-  int get numberOfPlayersByTeam {
-    int totalPLayers = getTotalPlayers();
-    return totalPLayers ~/ numberOfTeams!;
-  }
+  int? numberOfStartingPlayers;
 
   @action
   Future<void> init(
       Iterable<bool> arePlayersSelected, MatchSettings matchSettings) async {
-    if (matchSettings.isNotConfig()) {
-      matchSettings = getMatchSettings;
-    }
+    MatchSettings? matchSettingsFromStorage = await matchSettingsService.load();
 
+    if (matchSettingsFromStorage != null) {
+      matchSettings.durationHr = matchSettingsFromStorage.durationHr;
+      matchSettings.durationMin = matchSettingsFromStorage.durationMin;
+      matchSettings.hasChangeSide = matchSettingsFromStorage.hasChangeSide;
+      matchSettings.timeToChangePlayer =
+          matchSettingsFromStorage.timeToChangePlayer;
+      matchSettings.numberOfStartingPlayers =
+          matchSettingsFromStorage.numberOfStartingPlayers;
+      matchSettings.numberOfTeams = matchSettingsFromStorage.numberOfTeams;
+    }
     changeSide(matchSettings.hasChangeSide);
-    drawNewTeams(matchSettings.isDrawNewTeams);
-    numberOfTeams = matchSettings.numberOfTeams ?? 2;
-    this.arePlayersSelected = arePlayersSelected;
+    numberOfStartingPlayers = matchSettings.numberOfStartingPlayers;
   }
 
   @action
@@ -49,17 +43,7 @@ abstract class MatchSettingsControllerBase with Store {
     hasChangeSide = changeSide;
   }
 
-  @action
-  void drawNewTeams(bool drawNewTeams) {
-    isDrawNewTeams = drawNewTeams;
-  }
-
-  @action
-  void changeNumberOfTeams(int numberOfTeams) {
-    this.numberOfTeams = numberOfTeams;
-  }
-
-  int getTotalPlayers() {
+  int getTotalPlayers(Iterable<bool> arePlayersSelected) {
     int totalPLayers = 0;
     for (var isPlayerSelected in arePlayersSelected) {
       if (isPlayerSelected) {
@@ -67,5 +51,22 @@ abstract class MatchSettingsControllerBase with Store {
       }
     }
     return totalPLayers;
+  }
+
+  List<int> getListOfTotalPlayersPossibleByTeam(
+      int? numberOfTeams, Iterable<bool> arePlayersSelected) {
+    int numberOfPossiblePlayersByTeam = 0;
+
+    if (numberOfTeams != null) {
+      int totalPLayers = getTotalPlayers(arePlayersSelected);
+      numberOfPossiblePlayersByTeam = totalPLayers ~/ numberOfTeams;
+    }
+
+    return ListHelper.getListOfTotalPlayersPossibleByTeam(
+        numberOfPossiblePlayersByTeam);
+  }
+
+  Future<void> save(MatchSettings matchSettings) async {
+    await matchSettingsService.save(matchSettings);
   }
 }

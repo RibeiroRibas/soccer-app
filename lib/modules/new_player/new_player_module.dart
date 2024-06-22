@@ -4,7 +4,7 @@ import 'package:team_draw/modules/new_player/controllers/new_player_controller.d
 import 'package:team_draw/modules/new_player/new_player_rote_navigator.dart';
 import 'package:team_draw/modules/new_player/ui/pages/new_player_nav_bar.dart';
 import 'package:team_draw/modules/new_player/ui/pages/success_page.dart';
-import 'package:team_draw/repositories/team_match_repository.dart';
+import 'package:team_draw/shared/repositories/team_match_repository.dart';
 import 'package:team_draw/services/team_match_service.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
 

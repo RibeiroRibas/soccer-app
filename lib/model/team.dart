@@ -7,20 +7,30 @@ import 'package:team_draw/shared/extensions/team_overall_map_extension.dart';
 class Team {
   int? id;
   String? name;
-  String? acronym;
+  String? _acronym;
   TeamShield? shield;
   List<Player>? players;
   int? numberOfStartingPlayers;
   TeamOverall teamOverall = TeamOverall();
 
+  String get acronym {
+    return _acronym ?? "TES";
+  }
+
+  set acronym(String acronym) {
+    _acronym = acronym;
+  }
+
   Team({
     this.id = 0,
     this.name,
-    this.acronym,
+    String? acronym,
     this.shield,
     this.players,
     this.numberOfStartingPlayers,
-  });
+  }) {
+    _acronym = acronym;
+  }
 
   bool hasPlayerBackup() {
     return numberOfStartingPlayers! < players!.length;

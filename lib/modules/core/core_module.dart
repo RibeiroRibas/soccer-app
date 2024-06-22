@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:team_draw/repositories/player_repository.dart';
+import 'package:team_draw/shared/repositories/player_repository.dart';
 import 'package:team_draw/services/player_service.dart';
 import 'package:team_draw/shared/controller/page_view_controller.dart';
 

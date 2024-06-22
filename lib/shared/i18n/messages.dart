@@ -73,7 +73,7 @@ const matchSettings = "Configurações da partida:";
 const duration = "Duração: ";
 const hour = "hr";
 const minute = "min";
-const numberOfPlayersByTeam = "Numero de jogadores por time: ";
+const numberOfPlayersByTeam = "Numero de jogadores (titulares) por time: ";
 const hasChangeSideQuestion = "Troca de lado?";
 const yes = "Sim";
 const no = "Não";
@@ -85,6 +85,9 @@ const requestTeamName = "Nome do time é obrigatório";
 const selectName = "Informe o novo nome do time ou selecione na lista abaixo";
 const typeTeamName = "Informe o nome do time!";
 const tapOnShieldOrNameToEdit = "Toque no escudo ou nome do time para editar";
+const newMatchAlmostBegin = "Voltar ao menu inicial";
+const playNextMatch = "Jogar a próxima partida";
+const matchResult = "Resultado da partida";
 
 // teams information
 const forward = "Ataque";
@@ -152,6 +155,9 @@ const preMatchMessage =
     "Organize os jogadores em campo. Quando o Juiz apitar você já pode iniciar a partida.";
 const okIGetIt = "Ok Entendi!";
 const playersManager = "Gerenciador de jogadores";
+const continuePlaying = "Continuar jogando";
+const endMatch = "Fim do jogo!";
+const stopMatch = "Encerrar a partida";
 
 //gallery
 const images = "Imagens";

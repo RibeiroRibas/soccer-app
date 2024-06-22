@@ -27,6 +27,7 @@ class _ExpandableFabSectionState extends State<ExpandableFabSection>
   late final AnimationController _controller;
   late final Animation<double> _expandAnimation;
   final expandableButtonController = Modular.get<ExpandableButtonController>();
+  late ReactionDisposer disposer;
 
   @override
   void initState() {
@@ -41,7 +42,7 @@ class _ExpandableFabSectionState extends State<ExpandableFabSection>
       reverseCurve: Curves.easeOutQuad,
       parent: _controller,
     );
-    autorun((_) async {
+    disposer = autorun((_) async {
       if (mounted) {
         if (expandableButtonController.isButtonOpen) {
           _controller.forward();
@@ -88,6 +89,7 @@ class _ExpandableFabSectionState extends State<ExpandableFabSection>
   @override
   void dispose() {
     _controller.dispose();
+    disposer();
     super.dispose();
   }
 }

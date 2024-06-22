@@ -180,11 +180,11 @@ mixin _$MatchTimerController on MatchTimerControllerBase, Store {
       ActionController(name: 'MatchTimerControllerBase', context: context);
 
   @override
-  void init(TeamMatch match, int timeToChangePlayer) {
+  void init(TeamMatch match, MatchSettings matchSettings) {
     final _$actionInfo = _$MatchTimerControllerBaseActionController.startAction(
         name: 'MatchTimerControllerBase.init');
     try {
-      return super.init(match, timeToChangePlayer);
+      return super.init(match, matchSettings);
     } finally {
       _$MatchTimerControllerBaseActionController.endAction(_$actionInfo);
     }

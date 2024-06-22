@@ -21,6 +21,7 @@ class SelectBoxComponent extends StatelessWidget {
     return Row(
       children: [
         Expanded(child: Text(description)),
+        const SizedBox(width: 10),
         DropDownButtonComponent(
           value: value,
           onValueChange: onValueChange,
