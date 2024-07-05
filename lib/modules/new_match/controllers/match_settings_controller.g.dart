@@ -43,18 +43,19 @@ mixin _$MatchSettingsController on MatchSettingsControllerBase, Store {
     });
   }
 
-  late final _$initAsyncAction =
-      AsyncAction('MatchSettingsControllerBase.init', context: context);
-
-  @override
-  Future<void> init(
-      Iterable<bool> arePlayersSelected, MatchSettings matchSettings) {
-    return _$initAsyncAction
-        .run(() => super.init(arePlayersSelected, matchSettings));
-  }
-
   late final _$MatchSettingsControllerBaseActionController =
       ActionController(name: 'MatchSettingsControllerBase', context: context);
+
+  @override
+  void init(Iterable<bool> arePlayersSelected, MatchSettings matchSettings) {
+    final _$actionInfo = _$MatchSettingsControllerBaseActionController
+        .startAction(name: 'MatchSettingsControllerBase.init');
+    try {
+      return super.init(arePlayersSelected, matchSettings);
+    } finally {
+      _$MatchSettingsControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void changeSide(bool changeSide) {

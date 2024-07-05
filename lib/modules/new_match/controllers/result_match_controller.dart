@@ -7,12 +7,17 @@ class ResultMatchController {
   late TeamInformation teamInformation;
   late List<String> playersGoalAtTime;
 
-  void init(List<TeamMatch> matches) {
+  void initFromResultMatch(List<TeamMatch> matches) {
     match = matches.first;
     matches.remove(match);
-    List<String> teamOneInformation = match.teamOne!.getTeamInformation();
-    List<String> teamTwoInformation = match.teamTwo!.getTeamInformation();
-    teamInformation = TeamInformation(teamOneInformation, teamTwoInformation);
+    teamInformation = match.getTeamsInformation();
+    playersGoalAtTime =
+        match.matchGoals != null ? match.matchGoals!.getPlayerGoalAtTime() : [];
+  }
+
+  void initFromDetailsMatch(TeamMatch match) {
+    this.match = match;
+    teamInformation = match.getTeamsInformation();
     playersGoalAtTime =
         match.matchGoals != null ? match.matchGoals!.getPlayerGoalAtTime() : [];
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/player_strengths.dart';
 import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
+import 'package:team_draw/modules/new_player/ui/components/action_buttons_component.dart';
 import 'package:team_draw/modules/new_player/ui/components/player_characteristics_component.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 
@@ -39,24 +40,33 @@ class _PlayerStrengthsPageViewState extends State<PlayerStrengthsPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return PlayerCharacteristicsComponent(
-      questionText: strengths,
-      subQuestionText: selectUpToTwoOptions,
-      positions: List.generate(
-        playerStrengths.length,
-        (index) {
-          return CheckboxListTile(
-            title: Text(
-              playerStrengths.elementAt(index).characteristic,
-              style: const TextStyle(fontSize: 12),
-              softWrap: false,
-            ),
-            value: widget.player.strengths
-                .any((element) => element == playerStrengths[index]),
-            onChanged: (_) => setStrengthsPoints(index),
-          );
-        },
-      ),
+    return Column(
+      children: [
+        PlayerCharacteristicsComponent(
+          questionText: strengths,
+          subQuestionText: selectUpToTwoOptions,
+          positions: List.generate(
+            playerStrengths.length,
+            (index) {
+              return CheckboxListTile(
+                title: Text(
+                  playerStrengths.elementAt(index).characteristic,
+                  style: const TextStyle(fontSize: 12),
+                  softWrap: false,
+                ),
+                value: widget.player.strengths
+                    .any((element) => element == playerStrengths[index]),
+                onChanged: (_) => setStrengthsPoints(index),
+              );
+            },
+          ),
+        ),
+        const SizedBox(width: 20),
+        ActionButtonsComponent(
+            onContinueTap: () =>
+                widget.goToNextPageView(NewPlayerPageView.weakPoints),
+            onSaveTap: () => widget.goToNextPageView(NewPlayerPageView.finish)),
+      ],
     );
   }
 }

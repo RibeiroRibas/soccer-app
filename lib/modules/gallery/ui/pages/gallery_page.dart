@@ -58,7 +58,7 @@ class _GalleryPageState extends State<GalleryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarTittleWithCloseButtonComponent(
-        tittle: gallery,
+        title: gallery,
         onCloseAction: () => _navigator.goTo(homeNavBarRoute),
       ),
       floatingActionButton: Builder(

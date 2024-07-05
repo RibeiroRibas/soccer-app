@@ -3,8 +3,10 @@ import 'package:team_draw/model/player_goals.dart';
 import 'package:team_draw/model/match_result.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
+import 'package:team_draw/modules/new_match/model/team_information.dart';
 
 class TeamMatch {
+  int? id;
   Team? teamOne;
   Team? teamTwo;
   int scoreTeamOne;
@@ -13,7 +15,8 @@ class TeamMatch {
   List<PlayerGoals>? matchGoals;
 
   TeamMatch(
-      {this.teamOne,
+      {this.id = 0,
+      this.teamOne,
       this.teamTwo,
       this.scoreTeamOne = 0,
       this.scoreTeamTwo = 0,
@@ -71,5 +74,11 @@ class TeamMatch {
         throw PlayersGoalNotFoundException();
       }
     }
+  }
+
+  TeamInformation getTeamsInformation() {
+    List<String> teamOneInformation = teamOne!.getTeamInformation();
+    List<String> teamTwoInformation = teamTwo!.getTeamInformation();
+    return TeamInformation(teamOneInformation, teamTwoInformation);
   }
 }

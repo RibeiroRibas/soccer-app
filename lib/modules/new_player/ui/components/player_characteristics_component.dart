@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/shared/ui/component/question_component.dart';
+import 'package:team_draw/shared/ui/component/tittle_with_sub_tittle_component.dart';
 
 class PlayerCharacteristicsComponent extends StatelessWidget {
   final String questionText;
@@ -16,9 +16,9 @@ class PlayerCharacteristicsComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        QuestionComponent(
-          questionText: questionText,
-          subQuestionText: subQuestionText,
+        TittleWithSubTittleComponent(
+          tittle: questionText,
+          subTittle: subQuestionText,
         ),
         SizedBox(
           height: 200,

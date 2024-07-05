@@ -3,6 +3,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/modules/new_match/ui/pages/page_views/deja_vu_match_page_view.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/modules/new_match/helper/new_match_page_view.dart';
 import 'package:team_draw/modules/new_match/new_match_rote_navigator.dart';
@@ -48,6 +49,10 @@ class _NewMatchNavBarState extends State<NewMatchNavBar> {
         matchSettings: matchSettings,
         onShowForwardButton: _onShowForwardButton,
       ),
+      DejaVuMatchPageView(
+          selectedPlayers: selectedPlayers,
+          matchSettings: matchSettings,
+          onShowForwardButton: _onShowForwardButton),
       MatchSettingsPageView(
         selectedPlayers: selectedPlayers,
         matchSettings: matchSettings,

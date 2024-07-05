@@ -3,7 +3,7 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
 import 'package:team_draw/modules/new_player/ui/components/slider_component.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/ui/component/question_component.dart';
+import 'package:team_draw/shared/ui/component/tittle_with_sub_tittle_component.dart';
 
 class PlayerOverallPageView extends StatelessWidget {
   final Player player;
@@ -16,16 +16,16 @@ class PlayerOverallPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const QuestionComponent(
-          questionText: playerOverall,
-          subQuestionText: swipeToSelect,
+        const TittleWithSubTittleComponent(
+          tittle: playerOverall,
+          subTittle: swipeToSelect,
         ),
         const SizedBox(height: 20),
         SliderOverallComponent(
           initialValue: player.overall,
           onChangeEnd: (overall) {
             player.overall = overall;
-            goToNextPageView(NewPlayerPageView.confirmNewPlayer);
+            goToNextPageView(NewPlayerPageView.strengths);
           },
         ),
       ],
