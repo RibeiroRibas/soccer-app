@@ -33,7 +33,7 @@ class PlayerPositionPageView extends StatelessWidget {
                 : false,
             onChanged: (_) {
               player.principalPosition = Position.fromIndex(index);
-              goToNextPageView(NewPlayerPageView.strengths);
+              goToNextPageView(NewPlayerPageView.overall);
             },
           );
         },

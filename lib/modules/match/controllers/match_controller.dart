@@ -66,9 +66,7 @@ abstract class MatchControllerBase with Store {
       reservePlayersTeamTwo,
     );
 
-    List<String> teamOneInformation = match.teamOne!.getTeamInformation();
-    List<String> teamTwoInformation = match.teamTwo!.getTeamInformation();
-    teamsInformation = TeamInformation(teamOneInformation, teamTwoInformation);
+    teamsInformation = match.getTeamsInformation();
   }
 
   void _setStartingAndReservePlayers(

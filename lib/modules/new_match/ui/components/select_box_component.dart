@@ -23,7 +23,9 @@ class SelectBoxComponent extends StatelessWidget {
         Expanded(child: Text(description)),
         const SizedBox(width: 10),
         DropDownButtonComponent(
-          value: value,
+          value: value == null || values.any((v) => v == value)
+              ? value
+              : values.last,
           onValueChange: onValueChange,
           width: MediaQuery.of(context).size.width / 4,
           values: values,

@@ -3,28 +3,26 @@ import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/new_match/controllers/result_match_conotroller.dart';
+import 'package:team_draw/modules/new_match/controllers/result_match_controller.dart';
 import 'package:team_draw/modules/new_match/new_match_rote_navigator.dart';
+import 'package:team_draw/modules/new_match/ui/components/match_result_component.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/ui/component/elevated_button_component.dart';
-import 'package:team_draw/shared/ui/component/result_match_component.dart';
-import 'package:team_draw/shared/ui/component/teams_info_component.dart';
 import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
-import 'package:team_draw/shared/ui/list_item/player_goals_list_item.dart';
 
-class ResultMatchPage extends StatefulWidget {
+class MatchResultPage extends StatefulWidget {
   final List<TeamMatch> matches;
   final MatchSettings matchSettings;
 
-  const ResultMatchPage(
+  const MatchResultPage(
       {super.key, required this.matches, required this.matchSettings});
 
   @override
-  State<ResultMatchPage> createState() => _ResultMatchPageState();
+  State<MatchResultPage> createState() => _MatchResultPageState();
 }
 
-class _ResultMatchPageState extends State<ResultMatchPage> {
+class _MatchResultPageState extends State<MatchResultPage> {
   final controller = Modular.get<ResultMatchController>();
   final _navigator = Modular.get<NewMatchRoteNavigator>();
 
@@ -34,7 +32,7 @@ class _ResultMatchPageState extends State<ResultMatchPage> {
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
-    controller.init(widget.matches);
+    controller.initFromResultMatch(widget.matches);
   }
 
   @override
@@ -47,30 +45,10 @@ class _ResultMatchPageState extends State<ResultMatchPage> {
           textStyle: Theme.of(context).textTheme.titleLarge!,
         )),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 25),
-              ResultMatchComponent(match: controller.match),
-              TeamsInformationComponent(
-                  teamsInformation: controller.teamInformation),
-              const SizedBox(height: 30),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return PlayerGoalsListItem(
-                      match: controller.match,
-                      playerGoalAtTime: controller.playersGoalAtTime[index]);
-                },
-                itemCount: controller.playersGoalAtTime.length,
-              ),
-            ],
-          ),
-        ),
-      ),
+      body: MatchResultComponent(
+          match: controller.match,
+          teamInformation: controller.teamInformation,
+          playersGoalAtTime: controller.playersGoalAtTime),
       bottomNavigationBar: Row(
         children: [
           Expanded(

@@ -39,7 +39,7 @@ class _SuccessViewState extends State<SuccessView> {
           )
         : Scaffold(
             appBar: AppBarTittleWithCloseButtonComponent(
-              tittle: allPlayers,
+              title: allPlayers,
               onCloseAction: () => _navigator.goTo('$homeNavBarRoute/'),
             ),
             body: Padding(

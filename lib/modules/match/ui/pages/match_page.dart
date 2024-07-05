@@ -76,7 +76,7 @@ class _MatchPageState extends State<MatchPage> {
             },
             onEndMatchTap: () =>
                 _matchController.save(widget.matches).then((_) {
-                  _navigator.goTo("$newMatchRote$resultMatchRoute", arguments: {
+                  _navigator.goTo("$newMatchRote$matchResultRoute", arguments: {
                     "matches": widget.matches,
                     "matchSettings": widget.matchSettings
                   });

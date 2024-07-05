@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/shared/helper/date_time_format_helper.dart';
-import 'package:team_draw/shared/ui/component/result_match_component.dart';
+import 'package:team_draw/shared/ui/component/match_score_component.dart';
 
 class MatchesListItem extends StatefulWidget {
   final TeamMatch match;
@@ -21,7 +21,7 @@ class _MatchesListItemState extends State<MatchesListItem> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
-              child: ResultMatchComponent(
+              child: MatchScoreComponent(
                   match: widget.match, isShowTeamName: false)),
           const SizedBox(
             width: 10,

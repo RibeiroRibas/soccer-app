@@ -31,23 +31,20 @@ class PlayersComponent extends StatelessWidget {
               goToNextRoute: goToNextRoute,
               isShowNewMatchButton: false,
             ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: PlayerOverallListItem(
-                    playerScore: playersScore[index],
-                    player: playersScore[index].player,
-                    goToUpdatePlayerRoute: goToUpdatePlayerRoute,
-                  ),
-                );
-              },
-              itemCount: playersScore.length,
-            ),
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: PlayerOverallListItem(
+                  playerScore: playersScore.elementAt(index),
+                  player: playersScore.elementAt(index).player,
+                  goToUpdatePlayerRoute: goToUpdatePlayerRoute,
+                ),
+              );
+            },
+            itemCount: playersScore.length,
           ),
         ],
       ),
