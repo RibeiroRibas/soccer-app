@@ -3,6 +3,6 @@ import 'package:team_draw/model/team_match.dart';
 
 class TeamMatchRepository {
   Future<List<TeamMatch>> findAllMatches() async {
-    return getAllMatches;
+    return getAllTeamMatches;
   }
 }

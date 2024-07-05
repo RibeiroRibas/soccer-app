@@ -3,7 +3,7 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/outlined_text_field_component.dart';
-import 'package:team_draw/shared/ui/component/question_component.dart';
+import 'package:team_draw/shared/ui/component/tittle_with_sub_tittle_component.dart';
 
 class PlayerNamePageView extends StatelessWidget {
   final Player player;
@@ -32,9 +32,9 @@ class PlayerNamePageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const QuestionComponent(
-          questionText: whatIsPlayerName,
-          subQuestionText: orNickname,
+        const TittleWithSubTittleComponent(
+          tittle: whatIsPlayerName,
+          subTittle: orNickname,
         ),
         Form(
           key: _formKey,

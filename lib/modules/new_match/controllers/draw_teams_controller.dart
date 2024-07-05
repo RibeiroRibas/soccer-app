@@ -50,10 +50,7 @@ abstract class DrawTeamsControllerBase with Store {
   void _getTeamInformation(List<TeamMatch> teamMatches) {
     List<TeamInformation> teamsInformation = [];
     for (TeamMatch teamMatch in teamMatches) {
-      List<String> teamOneInformation = teamMatch.teamOne!.getTeamInformation();
-      List<String> teamTwoInformation = teamMatch.teamTwo!.getTeamInformation();
-      final teamInformation =
-          TeamInformation(teamOneInformation, teamTwoInformation);
+      final teamInformation = teamMatch.getTeamsInformation();
       teamsInformation.add(teamInformation);
       availableNames.removeWhere((name) => teamMatch.teamOne!.name == name);
       availableNames.removeWhere((name) => teamMatch.teamTwo!.name == name);

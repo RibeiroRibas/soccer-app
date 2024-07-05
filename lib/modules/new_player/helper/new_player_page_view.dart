@@ -1,9 +1,9 @@
 enum NewPlayerPageView {
   name(0),
   principalPosition(1),
-  strengths(2),
-  weakPoints(3),
-  overall(4),
+  overall(2),
+  strengths(3),
+  weakPoints(4),
   confirmNewPlayer(5),
   finish(6);
 

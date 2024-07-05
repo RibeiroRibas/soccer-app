@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 
 class AppBarTittleWithCloseButtonComponent extends StatelessWidget
     implements PreferredSizeWidget {
-  final String tittle;
+  final String title;
   final Function onCloseAction;
 
   const AppBarTittleWithCloseButtonComponent(
-      {super.key, required this.tittle, required this.onCloseAction});
+      {super.key, required this.title, required this.onCloseAction});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -14,9 +15,9 @@ class AppBarTittleWithCloseButtonComponent extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
-        tittle,
-        style: const TextStyle(fontWeight: FontWeight.bold),
+      title: TextWithBorderComponent(
+        text: title,
+        textStyle: const TextStyle(fontWeight: FontWeight.bold),
       ),
       centerTitle: true,
       automaticallyImplyLeading: false,

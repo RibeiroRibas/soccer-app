@@ -20,20 +20,7 @@ abstract class MatchSettingsControllerBase with Store {
   int? numberOfStartingPlayers;
 
   @action
-  Future<void> init(
-      Iterable<bool> arePlayersSelected, MatchSettings matchSettings) async {
-    MatchSettings? matchSettingsFromStorage = await matchSettingsService.load();
-
-    if (matchSettingsFromStorage != null) {
-      matchSettings.durationHr = matchSettingsFromStorage.durationHr;
-      matchSettings.durationMin = matchSettingsFromStorage.durationMin;
-      matchSettings.hasChangeSide = matchSettingsFromStorage.hasChangeSide;
-      matchSettings.timeToChangePlayer =
-          matchSettingsFromStorage.timeToChangePlayer;
-      matchSettings.numberOfStartingPlayers =
-          matchSettingsFromStorage.numberOfStartingPlayers;
-      matchSettings.numberOfTeams = matchSettingsFromStorage.numberOfTeams;
-    }
+  void init(Iterable<bool> arePlayersSelected, MatchSettings matchSettings) {
     changeSide(matchSettings.hasChangeSide);
     numberOfStartingPlayers = matchSettings.numberOfStartingPlayers;
   }

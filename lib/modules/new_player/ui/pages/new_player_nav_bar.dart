@@ -89,15 +89,15 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
         player: widget.player,
         goToNextPageView: goToNextPageView,
       ),
+      PlayerOverallPageView(
+        player: widget.player,
+        goToNextPageView: goToNextPageView,
+      ),
       PlayerStrengthsPageView(
         player: widget.player,
         goToNextPageView: goToNextPageView,
       ),
       PlayerWeakPointsPageView(
-        player: widget.player,
-        goToNextPageVIew: goToNextPageView,
-      ),
-      PlayerOverallPageView(
         player: widget.player,
         goToNextPageView: goToNextPageView,
       ),
@@ -112,9 +112,7 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
 
   bool _isShowForwardButton() {
     int currentPageIndex = _pageViewController.currentPageIndex;
-    return currentPageIndex == NewPlayerPageView.strengths.pageIndex ||
-        currentPageIndex == NewPlayerPageView.weakPoints.pageIndex ||
-        currentPageIndex == NewPlayerPageView.name.pageIndex &&
+    return currentPageIndex == NewPlayerPageView.name.pageIndex &&
             widget.player.name != null ||
         currentPageIndex == NewPlayerPageView.principalPosition.pageIndex &&
             widget.player.principalPosition != null ||

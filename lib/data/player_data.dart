@@ -137,8 +137,32 @@ List<Player> players1 = [
 List<Player> players2 = [
   helton,
   sid,
-  cris,
+  douglas,
   neny,
   diego,
   bruno,
+];
+
+List<Player> players3 = [
+  sid,
+  douglas,
+  neny,
+  diego,
+  bruno,
+];
+
+List<Player> players4 = [
+  helder,
+  galdino,
+  guilherme,
+  jodir,
+  cleber,
+];
+
+List<Player> players5 = [
+  rodrigo,
+  cris,
+  helton,
+  volnei,
+  cezinha,
 ];

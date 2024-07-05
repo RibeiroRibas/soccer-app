@@ -88,6 +88,16 @@ const tapOnShieldOrNameToEdit = "Toque no escudo ou nome do time para editar";
 const newMatchAlmostBegin = "Voltar ao menu inicial";
 const playNextMatch = "Jogar a próxima partida";
 const matchResult = "Resultado da partida";
+const matchDetails = "Detalhes da partida";
+const playAgain = "jogar novamente";
+const hasNotHistoryMatchMessage =
+    "Não existe um histórico de jogos para os jogadores selecionados.\n"
+    "Avance para proxima etapa e informe as configurações da partida para ser possível gerar novos times.";
+const hasHistoryMatchMessage =
+    "Os jogadores selecionados já se enfrentaram antes.\n"
+    "Caso queira repetir a partida selecione uma na lista abaixa.\n"
+    "Caso queira gerar novos times avance tocando na seta indicadora acima.";
+const matchRepeater = "Repetidor de partida";
 
 // teams information
 const forward = "Ataque";
@@ -148,7 +158,7 @@ const whoToGetOut = "Quem sai";
 const willBeContinuousInReserve = "vai continuar na reserva.";
 const willBeContinuousPlaying = "vai continuar jogando.";
 const start = "Iniciar";
-const startMatch = "Iniciar Partida";
+const startMatch = "Iniciar a partida";
 const whoAlreadyGoToReserve = "Quem já foi pra reserva";
 const theMatchIsAlmostStart = "A partida já vai começar!";
 const preMatchMessage =

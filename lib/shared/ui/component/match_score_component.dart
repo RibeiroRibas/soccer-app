@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 
-class ResultMatchComponent extends StatelessWidget {
+class MatchScoreComponent extends StatelessWidget {
   final TeamMatch match;
   final bool isShowTeamName;
 
-  const ResultMatchComponent(
+  const MatchScoreComponent(
       {super.key, required this.match, this.isShowTeamName = true});
 
   double _calculateCellWidth(BuildContext context) =>
