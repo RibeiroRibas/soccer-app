@@ -3,11 +3,11 @@
 <plist version="1.0">
 	<dict>
 		<key>NSMicrophoneUsageDescription</key>
-    	<string>This app will only attach the microphone when record a video. These videos will be used in team image gallery that will be saved in the internal storage.</string>
+		<string>This app will only attach the microphone when record a video. These videos will be used in team image gallery that will be saved in the internal storage.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-    	<string>This app will only attach the images you select. These images will be used in team image gallery that will be saved in the internal storage.</string>
-    	<key>NSCameraUsageDescription</key>
-        <string>This app uses your camera to take some pictures. These images and videos will be used in team image gallery that will be saved in the internal storage.</string>
+		<string>This app will only attach the images you select. These images will be used in team image gallery that will be saved in the internal storage.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>This app uses your camera to take some pictures. These images and videos will be used in team image gallery that will be saved in the internal storage.</string>
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>

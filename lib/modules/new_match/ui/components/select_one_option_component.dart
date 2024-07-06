@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/ui/component/check_box_component.dart';
 
 class SelectOneOptionComponent extends StatelessWidget {
   final String question;
@@ -17,15 +16,32 @@ class SelectOneOptionComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CheckBoxComponent(
+        SizedBox(
+          width: MediaQuery.of(context).size.width / 4,
+          child: CheckboxListTile(
+            title: const Text(
+              yes,
+              style: TextStyle(fontSize: 14),
+            ),
+            controlAffinity: ListTileControlAffinity.leading,
             value: value,
-            onValueSelected: (value) => onValueSelected(value),
-            text: yes),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+            onChanged: (_) => onValueSelected(true),
+          ),
+        ),
         Expanded(child: Center(child: Text(question))),
-        CheckBoxComponent(
-            value: value,
-            onValueSelected: (value) => onValueSelected(value),
-            text: no),
+        SizedBox(
+          width: MediaQuery.of(context).size.width / 4,
+          child: CheckboxListTile(
+            title: const Text(
+              no,
+              style: TextStyle(fontSize: 14),
+            ),
+            value: !value,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+            onChanged: (_) => onValueSelected(false),
+          ),
+        ),
       ],
     );
   }

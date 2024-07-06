@@ -35,7 +35,7 @@ const allPlayers = "Todos os jogadores";
 const finish = "CONCLUIR";
 const strengths = "Pontos fortes";
 const weakPoints = "Pontos fracos";
-const selectUpToTwoOptions = "Selecione até duas opções";
+const optional = "Opcional";
 
 const goalkeeperPosition = "GOLEIRO";
 const forwardPosition = "ATACANTE";

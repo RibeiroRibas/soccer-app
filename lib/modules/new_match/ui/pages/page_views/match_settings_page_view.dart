@@ -51,42 +51,42 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) => SingleChildScrollView(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
-              child: TittleComponent(tittle: matchSettings),
-            ),
-            MatchDurationTimeComponent(
-              durationHr: widget.matchSettings.durationHr,
-              durationMin: widget.matchSettings.durationMin,
-              onDurationHrChange: (value) async {
-                widget.matchSettings.durationHr = value;
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
+            child: TittleComponent(tittle: matchSettings),
+          ),
+          MatchDurationTimeComponent(
+            durationHr: widget.matchSettings.durationHr,
+            durationMin: widget.matchSettings.durationMin,
+            onDurationHrChange: (value) async {
+              widget.matchSettings.durationHr = value;
+              await _verifyCanShowForwardButton();
+            },
+            onDurationMinChange: (value) =>
+                widget.matchSettings.durationMin = value,
+          ),
+          const Divider(),
+          SelectBoxComponent(
+            value: widget.matchSettings.numberOfTeams,
+            onValueChange: (value) async {
+              if (value != widget.matchSettings.numberOfTeams) {
+                widget.matchSettings.numberOfTeams = value;
+                _controller.numberOfStartingPlayers = null;
+                widget.matchSettings.numberOfStartingPlayers = null;
                 await _verifyCanShowForwardButton();
-              },
-              onDurationMinChange: (value) =>
-                  widget.matchSettings.durationMin = value,
-            ),
-            const Divider(),
-            SelectBoxComponent(
-              value: widget.matchSettings.numberOfTeams,
-              onValueChange: (value) async {
-                if (value != widget.matchSettings.numberOfTeams) {
-                  widget.matchSettings.numberOfTeams = value;
-                  _controller.numberOfStartingPlayers = null;
-                  widget.matchSettings.numberOfStartingPlayers = null;
-                  await _verifyCanShowForwardButton();
-                }
-              },
-              values: ListHelper.getListOfPossibleTeams(
-                  _controller.getTotalPlayers(widget.selectedPlayers.values)),
-              description: numberOfTeams,
-              labelText: quantity,
-            ),
-            const Divider(),
-            SelectBoxComponent(
+              }
+            },
+            values: ListHelper.getListOfPossibleTeams(
+                _controller.getTotalPlayers(widget.selectedPlayers.values)),
+            description: numberOfTeams,
+            labelText: quantity,
+          ),
+          const Divider(),
+          Observer(
+            builder: (_) => SelectBoxComponent(
               value: _controller.numberOfStartingPlayers,
               onValueChange: (value) async {
                 _controller.numberOfStartingPlayers = value;
@@ -99,8 +99,10 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
               description: numberOfPlayersByTeam,
               labelText: quantity,
             ),
-            const Divider(),
-            SelectOneOptionComponent(
+          ),
+          const Divider(),
+          Observer(
+            builder: (_) => SelectOneOptionComponent(
                 question: hasChangeSideQuestion,
                 value: _controller.hasChangeSide,
                 onValueSelected: (value) async {
@@ -108,20 +110,20 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
                   widget.matchSettings.hasChangeSide = value;
                   await _verifyCanShowForwardButton();
                 }),
-            const Divider(),
-            SelectBoxComponent(
-              value: widget.matchSettings.timeToChangePlayer,
-              onValueChange: (value) async {
-                widget.matchSettings.timeToChangePlayer = value;
-                await _verifyCanShowForwardButton();
-              },
-              values: ListHelper.getListOfMinutes(),
-              description: changePlayerEvery,
-              labelText: minute,
-            ),
-            const Divider(),
-          ],
-        ),
+          ),
+          const Divider(),
+          SelectBoxComponent(
+            value: widget.matchSettings.timeToChangePlayer,
+            onValueChange: (value) async {
+              widget.matchSettings.timeToChangePlayer = value;
+              await _verifyCanShowForwardButton();
+            },
+            values: ListHelper.getListOfMinutes(),
+            description: changePlayerEvery,
+            labelText: minute,
+          ),
+          const Divider(),
+        ],
       ),
     );
   }
