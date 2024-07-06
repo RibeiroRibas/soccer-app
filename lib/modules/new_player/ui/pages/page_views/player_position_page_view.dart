@@ -16,6 +16,8 @@ class PlayerPositionPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final focusNode = FocusNode();
+    focusNode.requestFocus();
     return PlayerCharacteristicsComponent(
       questionText: principalPositionQuestion,
       subQuestionText: principalPositionSubQuestion,
@@ -28,6 +30,7 @@ class PlayerPositionPageView extends StatelessWidget {
               style: const TextStyle(fontSize: 12),
               softWrap: false,
             ),
+            focusNode: focusNode,
             value: player.principalPosition != null
                 ? player.principalPosition! == positions[index]
                 : false,
