@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
     <application
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
         android:enableOnBackInvokedCallback="true"
         android:label="Sagrado Fut">
         <activity

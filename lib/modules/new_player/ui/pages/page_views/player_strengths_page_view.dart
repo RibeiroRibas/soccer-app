@@ -44,7 +44,7 @@ class _PlayerStrengthsPageViewState extends State<PlayerStrengthsPageView> {
       children: [
         PlayerCharacteristicsComponent(
           questionText: strengths,
-          subQuestionText: selectUpToTwoOptions,
+          subQuestionText: optional,
           positions: List.generate(
             playerStrengths.length,
             (index) {

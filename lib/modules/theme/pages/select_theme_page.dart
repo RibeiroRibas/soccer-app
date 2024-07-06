@@ -4,7 +4,9 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/data/shield_data.dart';
 import 'package:team_draw/modules/theme/controllers/theme_controller.dart';
 import 'package:team_draw/modules/theme/model/theme_name.dart';
+import 'package:team_draw/modules/theme/theme_route_navigator.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/theme/theme_resolve.dart';
 
 class SelectThemePage extends StatefulWidget {
@@ -16,6 +18,7 @@ class SelectThemePage extends StatefulWidget {
 
 class _SelectThemePageState extends State<SelectThemePage> {
   final _controller = Modular.get<ThemeController>();
+  final _navigator = Modular.get<ThemeRouteNavigator>();
 
   List<Widget> imageSliders() {
     return ThemeName.values
@@ -42,7 +45,9 @@ class _SelectThemePageState extends State<SelectThemePage> {
                       ],
                     )),
               ),
-              onTap: () => _controller.setSelectedTheme(themeName),
+              onTap: () => _controller
+                  .setSelectedTheme(themeName)
+                  .then((_) => _navigator.goTo('$homeNavBarRoute/')),
             ))
         .toList();
   }

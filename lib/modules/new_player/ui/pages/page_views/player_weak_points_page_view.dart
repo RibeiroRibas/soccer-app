@@ -44,7 +44,7 @@ class _PlayerWeakPointsPageViewState extends State<PlayerWeakPointsPageView> {
       children: [
         PlayerCharacteristicsComponent(
           questionText: weakPoints,
-          subQuestionText: selectUpToTwoOptions,
+          subQuestionText: optional,
           positions: List.generate(
             playerWeakPoints.length,
             (index) {

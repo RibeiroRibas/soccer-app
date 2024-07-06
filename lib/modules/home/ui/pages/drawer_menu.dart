@@ -104,6 +104,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
               height: 50,
             ),
           ),
+          Expanded(child: SizedBox()),
         ]),
       ],
     );
