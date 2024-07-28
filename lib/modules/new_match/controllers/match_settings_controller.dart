@@ -40,7 +40,7 @@ abstract class MatchSettingsControllerBase with Store {
     return totalPLayers;
   }
 
-  List<int> getListOfTotalPlayersPossibleByTeam(
+  List<String> getListOfTotalPlayersPossibleByTeam(
       int? numberOfTeams, Iterable<bool> arePlayersSelected) {
     int numberOfPossiblePlayersByTeam = 0;
 

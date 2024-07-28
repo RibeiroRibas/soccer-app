@@ -4,9 +4,9 @@ import 'package:mobx/mobx.dart';
 import 'package:team_draw/exceptions/players_goal_not_found_exception.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/model/team.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/home/model/player_score.dart';
+import 'package:team_draw/modules/match/model/formation.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
 import 'package:team_draw/services/player_service.dart';
 import 'package:team_draw/services/team_match_service.dart';
@@ -29,14 +29,6 @@ abstract class MatchControllerBase with Store {
   @observable
   int scoreTeamTwo = 0;
 
-  List<Player> playersTeamOne = [];
-
-  List<Player> playersTeamTwo = [];
-
-  List<Player> reservePlayersTeamOne = [];
-
-  List<Player> reservePlayersTeamTwo = [];
-
   @observable
   bool isMatchStarted = false;
 
@@ -51,35 +43,16 @@ abstract class MatchControllerBase with Store {
 
   late MatchSettings settings;
 
+  @observable
+  Formation formation = Formation.defaultFormation;
+
   void init(List<TeamMatch> matches, MatchSettings matchSettings) {
     settings = matchSettings;
 
     match = matches.first;
-    _setStartingAndReservePlayers(
-      match.teamOne!,
-      playersTeamOne,
-      reservePlayersTeamOne,
-    );
-    _setStartingAndReservePlayers(
-      match.teamTwo!,
-      playersTeamTwo,
-      reservePlayersTeamTwo,
-    );
 
     teamsInformation = match.getTeamsInformation();
-  }
-
-  void _setStartingAndReservePlayers(
-      Team team, List<Player> startingPlayers, List<Player> reservePlayers) {
-    List<Player> players = [];
-    players.addAll(team.players!);
-
-    _playerService.initPlayersByPosition(players);
-
-    _playerService.removePlayersByPosition(
-        team, startingPlayers, settings.numberOfStartingPlayers!);
-
-    reservePlayers.addAll(_playerService.getAllPlayers());
+    match.teamTwo!.shield!.primaryColor = resolveColorTeamTwo();
   }
 
   Color resolveColorTeamTwo() {
@@ -88,10 +61,6 @@ abstract class MatchControllerBase with Store {
       return match.teamTwo!.shield!.secondaryColor;
     }
     return match.teamTwo!.shield!.primaryColor;
-  }
-
-  Color resolveColorTeamOne() {
-    return match.teamOne!.shield!.primaryColor;
   }
 
   Future<void> calculatePlayerScore() async {

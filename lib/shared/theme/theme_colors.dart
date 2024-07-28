@@ -20,4 +20,6 @@ class ThemeColors {
   static const Color secondaryPosition = Colors.yellow;
   static const Color neutralPosition = Colors.white;
   static const Color overall = Color.fromRGBO(0, 255, 66, 1);
+
+  static const Color selectedPosition = Colors.orange;
 }

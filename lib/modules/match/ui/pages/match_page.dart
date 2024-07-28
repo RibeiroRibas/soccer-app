@@ -11,7 +11,7 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team_match.dart';
 import 'package:team_draw/modules/match/controllers/match_controller.dart';
 import 'package:team_draw/modules/match/controllers/match_timer_controller.dart';
-import 'package:team_draw/modules/match/controllers/players_controller.dart';
+import 'package:team_draw/modules/match/controllers/team_controller.dart';
 import 'package:team_draw/modules/match/match_navigator.dart';
 import 'package:team_draw/modules/match/ui/component/match_manager_component.dart';
 import 'package:team_draw/modules/match/ui/component/starting_players_component.dart';
@@ -37,8 +37,8 @@ class MatchPage extends StatefulWidget {
 
 class _MatchPageState extends State<MatchPage> {
   final _matchController = Modular.get<MatchController>();
-  final _playersOneController = Modular.get<PlayersOneController>();
-  final _playersTwoController = Modular.get<PlayersTwoController>();
+  final _teamOneController = Modular.get<TeamTwoController>();
+  final _teamTwoController = Modular.get<TeamOneController>();
   final _matchTimerController = Modular.get<MatchTimerController>();
   final _navigator = Modular.get<MatchNavigator>();
   late ReactionDisposer isTimeToSwitchPlayerDisposer;
@@ -51,6 +51,10 @@ class _MatchPageState extends State<MatchPage> {
         .addPostFrameCallback((_) => _showPreMatchDialog());
     _setOrientation();
     _initControllers();
+    _reactionsDisposers();
+  }
+
+  void _reactionsDisposers() {
     isTimeToSwitchPlayerDisposer =
         reaction((_) => _matchTimerController.isTimeToSwitchPlayer, (_) {
       if (!_matchTimerController.isDisableAutomaticSwitch) {
@@ -84,20 +88,16 @@ class _MatchPageState extends State<MatchPage> {
   }
 
   void _switchPlayers() {
-    _playersOneController.switchPlayers();
-    _playersTwoController.switchPlayers();
+    _teamOneController.switchPlayers();
+    _teamTwoController.switchPlayers();
   }
 
   void _initControllers() {
     _matchController.init(widget.matches, widget.matchSettings);
-    _playersOneController.init(
-        _matchController.playersTeamOne,
-        _matchController.reservePlayersTeamOne,
-        _matchController.match.teamOne!);
-    _playersTwoController.init(
-        _matchController.playersTeamTwo,
-        _matchController.reservePlayersTeamTwo,
-        _matchController.match.teamTwo!);
+    _teamOneController.init(_matchController.match.teamOne!,
+        widget.matchSettings.numberOfStartingPlayers!);
+    _teamTwoController.init(_matchController.match.teamTwo!,
+        widget.matchSettings.numberOfStartingPlayers!);
     _matchTimerController.init(_matchController.match, widget.matchSettings);
   }
 
@@ -141,9 +141,7 @@ class _MatchPageState extends State<MatchPage> {
   }
 
   String _buildGoalTime() {
-    return "${_matchTimerController.hour.toString().padLeft(2, '0')}:"
-        "${_matchTimerController.minutes.toString().padLeft(2, '0')}:"
-        "${_matchTimerController.seconds.toString().padLeft(2, '0')}";
+    return _matchTimerController.buildGoalTime();
   }
 
   Future<void> _showSelectedWrongPlayerAlertDialog(String tittle) async {
@@ -186,50 +184,87 @@ class _MatchPageState extends State<MatchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) => Stack(
-        children: [
-          const _BackGroundField(),
-          TeamsAndMatchInfoComponent(
-              shieldTeamOne:
-                  _matchController.match.teamOne!.shield!.resourcePath,
-              shieldTeamTwo:
-                  _matchController.match.teamTwo!.shield!.resourcePath,
-              onShieldTap: () => _goToTeamsAndMatchInfoModal(context)),
-          Observer(
-            builder: (_) => StartingPlayersComponent(
-                isTeamLeftSide: true,
-                players: _playersOneController.startingPlayers,
-                teamColor: _matchController.resolveColorTeamOne()),
-          ),
-          if (!_matchController.isMatchStarted)
-            Center(
-                child: ElevatedButtonComponent(
-                    onButtonPressed: () => _matchController.startMatch(),
-                    text: start)),
-          if (_matchController.isMatchStarted)
+    return Scaffold(
+      body: Observer(
+        builder: (_) => Stack(
+          children: [
+            const _BackGroundField(),
+            TeamsAndMatchInfoComponent(
+                shieldTeamOne:
+                    _matchController.match.teamOne!.shield!.resourcePath,
+                shieldTeamTwo:
+                    _matchController.match.teamTwo!.shield!.resourcePath,
+                onShieldTap: () => _goToTeamsAndMatchInfoModal(context)),
+            if (!_matchController.isMatchStarted) ...{
+              Center(
+                  child: ElevatedButtonComponent(
+                      onButtonPressed: () => _matchController.startMatch(),
+                      text: start)),
+              const Positioned(
+                top: 5,
+                right: 0,
+                left: 0,
+                child: Column(
+                  children: [
+                    Text(
+                        "* Caso queira mudar as posições, selecione dois jogadores do mesmo time."),
+                    Text(
+                        "* Caso queira substituir os jogadores mantenha pressionado sobre o jogador selecionado."),
+                  ],
+                ),
+              )
+            },
             Observer(
-                builder: (_) => MatchManagerComponent(
-                      scoreTeamOne: _matchController.scoreTeamOne,
-                      scoreTeamTwo: _matchController.scoreTeamTwo,
-                      onChangeScore: (isScoreTeamOne, isIncreaseScore) =>
-                          _showSetPlayerScoreDialog(
-                              context,
-                              isScoreTeamOne,
-                              isIncreaseScore,
-                              isScoreTeamOne
-                                  ? _matchController.match.teamOne!.players!
-                                  : _matchController.match.teamTwo!.players!),
-                      timeToChangePlayer:
-                          _matchController.settings.timeToChangePlayer!,
-                    )),
-          Observer(
-            builder: (_) => StartingPlayersComponent(
-                isTeamLeftSide: false,
-                players: _playersTwoController.startingPlayers,
-                teamColor: _matchController.resolveColorTeamTwo()),
-          ),
-        ],
+              builder: (_) => Positioned(
+                top: 37,
+                bottom: 37,
+                child: StartingPlayersComponent(
+                  isTeamLeftSide: true,
+                  players: _teamOneController.startingPlayers,
+                  teamColor: _teamOneController.teamColor,
+                  onSelectedPlayers: _teamOneController.switchPlayerPosition,
+                  numberOfStartingPlayers:
+                      widget.matchSettings.numberOfStartingPlayers!,
+                  teamFormation: _teamOneController.teamFormation,
+                  selectedPlayer: _teamOneController.selectedPlayer,
+                ),
+              ),
+            ),
+            if (_matchController.isMatchStarted)
+              Observer(
+                  builder: (_) => MatchManagerComponent(
+                        scoreTeamOne: _matchController.scoreTeamOne,
+                        scoreTeamTwo: _matchController.scoreTeamTwo,
+                        onChangeScore: (isScoreTeamOne, isIncreaseScore) =>
+                            _showSetPlayerScoreDialog(
+                                context,
+                                isScoreTeamOne,
+                                isIncreaseScore,
+                                isScoreTeamOne
+                                    ? _matchController.match.teamOne!.players!
+                                    : _matchController.match.teamTwo!.players!),
+                        timeToChangePlayer:
+                            _matchController.settings.timeToChangePlayer!,
+                      )),
+            Observer(
+              builder: (_) => Positioned(
+                top: 37,
+                bottom: 37,
+                right: 4,
+                child: StartingPlayersComponent(
+                  isTeamLeftSide: false,
+                  players: _teamTwoController.startingPlayers,
+                  teamColor: _teamTwoController.teamColor,
+                  onSelectedPlayers: _teamTwoController.switchPlayerPosition,
+                  numberOfStartingPlayers:
+                      widget.matchSettings.numberOfStartingPlayers!,
+                  teamFormation: _teamTwoController.teamFormation,
+                  selectedPlayer: _teamTwoController.selectedPlayer,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

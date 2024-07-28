@@ -170,14 +170,10 @@ class Team {
   }
 
   double _calculateDefenderOverall() {
-    return teamOverall.overallByPosition[Position.defender]! +
-        teamOverall.overallByPosition[Position.leftBack]! +
-        teamOverall.overallByPosition[Position.rightBack]!;
+    return teamOverall.overallByPosition[Position.defender]!;
   }
 
   double _calculateForwardOverall() {
-    return teamOverall.overallByPosition[Position.forward]! +
-        teamOverall.overallByPosition[Position.leftWinger]! +
-        teamOverall.overallByPosition[Position.rightWinger]!;
+    return teamOverall.overallByPosition[Position.forward]!;
   }
 }

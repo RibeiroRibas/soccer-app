@@ -62,18 +62,18 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
             durationHr: widget.matchSettings.durationHr,
             durationMin: widget.matchSettings.durationMin,
             onDurationHrChange: (value) async {
-              widget.matchSettings.durationHr = value;
+              widget.matchSettings.durationHr = int.parse(value);
               await _verifyCanShowForwardButton();
             },
             onDurationMinChange: (value) =>
-                widget.matchSettings.durationMin = value,
+                widget.matchSettings.durationMin = int.parse(value),
           ),
           const Divider(),
           SelectBoxComponent(
-            value: widget.matchSettings.numberOfTeams,
+            value: widget.matchSettings.numberOfTeams.toString(),
             onValueChange: (value) async {
-              if (value != widget.matchSettings.numberOfTeams) {
-                widget.matchSettings.numberOfTeams = value;
+              if (int.parse(value) != widget.matchSettings.numberOfTeams) {
+                widget.matchSettings.numberOfTeams = int.parse(value);
                 _controller.numberOfStartingPlayers = null;
                 widget.matchSettings.numberOfStartingPlayers = null;
                 await _verifyCanShowForwardButton();
@@ -87,10 +87,10 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
           const Divider(),
           Observer(
             builder: (_) => SelectBoxComponent(
-              value: _controller.numberOfStartingPlayers,
+              value: _controller.numberOfStartingPlayers.toString(),
               onValueChange: (value) async {
-                _controller.numberOfStartingPlayers = value;
-                widget.matchSettings.numberOfStartingPlayers = value;
+                _controller.numberOfStartingPlayers = int.parse(value);
+                widget.matchSettings.numberOfStartingPlayers = int.parse(value);
                 await _verifyCanShowForwardButton();
               },
               values: _controller.getListOfTotalPlayersPossibleByTeam(
@@ -113,9 +113,9 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
           ),
           const Divider(),
           SelectBoxComponent(
-            value: widget.matchSettings.timeToChangePlayer,
+            value: widget.matchSettings.timeToChangePlayer.toString(),
             onValueChange: (value) async {
-              widget.matchSettings.timeToChangePlayer = value;
+              widget.matchSettings.timeToChangePlayer = int.parse(value);
               await _verifyCanShowForwardButton();
             },
             values: ListHelper.getListOfMinutes(),

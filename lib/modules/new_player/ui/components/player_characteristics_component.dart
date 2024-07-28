@@ -5,12 +5,14 @@ class PlayerCharacteristicsComponent extends StatelessWidget {
   final String questionText;
   final String subQuestionText;
   final List<Widget> positions;
+  final double heightSize;
 
   const PlayerCharacteristicsComponent(
       {super.key,
       required this.questionText,
       required this.subQuestionText,
-      required this.positions});
+      required this.positions,
+      required this.heightSize});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class PlayerCharacteristicsComponent extends StatelessWidget {
           subTittle: subQuestionText,
         ),
         SizedBox(
-          height: 200,
+          height: heightSize,
           width: MediaQuery.of(context).size.width,
           child: GridView(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
