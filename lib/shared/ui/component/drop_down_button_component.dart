@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class DropDownButtonComponent extends StatelessWidget {
-  final int? value;
-  final Function(int) onValueChange;
+  final dynamic value;
+  final Function(String) onValueChange;
   final double width;
-  final List<int> values;
+  final List<String> values;
   final String labelText;
+  final double? height;
 
   const DropDownButtonComponent({
     super.key,
@@ -14,13 +15,15 @@ class DropDownButtonComponent extends StatelessWidget {
     required this.width,
     required this.values,
     required this.labelText,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width / 4,
-      child: DropdownButtonFormField<int?>(
+      width: width,
+      height: height,
+      child: DropdownButtonFormField<String>(
         dropdownColor: Theme.of(context).colorScheme.surface,
         decoration: InputDecoration(
           labelText: labelText,
@@ -29,8 +32,8 @@ class DropDownButtonComponent extends StatelessWidget {
         ),
         value: value,
         items: values
-            .map((hr) =>
-                DropdownMenuItem<int>(value: hr, child: Text(hr.toString())))
+            .map((value) =>
+                DropdownMenuItem<String>(value: value, child: Text(value)))
             .toList(),
         onChanged: (value) {
           onValueChange(value!);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:team_draw/modules/match/controllers/players_controller.dart';
+import 'package:team_draw/modules/match/controllers/team_controller.dart';
 import 'package:team_draw/modules/match/ui/component/reserve_player_timer_component.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
@@ -17,8 +17,8 @@ class SwitchPlayerModal extends StatefulWidget {
 }
 
 class _SwitchPlayerModalState extends State<SwitchPlayerModal> {
-  final _playersOneController = Modular.get<PlayersOneController>();
-  final _playersTwoController = Modular.get<PlayersTwoController>();
+  final _teamOneController = Modular.get<TeamOneController>();
+  final _teamTwoController = Modular.get<TeamTwoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +32,12 @@ class _SwitchPlayerModalState extends State<SwitchPlayerModal> {
         children: [
           Observer(
             builder: (_) => SwitchPlayersComponent(
-                playersToGetIn: _playersOneController.playersToGetIn,
-                playersToGetOut: _playersOneController.playersToGetOut,
-                teamName: _playersOneController.team.name!,
-                teamShield: _playersOneController.team.shield!.resourcePath,
+                playersToGetIn: _teamOneController.playersToGetIn,
+                playersToGetOut: _teamOneController.playersToGetOut,
+                teamName: _teamOneController.team.name!,
+                teamShield: _teamOneController.team.shield!.resourcePath,
                 playersAlreadyGoneToReserve:
-                    _playersOneController.playersAlreadyGoneToReserve),
+                    _teamOneController.playersAlreadyGoneToReserve),
           ),
           Expanded(
               child: SingleChildScrollView(
@@ -54,12 +54,12 @@ class _SwitchPlayerModalState extends State<SwitchPlayerModal> {
                       ])))),
           Observer(
             builder: (_) => SwitchPlayersComponent(
-                playersToGetIn: _playersTwoController.playersToGetIn,
-                playersToGetOut: _playersTwoController.playersToGetOut,
-                teamName: _playersTwoController.team.name!,
-                teamShield: _playersTwoController.team.shield!.resourcePath,
+                playersToGetIn: _teamTwoController.playersToGetIn,
+                playersToGetOut: _teamTwoController.playersToGetOut,
+                teamName: _teamTwoController.team.name!,
+                teamShield: _teamTwoController.team.shield!.resourcePath,
                 playersAlreadyGoneToReserve:
-                    _playersTwoController.playersAlreadyGoneToReserve),
+                    _teamTwoController.playersAlreadyGoneToReserve),
           ),
         ],
       ),

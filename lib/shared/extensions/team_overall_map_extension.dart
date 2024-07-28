@@ -26,19 +26,49 @@ extension TeamOverallExtension on Map<Position, double> {
   }
 
   void increaseOverallByPosition(Position position, double overall) {
-    this[position] = this[position]! + overall;
+    if (_isDefensivePosition(position)) {
+      this[Position.defender] = this[Position.defender]! + overall;
+    } else if (_isMidfielderPosition(position)) {
+      this[Position.midfielder] = this[Position.midfielder]! + overall;
+    } else if (_isForwardPosition(position)) {
+      this[Position.forward] = this[Position.forward]! + overall;
+    }
+  }
+
+  bool _isDefensivePosition(Position position) {
+    List<Position> defensivePositions = [
+      Position.goalkeeper,
+      Position.leftDefender,
+      Position.defender,
+      Position.rightDefender,
+      Position.leftDefensiveMidfielder,
+      Position.rightDefensiveMidfielder,
+    ];
+    return defensivePositions.any((p) => p == position);
+  }
+
+  bool _isMidfielderPosition(Position position) {
+    List<Position> midfielderPositions = [
+      Position.leftMidfielder,
+      Position.midfielder,
+      Position.rightMidfielder,
+    ];
+    return midfielderPositions.any((p) => p == position);
+  }
+
+  bool _isForwardPosition(Position position) {
+    List<Position> forwardPositions = [
+      Position.leftWinger,
+      Position.forward,
+      Position.rightWinger,
+    ];
+    return forwardPositions.any((p) => p == position);
   }
 
   void clearValues() {
-    assert(Position.values.length == length);
     this[Position.forward] = 0.0;
     this[Position.defender] = 0.0;
     this[Position.midfielder] = 0.0;
-    this[Position.goalkeeper] = 0.0;
-    this[Position.leftBack] = 0.0;
-    this[Position.rightBack] = 0.0;
-    this[Position.leftWinger] = 0.0;
-    this[Position.rightWinger] = 0.0;
   }
 
   int _numberOfPlayerBackup(

@@ -1,17 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
+import 'package:team_draw/modules/match/model/default_formation.dart';
+import 'package:team_draw/modules/match/model/formation.dart';
+import 'package:team_draw/modules/match/model/team_formation.dart';
+import 'package:team_draw/services/player_service.dart';
 
-part 'players_controller.g.dart';
+part 'team_controller.g.dart';
 
-class PlayersController = PlayersControllerBase with _$PlayersController;
+class TeamController = TeamControllerBase with _$TeamController;
 
-class PlayersTwoController extends PlayersController {}
+class TeamOneController extends TeamController {
+  TeamOneController(super.playerService);
+}
 
-class PlayersOneController extends PlayersController {}
+class TeamTwoController extends TeamController {
+  TeamTwoController(super.playerService);
+}
 
-abstract class PlayersControllerBase with Store {
+abstract class TeamControllerBase with Store {
+  final PlayerService _playerService;
+
   @observable
   List<Player> playersAlreadyGoneToReserve = [];
 
@@ -27,29 +38,79 @@ abstract class PlayersControllerBase with Store {
   @observable
   List<Player> reservePlayers = [];
 
+  @observable
+  Formation formation = Formation.defaultFormation;
+
+  @observable
+  late TeamFormation teamFormation;
+
+  TeamControllerBase(this._playerService);
+
+  @observable
+  Player? selectedPlayer;
+
   late Team team;
 
-  void init(
-      List<Player> startingPlayers, List<Player> reservePlayers, Team team) {
+  late Color teamColor;
+
+  void init(Team team, int numberOfStartingPlayers) {
     this.team = team;
-    this.reservePlayers.addAll(reservePlayers);
+    _setStartingAndReservePlayers(numberOfStartingPlayers);
+    _setPlayersToGetInAndGetOut();
+
+    teamColor = team.shield!.primaryColor;
+    teamFormation = _buildDefaultTeamFormation(numberOfStartingPlayers);
+  }
+
+  void _setPlayersToGetInAndGetOut() {
     playersToGetIn.addAll(reservePlayers);
     playersAlreadyGoneToReserve.addAll(reservePlayers);
-    this.startingPlayers.addAll(startingPlayers);
     _setPlayersToGetOut();
+  }
+
+  void _setStartingAndReservePlayers(int numberOfStartingPlayers) {
+    List<Player> startingPlayers = _playerService.getStartingPlayers(
+        team.players!, numberOfStartingPlayers);
+    this.startingPlayers.addAll(startingPlayers);
+    reservePlayers.addAll(_playerService.getAllPlayers());
+  }
+
+  TeamFormation _buildDefaultTeamFormation(int numberOfStartingPlayers) {
+    return DefaultFormation(
+        startingPlayers,
+        teamColor,
+        (player) => _setSelectedPlayer(player),
+        (player1, player2) => switchPlayerPosition(player1, player2),
+        numberOfPlayers: numberOfStartingPlayers);
+  }
+
+  @action
+  void _setSelectedPlayer(Player? player) {
+    selectedPlayer = player;
+  }
+
+  void switchPlayerPosition(Player player1, Player player2) {
+    Position? improvisedPositionPlayer1 = player1.improvisedPosition;
+    Position? improvisedPositionPlayer2 = player2.improvisedPosition;
+    _setImprovisedPosition(
+        player1, improvisedPositionPlayer2, player2.principalPosition!);
+    _setImprovisedPosition(
+        player2, improvisedPositionPlayer1, player1.principalPosition!);
+    selectedPlayer = null;
+    _restartStatingPlayers();
   }
 
   void _setPlayersToGetOut() {
     List<Player> playersThatNotGetOut = [];
     playersThatNotGetOut.addAll(startingPlayers);
     for (Player player in playersAlreadyGoneToReserve) {
-      playersThatNotGetOut.removeWhere((element) => element == player);
+      playersThatNotGetOut.removeWhere((element) => element.id == player.id);
     }
     playersThatNotGetOut.removeWhere((player) => player.isGoalKeeper());
     while (playersThatNotGetOut.length < playersToGetIn.length) {
       Player player = playersAlreadyGoneToReserve.first;
       playersThatNotGetOut.add(player);
-      playersAlreadyGoneToReserve.remove(player);
+      playersAlreadyGoneToReserve.removeWhere((p) => p.id == player.id);
     }
 
     if (playersThatNotGetOut.length == playersToGetIn.length) {
@@ -66,7 +127,7 @@ abstract class PlayersControllerBase with Store {
     } while (count != startingPlayers.length);
 
     for (Player player in playersToGetOut) {
-      playersThatNotGetOut.remove(player);
+      playersThatNotGetOut.removeWhere((p) => p.id == player.id);
     }
 
     count = 0;
@@ -118,6 +179,60 @@ abstract class PlayersControllerBase with Store {
                 player, playersThatNotGetOut, Position.rightBack);
             _addIfIsAnotherPosition(
                 player, playersThatNotGetOut, Position.defender);
+          } else if (player.isLeftMidfielder()) {
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.midfielder);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.rightMidfielder);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.leftDefensiveMidfielder);
+            _addIfIsAnotherPosition(player, playersThatNotGetOut,
+                Position.rightDefensiveMidfielder);
+          } else if (player.isRightMidfielder()) {
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.midfielder);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.leftMidfielder);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.leftDefensiveMidfielder);
+            _addIfIsAnotherPosition(player, playersThatNotGetOut,
+                Position.rightDefensiveMidfielder);
+          } else if (player.isLeftDefender()) {
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.defender);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.rightDefender);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.rightBack);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.leftBack);
+          } else if (player.isRightDefender()) {
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.defender);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.leftDefender);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.rightBack);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.leftBack);
+          } else if (player.isLeftDefensiveMidfielder()) {
+            _addIfIsAnotherPosition(player, playersThatNotGetOut,
+                Position.rightDefensiveMidfielder);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.midfielder);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.leftMidfielder);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.rightMidfielder);
+          } else if (player.isRightDefensiveMidfielder()) {
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.leftDefensiveMidfielder);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.midfielder);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.rightMidfielder);
+            _addIfIsAnotherPosition(
+                player, playersThatNotGetOut, Position.leftMidfielder);
           }
         }
         count += 1;
@@ -125,10 +240,10 @@ abstract class PlayersControllerBase with Store {
     }
 
     for (Player player in playersToGetOut) {
-      playersThatNotGetOut.remove(player);
+      playersThatNotGetOut.removeWhere((p) => p.id == player.id);
     }
 
-    while (playersToGetOut.length != playersToGetIn.length) {
+    if (playersToGetOut.any((player) => player.isGoalKeeper())) {
       Player player = playersToGetOut.firstWhere(
           (element) => element.principalPosition != Position.goalkeeper);
       playersToGetOut.add(player);
@@ -153,7 +268,7 @@ abstract class PlayersControllerBase with Store {
     if (playersThatNotGetOut
             .any((element) => element.principalPosition == position) &&
         playersToGetOut.length != playersToGetIn.length &&
-        !playersToGetOut.any((element) => element == player)) {
+        !playersToGetOut.any((element) => element.id == player.id)) {
       Player p = playersThatNotGetOut
           .firstWhere((element) => element.principalPosition == position);
       if (!playersToGetOut.any((pl) => pl == p)) {
@@ -163,26 +278,26 @@ abstract class PlayersControllerBase with Store {
   }
 
   void addPlayerToPlayersToGetIn(Player player) {
-    if (!playersToGetIn.any((p) => p == player)) {
+    if (!playersToGetIn.any((p) => p.id == player.id)) {
       playersToGetIn.add(player);
       _restartPlayersToGetIn();
     }
   }
 
   void addPlayerToPlayersToGetOut(Player player) {
-    if (!playersToGetOut.any((p) => p == player)) {
+    if (!playersToGetOut.any((p) => p.id == player.id)) {
       playersToGetOut.add(player);
       _restartPlayersToGetOut();
     }
   }
 
   void removePlayerToPlayerToGetIn(Player player) {
-    playersToGetIn.remove(player);
+    playersToGetIn.removeWhere((p) => p.id == player.id);
     _restartPlayersToGetIn();
   }
 
   void removePlayerToPlayerToGetOut(Player player) {
-    playersToGetOut.remove(player);
+    playersToGetOut.removeWhere((p) => p.id == player.id);
     _restartPlayersToGetOut();
   }
 
@@ -225,13 +340,13 @@ abstract class PlayersControllerBase with Store {
     startingPlayers.addAll(playersToGetIn);
     reservePlayers.addAll(playersToGetOut);
     for (Player player in playersToGetOut) {
-      startingPlayers.remove(player);
-      if (!playersAlreadyGoneToReserve.any((p) => p == player)) {
+      startingPlayers.removeWhere((p) => p.id == player.id);
+      if (!playersAlreadyGoneToReserve.any((p) => p.id == player.id)) {
         playersAlreadyGoneToReserve.add(player);
       }
     }
     for (Player player in playersToGetIn) {
-      reservePlayers.remove(player);
+      reservePlayers.removeWhere((p) => p.id == player.id);
     }
     playersToGetIn.clear();
     playersToGetIn.addAll(reservePlayers);
@@ -242,5 +357,14 @@ abstract class PlayersControllerBase with Store {
     _restartStatingPlayers();
     _restartReservePlayers();
     _restartPlayersAlreadyGoneToReserve();
+  }
+
+  void _setImprovisedPosition(Player player1, Position? improvisedPosition,
+      Position principalPosition) {
+    if (player1.principalPosition == improvisedPosition) {
+      player1.improvisedPosition = null;
+      return;
+    }
+    player1.improvisedPosition = improvisedPosition ?? principalPosition;
   }
 }

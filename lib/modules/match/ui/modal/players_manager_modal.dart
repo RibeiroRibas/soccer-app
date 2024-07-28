@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:team_draw/modules/match/controllers/players_controller.dart';
+import 'package:team_draw/modules/match/controllers/team_controller.dart';
 import 'package:team_draw/modules/match/ui/component/players_manager_actions_component.dart';
 import 'package:team_draw/modules/match/ui/component/players_manager_app_bar_component.dart';
 import 'package:team_draw/modules/match/ui/component/starting_and_reserve_players_component.dart';
@@ -15,7 +15,7 @@ class PlayersManagerModal extends StatefulWidget {
 }
 
 class _PlayersManagerModalState extends State<PlayersManagerModal> {
-  late PlayersController _controller;
+  late TeamController _controller;
   bool isTeamOne = true;
 
   @override
@@ -26,9 +26,9 @@ class _PlayersManagerModalState extends State<PlayersManagerModal> {
 
   void _initViewModel() {
     if (isTeamOne) {
-      _controller = Modular.get<PlayersOneController>();
+      _controller = Modular.get<TeamOneController>();
     } else {
-      _controller = Modular.get<PlayersTwoController>();
+      _controller = Modular.get<TeamTwoController>();
     }
   }
 

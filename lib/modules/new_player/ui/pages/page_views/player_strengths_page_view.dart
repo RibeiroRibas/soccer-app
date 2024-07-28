@@ -43,6 +43,7 @@ class _PlayerStrengthsPageViewState extends State<PlayerStrengthsPageView> {
     return Column(
       children: [
         PlayerCharacteristicsComponent(
+          heightSize: 200,
           questionText: strengths,
           subQuestionText: optional,
           positions: List.generate(

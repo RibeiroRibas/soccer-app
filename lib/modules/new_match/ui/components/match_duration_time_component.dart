@@ -6,8 +6,8 @@ import 'package:team_draw/shared/ui/component/drop_down_button_component.dart';
 class MatchDurationTimeComponent extends StatelessWidget {
   final int? durationHr;
   final int? durationMin;
-  final Function(int) onDurationHrChange;
-  final Function(int) onDurationMinChange;
+  final Function(dynamic) onDurationHrChange;
+  final Function(dynamic) onDurationMinChange;
 
   const MatchDurationTimeComponent({
     super.key,
@@ -24,7 +24,7 @@ class MatchDurationTimeComponent extends StatelessWidget {
       children: [
         const Expanded(child: Text(duration)),
         DropDownButtonComponent(
-          value: durationHr,
+          value: durationHr.toString(),
           onValueChange: onDurationHrChange,
           width: MediaQuery.of(context).size.width / 4,
           values: ListHelper.getListOfHours(),
@@ -32,7 +32,7 @@ class MatchDurationTimeComponent extends StatelessWidget {
         ),
         const SizedBox(width: 2),
         DropDownButtonComponent(
-          value: durationMin,
+          value: durationMin.toString(),
           onValueChange: onDurationMinChange,
           width: MediaQuery.of(context).size.width / 4,
           values: ListHelper.getListOfMinutes(),

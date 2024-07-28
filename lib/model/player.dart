@@ -10,6 +10,7 @@ class Player {
   int id;
   String? name;
   Position? principalPosition;
+  Position? improvisedPosition;
   double? overall;
   List<PlayerStrengths> strengths = [];
   List<PlayerWeakPoints> weakPoints = [];
@@ -118,5 +119,33 @@ class Player {
 
   bool isRightWinger() {
     return principalPosition == Position.rightWinger;
+  }
+
+  bool isLeftDefender() {
+    return principalPosition == Position.leftDefender;
+  }
+
+  bool isRightDefender() {
+    return principalPosition == Position.rightDefender;
+  }
+
+  bool isLeftMidfielder() {
+    return principalPosition == Position.leftMidfielder;
+  }
+
+  bool isRightMidfielder() {
+    return principalPosition == Position.rightMidfielder;
+  }
+
+  bool isLeftDefensiveMidfielder() {
+    return principalPosition == Position.leftDefensiveMidfielder;
+  }
+
+  bool isRightDefensiveMidfielder() {
+    return principalPosition == Position.rightDefensiveMidfielder;
+  }
+
+  bool isPresent() {
+    return id != 0;
   }
 }

@@ -16,25 +16,25 @@ Player pedro = Player(
 Player jodir = Player(
   id: 3,
   name: "Jodir",
-  principalPosition: Position.defender,
+  principalPosition: Position.leftDefender,
   overall: 5,
 );
 Player rodrigo = Player(
   id: 4,
   name: "Rodrigo",
-  principalPosition: Position.defender,
+  principalPosition: Position.rightDefender,
   overall: 6,
 );
 Player helton = Player(
   id: 5,
   name: "Helton",
-  principalPosition: Position.defender,
+  principalPosition: Position.leftWinger,
   overall: 7,
 );
 Player cris = Player(
   id: 6,
   name: "Cris",
-  principalPosition: Position.midfielder,
+  principalPosition: Position.rightDefensiveMidfielder,
   overall: 7,
 );
 Player cleber = Player(
@@ -46,7 +46,7 @@ Player cleber = Player(
 Player helder = Player(
   id: 8,
   name: "Helder",
-  principalPosition: Position.defender,
+  principalPosition: Position.forward,
   overall: 5,
 );
 Player douglas = Player(
@@ -82,7 +82,7 @@ Player galdino = Player(
 Player bruno = Player(
   id: 14,
   name: "Bruno",
-  principalPosition: Position.midfielder,
+  principalPosition: Position.rightMidfielder,
   overall: 7,
 );
 Player guilherme = Player(
@@ -94,7 +94,7 @@ Player guilherme = Player(
 Player volnei = Player(
   id: 16,
   name: "Volnei",
-  principalPosition: Position.defender,
+  principalPosition: Position.rightDefender,
   overall: 4,
 );
 Player ricardo = Player(

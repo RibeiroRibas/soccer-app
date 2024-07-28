@@ -144,4 +144,10 @@ abstract class MatchTimerControllerBase with Store implements Disposable {
     reservePlayerTimerDisposer();
     matchTimerDisposer();
   }
+
+  String buildGoalTime() {
+    return "${hour.toString().padLeft(2, '0')}:"
+        "${minutes.toString().padLeft(2, '0')}:"
+        "${seconds.toString().padLeft(2, '0')}";
+  }
 }
