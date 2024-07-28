@@ -3,9 +3,9 @@ import 'package:team_draw/shared/ui/component/drop_down_button_component.dart';
 
 class SelectBoxComponent extends StatelessWidget {
   final String description;
-  final int? value;
-  final Function(int) onValueChange;
-  final List<int> values;
+  final String? value;
+  final Function(String) onValueChange;
+  final List<String> values;
   final String labelText;
 
   const SelectBoxComponent(

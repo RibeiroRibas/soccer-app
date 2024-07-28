@@ -43,6 +43,7 @@ class _PlayerWeakPointsPageViewState extends State<PlayerWeakPointsPageView> {
     return Column(
       children: [
         PlayerCharacteristicsComponent(
+          heightSize: 200,
           questionText: weakPoints,
           subQuestionText: optional,
           positions: List.generate(

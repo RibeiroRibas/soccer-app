@@ -5,13 +5,16 @@ class PlayerNameAndPositionComponent extends StatelessWidget {
   final Position? position;
   final Color? positionColor;
   final String? playerName;
+  final bool isStartingPlayersComponent;
+  final bool showEmptyPositions;
 
-  const PlayerNameAndPositionComponent({
-    super.key,
-    required this.position,
-    this.positionColor,
-    this.playerName,
-  });
+  const PlayerNameAndPositionComponent(
+      {super.key,
+      this.position,
+      this.positionColor,
+      this.playerName,
+      this.isStartingPlayersComponent = false,
+      this.showEmptyPositions = false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,30 +22,31 @@ class PlayerNameAndPositionComponent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          height: 25,
-          width: 25,
+          height: 28,
+          width: 28,
           alignment: Alignment.center,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 width: 2,
-                color: positionColor == null
-                    ? Theme.of(context).primaryColor
-                    : position != null
-                        ? positionColor!
-                        : Colors.transparent,
+                color: _resolveColor(context),
               )),
           child: position != null
               ? Text(
                   position!.acronym,
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: positionColor, fontWeight: FontWeight.bold),
+                      color: isStartingPlayersComponent && showEmptyPositions
+                          ? positionColor
+                          : isStartingPlayersComponent && !showEmptyPositions
+                              ? Colors.transparent
+                              : positionColor,
+                      fontWeight: FontWeight.bold),
                 )
               : null,
         ),
         if (playerName != null)
           Text(
-            playerName!,
+            isStartingPlayersComponent ? "" : playerName!,
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium!
@@ -50,5 +54,17 @@ class PlayerNameAndPositionComponent extends StatelessWidget {
           )
       ],
     );
+  }
+
+  Color _resolveColor(BuildContext context) {
+    return isStartingPlayersComponent && showEmptyPositions
+        ? positionColor!
+        : isStartingPlayersComponent && !showEmptyPositions
+            ? Colors.transparent
+            : positionColor == null
+                ? Theme.of(context).primaryColor
+                : position != null
+                    ? positionColor!
+                    : Colors.transparent;
   }
 }

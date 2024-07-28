@@ -19,6 +19,7 @@ class PlayerPositionPageView extends StatelessWidget {
     final focusNode = FocusNode();
     focusNode.requestFocus();
     return PlayerCharacteristicsComponent(
+      heightSize: 400,
       questionText: principalPositionQuestion,
       subQuestionText: principalPositionSubQuestion,
       positions: List.generate(

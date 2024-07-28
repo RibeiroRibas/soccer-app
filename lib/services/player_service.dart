@@ -15,11 +15,19 @@ class PlayerService {
   late List<Player> _goalKeepers;
   late List<Player> _forwards;
   late List<Player> _midfielders;
+  late List<Player> _leftMidfielders;
+  late List<Player> _rightMidfielders;
   late List<Player> _defenders;
+  late List<Player> _leftDefenders;
+  late List<Player> _rightDefenders;
   late List<Player> _leftBacks;
   late List<Player> _rightBacks;
   late List<Player> _leftWingers;
   late List<Player> _rightWingers;
+  late List<Player> _leftDefensiveMidfielder;
+  late List<Player> _rightDefensiveMidfielder;
+
+  Map<Position, List<Player>> allPlayersByPosition = {};
 
   bool canAddForward = true;
   bool canAddDefender = true;
@@ -28,6 +36,12 @@ class PlayerService {
   bool canAddRightBack = true;
   bool canAddLeftWinger = true;
   bool canAddRightWinger = true;
+  bool canAddLeftDefender = true;
+  bool canAddRightDefender = true;
+  bool canAddLeftMidfielder = true;
+  bool canAddRightMidfielder = true;
+  bool canAddLeftDefensiveMidfielder = true;
+  bool canAddRightDefensiveMidfielder = true;
   bool alreadyDrawTeamOne = false;
 
   List<PlayerScore> calculatePlayerScore(
@@ -60,11 +74,17 @@ class PlayerService {
     _goalKeepers = [];
     _forwards = [];
     _midfielders = [];
+    _leftMidfielders = [];
+    _rightMidfielders = [];
     _defenders = [];
+    _leftDefenders = [];
+    _rightDefenders = [];
     _leftBacks = [];
     _rightBacks = [];
     _leftWingers = [];
     _rightWingers = [];
+    _leftDefensiveMidfielder = [];
+    _rightDefensiveMidfielder = [];
     for (Player player in players) {
       if (player.isGoalKeeper()) {
         _goalKeepers.add(player);
@@ -82,7 +102,24 @@ class PlayerService {
         _leftWingers.add(player);
       } else if (player.isRightWinger()) {
         _rightWingers.add(player);
+      } else if (player.isLeftDefensiveMidfielder()) {
+        _leftDefensiveMidfielder.add(player);
+      } else if (player.isRightDefensiveMidfielder()) {
+        _rightDefensiveMidfielder.add(player);
+      } else if (player.isLeftDefender()) {
+        _leftDefenders.add(player);
+      } else if (player.isRightDefender()) {
+        _rightDefenders.add(player);
+      } else if (player.isLeftMidfielder()) {
+        _leftMidfielders.add(player);
+      } else if (player.isRightMidfielder()) {
+        _rightMidfielders.add(player);
       }
+    }
+    for (Position position in Position.allPositions()) {
+      allPlayersByPosition[position] = players
+          .where((player) => player.principalPosition == position)
+          .toList();
     }
   }
 
@@ -116,6 +153,30 @@ class PlayerService {
       canAddRightWinger = Random().nextInt(2) == 0;
     }
     count++;
+    if (_leftMidfielders.length == 1) {
+      canAddLeftMidfielder = Random().nextInt(2) == 0;
+    }
+    count++;
+    if (_rightMidfielders.length == 1) {
+      canAddRightMidfielder = Random().nextInt(2) == 0;
+    }
+    count++;
+    if (_leftDefenders.length == 1) {
+      canAddLeftDefender = Random().nextInt(2) == 0;
+    }
+    count++;
+    if (_rightDefenders.length == 1) {
+      canAddRightDefender = Random().nextInt(2) == 0;
+    }
+    count++;
+    if (_leftDefensiveMidfielder.length == 1) {
+      canAddLeftDefensiveMidfielder = Random().nextInt(2) == 0;
+    }
+    count++;
+    if (_rightDefensiveMidfielder.length == 1) {
+      canAddRightDefensiveMidfielder = Random().nextInt(2) == 0;
+    }
+    count++;
     assert(Position.values.length == count);
   }
 
@@ -127,6 +188,12 @@ class PlayerService {
     canAddRightBack = true;
     canAddLeftWinger = true;
     canAddRightWinger = true;
+    canAddLeftDefensiveMidfielder = true;
+    canAddRightDefensiveMidfielder = true;
+    canAddLeftDefender = true;
+    canAddRightDefender = true;
+    canAddLeftMidfielder = true;
+    canAddRightMidfielder = true;
   }
 
   void addPlayersByPosition(
@@ -185,55 +252,66 @@ class PlayerService {
           _addPlayer(_rightWingers, team, players);
         }
       }
+      if (_leftDefenders.isNotEmpty &&
+          team.players!.length < numberOfStartingPlayers!) {
+        if (canAddLeftDefender) {
+          _addPlayer(_leftDefenders, team, players);
+        }
+      }
+      if (_rightDefenders.isNotEmpty &&
+          team.players!.length < numberOfStartingPlayers!) {
+        if (canAddRightDefender) {
+          _addPlayer(_rightDefenders, team, players);
+        }
+      }
+      if (_leftDefensiveMidfielder.isNotEmpty &&
+          team.players!.length < numberOfStartingPlayers!) {
+        if (canAddLeftDefensiveMidfielder) {
+          _addPlayer(_leftDefensiveMidfielder, team, players);
+        }
+      }
+      if (_rightDefensiveMidfielder.isNotEmpty &&
+          team.players!.length < numberOfStartingPlayers!) {
+        if (canAddRightDefensiveMidfielder) {
+          _addPlayer(_rightDefensiveMidfielder, team, players);
+        }
+      }
+      if (_leftMidfielders.isNotEmpty &&
+          team.players!.length < numberOfStartingPlayers!) {
+        if (canAddLeftMidfielder) {
+          _addPlayer(_leftMidfielders, team, players);
+        }
+      }
+      if (_rightMidfielders.isNotEmpty &&
+          team.players!.length < numberOfStartingPlayers!) {
+        if (canAddRightMidfielder) {
+          _addPlayer(_rightMidfielders, team, players);
+        }
+      }
     } while (team.players!.length < numberOfStartingPlayers!);
   }
 
-  void removePlayersByPosition(
-      Team team, List<Player> startingPlayers, int numberOfStartingPlayers) {
-    do {
-      if (_hasNotStartingGoalKeeper(startingPlayers) &&
-          _goalKeepers.isNotEmpty) {
-        startingPlayers.add(_goalKeepers.first);
-        _goalKeepers.removeAt(0);
+  List<Player> getStartingPlayers(
+      List<Player> players, int numberOfStartingPlayers) {
+    initPlayersByPosition(players);
+    List<Player> startingPlayers = [];
+    for (Position position in Position.allPositions()) {
+      if (allPlayersByPosition[position]!.isNotEmpty &&
+          startingPlayers.length != numberOfStartingPlayers) {
+        startingPlayers.add(allPlayersByPosition[position]!.first);
+        allPlayersByPosition[position]!.removeAt(0);
       }
-      if (_leftBacks.isNotEmpty &&
-          _hasNotStartingLeftBack(startingPlayers) &&
-          startingPlayers.length < numberOfStartingPlayers) {
-        startingPlayers.add(_leftBacks.first);
-        _leftBacks.removeAt(0);
+    }
+    while (startingPlayers.length != numberOfStartingPlayers) {
+      for (Position position in Position.allPositions()) {
+        if (allPlayersByPosition[position]!.isNotEmpty &&
+            startingPlayers.length != numberOfStartingPlayers) {
+          startingPlayers.add(allPlayersByPosition[position]!.first);
+          allPlayersByPosition[position]!.removeAt(0);
+        }
       }
-      if (_rightBacks.isNotEmpty &&
-          _hasNotStartingRightBack(startingPlayers) &&
-          startingPlayers.length < numberOfStartingPlayers) {
-        startingPlayers.add(_rightBacks.first);
-        _rightBacks.removeAt(0);
-      }
-      if (_defenders.isNotEmpty &&
-          startingPlayers.length < numberOfStartingPlayers) {
-        startingPlayers.add(_defenders.first);
-        _defenders.removeAt(0);
-      }
-      if (_midfielders.isNotEmpty &&
-          startingPlayers.length < numberOfStartingPlayers) {
-        startingPlayers.add(_midfielders.first);
-        _midfielders.removeAt(0);
-      }
-      if (_forwards.isNotEmpty &&
-          startingPlayers.length < numberOfStartingPlayers) {
-        startingPlayers.add(_forwards.first);
-        _forwards.removeAt(0);
-      }
-      if (_leftWingers.isNotEmpty &&
-          startingPlayers.length < numberOfStartingPlayers) {
-        startingPlayers.add(_leftWingers.first);
-        _leftWingers.removeAt(0);
-      }
-      if (_rightWingers.isNotEmpty &&
-          startingPlayers.length < numberOfStartingPlayers) {
-        startingPlayers.add(_rightWingers.first);
-        _rightWingers.removeAt(0);
-      }
-    } while (startingPlayers.length < numberOfStartingPlayers);
+    }
+    return startingPlayers;
   }
 
   void _addPlayer(
@@ -244,27 +322,11 @@ class PlayerService {
     playersByPosition.removeAt(playerIndex);
   }
 
-  bool _hasNotStartingGoalKeeper(List<Player> startingPlayers) =>
-      !startingPlayers
-          .any((player) => player.principalPosition! == Position.goalkeeper);
-
-  bool _hasNotStartingLeftBack(List<Player> startingPlayers) => !startingPlayers
-      .any((player) => player.principalPosition! == Position.leftBack);
-
-  bool _hasNotStartingRightBack(List<Player> startingPlayers) =>
-      !startingPlayers
-          .any((player) => player.principalPosition! == Position.rightBack);
-
   List<Player> getAllPlayers() {
     List<Player> players = [];
-    players.addAll(_goalKeepers);
-    players.addAll(_defenders);
-    players.addAll(_midfielders);
-    players.addAll(_forwards);
-    players.addAll(_leftBacks);
-    players.addAll(_rightBacks);
-    players.addAll(_leftWingers);
-    players.addAll(_rightWingers);
+    allPlayersByPosition.forEach((position, playersByPosition) {
+      players.addAll(playersByPosition);
+    });
     return players;
   }
 }

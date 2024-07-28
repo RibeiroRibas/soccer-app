@@ -1,35 +1,35 @@
 import 'package:team_draw/shared/i18n/messages.dart';
 
 class ListHelper {
-  static List<int> getListOfHours() {
-    List<int> hours = [];
+  static List<String> getListOfHours() {
+    List<String> hours = [];
     for (int i = 0; i < 24; i++) {
-      hours.add(i);
+      hours.add(i.toString());
     }
     return hours;
   }
 
-  static List<int> getListOfMinutes() {
-    List<int> hours = [];
+  static List<String> getListOfMinutes() {
+    List<String> hours = [];
     for (int i = 0; i < 60; i++) {
-      hours.add(i);
+      hours.add(i.toString());
     }
     return hours;
   }
 
-  static List<int> getListOfTotalPlayersPossibleByTeam(
+  static List<String> getListOfTotalPlayersPossibleByTeam(
       int numberOfPlayersByTeam) {
-    List<int> hours = [];
+    List<String> hours = [];
     for (int i = 1; i <= numberOfPlayersByTeam; i++) {
-      hours.add(i);
+      hours.add(i.toString());
     }
     return hours;
   }
 
-  static List<int> getListOfPossibleTeams(int numberOfTotalPlayers) {
-    List<int> values = [];
+  static List<String> getListOfPossibleTeams(int numberOfTotalPlayers) {
+    List<String> values = [];
     for (int i = 1; i <= numberOfTotalPlayers; i++) {
-      values.add(i);
+      values.add(i.toString());
     }
     return values;
   }
