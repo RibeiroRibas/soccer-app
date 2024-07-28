@@ -13,9 +13,7 @@ import 'package:team_draw/modules/match/controllers/match_controller.dart';
 import 'package:team_draw/modules/match/controllers/match_timer_controller.dart';
 import 'package:team_draw/modules/match/controllers/team_controller.dart';
 import 'package:team_draw/modules/match/match_navigator.dart';
-import 'package:team_draw/modules/match/model/formation.dart';
 import 'package:team_draw/modules/match/ui/component/match_manager_component.dart';
-import 'package:team_draw/modules/match/ui/component/show_empty_positions_component.dart';
 import 'package:team_draw/modules/match/ui/component/starting_players_component.dart';
 import 'package:team_draw/modules/match/ui/component/teams_and_match_info_component.dart';
 import 'package:team_draw/modules/match/ui/dialog/end_match_alert_dialog.dart';
@@ -24,7 +22,6 @@ import 'package:team_draw/modules/match/ui/modal/teams_and_match_info_modal.dart
 import 'package:team_draw/shared/dialogs/select_player_dialog.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
-import 'package:team_draw/shared/ui/component/drop_down_button_component.dart';
 import 'package:team_draw/shared/ui/component/elevated_button_component.dart';
 
 class MatchPage extends StatefulWidget {
@@ -198,59 +195,7 @@ class _MatchPageState extends State<MatchPage> {
                 shieldTeamTwo:
                     _matchController.match.teamTwo!.shield!.resourcePath,
                 onShieldTap: () => _goToTeamsAndMatchInfoModal(context)),
-            if (_teamOneController.isShowEmptyPositionComponent)
-              Positioned(
-                bottom: 20.0,
-                left: 20.0,
-                child: Observer(
-                    builder: (_) => ShowEmptyPositionsComponent(
-                          showEmptyPositions:
-                              _teamOneController.isShowEmptyPosition,
-                          onButtonPressed: () =>
-                              _teamOneController.onShowEmptyPosition(),
-                        )),
-              ),
-            if (_teamTwoController.isShowEmptyPositionComponent)
-              Positioned(
-                bottom: 20.0,
-                right: 20.0,
-                child: Observer(
-                    builder: (_) => ShowEmptyPositionsComponent(
-                          showEmptyPositions:
-                              _teamTwoController.isShowEmptyPosition,
-                          onButtonPressed: () =>
-                              _teamTwoController.onShowEmptyPosition(),
-                        )),
-              ),
             if (!_matchController.isMatchStarted) ...{
-              Positioned(
-                bottom: 15.0,
-                left: MediaQuery.of(context).size.width / 3.5,
-                child: DropDownButtonComponent(
-                  value: _teamOneController.formation.description,
-                  onValueChange: (value) => _teamOneController.changeFormation(
-                      Formation.fromString(value),
-                      widget.matchSettings.numberOfStartingPlayers!),
-                  width: 140,
-                  height: 30,
-                  values: Formation.allPositionsNames(),
-                  labelText: "$formation ",
-                ),
-              ),
-              Positioned(
-                bottom: 15.0,
-                right: MediaQuery.of(context).size.width / 3.5,
-                child: DropDownButtonComponent(
-                  value: _teamTwoController.formation.description,
-                  onValueChange: (value) => _teamTwoController.changeFormation(
-                      Formation.fromString(value),
-                      widget.matchSettings.numberOfStartingPlayers!),
-                  width: 140,
-                  height: 30,
-                  values: Formation.allPositionsNames(),
-                  labelText: formation,
-                ),
-              ),
               Center(
                   child: ElevatedButtonComponent(
                       onButtonPressed: () => _matchController.startMatch(),
@@ -277,7 +222,6 @@ class _MatchPageState extends State<MatchPage> {
                   isTeamLeftSide: true,
                   players: _teamOneController.startingPlayers,
                   teamColor: _teamOneController.teamColor,
-                  showEmptyPositions: _teamOneController.isShowEmptyPosition,
                   onSelectedPlayers: _teamOneController.switchPlayerPosition,
                   numberOfStartingPlayers:
                       widget.matchSettings.numberOfStartingPlayers!,
@@ -311,7 +255,6 @@ class _MatchPageState extends State<MatchPage> {
                   isTeamLeftSide: false,
                   players: _teamTwoController.startingPlayers,
                   teamColor: _teamTwoController.teamColor,
-                  showEmptyPositions: _teamTwoController.isShowEmptyPosition,
                   onSelectedPlayers: _teamTwoController.switchPlayerPosition,
                   numberOfStartingPlayers:
                       widget.matchSettings.numberOfStartingPlayers!,

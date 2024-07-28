@@ -9,15 +9,6 @@ part of 'team_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$TeamController on TeamControllerBase, Store {
-  Computed<bool>? _$isShowEmptyPositionComponentComputed;
-
-  @override
-  bool get isShowEmptyPositionComponent =>
-      (_$isShowEmptyPositionComponentComputed ??= Computed<bool>(
-              () => super.isShowEmptyPositionComponent,
-              name: 'TeamControllerBase.isShowEmptyPositionComponent'))
-          .value;
-
   late final _$playersAlreadyGoneToReserveAtom = Atom(
       name: 'TeamControllerBase.playersAlreadyGoneToReserve', context: context);
 
@@ -135,22 +126,6 @@ mixin _$TeamController on TeamControllerBase, Store {
     });
   }
 
-  late final _$isShowEmptyPositionAtom =
-      Atom(name: 'TeamControllerBase.isShowEmptyPosition', context: context);
-
-  @override
-  bool get isShowEmptyPosition {
-    _$isShowEmptyPositionAtom.reportRead();
-    return super.isShowEmptyPosition;
-  }
-
-  @override
-  set isShowEmptyPosition(bool value) {
-    _$isShowEmptyPositionAtom.reportWrite(value, super.isShowEmptyPosition, () {
-      super.isShowEmptyPosition = value;
-    });
-  }
-
   late final _$selectedPlayerAtom =
       Atom(name: 'TeamControllerBase.selectedPlayer', context: context);
 
@@ -171,44 +146,11 @@ mixin _$TeamController on TeamControllerBase, Store {
       ActionController(name: 'TeamControllerBase', context: context);
 
   @override
-  void _setTeamFormation(int numberOfStartingPlayers) {
-    final _$actionInfo = _$TeamControllerBaseActionController.startAction(
-        name: 'TeamControllerBase._setTeamFormation');
-    try {
-      return super._setTeamFormation(numberOfStartingPlayers);
-    } finally {
-      _$TeamControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void _setSelectedPlayer(Player? player) {
     final _$actionInfo = _$TeamControllerBaseActionController.startAction(
         name: 'TeamControllerBase._setSelectedPlayer');
     try {
       return super._setSelectedPlayer(player);
-    } finally {
-      _$TeamControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void onShowEmptyPosition() {
-    final _$actionInfo = _$TeamControllerBaseActionController.startAction(
-        name: 'TeamControllerBase.onShowEmptyPosition');
-    try {
-      return super.onShowEmptyPosition();
-    } finally {
-      _$TeamControllerBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void changeFormation(Formation formation, int numberOfStartingPlayers) {
-    final _$actionInfo = _$TeamControllerBaseActionController.startAction(
-        name: 'TeamControllerBase.changeFormation');
-    try {
-      return super.changeFormation(formation, numberOfStartingPlayers);
     } finally {
       _$TeamControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -279,9 +221,7 @@ startingPlayers: ${startingPlayers},
 reservePlayers: ${reservePlayers},
 formation: ${formation},
 teamFormation: ${teamFormation},
-isShowEmptyPosition: ${isShowEmptyPosition},
-selectedPlayer: ${selectedPlayer},
-isShowEmptyPositionComponent: ${isShowEmptyPositionComponent}
+selectedPlayer: ${selectedPlayer}
     ''';
   }
 }

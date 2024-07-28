@@ -3,8 +3,6 @@ import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/modules/match/model/by_position_formation.dart';
-import 'package:team_draw/modules/match/model/custom_formation.dart';
 import 'package:team_draw/modules/match/model/default_formation.dart';
 import 'package:team_draw/modules/match/model/formation.dart';
 import 'package:team_draw/modules/match/model/team_formation.dart';
@@ -48,18 +46,6 @@ abstract class TeamControllerBase with Store {
 
   TeamControllerBase(this._playerService);
 
-  @computed
-  bool get isShowEmptyPositionComponent {
-    if (formation == Formation.customFormation) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  @observable
-  bool isShowEmptyPosition = true;
-
   @observable
   Player? selectedPlayer;
 
@@ -89,18 +75,6 @@ abstract class TeamControllerBase with Store {
     reservePlayers.addAll(_playerService.getAllPlayers());
   }
 
-  @action
-  void _setTeamFormation(int numberOfStartingPlayers) {
-    switch (formation) {
-      case Formation.customFormation:
-        teamFormation = _buildCustomTeamFormation(numberOfStartingPlayers);
-      case Formation.byPositionFormation:
-        teamFormation = _buildByPositionTeamFormation(numberOfStartingPlayers);
-      default:
-        teamFormation = _buildDefaultTeamFormation(numberOfStartingPlayers);
-    }
-  }
-
   TeamFormation _buildDefaultTeamFormation(int numberOfStartingPlayers) {
     return DefaultFormation(
         startingPlayers,
@@ -110,40 +84,9 @@ abstract class TeamControllerBase with Store {
         numberOfPlayers: numberOfStartingPlayers);
   }
 
-  TeamFormation _buildByPositionTeamFormation(int numberOfStartingPlayers) {
-    return ByPositionFormation(
-        startingPlayers,
-        teamColor,
-        (player) => selectedPlayer = player,
-        (player1, player2) => switchPlayerPosition(player1, player2));
-  }
-
   @action
   void _setSelectedPlayer(Player? player) {
     selectedPlayer = player;
-  }
-
-  TeamFormation _buildCustomTeamFormation(int numberOfStartingPlayers) {
-    return CustomFormation(
-        startingPlayers,
-        teamColor,
-        (player) => selectedPlayer = player,
-        (player1, player2) => switchPlayerPosition(player1, player2),
-        isShowEmptyPositions: isShowEmptyPosition);
-  }
-
-  @action
-  void onShowEmptyPosition() {
-    CustomFormation customFormation = teamFormation as CustomFormation;
-    customFormation.isShowEmptyPositions = !isShowEmptyPosition;
-    teamFormation = customFormation;
-    isShowEmptyPosition = !isShowEmptyPosition;
-  }
-
-  @action
-  void changeFormation(Formation formation, int numberOfStartingPlayers) {
-    this.formation = formation;
-    _setTeamFormation(numberOfStartingPlayers);
   }
 
   void switchPlayerPosition(Player player1, Player player2) {

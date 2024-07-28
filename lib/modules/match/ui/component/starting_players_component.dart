@@ -6,7 +6,6 @@ class StartingPlayersComponent extends StatelessWidget {
   final bool isTeamLeftSide;
   final List<Player> players;
   final Color teamColor;
-  final bool showEmptyPositions;
   final Function(Player, Player) onSelectedPlayers;
   final int numberOfStartingPlayers;
   final TeamFormation teamFormation;
@@ -17,7 +16,6 @@ class StartingPlayersComponent extends StatelessWidget {
       required this.isTeamLeftSide,
       required this.players,
       required this.teamColor,
-      required this.showEmptyPositions,
       required this.onSelectedPlayers,
       required this.numberOfStartingPlayers,
       required this.teamFormation,
