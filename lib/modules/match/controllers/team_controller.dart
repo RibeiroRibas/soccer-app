@@ -53,13 +53,16 @@ abstract class TeamControllerBase with Store {
 
   late Color teamColor;
 
+  late int numberOfStartingPlayers;
+
   void init(Team team, int numberOfStartingPlayers) {
+    this.numberOfStartingPlayers = numberOfStartingPlayers;
     this.team = team;
-    _setStartingAndReservePlayers(numberOfStartingPlayers);
+    _setStartingAndReservePlayers();
     _setPlayersToGetInAndGetOut();
 
     teamColor = team.shield!.primaryColor;
-    teamFormation = _buildDefaultTeamFormation(numberOfStartingPlayers);
+    teamFormation = _buildDefaultTeamFormation();
   }
 
   void _setPlayersToGetInAndGetOut() {
@@ -68,28 +71,32 @@ abstract class TeamControllerBase with Store {
     _setPlayersToGetOut();
   }
 
-  void _setStartingAndReservePlayers(int numberOfStartingPlayers) {
+  void _setStartingAndReservePlayers() {
     List<Player> startingPlayers = _playerService.getStartingPlayers(
         team.players!, numberOfStartingPlayers);
     this.startingPlayers.addAll(startingPlayers);
-    reservePlayers.addAll(_playerService.getAllPlayers());
+    reservePlayers.addAll(_playerService.getReservePlayers());
   }
 
-  TeamFormation _buildDefaultTeamFormation(int numberOfStartingPlayers) {
-    return DefaultFormation(
-        startingPlayers,
-        teamColor,
-        (player) => _setSelectedPlayer(player),
-        (player1, player2) => switchPlayerPosition(player1, player2),
+  TeamFormation _buildDefaultTeamFormation() {
+    return DefaultFormation(startingPlayers, teamColor,
+        (player) => _onSelectedPlayer(player), (player) => {},
         numberOfPlayers: numberOfStartingPlayers);
   }
 
   @action
-  void _setSelectedPlayer(Player? player) {
-    selectedPlayer = player;
+  void _onSelectedPlayer(Player player) {
+    if (selectedPlayer == null) {
+      selectedPlayer = player;
+    } else if (selectedPlayer!.id == player.id) {
+      selectedPlayer = null;
+    } else {
+      _switchPlayersPosition(selectedPlayer!, player);
+      selectedPlayer = null;
+    }
   }
 
-  void switchPlayerPosition(Player player1, Player player2) {
+  void _switchPlayersPosition(Player player1, Player player2) {
     Position? improvisedPositionPlayer1 = player1.improvisedPosition;
     Position? improvisedPositionPlayer2 = player2.improvisedPosition;
     _setImprovisedPosition(
@@ -100,180 +107,173 @@ abstract class TeamControllerBase with Store {
     _restartStatingPlayers();
   }
 
+  /*
+  Regra de negócio para troca de jogadores de linha:
+
+  Regra 1 = Se possível todos os jogadores devem sair no mínimo uma vez.
+  Regra 2 = O jogador que está na reserva não deve possuir
+            uma posição improvisada.
+  Regra 3 = Caso tenha um goleiro fixo ele não deve ser substituído automaticamente.
+  Regra 4 = Se todos os jogadores já saiŕam no mínimo uma vez então as próximas
+            trocas devem respeitar a mesma ordem, o primeiro jogador que estava
+            na reserva será o próximo a sair.
+
+  Regra de negócio para troca de jogadores na posição improvisada de goleiro:
+
+  Regra 5 = O próximo goleiro não deve ser o jogador que acabou de entrar.
+  Regra 6 = Caso seja possível todos os jogadores devem agarrar no mínimo uma vez.
+  Regra 7 = Caso todos os jogadores já tenham agarrado uma vez então o próximo
+            jogador a agarrar será o primeiro que agarrou.
+
+  Seguir a ordem abaixo para decidir o jogador de linha que vai sair:
+
+  Caso 1 = A posição principal do jogador que vai entrar
+          e do jogador que vai sair deve ser a mesma.
+  Caso 2 = A posição improvisada(caso exista) do jogador que vai sair
+           deve ser igual a possição principal do jogador que vai entrar.
+  Caso 3 = Caso o jogador que vai sair seja da mesma zona de posição de atuação
+          do jogador que vai entrar, então o jogador que vai entrar recebe
+          como posição improvisada a posição improvisada ou principal
+           do jogador que vai sair.
+  Caso 4 = Caso o jogador que vai sair NÃO seja da mesma área de posição de atuação
+          do jogador que vai entrar, então deve-se respeitar uma ordem de
+          escolha do jogador que vai entrar, ele deve respeitar a ordem
+          de posições pré estabelecidas e receber como posição improvisada
+           a posição improvisada(se existir) ou principal
+           do jogador que vai sair.
+
+   */
   void _setPlayersToGetOut() {
-    List<Player> playersThatNotGetOut = [];
-    playersThatNotGetOut.addAll(startingPlayers);
-    for (Player player in playersAlreadyGoneToReserve) {
-      playersThatNotGetOut.removeWhere((element) => element.id == player.id);
-    }
-    playersThatNotGetOut.removeWhere((player) => player.isGoalKeeper());
-    while (playersThatNotGetOut.length < playersToGetIn.length) {
-      Player player = playersAlreadyGoneToReserve.first;
-      playersThatNotGetOut.add(player);
-      playersAlreadyGoneToReserve.removeWhere((p) => p.id == player.id);
+    List<Player> playersThatNotGotOut = [];
+    playersThatNotGotOut.addAll(startingPlayers);
+
+    // Regra 1
+    playersThatNotGotOut.removeWhere(
+        (player) => playersAlreadyGoneToReserve.any((p) => p.id == player.id));
+
+    // Regra 2
+    for (Player player in this.playersToGetIn) {
+      player.improvisedPosition = null;
     }
 
-    if (playersThatNotGetOut.length == playersToGetIn.length) {
-      playersToGetOut.addAll(playersThatNotGetOut);
+    // Regra 3 e 5
+    playersThatNotGotOut.removeWhere((p) =>
+        p.principalPosition == Position.goalkeeper ||
+        p.improvisedPosition == Position.goalkeeper);
+
+    // Regra 4
+    while (playersThatNotGotOut.length < this.playersToGetIn.length) {
+      Player player = playersAlreadyGoneToReserve.first;
+      playersThatNotGotOut.add(player);
+      playersAlreadyGoneToReserve.remove(player);
+      playersAlreadyGoneToReserve.add(player);
+    }
+
+    if (playersThatNotGotOut.length == this.playersToGetIn.length) {
+      playersToGetOut.addAll(playersThatNotGotOut);
       return;
     }
 
-    int count = 0;
-    do {
-      for (Player player in playersThatNotGetOut) {
-        _addIfIsSamePosition(player);
-      }
-      count += 1;
-    } while (count != startingPlayers.length);
+    List<Player> playersToGetIn = [];
+    playersToGetIn.addAll(this.playersToGetIn);
 
-    for (Player player in playersToGetOut) {
-      playersThatNotGetOut.removeWhere((p) => p.id == player.id);
+    // Caso 1
+    for (Player player in playersThatNotGotOut) {
+      if (playersToGetIn
+          .any((p) => p.principalPosition == player.principalPosition)) {
+        if (playersToGetOut.length < this.playersToGetIn.length) {
+          Player playerToGetIn = playersToGetIn.firstWhere(
+              (p) => p.principalPosition == player.principalPosition);
+          playersToGetIn.remove(playerToGetIn);
+          playersToGetOut.add(player);
+        }
+      }
     }
 
-    count = 0;
-    if (playersToGetOut.length != playersToGetIn.length) {
-      do {
-        for (Player player in playersToGetIn) {
-          if (player.isDefender()) {
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftBack);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.rightBack);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.midfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.forward);
-          } else if (player.isLeftBack()) {
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.defender);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.midfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.forward);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.rightBack);
-          } else if (player.isRightBack()) {
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.defender);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.midfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.forward);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftBack);
-          } else if (player.isMidfielder()) {
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.forward);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftBack);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.rightBack);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.defender);
-          } else if (player.isForward()) {
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.midfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftBack);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.rightBack);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.defender);
-          } else if (player.isLeftMidfielder()) {
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.midfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.rightMidfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftDefensiveMidfielder);
-            _addIfIsAnotherPosition(player, playersThatNotGetOut,
-                Position.rightDefensiveMidfielder);
-          } else if (player.isRightMidfielder()) {
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.midfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftMidfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftDefensiveMidfielder);
-            _addIfIsAnotherPosition(player, playersThatNotGetOut,
-                Position.rightDefensiveMidfielder);
-          } else if (player.isLeftDefender()) {
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.defender);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.rightDefender);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.rightBack);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftBack);
-          } else if (player.isRightDefender()) {
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.defender);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftDefender);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.rightBack);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftBack);
-          } else if (player.isLeftDefensiveMidfielder()) {
-            _addIfIsAnotherPosition(player, playersThatNotGetOut,
-                Position.rightDefensiveMidfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.midfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftMidfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.rightMidfielder);
-          } else if (player.isRightDefensiveMidfielder()) {
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftDefensiveMidfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.midfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.rightMidfielder);
-            _addIfIsAnotherPosition(
-                player, playersThatNotGetOut, Position.leftMidfielder);
+    if (playersToGetOut.length == this.playersToGetIn.length) return;
+    playersThatNotGotOut
+        .removeWhere((player) => playersToGetOut.any((p) => p.id == player.id));
+
+    // Caso 2
+    for (Player player in playersThatNotGotOut) {
+      if (playersToGetIn
+          .any((p) => p.principalPosition == player.improvisedPosition)) {
+        if (playersToGetOut.length < this.playersToGetIn.length) {
+          Player playerToGetIn = playersToGetIn.firstWhere(
+              (p) => p.principalPosition == player.improvisedPosition);
+          playersToGetIn.remove(playerToGetIn);
+          for (var p in this.playersToGetIn) {
+            if (p == playerToGetIn) {
+              p.improvisedPosition = player.improvisedPosition;
+            }
+          }
+          playersToGetOut.add(player);
+        }
+      }
+    }
+
+    if (playersToGetOut.length == this.playersToGetIn.length) return;
+    playersThatNotGotOut
+        .removeWhere((player) => playersToGetOut.any((p) => p.id == player.id));
+
+    // Caso 3
+    for (Player player in playersThatNotGotOut) {
+      for (List<Position> positionsByZone in Position.positionsByZone()) {
+        if (playersToGetIn.any((p) => positionsByZone
+            .any((position) => p.principalPosition == position))) {
+          for (Position position in positionsByZone) {
+            if (player.principalPosition == position ||
+                player.improvisedPosition == position) {
+              if (playersToGetOut.length < this.playersToGetIn.length) {
+                Player playerToGetIn = playersToGetIn.firstWhere((p) =>
+                    positionsByZone
+                        .any((position) => p.principalPosition == position));
+                playersToGetIn.remove(playerToGetIn);
+                for (var p in this.playersToGetIn) {
+                  if (p == playerToGetIn) {
+                    p.improvisedPosition =
+                        player.improvisedPosition ?? player.principalPosition;
+                  }
+                }
+                playersToGetOut.add(player);
+              }
+            }
           }
         }
-        count += 1;
-      } while (count != startingPlayers.length);
-    }
-
-    for (Player player in playersToGetOut) {
-      playersThatNotGetOut.removeWhere((p) => p.id == player.id);
-    }
-
-    if (playersToGetOut.any((player) => player.isGoalKeeper())) {
-      Player player = playersToGetOut.firstWhere(
-          (element) => element.principalPosition != Position.goalkeeper);
-      playersToGetOut.add(player);
-    }
-  }
-
-  bool _isSamePosition(Player player) {
-    return playersToGetIn.any(
-        (element) => element.principalPosition == player.principalPosition);
-  }
-
-  void _addIfIsSamePosition(Player player) {
-    if (_isSamePosition(player) &&
-        playersToGetOut.length != playersToGetIn.length &&
-        !playersToGetOut.any((element) => element == player)) {
-      playersToGetOut.add(player);
-    }
-  }
-
-  void _addIfIsAnotherPosition(
-      Player player, List<Player> playersThatNotGetOut, Position position) {
-    if (playersThatNotGetOut
-            .any((element) => element.principalPosition == position) &&
-        playersToGetOut.length != playersToGetIn.length &&
-        !playersToGetOut.any((element) => element.id == player.id)) {
-      Player p = playersThatNotGetOut
-          .firstWhere((element) => element.principalPosition == position);
-      if (!playersToGetOut.any((pl) => pl == p)) {
-        playersToGetOut.add(p);
       }
+    }
+
+    if (playersToGetOut.length == this.playersToGetIn.length) return;
+    playersThatNotGotOut
+        .removeWhere((player) => playersToGetOut.any((p) => p.id == player.id));
+
+    // Caso 4
+    for (Player player in playersThatNotGotOut) {
+      Position.positionsByZone().asMap().forEach((index, positionsByZone) {
+        if (playersToGetIn.any((p) => positionsByZone
+            .any((position) => p.principalPosition == position))) {
+          List<Position> orderOfChangingByZone =
+              Position.orderOfChangingByZone().elementAt(index);
+          for (Position position in orderOfChangingByZone) {
+            if (player.principalPosition == position ||
+                player.improvisedPosition == position) {
+              if (playersToGetOut.length < this.playersToGetIn.length) {
+                Player playerToGetIn = playersToGetIn.firstWhere((p) =>
+                    positionsByZone
+                        .any((position) => p.principalPosition == position));
+                playersToGetIn.remove(playerToGetIn);
+                for (var p in this.playersToGetIn) {
+                  if (p == playerToGetIn) {
+                    p.improvisedPosition =
+                        player.improvisedPosition ?? player.principalPosition;
+                  }
+                }
+                playersToGetOut.add(player);
+              }
+            }
+          }
+        }
+      });
     }
   }
 
@@ -337,19 +337,17 @@ abstract class TeamControllerBase with Store {
   }
 
   void switchPlayers() {
+    startingPlayers
+        .removeWhere((player) => playersToGetOut.any((p) => p.id == player.id));
     startingPlayers.addAll(playersToGetIn);
+    reservePlayers
+        .removeWhere((player) => playersToGetIn.any((p) => p.id == player.id));
     reservePlayers.addAll(playersToGetOut);
-    for (Player player in playersToGetOut) {
-      startingPlayers.removeWhere((p) => p.id == player.id);
-      if (!playersAlreadyGoneToReserve.any((p) => p.id == player.id)) {
-        playersAlreadyGoneToReserve.add(player);
-      }
-    }
-    for (Player player in playersToGetIn) {
-      reservePlayers.removeWhere((p) => p.id == player.id);
-    }
     playersToGetIn.clear();
     playersToGetIn.addAll(reservePlayers);
+    playersAlreadyGoneToReserve
+        .removeWhere((player) => playersToGetOut.any((p) => p.id == player.id));
+    playersAlreadyGoneToReserve.addAll(playersToGetOut);
     playersToGetOut.clear();
     _setPlayersToGetOut();
     _restartPlayersToGetIn();
@@ -357,6 +355,7 @@ abstract class TeamControllerBase with Store {
     _restartStatingPlayers();
     _restartReservePlayers();
     _restartPlayersAlreadyGoneToReserve();
+    teamFormation = _buildDefaultTeamFormation();
   }
 
   void _setImprovisedPosition(Player player1, Position? improvisedPosition,

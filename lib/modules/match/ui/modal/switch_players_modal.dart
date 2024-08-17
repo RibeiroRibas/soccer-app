@@ -4,8 +4,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/modules/match/controllers/team_controller.dart';
 import 'package:team_draw/modules/match/ui/component/reserve_player_timer_component.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
-import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 import 'package:team_draw/shared/ui/component/switch_players_component.dart';
+import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 
 class SwitchPlayerModal extends StatefulWidget {
   final Function onCloseModal;
@@ -32,12 +32,12 @@ class _SwitchPlayerModalState extends State<SwitchPlayerModal> {
         children: [
           Observer(
             builder: (_) => SwitchPlayersComponent(
-                playersToGetIn: _teamOneController.playersToGetIn,
-                playersToGetOut: _teamOneController.playersToGetOut,
-                teamName: _teamOneController.team.name!,
-                teamShield: _teamOneController.team.shield!.resourcePath,
+                playersToGetIn: _teamTwoController.playersToGetIn,
+                playersToGetOut: _teamTwoController.playersToGetOut,
+                teamName: _teamTwoController.team.name!,
+                teamShield: _teamTwoController.team.shield!.resourcePath,
                 playersAlreadyGoneToReserve:
-                    _teamOneController.playersAlreadyGoneToReserve),
+                    _teamTwoController.playersAlreadyGoneToReserve),
           ),
           Expanded(
               child: SingleChildScrollView(
@@ -54,12 +54,12 @@ class _SwitchPlayerModalState extends State<SwitchPlayerModal> {
                       ])))),
           Observer(
             builder: (_) => SwitchPlayersComponent(
-                playersToGetIn: _teamTwoController.playersToGetIn,
-                playersToGetOut: _teamTwoController.playersToGetOut,
-                teamName: _teamTwoController.team.name!,
-                teamShield: _teamTwoController.team.shield!.resourcePath,
+                playersToGetIn: _teamOneController.playersToGetIn,
+                playersToGetOut: _teamOneController.playersToGetOut,
+                teamName: _teamOneController.team.name!,
+                teamShield: _teamOneController.team.shield!.resourcePath,
                 playersAlreadyGoneToReserve:
-                    _teamTwoController.playersAlreadyGoneToReserve),
+                    _teamOneController.playersAlreadyGoneToReserve),
           ),
         ],
       ),

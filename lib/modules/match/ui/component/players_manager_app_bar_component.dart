@@ -6,13 +6,9 @@ import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 class PlayersManagerAppBarComponent extends StatelessWidget {
   final String teamName;
   final String teamShield;
-  final Function onChangeTeamTap;
 
   const PlayersManagerAppBarComponent(
-      {super.key,
-      required this.teamName,
-      required this.teamShield,
-      required this.onChangeTeamTap});
+      {super.key, required this.teamName, required this.teamShield});
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +19,11 @@ class PlayersManagerAppBarComponent extends StatelessWidget {
             width: MediaQuery.of(context).size.width / 3,
             child: TeamShieldAndNameComponent(
                 teamName: teamName, teamShield: teamShield)),
+        const Expanded(child: SizedBox()),
         TextWithBorderComponent(
             text: playersManager,
             textStyle: Theme.of(context).textTheme.bodyLarge!),
-        SizedBox(
-            width: MediaQuery.of(context).size.width / 3,
-            child: IconButton(
-                onPressed: () => onChangeTeamTap.call(),
-                icon: Icon(Icons.change_circle,
-                    size: 50, color: Theme.of(context).primaryColor))),
+        const Expanded(child: SizedBox()),
       ],
     );
   }

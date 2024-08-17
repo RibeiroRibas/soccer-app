@@ -25,32 +25,46 @@ enum Position {
     assert(values.length == 14);
     switch (index) {
       case 0:
+        assert(allPositions()[0] == goalkeeper);
         return goalkeeper;
       case 1:
+        assert(allPositions()[1] == goalkeeper);
         return forward;
       case 2:
+        assert(allPositions()[2] == goalkeeper);
         return midfielder;
       case 3:
+        assert(allPositions()[3] == goalkeeper);
         return leftMidfielder;
       case 4:
+        assert(allPositions()[4] == goalkeeper);
         return rightMidfielder;
       case 5:
+        assert(allPositions()[5] == goalkeeper);
         return defender;
       case 6:
+        assert(allPositions()[6] == goalkeeper);
         return leftDefender;
       case 7:
+        assert(allPositions()[7] == goalkeeper);
         return rightDefender;
       case 8:
+        assert(allPositions()[8] == goalkeeper);
         return leftBack;
       case 9:
+        assert(allPositions()[9] == goalkeeper);
         return rightBack;
       case 10:
+        assert(allPositions()[10] == goalkeeper);
         return leftWinger;
       case 11:
+        assert(allPositions()[11] == goalkeeper);
         return rightWinger;
       case 12:
+        assert(allPositions()[12] == goalkeeper);
         return leftDefensiveMidfielder;
       default:
+        assert(allPositions()[13] == goalkeeper);
         return rightDefensiveMidfielder;
     }
   }
@@ -76,12 +90,12 @@ enum Position {
     return positions;
   }
 
-  static List<Position> defenderPositions() {
+  static List<Position> defensivePositions() {
     return [
-      leftBack,
-      leftDefender,
       defender,
+      leftDefender,
       rightDefender,
+      leftBack,
       rightBack,
     ];
   }
@@ -107,5 +121,105 @@ enum Position {
       leftDefensiveMidfielder,
       rightDefensiveMidfielder,
     ];
+  }
+
+  static List<List<Position>> positionsByZone() {
+    return [
+      defensivePositions(),
+      defensiveMidfielderPositions(),
+      midfielderPositions(),
+      forwardPositions(),
+    ];
+  }
+
+  static List<Position> orderOfChangingDefensivePlayers() {
+    List<Position> positions = [
+      defender,
+      leftDefender,
+      rightDefender,
+      leftBack,
+      rightBack,
+      leftDefensiveMidfielder,
+      rightDefensiveMidfielder,
+      midfielder,
+      leftMidfielder,
+      rightMidfielder,
+      forward,
+      leftWinger,
+      rightWinger,
+    ];
+    assert(values.length - 1 == positions.length);
+    return positions;
+  }
+
+  static List<Position> orderOfChangingDefensiveMidfielderPlayers() {
+    List<Position> positions = [
+      leftDefensiveMidfielder,
+      rightDefensiveMidfielder,
+      midfielder,
+      leftMidfielder,
+      rightMidfielder,
+      defender,
+      leftDefender,
+      rightDefender,
+      leftBack,
+      rightBack,
+      forward,
+      leftWinger,
+      rightWinger,
+    ];
+    assert(values.length - 1 == positions.length);
+    return positions;
+  }
+
+  static List<Position> orderOfChangingMidfielderPlayers() {
+    List<Position> positions = [
+      midfielder,
+      leftMidfielder,
+      rightMidfielder,
+      forward,
+      leftWinger,
+      rightWinger,
+      leftDefensiveMidfielder,
+      rightDefensiveMidfielder,
+      defender,
+      leftDefender,
+      rightDefender,
+      leftBack,
+      rightBack,
+    ];
+    assert(values.length - 1 == positions.length);
+    return positions;
+  }
+
+  static List<Position> orderOfChangingForwardPlayers() {
+    List<Position> positions = [
+      forward,
+      leftWinger,
+      rightWinger,
+      midfielder,
+      leftMidfielder,
+      rightMidfielder,
+      leftDefensiveMidfielder,
+      rightDefensiveMidfielder,
+      leftBack,
+      rightBack,
+      defender,
+      leftDefender,
+      rightDefender,
+    ];
+    assert(values.length - 1 == positions.length);
+    return positions;
+  }
+
+  static List<List<Position>> orderOfChangingByZone() {
+    List<List<Position>> positions = [
+      orderOfChangingDefensivePlayers(),
+      orderOfChangingDefensiveMidfielderPlayers(),
+      orderOfChangingMidfielderPlayers(),
+      orderOfChangingForwardPlayers(),
+    ];
+    assert(positionsByZone().length == positions.length);
+    return positions;
   }
 }

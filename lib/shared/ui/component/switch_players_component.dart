@@ -76,7 +76,7 @@ class SwitchPlayersComponent extends StatelessWidget {
                 TeamShieldAndNameComponent(
                     teamName: teamName!, teamShield: teamShield!),
               TextWithBorderComponent(
-                  text: whoToGetIn,
+                  text: whoToGetOut,
                   textStyle: Theme.of(context).textTheme.bodyLarge!),
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
@@ -95,7 +95,7 @@ class SwitchPlayersComponent extends StatelessWidget {
                   },
                   itemCount: playersToGetIn.length),
               TextWithBorderComponent(
-                  text: whoToGetOut,
+                  text: whoToGetIn,
                   textStyle: Theme.of(context).textTheme.bodyLarge!),
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),

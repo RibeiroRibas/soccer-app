@@ -146,11 +146,11 @@ mixin _$TeamController on TeamControllerBase, Store {
       ActionController(name: 'TeamControllerBase', context: context);
 
   @override
-  void _setSelectedPlayer(Player? player) {
+  void _onSelectedPlayer(Player player) {
     final _$actionInfo = _$TeamControllerBaseActionController.startAction(
-        name: 'TeamControllerBase._setSelectedPlayer');
+        name: 'TeamControllerBase._onSelectedPlayer');
     try {
-      return super._setSelectedPlayer(player);
+      return super._onSelectedPlayer(player);
     } finally {
       _$TeamControllerBaseActionController.endAction(_$actionInfo);
     }
