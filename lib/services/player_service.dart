@@ -322,7 +322,7 @@ class PlayerService {
     playersByPosition.removeAt(playerIndex);
   }
 
-  List<Player> getAllPlayers() {
+  List<Player> getReservePlayers() {
     List<Player> players = [];
     allPlayersByPosition.forEach((position, playersByPosition) {
       players.addAll(playersByPosition);

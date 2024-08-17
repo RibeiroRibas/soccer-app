@@ -119,4 +119,13 @@ abstract class MatchControllerBase with Store {
   Future<void> save(List<TeamMatch> matches) async {
     matches[0] = match;
   }
+
+  void cleanTemporaryValues() {
+    for (var player in match.teamOne!.players!) {
+      player.improvisedPosition = null;
+    }
+    for (var player in match.teamTwo!.players!) {
+      player.improvisedPosition = null;
+    }
+  }
 }

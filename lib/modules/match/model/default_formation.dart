@@ -9,42 +9,72 @@ class DefaultFormation extends TeamFormation {
   Map<Position, Player?> formation = {};
 
   DefaultFormation(super.players, super.teamColor, super.onSelectedPlayer,
-      super.selectedPlayers,
+      super.onLongPlayerPress,
       {required this.numberOfPlayers});
 
   void _setPlayersAndPositions() {
     List<Player> playersInImprovisedPosition = [];
     setGoalKeeper();
     for (Player player in players) {
-      if (player.improvisedPosition != null) {
-        if (formation.containsKey(player.improvisedPosition)) {
-          if (formation[player.improvisedPosition] == null) {
-            formation[player.improvisedPosition!] = player;
-          }
+      _setPlayersAtDefinedPosition(player, playersInImprovisedPosition);
+    }
+    while (playersInImprovisedPosition.isNotEmpty) {
+      Player player = playersInImprovisedPosition.first;
+      _setPlayerAtImprovisedPosition(player);
+      playersInImprovisedPosition.removeWhere((p) => p.id == player.id);
+    }
+  }
+
+  void _setPlayersAtDefinedPosition(
+      Player player, List<Player> playersInImprovisedPosition) {
+    if (player.improvisedPosition != null) {
+      if (formation.containsKey(player.improvisedPosition)) {
+        if (formation[player.improvisedPosition] == null) {
+          formation[player.improvisedPosition!] = player;
         }
-      } else if (formation.containsKey(player.principalPosition)) {
-        if (formation[player.principalPosition] == null) {
-          formation[player.principalPosition!] = player;
-        } else {
-          playersInImprovisedPosition.add(player);
-        }
+      }
+    } else if (formation.containsKey(player.principalPosition)) {
+      if (formation[player.principalPosition] == null) {
+        formation[player.principalPosition!] = player;
       } else {
         playersInImprovisedPosition.add(player);
       }
+    } else {
+      playersInImprovisedPosition.add(player);
     }
-    formation.forEach((position, player) {
-      if (formation[position] == null &&
-          playersInImprovisedPosition.isNotEmpty) {
-        Player player = playersInImprovisedPosition.first;
-        formation[position] = player;
-        playersInImprovisedPosition.remove(player);
-        for (var p in players) {
-          if (p == player) {
-            p.improvisedPosition = position;
-          }
+  }
+
+  void _setPlayerAtImprovisedPosition(Player player) {
+    if (Position.defensivePositions()
+        .any((p) => p == player.principalPosition)) {
+      _setImprovisedPositionByDefinedOrder(
+          Position.orderOfChangingDefensivePlayers(), player);
+    } else if (Position.defensiveMidfielderPositions()
+        .any((p) => p == player.principalPosition)) {
+      _setImprovisedPositionByDefinedOrder(
+          Position.orderOfChangingDefensiveMidfielderPlayers(), player);
+    } else if (Position.midfielderPositions()
+        .any((p) => p == player.principalPosition)) {
+      _setImprovisedPositionByDefinedOrder(
+          Position.orderOfChangingMidfielderPlayers(), player);
+    } else if (Position.forwardPositions()
+        .any((p) => p == player.principalPosition)) {
+      _setImprovisedPositionByDefinedOrder(
+          Position.orderOfChangingForwardPlayers(), player);
+    }
+  }
+
+  void _setImprovisedPositionByDefinedOrder(
+      List<Position> positions, Player player) {
+    for (Position position in positions) {
+      if (formation.containsKey(position)) {
+        if (formation[position] == null) {
+          player.improvisedPosition = position;
+          formation[position] = player;
+          break;
         }
       }
-    });
+    }
   }
 
   void _setTeamFormation() {
@@ -130,13 +160,14 @@ class DefaultFormation extends TeamFormation {
   }
 
   @override
-  void init() {
+  void init(Player? selectedPlayer) {
+    super.selectedPlayer = selectedPlayer;
     _setTeamFormation();
     _setPlayersAndPositions();
   }
 
   @override
-  List<Widget> buildGoalKeeper() {
+  List<Widget> getGoalKeeper() {
     List<Widget> playersComponent = [];
     addComponent(formation[Position.goalkeeper], playersComponent);
     return playersComponent;
@@ -150,15 +181,16 @@ class DefaultFormation extends TeamFormation {
             position: player.improvisedPosition ?? player.principalPosition,
             playerName: formatName(player.name!),
             positionColor: resolveSelectedPlayerColor(player)),
-        onTap: () => setSelectedPlayers(player),
+        onTap: () => super.onSelectedPlayer(player),
+        onLongPress: () => super.onLongPlayerPress(player),
       ));
     }
   }
 
   @override
-  List<Widget> buildDefendersLeftSide() {
+  List<Widget> getDefendersLeftSide() {
     List<Widget> playersComponent = [];
-    for (Position position in Position.defenderPositions()) {
+    for (Position position in Position.defensivePositions()) {
       if (formation.containsKey(position)) {
         addComponent(formation[position], playersComponent);
       }
@@ -167,9 +199,9 @@ class DefaultFormation extends TeamFormation {
   }
 
   @override
-  List<Widget> buildDefendersRightSide() {
+  List<Widget> getDefendersRightSide() {
     List<Widget> playersComponent = [];
-    for (Position position in Position.defenderPositions().reversed) {
+    for (Position position in Position.defensivePositions().reversed) {
       if (formation.containsKey(position)) {
         addComponent(formation[position], playersComponent);
       }
@@ -178,7 +210,7 @@ class DefaultFormation extends TeamFormation {
   }
 
   @override
-  List<Widget> buildDefensiveMidfieldersLeftSide() {
+  List<Widget> getDefensiveMidfieldersLeftSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.defensiveMidfielderPositions()) {
       if (formation.containsKey(position)) {
@@ -189,7 +221,7 @@ class DefaultFormation extends TeamFormation {
   }
 
   @override
-  List<Widget> buildDefensiveMidfieldersRightSide() {
+  List<Widget> getDefensiveMidfieldersRightSide() {
     List<Widget> playersComponent = [];
     for (Position position
         in Position.defensiveMidfielderPositions().reversed) {
@@ -201,7 +233,7 @@ class DefaultFormation extends TeamFormation {
   }
 
   @override
-  List<Widget> buildForwardsLeftSide() {
+  List<Widget> getForwardsLeftSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.forwardPositions()) {
       if (formation.containsKey(position)) {
@@ -212,7 +244,7 @@ class DefaultFormation extends TeamFormation {
   }
 
   @override
-  List<Widget> buildForwardsRightSide() {
+  List<Widget> getForwardsRightSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.forwardPositions().reversed) {
       if (formation.containsKey(position)) {
@@ -223,7 +255,7 @@ class DefaultFormation extends TeamFormation {
   }
 
   @override
-  List<Widget> buildMidfieldersLeftSide() {
+  List<Widget> getMidfieldersLeftSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.midfielderPositions()) {
       if (formation.containsKey(position)) {
@@ -234,7 +266,7 @@ class DefaultFormation extends TeamFormation {
   }
 
   @override
-  List<Widget> buildMidfieldersRightSide() {
+  List<Widget> getMidfieldersRightSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.midfielderPositions().reversed) {
       if (formation.containsKey(position)) {

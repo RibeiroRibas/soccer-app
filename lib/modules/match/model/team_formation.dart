@@ -8,34 +8,34 @@ import 'package:team_draw/shared/theme/theme_colors.dart';
 abstract class TeamFormation {
   final List<Player> players;
   final Color teamColor;
-  final Function(Player?) onSelectedPlayers;
+  final Function(Player) onSelectedPlayer;
+  final Function(Player) onLongPlayerPress;
   Player? selectedPlayer;
-  final Function(Player, Player) selectedPlayers;
 
   late Player goalKeeper;
 
-  TeamFormation(this.players, this.teamColor, this.onSelectedPlayers,
-      this.selectedPlayers);
+  TeamFormation(this.players, this.teamColor, this.onSelectedPlayer,
+      this.onLongPlayerPress);
 
-  void init();
+  void init(Player? selectedPlayer);
 
-  List<Widget> buildGoalKeeper();
+  List<Widget> getGoalKeeper();
 
-  List<Widget> buildDefensiveMidfieldersLeftSide();
+  List<Widget> getDefensiveMidfieldersLeftSide();
 
-  List<Widget> buildDefensiveMidfieldersRightSide();
+  List<Widget> getDefensiveMidfieldersRightSide();
 
-  List<Widget> buildDefendersLeftSide();
+  List<Widget> getDefendersLeftSide();
 
-  List<Widget> buildDefendersRightSide();
+  List<Widget> getDefendersRightSide();
 
-  List<Widget> buildMidfieldersLeftSide();
+  List<Widget> getMidfieldersLeftSide();
 
-  List<Widget> buildMidfieldersRightSide();
+  List<Widget> getMidfieldersRightSide();
 
-  List<Widget> buildForwardsLeftSide();
+  List<Widget> getForwardsLeftSide();
 
-  List<Widget> buildForwardsRightSide();
+  List<Widget> getForwardsRightSide();
 
   void addComponent(Player? player, List<Widget> playersComponent);
 
@@ -57,28 +57,11 @@ abstract class TeamFormation {
     }
   }
 
-  Color resolveSelectedPlayerColor(Player playerOrPosition) {
-    return selectedPlayer != null &&
-                selectedPlayer!.isPresent() &&
-                selectedPlayer!.id == playerOrPosition.id ||
+  Color resolveSelectedPlayerColor(Player player) {
+    return selectedPlayer != null && selectedPlayer!.id == player.id ||
             selectedPlayer != null &&
-                !selectedPlayer!.isPresent() &&
-                selectedPlayer!.principalPosition ==
-                    playerOrPosition.principalPosition
+                selectedPlayer!.principalPosition == player.principalPosition
         ? ThemeColors.selectedPosition
         : teamColor;
-  }
-
-  void setSelectedPlayers(Player player) {
-    if (selectedPlayer == null) {
-      selectedPlayer = player;
-      onSelectedPlayers(player);
-    } else if (selectedPlayer!.id == player.id) {
-      selectedPlayer = null;
-      onSelectedPlayers(null);
-    } else {
-      selectedPlayers(selectedPlayer!, player);
-      selectedPlayer = null;
-    }
   }
 }

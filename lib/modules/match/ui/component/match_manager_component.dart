@@ -31,9 +31,15 @@ class MatchManagerComponent extends StatelessWidget {
                   onChangeScore(isScoreTeamOne, isIncreaseScore)),
           const Center(child: MatchTimerComponent()),
           const Expanded(child: SizedBox()),
-          const _ReserveBenchWidget(),
-          const ReservePlayerTimerComponent(),
-          const SizedBox(height: 20),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _ReserveBenchWidget(isTeamOne: false),
+              ReservePlayerTimerComponent(),
+              _ReserveBenchWidget(isTeamOne: true),
+            ],
+          ),
+          const SizedBox(height: 10),
         ],
       ),
     );
@@ -41,7 +47,9 @@ class MatchManagerComponent extends StatelessWidget {
 }
 
 class _ReserveBenchWidget extends StatelessWidget {
-  const _ReserveBenchWidget();
+  final bool isTeamOne;
+
+  const _ReserveBenchWidget({required this.isTeamOne});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +59,7 @@ class _ReserveBenchWidget extends StatelessWidget {
             context: context,
             builder: (context) => SingleChildScrollView(
                 controller: ModalScrollController.of(context),
-                child: const PlayersManagerModal())),
+                child: PlayersManagerModal(isTeamOne: isTeamOne))),
         child: SizedBox(
             width: 60,
             child: Image.asset("$imageInitialPath/switch-player.png",
