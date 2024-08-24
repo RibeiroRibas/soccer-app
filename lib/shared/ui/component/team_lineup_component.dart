@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/shared/ui/list_item/player_overall_list_item.dart';
-import 'package:team_draw/shared/ui/component/team_overall_by_position_component.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/shared/ui/component/team_overall_component.dart';
+import 'package:team_draw/shared/ui/list_item/player_info_list_item_.dart';
+import 'package:team_draw/shared/ui/list_item/player_overall_list_item.dart';
 
 class TeamLineupComponent extends StatelessWidget {
   final Team team;
-  final List<TeamMatch>? allMatches;
+  final List<TeamsMatch>? allMatches;
   final Function(Player)? onSwitchPlayer;
 
   const TeamLineupComponent(
@@ -29,18 +29,13 @@ class TeamLineupComponent extends StatelessWidget {
               ),
               const Divider(),
               for (Player player in team.players!) ...{
-                PlayerOverallListItem(
-                  playerScore: allMatches != null
-                      ? player.calculateScore(allMatches!)
-                      : null,
-                  player: player,
-                  onSwitchPlayer: onSwitchPlayer,
-                ),
+                PlayerInfoListItem(
+                    playerScore: allMatches != null
+                        ? player.calculateScore(allMatches!)
+                        : null,
+                    player: player,
+                    onSwitchPlayer: onSwitchPlayer),
               },
-              const Divider(),
-              TeamOverallByPositionComponent(
-                overallByPosition: team.teamOverall.overallByPosition,
-              ),
             ],
           ),
         ),

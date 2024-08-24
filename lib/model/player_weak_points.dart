@@ -12,16 +12,4 @@ enum PlayerWeakPoints {
 
   final String characteristic;
 
-  static List<PlayerWeakPoints> all() {
-    List<PlayerWeakPoints> weakPoints = [
-      velocity,
-      overweight,
-      pass,
-      kick,
-      positioning,
-      skill,
-    ];
-    assert(values.length == weakPoints.length);
-    return weakPoints;
-  }
 }

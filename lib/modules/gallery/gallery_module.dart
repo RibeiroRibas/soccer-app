@@ -6,7 +6,7 @@ import 'package:team_draw/modules/gallery/gallery_route_navigator.dart';
 import 'package:team_draw/modules/gallery/ui/pages/gallery_page.dart';
 import 'package:team_draw/modules/gallery/ui/pages/image_viewer_page.dart';
 import 'package:team_draw/modules/gallery/ui/pages/video_player_page.dart';
-import 'package:team_draw/services/media_service.dart';
+import 'package:team_draw/shared/services/media_service.dart';
 
 class GalleryModule extends Module {
   @override

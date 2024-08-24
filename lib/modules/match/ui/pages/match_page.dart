@@ -7,8 +7,7 @@ import 'package:mobx/mobx.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:team_draw/data/shield_data.dart';
 import 'package:team_draw/model/match_settings.dart';
-import 'package:team_draw/model/player.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/modules/match/controllers/match_controller.dart';
 import 'package:team_draw/modules/match/controllers/match_timer_controller.dart';
 import 'package:team_draw/modules/match/controllers/team_controller.dart';
@@ -25,7 +24,7 @@ import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/ui/component/elevated_button_component.dart';
 
 class MatchPage extends StatefulWidget {
-  final List<TeamMatch> matches;
+  final List<TeamsMatch> matches;
   final MatchSettings matchSettings;
 
   const MatchPage(
@@ -54,6 +53,30 @@ class _MatchPageState extends State<MatchPage> {
     _reactionsDisposers();
   }
 
+  Future<void> _showPreMatchDialog() async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const PreMatchDialog();
+        });
+  }
+
+  Future<void> _setOrientation() async {
+    await SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.landscapeLeft]);
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
+
+  void _initControllers() {
+    _matchController.init(widget.matches, widget.matchSettings);
+    _teamOneController.init(_matchController.match.teamOne!,
+        widget.matchSettings.numberOfStartingPlayers!);
+    _teamTwoController.init(_matchController.match.teamTwo!,
+        widget.matchSettings.numberOfStartingPlayers!);
+    _matchTimerController.init(_matchController.match, widget.matchSettings);
+  }
+
   void _reactionsDisposers() {
     isTimeToSwitchPlayerDisposer =
         reaction((_) => _matchTimerController.isTimeToSwitchPlayer, (_) {
@@ -67,6 +90,11 @@ class _MatchPageState extends State<MatchPage> {
         _showEndMatchDialog();
       }
     });
+  }
+
+  void _switchPlayers() {
+    _teamOneController.switchPlayers();
+    _teamTwoController.switchPlayers();
   }
 
   Future<void> _showEndMatchDialog() async {
@@ -85,101 +113,6 @@ class _MatchPageState extends State<MatchPage> {
                     "matchSettings": widget.matchSettings
                   });
                 })));
-  }
-
-  void _switchPlayers() {
-    _teamOneController.switchPlayers();
-    _teamTwoController.switchPlayers();
-  }
-
-  void _initControllers() {
-    _matchController.init(widget.matches, widget.matchSettings);
-    _teamOneController.init(_matchController.match.teamOne!,
-        widget.matchSettings.numberOfStartingPlayers!);
-    _teamTwoController.init(_matchController.match.teamTwo!,
-        widget.matchSettings.numberOfStartingPlayers!);
-    _matchTimerController.init(_matchController.match, widget.matchSettings);
-  }
-
-  Future<void> _setOrientation() async {
-    await SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.landscapeLeft]);
-    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  }
-
-  Future<dynamic> _goToTeamsAndMatchInfoModal(BuildContext context) {
-    return _matchController.calculatePlayerScore().then((_) =>
-        showBarModalBottomSheet(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            context: context,
-            builder: (context) => SingleChildScrollView(
-                controller: ModalScrollController.of(context),
-                child: TeamsAndMatchInfoModal(
-                    teamMatch: _matchController.match,
-                    playersScoreTeamOne: _matchController.playersScoreTeamOne,
-                    playersScoreTeamTwo: _matchController.playersScoreTeamTwo,
-                    teamInformation: _matchController.teamsInformation))));
-  }
-
-  Future<void> _showSetPlayerScoreDialog(BuildContext context,
-      bool isScoreTeamOne, bool isIncreaseScore, List<Player> players) async {
-    if (_matchController.verifyIfScoreIsNotEqualsZero(
-        isScoreTeamOne, isIncreaseScore)) {
-      return showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return SelectPlayerDialog(
-                isIncreaseScore: isIncreaseScore,
-                players: players,
-                onPlayerTap: (player) => _matchController
-                    .changeScore(isScoreTeamOne, isIncreaseScore, player,
-                        _buildGoalTime())
-                    .then((_) => _verifyErrorMessageOrDoDisposeDialog()));
-          });
-    }
-  }
-
-  String _buildGoalTime() {
-    return _matchTimerController.buildGoalTime();
-  }
-
-  Future<void> _showSelectedWrongPlayerAlertDialog(String tittle) async {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            title: Text(tittle),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  style: Theme.of(context).textButtonTheme.style!.copyWith(
-                      foregroundColor: WidgetStateProperty.all(
-                          Theme.of(context).colorScheme.onSecondary)),
-                  child: const Text(ok)),
-            ],
-          );
-        });
-  }
-
-  _verifyErrorMessageOrDoDisposeDialog() {
-    if (_matchController.playerGoalNotFundMessage != null) {
-      _showSelectedWrongPlayerAlertDialog(
-          _matchController.playerGoalNotFundMessage!);
-    } else {
-      Navigator.of(context).pop();
-    }
-  }
-
-  Future<void> _showPreMatchDialog() async {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const PreMatchDialog();
-        });
   }
 
   @override
@@ -202,22 +135,8 @@ class _MatchPageState extends State<MatchPage> {
                           text: start))
                   : const SizedBox()),
           Observer(
-            builder: (_) => !_matchController.isMatchStarted
-                ? const Positioned(
-                    top: 5,
-                    right: 0,
-                    left: 0,
-                    child: Column(
-                      children: [
-                        Text(
-                            "* Caso queira mudar as posições, selecione dois jogadores do mesmo time."),
-                        Text(
-                            "* Caso queira substituir os jogadores mantenha pressionado sobre o jogador selecionado."),
-                      ],
-                    ),
-                  )
-                : const SizedBox(),
-          ),
+              builder: (_) => _PreMatchMessagesComponent(
+                  isMatchStarted: _matchController.isMatchStarted)),
           Observer(
             builder: (_) => Positioned(
               top: 37,
@@ -236,12 +155,7 @@ class _MatchPageState extends State<MatchPage> {
                       scoreTeamTwo: _matchController.scoreTeamTwo,
                       onChangeScore: (isScoreTeamOne, isIncreaseScore) =>
                           _showSetPlayerScoreDialog(
-                              context,
-                              isScoreTeamOne,
-                              isIncreaseScore,
-                              isScoreTeamOne
-                                  ? _matchController.match.teamOne!.players!
-                                  : _matchController.match.teamTwo!.players!),
+                              context, isScoreTeamOne, isIncreaseScore),
                       timeToChangePlayer:
                           _matchController.settings.timeToChangePlayer!,
                     )
@@ -263,11 +177,49 @@ class _MatchPageState extends State<MatchPage> {
     );
   }
 
+  Future<dynamic> _goToTeamsAndMatchInfoModal(BuildContext context) {
+    return _matchController.calculatePlayerScore().then((_) =>
+        showBarModalBottomSheet(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            context: context,
+            builder: (context) => SingleChildScrollView(
+                controller: ModalScrollController.of(context),
+                child: TeamsAndMatchInfoModal(
+                    teamMatch: _matchController.match,
+                    playersScoreTeamOne: _matchController.playersScoreTeamOne,
+                    playersScoreTeamTwo: _matchController.playersScoreTeamTwo,
+                    teamInformation: _matchController.teamsInformation))));
+  }
+
+  Future<void> _showSetPlayerScoreDialog(
+      BuildContext context, bool isScoreTeamOne, bool isIncreaseScore) async {
+    if (_matchController.verifyIfScoreIsNotEqualsZero(
+        isScoreTeamOne, isIncreaseScore)) {
+      return showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return SelectPlayerDialog(
+                isIncreaseScore: isIncreaseScore,
+                players: _matchController.getPlayersToShowInScoreDialog(
+                    isScoreTeamOne, isIncreaseScore),
+                onPlayerTap: (player) => _matchController
+                    .changeScore(isScoreTeamOne, isIncreaseScore, player,
+                        _buildGoalTime())
+                    .then((_) => Navigator.of(context).pop()));
+          });
+    }
+  }
+
+  String _buildGoalTime() {
+    return _matchTimerController.buildGoalTime();
+  }
+
   @override
   void dispose() {
     isTimeToSwitchPlayerDisposer();
     isMatchEndDisposer();
-    _matchController.cleanTemporaryValues();
+    _matchController.cleanImprovisedPositions();
     super.dispose();
   }
 }
@@ -283,5 +235,30 @@ class _BackGroundField extends StatelessWidget {
                 image:
                     AssetImage("$imageInitialPath/soccer-field-landscape.jpg"),
                 fit: BoxFit.cover)));
+  }
+}
+
+class _PreMatchMessagesComponent extends StatelessWidget {
+  final bool isMatchStarted;
+
+  const _PreMatchMessagesComponent({required this.isMatchStarted});
+
+  @override
+  Widget build(BuildContext context) {
+    return !isMatchStarted
+        ? const Positioned(
+            top: 5,
+            right: 0,
+            left: 0,
+            child: Column(
+              children: [
+                Text(
+                    "* Caso queira mudar as posições, selecione dois jogadores do mesmo time."),
+                Text(
+                    "* Caso queira substituir os jogadores mantenha pressionado sobre o jogador selecionado."),
+              ],
+            ),
+          )
+        : const SizedBox();
   }
 }

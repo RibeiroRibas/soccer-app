@@ -14,7 +14,7 @@ class BoxCardComponent extends StatelessWidget {
         boxShadow: kElevationToShadow[2],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(4),
+        padding: const EdgeInsets.all(8),
         child: boxCardBody,
       ),
     );

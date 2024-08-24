@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/home/model/player_score.dart';
+import 'package:team_draw/model/teams_match.dart';
+import 'package:team_draw/model/player_score.dart';
 import 'package:team_draw/modules/match/ui/component/match_info_component.dart';
 import 'package:team_draw/modules/match/ui/component/team_info_component.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
 
 class TeamsAndMatchInfoModal extends StatelessWidget {
-  final TeamMatch teamMatch;
+  final TeamsMatch teamMatch;
   final List<PlayerScore> playersScoreTeamOne;
   final List<PlayerScore> playersScoreTeamTwo;
   final TeamInformation teamInformation;

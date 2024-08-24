@@ -3,9 +3,9 @@ import 'package:team_draw/data/team_data.dart';
 import 'package:team_draw/model/match_details.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player_goals.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 
-List<TeamMatch> getAllTeamMatches = [
+List<TeamsMatch> getAllTeamMatches = [
   matchOneVSTwo,
   matchOneVSTree,
   matchTwoVSTree,
@@ -21,7 +21,7 @@ List<TeamMatch> getAllTeamMatches = [
   matchSixVSFour,
 ];
 
-TeamMatch matchOneVSTwo = TeamMatch(
+TeamsMatch matchOneVSTwo = TeamsMatch(
   id: 1,
   teamOne: getTeamOne,
   teamTwo: getTeamTwo,
@@ -38,7 +38,7 @@ TeamMatch matchOneVSTwo = TeamMatch(
   ],
 );
 
-TeamMatch matchOneVSTree = TeamMatch(
+TeamsMatch matchOneVSTree = TeamsMatch(
   id: 2,
   teamOne: getTeamOne,
   teamTwo: getTeamTree,
@@ -55,7 +55,7 @@ TeamMatch matchOneVSTree = TeamMatch(
   ],
 );
 
-TeamMatch matchTwoVSTree = TeamMatch(
+TeamsMatch matchTwoVSTree = TeamsMatch(
   id: 3,
   teamOne: getTeamTwo,
   teamTwo: getTeamTree,
@@ -72,7 +72,7 @@ TeamMatch matchTwoVSTree = TeamMatch(
   ],
 );
 
-TeamMatch matchTwoVSFour = TeamMatch(
+TeamsMatch matchTwoVSFour = TeamsMatch(
   id: 4,
   teamOne: getTeamTwo,
   teamTwo: getTeamFour,
@@ -89,7 +89,7 @@ TeamMatch matchTwoVSFour = TeamMatch(
   ],
 );
 
-TeamMatch matchFourVSTree = TeamMatch(
+TeamsMatch matchFourVSTree = TeamsMatch(
   id: 5,
   teamOne: getTeamFour,
   teamTwo: getTeamTree,
@@ -106,7 +106,7 @@ TeamMatch matchFourVSTree = TeamMatch(
   ],
 );
 
-TeamMatch matchFiveVSSix = TeamMatch(
+TeamsMatch matchFiveVSSix = TeamsMatch(
   id: 6,
   teamOne: getTeamFive,
   teamTwo: getTeamSix,
@@ -123,7 +123,7 @@ TeamMatch matchFiveVSSix = TeamMatch(
   ],
 );
 
-TeamMatch matchSixVSFour = TeamMatch(
+TeamsMatch matchSixVSFour = TeamsMatch(
   id: 7,
   teamOne: getTeamSix,
   teamTwo: getTeamFour,
@@ -140,7 +140,7 @@ TeamMatch matchSixVSFour = TeamMatch(
   ],
 );
 
-TeamMatch matchSevenVSEight = TeamMatch(
+TeamsMatch matchSevenVSEight = TeamsMatch(
   id: 8,
   teamOne: getTeamSeven,
   teamTwo: getTeamEight,
@@ -156,7 +156,7 @@ TeamMatch matchSevenVSEight = TeamMatch(
   ],
 );
 
-TeamMatch matchSevenVSNine = TeamMatch(
+TeamsMatch matchSevenVSNine = TeamsMatch(
   id: 9,
   teamOne: getTeamSeven,
   teamTwo: getTeamNine,
@@ -172,7 +172,7 @@ TeamMatch matchSevenVSNine = TeamMatch(
   ],
 );
 
-TeamMatch matchEightVSNine = TeamMatch(
+TeamsMatch matchEightVSNine = TeamsMatch(
   id: 10,
   teamOne: getTeamEight,
   teamTwo: getTeamNine,

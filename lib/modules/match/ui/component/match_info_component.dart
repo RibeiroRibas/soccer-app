@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
 import 'package:team_draw/shared/extensions/player_goals_extension.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
@@ -8,7 +8,7 @@ import 'package:team_draw/shared/ui/component/teams_info_component.dart';
 import 'package:team_draw/shared/ui/list_item/player_goals_list_item.dart';
 
 class MatchInfoComponent extends StatelessWidget {
-  final TeamMatch teamMatch;
+  final TeamsMatch teamMatch;
   final TeamInformation teamInformation;
 
   const MatchInfoComponent(
@@ -51,8 +51,11 @@ class MatchInfoComponent extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return PlayerGoalsListItem(
-                      match: teamMatch,
-                      playerGoalAtTime: playersGoalAtTime[index]);
+                    match: teamMatch,
+                    playerGoalAtTime: playersGoalAtTime[index],
+                    isOwnGoal: teamMatch.matchGoals!
+                        .isOwnGoal(playersGoalAtTime[index]),
+                  );
                 },
                 itemCount: playersGoalAtTime.length,
               ),

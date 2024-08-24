@@ -9,11 +9,13 @@ import 'package:team_draw/modules/new_match/new_match_module.dart';
 import 'package:team_draw/modules/new_player/new_player_module.dart';
 import 'package:team_draw/modules/theme/repository/theme_repository.dart';
 import 'package:team_draw/modules/theme/theme_module.dart';
+import 'package:team_draw/shared/services/local_storage_service.dart';
 
 class AppModule extends Module {
   @override
   void binds(i) {
     i.addSingleton(LocalStorageRepository.new);
+    i.addSingleton(LocalStorageService.new);
     i.addSingleton(ThemeRepository.new);
     i.addSingleton(ThemeController.new);
   }

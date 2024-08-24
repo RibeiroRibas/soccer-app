@@ -3,7 +3,7 @@ import 'package:team_draw/data/team_name_data.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/model/team_shield.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
 import 'package:team_draw/modules/new_match/services/draw_teams_service.dart';
@@ -17,7 +17,7 @@ abstract class DrawTeamsControllerBase with Store {
 
   DrawTeamsControllerBase(this.service);
 
-  List<TeamMatch> teamMatches = [];
+  List<TeamsMatch> teamMatches = [];
 
   List<TeamInformation> teamsInformation = [];
 
@@ -36,7 +36,7 @@ abstract class DrawTeamsControllerBase with Store {
     sortedTeams.clear();
     availableNames.clear();
     sortedTeams = await service.drawTeamsMatch(players, matchSettings);
-    final List<TeamMatch> teamMatches =
+    final List<TeamsMatch> teamMatches =
         service.generateTeamMatches(sortedTeams);
 
     _setAvailableNames();
@@ -47,9 +47,9 @@ abstract class DrawTeamsControllerBase with Store {
     onUpdateData = !onUpdateData;
   }
 
-  void _getTeamInformation(List<TeamMatch> teamMatches) {
+  void _getTeamInformation(List<TeamsMatch> teamMatches) {
     List<TeamInformation> teamsInformation = [];
-    for (TeamMatch teamMatch in teamMatches) {
+    for (TeamsMatch teamMatch in teamMatches) {
       final teamInformation = teamMatch.getTeamsInformation();
       teamsInformation.add(teamInformation);
       availableNames.removeWhere((name) => teamMatch.teamOne!.name == name);
@@ -67,7 +67,7 @@ abstract class DrawTeamsControllerBase with Store {
     for (Team team in sortedTeams) {
       if (team.name == oldTeamName) {
         team.name = newTeamName;
-        for (TeamMatch teamMatch in teamMatches) {
+        for (TeamsMatch teamMatch in teamMatches) {
           if (teamMatch.teamOne!.name == team.name) {
             teamMatch.teamOne = team;
           }
@@ -92,7 +92,7 @@ abstract class DrawTeamsControllerBase with Store {
     for (Team team in sortedTeams) {
       if (team.shield == oldTeamShield) {
         team.shield = newTeamShield;
-        for (TeamMatch teamMatch in teamMatches) {
+        for (TeamsMatch teamMatch in teamMatches) {
           if (teamMatch.teamOne!.name == team.name) {
             teamMatch.teamOne = team;
           }
@@ -160,7 +160,7 @@ abstract class DrawTeamsControllerBase with Store {
     for (Team team in sortedTeams) {
       team.calculateOverall();
     }
-    final List<TeamMatch> teamMatches =
+    final List<TeamsMatch> teamMatches =
         service.generateTeamMatches(sortedTeams);
     _getTeamInformation(teamMatches);
     this.teamMatches = teamMatches;

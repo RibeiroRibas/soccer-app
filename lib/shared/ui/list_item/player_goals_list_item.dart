@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/presentation/custom_icons.dart';
+import 'package:team_draw/shared/theme/theme_colors.dart';
 
 class PlayerGoalsListItem extends StatelessWidget {
-  final TeamMatch match;
+  final TeamsMatch match;
   final String playerGoalAtTime;
+  final bool isOwnGoal;
 
   const PlayerGoalsListItem({
     super.key,
     required this.match,
     required this.playerGoalAtTime,
+    required this.isOwnGoal,
   });
 
   bool isPLayerTeamOne(String playerName) {
@@ -21,18 +24,28 @@ class PlayerGoalsListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        if (!isPLayerTeamOne(playerGoalAtTime)) ...{
+        if (!isPLayerTeamOne(playerGoalAtTime) && !isOwnGoal ||
+            isPLayerTeamOne(playerGoalAtTime) && isOwnGoal) ...{
           const Expanded(child: SizedBox())
         },
-        const Padding(
-          padding: EdgeInsets.all(4.0),
-          child: Icon(CustomIcons.soccerBall, size: 20),
-        ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
-          child: Text(playerGoalAtTime),
-        ),
-        if (isPLayerTeamOne(playerGoalAtTime)) ...{
+            padding: const EdgeInsets.all(4.0),
+            child: Icon(
+              CustomIcons.soccerBall,
+              size: 20,
+              color: isOwnGoal ? ThemeColors.ownGoal : null,
+            )),
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5),
+            child: Text(playerGoalAtTime,
+                style: isOwnGoal
+                    ? Theme.of(context)
+                        .textTheme
+                        .bodyMedium!
+                        .copyWith(color: ThemeColors.ownGoal)
+                    : null)),
+        if (isPLayerTeamOne(playerGoalAtTime) && !isOwnGoal ||
+            !isPLayerTeamOne(playerGoalAtTime) && isOwnGoal) ...{
           const Expanded(child: SizedBox())
         },
       ],

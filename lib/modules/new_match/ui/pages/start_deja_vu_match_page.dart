@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/match_details.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/modules/new_match/new_match_rote_navigator.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
@@ -45,7 +45,7 @@ class StartDejaVuMatchPage extends StatelessWidget {
                   text: startMatch,
                 ),
               ),
-              for (TeamMatch match in matchesDetail.matches) ...{
+              for (TeamsMatch match in matchesDetail.matches) ...{
                 const SizedBox(height: 25),
                 MatchScoreComponent(match: match),
                 TeamsInformationComponent(

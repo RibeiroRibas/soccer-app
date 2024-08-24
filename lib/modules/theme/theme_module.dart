@@ -6,10 +6,12 @@ import 'package:team_draw/modules/theme/repository/theme_repository.dart';
 import 'package:team_draw/modules/theme/theme_route_navigator.dart';
 import 'package:team_draw/shared/repositories/local_storage_repository.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
+import 'package:team_draw/shared/services/local_storage_service.dart';
 
 class ThemeModule extends Module {
   @override
   void binds(i) {
+    i.addSingleton(LocalStorageService.new);
     i.addSingleton(LocalStorageRepository.new);
     i.addSingleton(ThemeRepository.new);
     i.addSingleton(ThemeController.new);

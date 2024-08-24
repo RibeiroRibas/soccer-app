@@ -1,32 +1,32 @@
 import 'package:team_draw/data/team_data.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/shared/repositories/team_repository.dart';
-import 'package:team_draw/modules/home/model/team_score.dart';
+import 'package:team_draw/model/team_score.dart';
 
 class TeamService {
-  final TeamRepository repository;
+  final TeamRepository _repository;
 
-  TeamService(this.repository);
+  TeamService(this._repository);
 
   Future<Team> findByName(String teamName) async {
-    return repository.findByName(teamName);
+    return _repository.findByName(teamName);
   }
 
   Future<Team> findByPlayers(List<Player> players) async {
-    return repository.findByPlayers(players);
+    return _repository.findByPlayers(players);
   }
 
   Future<List<Team>> findAllTeams() async {
-    return getAllTeams;
+    return _repository.findAllTeams();
   }
 
   List<TeamScore> calculateTeamScore(
-      List<Team> teams, List<TeamMatch> allMatches) {
+      List<Team> teams, List<TeamsMatch> allMatches) {
     List<TeamScore> teamsScore = [];
     for (Team team in teams) {
-      List<TeamMatch> teamMatches = [];
+      List<TeamsMatch> teamMatches = [];
       teamMatches.addAll(allMatches);
       teamMatches.removeWhere(
           (element) => element.teamOne != team && element.teamTwo != team);

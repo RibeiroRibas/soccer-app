@@ -12,7 +12,7 @@ class PlayerPositionPageView extends StatelessWidget {
   PlayerPositionPageView(
       {super.key, required this.player, required this.goToNextPageView});
 
-  final List<Position> positions = Position.allPositions();
+  final List<Position> positions = Position.values;
 
   @override
   Widget build(BuildContext context) {

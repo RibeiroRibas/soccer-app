@@ -83,17 +83,17 @@ class SwitchPlayersComponent extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return PlayerOverallListItem(
-                        player: playersToGetIn[index],
-                        moveToColumnLeft: removePlayerToPlayerToGetIn != null
+                        player: playersToGetOut[index],
+                        moveToColumnLeft: removePlayerToPlayerToGetOut != null
                             ? (player) => movePlayerDialog(
                                 player,
-                                "${player.name} $willBeContinuousInReserve",
+                                "${player.name} $willBeContinuousPlaying",
                                 (player) =>
-                                    removePlayerToPlayerToGetIn!.call(player),
+                                    removePlayerToPlayerToGetOut!.call(player),
                                 context)
                             : null);
                   },
-                  itemCount: playersToGetIn.length),
+                  itemCount: playersToGetOut.length),
               TextWithBorderComponent(
                   text: whoToGetIn,
                   textStyle: Theme.of(context).textTheme.bodyLarge!),
@@ -102,17 +102,17 @@ class SwitchPlayersComponent extends StatelessWidget {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return PlayerOverallListItem(
-                        player: playersToGetOut[index],
-                        moveToColumnLeft: removePlayerToPlayerToGetOut != null
+                        player: playersToGetIn[index],
+                        moveToColumnLeft: removePlayerToPlayerToGetIn != null
                             ? (player) => movePlayerDialog(
                                 player,
-                                "${player.name} $willBeContinuousPlaying",
+                                "${player.name} $willBeContinuousInReserve",
                                 (player) =>
-                                    removePlayerToPlayerToGetOut!(player),
+                                    removePlayerToPlayerToGetIn!(player),
                                 context)
                             : null);
                   },
-                  itemCount: playersToGetOut.length),
+                  itemCount: playersToGetIn.length),
               TextWithBorderComponent(
                   text: whoAlreadyGoToReserve,
                   textStyle: Theme.of(context).textTheme.bodyLarge!),

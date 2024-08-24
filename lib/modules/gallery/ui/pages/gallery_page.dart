@@ -44,16 +44,6 @@ class _GalleryPageState extends State<GalleryPage> {
     );
   }
 
-  Future<void> _goToVideoPlayerPage(File video) {
-    return _navigator.pushNamed('$galleryRoute$videoPlayerRoute',
-        arguments: {"video": video});
-  }
-
-  Future<void> _goToImageViewerPage(int index) {
-    return _navigator.pushNamed('$galleryRoute$imageViewerRoute',
-        arguments: {"images": _controller.images, "imageIndex": index});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +54,7 @@ class _GalleryPageState extends State<GalleryPage> {
       floatingActionButton: Builder(
         builder: (_) {
           return Observer(
-            builder: (_) => _controller.currentIndex == 0
+            builder: (_) => _controller.isImage
                 ? FloatingActionButton(
                     onPressed: () => _controller.pickImagesFromDevice(),
                     child: const Icon(Icons.photo_library),
@@ -79,61 +69,113 @@ class _GalleryPageState extends State<GalleryPage> {
       body: Observer(
         builder: (_) => SingleChildScrollView(
           child: _controller.isImage
-              ? GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: _controller.images.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                        onTap: () => _goToImageViewerPage(index),
-                        child: ImageListItem(image: _controller.images[index]));
-                  },
-                )
-              : GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  ),
-                  itemCount: _controller.videos.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () =>
-                          _goToVideoPlayerPage(_controller.videos[index]),
-                      child: VideoListItem(
-                        video: _controller.videos[index],
-                      ),
-                    );
-                  },
-                ),
+              ? _ImagesComponent(
+                  images: _controller.images,
+                  onImageTap: (index) => _goToImageViewerPage(index))
+              : _VideosComponent(
+                  videos: _controller.videos,
+                  onVideoTap: (video) => _goToVideoPlayerPage(video)),
         ),
       ),
       bottomNavigationBar: Observer(
-        builder: (_) => BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.image),
-              label: images,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.play_arrow),
-              label: videos,
-            ),
-          ],
-          selectedItemColor: Theme.of(context).primaryColor,
-          currentIndex: _controller.currentIndex,
-          onTap: (index) => _controller.changeCurrentIndex(index),
-        ),
+        builder: (_) => _BottomNavigationBarComponent(
+            currentIndex: _controller.currentIndex,
+            onTabTap: (index) => _controller.changeCurrentIndex(index)),
       ),
     );
+  }
+
+  Future<void> _goToVideoPlayerPage(File video) {
+    return _navigator.pushNamed('$galleryRoute$videoPlayerRoute',
+        arguments: {"video": video});
+  }
+
+  Future<void> _goToImageViewerPage(int index) {
+    return _navigator.pushNamed('$galleryRoute$imageViewerRoute',
+        arguments: {"images": _controller.images, "imageIndex": index});
   }
 
   @override
   void dispose() {
     disposer();
     super.dispose();
+  }
+}
+
+class _ImagesComponent extends StatelessWidget {
+  final List<String> images;
+  final Function(int) onImageTap;
+
+  const _ImagesComponent({required this.images, required this.onImageTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+      itemCount: images.length,
+      itemBuilder: (BuildContext context, int index) {
+        return GestureDetector(
+            onTap: () => onImageTap(index),
+            child: ImageListItem(image: images[index]));
+      },
+    );
+  }
+}
+
+class _VideosComponent extends StatelessWidget {
+  final List<File> videos;
+  final Function(File) onVideoTap;
+
+  const _VideosComponent({required this.videos, required this.onVideoTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+      itemCount: videos.length,
+      itemBuilder: (BuildContext context, int index) {
+        return GestureDetector(
+          onTap: () => onVideoTap(videos[index]),
+          child: VideoListItem(
+            video: videos[index],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _BottomNavigationBarComponent extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTabTap;
+
+  const _BottomNavigationBarComponent(
+      {required this.currentIndex, required this.onTabTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.image),
+          label: images,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.play_arrow),
+          label: videos,
+        ),
+      ],
+      selectedItemColor: Theme.of(context).primaryColor,
+      currentIndex: currentIndex,
+      onTap: (index) => onTabTap(index),
+    );
   }
 }

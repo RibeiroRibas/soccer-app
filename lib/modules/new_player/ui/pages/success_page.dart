@@ -4,7 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/new_player/ui/pages/page_views/players_page_view.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
-import 'package:team_draw/modules/home/model/player_score.dart';
+import 'package:team_draw/model/player_score.dart';
 import 'package:team_draw/modules/new_player/new_player_rote_navigator.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/app_bar_tittle_with_close_button_component.dart';

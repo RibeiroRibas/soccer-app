@@ -1,7 +1,7 @@
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team_shield.dart';
-import 'package:team_draw/modules/home/model/team_overall.dart';
+import 'package:team_draw/model/team_overall.dart';
 import 'package:team_draw/shared/extensions/team_overall_map_extension.dart';
 
 class Team {

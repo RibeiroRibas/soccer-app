@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/modules/home/model/team_score.dart';
+import 'package:team_draw/model/team_score.dart';
 import 'package:team_draw/modules/home/ui/components/column_position_and_name_component.dart';
 import 'package:team_draw/modules/home/ui/components/column_team_scores_component.dart';
 import 'package:team_draw/shared/extensions/team_score_list_extension.dart';
@@ -19,13 +19,11 @@ class ClassificationTableComponent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0, bottom: 8.0),
-          child: TextWithBorderComponent(
-            text: classificationTable,
-            textStyle: Theme.of(context).textTheme.bodyLarge!,
-          ),
+        TextWithBorderComponent(
+          text: classificationTable,
+          textStyle: Theme.of(context).textTheme.bodyLarge!,
         ),
+        const SizedBox(height: 8.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

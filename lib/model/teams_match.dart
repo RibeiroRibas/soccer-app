@@ -1,11 +1,10 @@
-import 'package:team_draw/exceptions/players_goal_not_found_exception.dart';
-import 'package:team_draw/model/player_goals.dart';
 import 'package:team_draw/model/match_result.dart';
 import 'package:team_draw/model/player.dart';
+import 'package:team_draw/model/player_goals.dart';
 import 'package:team_draw/model/team.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
 
-class TeamMatch {
+class TeamsMatch {
   int? id;
   Team? teamOne;
   Team? teamTwo;
@@ -14,7 +13,7 @@ class TeamMatch {
   DateTime? matchDate;
   List<PlayerGoals>? matchGoals;
 
-  TeamMatch(
+  TeamsMatch(
       {this.id = 0,
       this.teamOne,
       this.teamTwo,
@@ -52,15 +51,22 @@ class TeamMatch {
     return scoreTeamOne;
   }
 
-  void setPlayerGoal(bool isIncreaseScore, Player player, String goalTime) {
+  void setPlayerGoal(
+    bool isIncreaseScore,
+    Player player,
+    String goalTime,
+    bool isScoreTeamOne,
+  ) {
     matchGoals = matchGoals ?? [];
-    if (matchGoals!.any((playerGoal) => playerGoal.player == player)) {
+    if (matchGoals!.any((playerGoal) => playerGoal.player.id == player.id)) {
       for (int i = 0; i < matchGoals!.length; i++) {
-        if (matchGoals![i].player == player) {
+        if (matchGoals![i].player.id == player.id) {
           if (isIncreaseScore) {
+            matchGoals![i].isOwnGoals.add(_isOwnGoal(isScoreTeamOne, player));
             matchGoals![i].goalTime.add(goalTime);
           } else {
             matchGoals![i].goalTime.removeLast();
+            matchGoals![i].isOwnGoals.removeLast();
             if (matchGoals![i].goalTime.isEmpty) {
               matchGoals!.removeAt(i);
             }
@@ -68,17 +74,38 @@ class TeamMatch {
         }
       }
     } else {
-      if (isIncreaseScore) {
-        matchGoals!.add(PlayerGoals(player: player, goalTime: [goalTime]));
-      } else {
-        throw PlayersGoalNotFoundException();
-      }
+      matchGoals!.add(PlayerGoals(
+          player: player,
+          goalTime: [goalTime],
+          isOwnGoal: _isOwnGoal(isScoreTeamOne, player)));
     }
   }
+
+  bool _isOwnGoal(bool isScoreTeamOne, Player player) =>
+      isScoreTeamOne && teamTwo!.players!.any((p) => p.id == player.id) ||
+      !isScoreTeamOne && teamOne!.players!.any((p) => p.id == player.id);
 
   TeamInformation getTeamsInformation() {
     List<String> teamOneInformation = teamOne!.getTeamInformation();
     List<String> teamTwoInformation = teamTwo!.getTeamInformation();
     return TeamInformation(teamOneInformation, teamTwoInformation);
+  }
+
+  bool isTeamOnePlayerGoalOrIsOwnGoal(PlayerGoals playerGoals) {
+    return teamOne!.players!.any((player) =>
+            playerGoals.player.id == player.id &&
+            playerGoals.isOwnGoals.any((isOwnGoal) => !isOwnGoal)) ||
+        teamTwo!.players!.any((player) =>
+            playerGoals.player.id == player.id &&
+            playerGoals.isOwnGoals.any((isOwnGoal) => isOwnGoal));
+  }
+
+  bool isTeamTwoPlayerGoalOrIsOwnGoal(PlayerGoals playerGoals) {
+    return teamTwo!.players!.any((player) =>
+            playerGoals.player.id == player.id &&
+            playerGoals.isOwnGoals.any((isOwnGoal) => !isOwnGoal)) ||
+        teamOne!.players!.any((player) =>
+            playerGoals.player.id == player.id &&
+            playerGoals.isOwnGoals.any((isOwnGoal) => isOwnGoal));
   }
 }

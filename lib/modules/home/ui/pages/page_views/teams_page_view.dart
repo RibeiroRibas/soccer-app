@@ -5,7 +5,6 @@ import 'package:team_draw/modules/home/home_route_navigator.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/box_card_component.dart';
 import 'package:team_draw/shared/ui/component/new_player_and_match_component.dart';
-import 'package:team_draw/shared/ui/component/player_overall_subtitle_component.dart';
 import 'package:team_draw/shared/ui/component/team_lineup_component.dart';
 
 class TeamsPageView extends StatelessWidget {
@@ -17,30 +16,27 @@ class TeamsPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeRouteNavigator navigator = Modular.get<HomeRouteNavigator>();
 
-    return CustomScrollView(
-      slivers: <Widget>[
-        const SliverToBoxAdapter(child: PlayerOverallSubtitleComponent()),
+    return SingleChildScrollView(
+        child: Column(
+      children: [
         if (teams.isEmpty)
-          SliverToBoxAdapter(
-            child: NewPlayerAndMatchComponent(
+          NewPlayerAndMatchComponent(
               message: emptyTeamMessage,
-              goToNextRoute: (route) => navigator.goTo('$route/'),
-            ),
-          ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: BoxCardComponent(
-                  boxCardBody: TeamLineupComponent(team: teams[index]),
-                ),
+              goToNextRoute: (route) => navigator.goTo('$route/')),
+        ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Column(
+                children: [
+                  BoxCardComponent(
+                      boxCardBody: TeamLineupComponent(team: teams[index])),
+                  const SizedBox(height: 8.0),
+                ],
               );
             },
-            childCount: teams.length,
-          ),
-        ),
+            itemCount: teams.length),
       ],
-    );
+    ));
   }
 }

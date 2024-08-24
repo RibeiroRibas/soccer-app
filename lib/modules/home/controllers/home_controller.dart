@@ -1,12 +1,12 @@
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/home/model/player_score.dart';
-import 'package:team_draw/modules/home/model/team_score.dart';
-import 'package:team_draw/services/player_service.dart';
-import 'package:team_draw/services/team_match_service.dart';
-import 'package:team_draw/services/team_service.dart';
+import 'package:team_draw/model/teams_match.dart';
+import 'package:team_draw/model/player_score.dart';
+import 'package:team_draw/model/team_score.dart';
+import 'package:team_draw/shared/services/player_service.dart';
+import 'package:team_draw/shared/services/team_match_service.dart';
+import 'package:team_draw/shared/services/team_service.dart';
 
 part 'home_controller.g.dart';
 
@@ -28,7 +28,7 @@ abstract class HomeControllerBase with Store {
 
   List<Team> teams = <Team>[];
   List<Player> players = <Player>[];
-  List<TeamMatch> allMatches = <TeamMatch>[];
+  List<TeamsMatch> allMatches = <TeamsMatch>[];
 
   @action
   Future<void> findAllData() async {

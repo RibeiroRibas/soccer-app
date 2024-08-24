@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/modules/new_match/services/generate_team_name_service.dart';
 import 'package:team_draw/modules/new_match/services/generate_team_shield_service.dart';
-import 'package:team_draw/services/player_service.dart';
-import 'package:team_draw/services/team_service.dart';
+import 'package:team_draw/shared/services/player_service.dart';
+import 'package:team_draw/shared/services/team_service.dart';
 
 class DrawTeamsService {
   final TeamService teamService;
@@ -129,15 +129,15 @@ class DrawTeamsService {
     }
   }
 
-  List<TeamMatch> generateTeamMatches(List<Team> sortedTeams) {
-    List<TeamMatch> matches = [];
+  List<TeamsMatch> generateTeamMatches(List<Team> sortedTeams) {
+    List<TeamsMatch> matches = [];
     List<Team> teams = [];
     teams.addAll(sortedTeams);
     while (teams.length > 1) {
       Team team1 = teams.first;
       teams.remove(team1);
       for (Team team2 in teams) {
-        TeamMatch teamMatch = TeamMatch(teamOne: team1, teamTwo: team2);
+        TeamsMatch teamMatch = TeamsMatch(teamOne: team1, teamTwo: team2);
         matches.add(teamMatch);
       }
     }

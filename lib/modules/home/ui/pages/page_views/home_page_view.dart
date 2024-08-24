@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/home/model/team_score.dart';
+import 'package:team_draw/model/teams_match.dart';
+import 'package:team_draw/model/team_score.dart';
 import 'package:team_draw/modules/home/home_route_navigator.dart';
 import 'package:team_draw/shared/ui/component/new_player_and_match_component.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
@@ -10,7 +10,7 @@ import 'package:team_draw/modules/home/ui/components/classification_table_compon
 
 class HomePageView extends StatelessWidget {
   final List<TeamScore> teamsScore;
-  final List<TeamMatch> allMatches;
+  final List<TeamsMatch> allMatches;
 
   const HomePageView({
     super.key,
@@ -26,14 +26,12 @@ class HomePageView extends StatelessWidget {
       child: Column(
         children: [
           ClassificationTableComponent(teamsScore: teamsScore),
-          HistoryMatchesComponent(
-            teamMatches: allMatches,
-          ),
+          const SizedBox(height: 16.0),
+          HistoryMatchesComponent(teamMatches: allMatches),
           if (allMatches.isEmpty)
             NewPlayerAndMatchComponent(
-              message: emptyMatchMessage,
-              goToNextRoute: (route) => navigator.goTo('$route/'),
-            ),
+                message: emptyMatchMessage,
+                goToNextRoute: (route) => navigator.goTo('$route/')),
         ],
       ),
     );

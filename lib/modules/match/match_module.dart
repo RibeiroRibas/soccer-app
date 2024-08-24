@@ -6,8 +6,8 @@ import 'package:team_draw/modules/match/match_navigator.dart';
 import 'package:team_draw/modules/match/ui/pages/match_page.dart';
 import 'package:team_draw/shared/repositories/team_match_repository.dart';
 import 'package:team_draw/shared/repositories/player_repository.dart';
-import 'package:team_draw/services/player_service.dart';
-import 'package:team_draw/services/team_match_service.dart';
+import 'package:team_draw/shared/services/player_service.dart';
+import 'package:team_draw/shared/services/team_match_service.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
 
 class MatchModule extends Module {

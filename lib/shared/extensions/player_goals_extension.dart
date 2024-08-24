@@ -39,4 +39,19 @@ extension PlayerGoalsExtension on List<PlayerGoals> {
   String _removeInitialCharactersAndSpace(String input) {
     return input.replaceFirst(RegExp(r'^\S+\s+'), '');
   }
+
+  bool isOwnGoal(String playerAtGoalTime) {
+    List<String> parts = playerAtGoalTime.split(' ');
+    String goalTime = parts[2];
+    if (any(
+        (playerGoal) => playerGoal.goalTime.any((time) => time == goalTime))) {
+      for (PlayerGoals playerGoals in this) {
+        int index = playerGoals.goalTime.indexOf(goalTime);
+        if (index >= 0) {
+          return playerGoals.isOwnGoals[index];
+        }
+      }
+    }
+    return false;
+  }
 }
