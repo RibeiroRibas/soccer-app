@@ -8,7 +8,9 @@ import 'package:team_draw/modules/match/ui/component/starting_and_reserve_player
 import 'package:team_draw/shared/ui/component/switch_players_component.dart';
 
 class PlayersManagerModal extends StatefulWidget {
-  const PlayersManagerModal({super.key});
+  final bool isTeamOne;
+
+  const PlayersManagerModal({super.key, required this.isTeamOne});
 
   @override
   State<PlayersManagerModal> createState() => _PlayersManagerModalState();
@@ -16,7 +18,6 @@ class PlayersManagerModal extends StatefulWidget {
 
 class _PlayersManagerModalState extends State<PlayersManagerModal> {
   late TeamController _controller;
-  bool isTeamOne = true;
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ class _PlayersManagerModalState extends State<PlayersManagerModal> {
   }
 
   void _initViewModel() {
-    if (isTeamOne) {
+    if (widget.isTeamOne) {
       _controller = Modular.get<TeamOneController>();
     } else {
       _controller = Modular.get<TeamTwoController>();
@@ -43,11 +44,7 @@ class _PlayersManagerModalState extends State<PlayersManagerModal> {
           children: [
             PlayersManagerAppBarComponent(
                 teamName: _controller.team.name!,
-                teamShield: _controller.team.shield!.resourcePath,
-                onChangeTeamTap: () => setState(() {
-                      isTeamOne = !isTeamOne;
-                      _initViewModel();
-                    })),
+                teamShield: _controller.team.shield!.resourcePath),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -4,7 +4,7 @@ import 'package:team_draw/model/position.dart';
 Player cezinha = Player(
   id: 1,
   name: "Cesinha",
-  principalPosition: Position.leftBack,
+  principalPosition: Position.leftWinger,
   overall: 7,
 );
 Player pedro = Player(
@@ -23,13 +23,13 @@ Player rodrigo = Player(
   id: 4,
   name: "Rodrigo",
   principalPosition: Position.rightDefender,
-  overall: 6,
+  overall: 7,
 );
 Player helton = Player(
   id: 5,
   name: "Helton",
   principalPosition: Position.leftWinger,
-  overall: 7,
+  overall: 9,
 );
 Player cris = Player(
   id: 6,
@@ -53,7 +53,7 @@ Player douglas = Player(
   id: 9,
   name: "Douglas",
   principalPosition: Position.rightWinger,
-  overall: 3,
+  overall: 4,
 );
 Player sid = Player(
   id: 10,
