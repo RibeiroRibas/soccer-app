@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/modules/home/model/player_score.dart';
+import 'package:team_draw/model/player_score.dart';
 import 'package:team_draw/modules/new_player/controllers/new_player_controller.dart';
 import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
 import 'package:team_draw/modules/new_player/new_player_rote_navigator.dart';

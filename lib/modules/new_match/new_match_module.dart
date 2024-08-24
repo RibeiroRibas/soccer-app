@@ -18,8 +18,8 @@ import 'package:team_draw/modules/new_match/ui/pages/match_details_page.dart';
 import 'package:team_draw/modules/new_match/ui/pages/match_result_page.dart';
 import 'package:team_draw/modules/new_match/ui/pages/new_match_nav_bar.dart';
 import 'package:team_draw/modules/new_match/ui/pages/start_deja_vu_match_page.dart';
-import 'package:team_draw/services/team_match_service.dart';
-import 'package:team_draw/services/team_service.dart';
+import 'package:team_draw/shared/services/team_match_service.dart';
+import 'package:team_draw/shared/services/team_service.dart';
 import 'package:team_draw/shared/repositories/local_storage_repository.dart';
 import 'package:team_draw/shared/repositories/team_repository.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
@@ -28,9 +28,7 @@ class NewMatchModule extends Module {
   static const durationTransaction = 500;
 
   @override
-  List<Module> get imports => [
-        CoreModule(),
-      ];
+  List<Module> get imports => [CoreModule()];
 
   @override
   void binds(i) {
@@ -39,7 +37,6 @@ class NewMatchModule extends Module {
     i.addLazySingleton(DrawTeamsService.new);
     i.addLazySingleton(GenerateTeamNameService.new);
     i.addLazySingleton(GenerateTeamShieldService.new);
-    i.addLazySingleton(LocalStorageRepository.new);
     i.addLazySingleton(NewMatchRoteNavigator.new);
     i.addLazySingleton(NewMatchNavBarController.new);
     i.addLazySingleton(DrawTeamsController.new);

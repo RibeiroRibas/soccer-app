@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/match_settings.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/modules/new_match/controllers/result_match_controller.dart';
 import 'package:team_draw/modules/new_match/new_match_rote_navigator.dart';
 import 'package:team_draw/modules/new_match/ui/components/match_result_component.dart';
@@ -12,7 +12,7 @@ import 'package:team_draw/shared/ui/component/elevated_button_component.dart';
 import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 
 class MatchResultPage extends StatefulWidget {
-  final List<TeamMatch> matches;
+  final List<TeamsMatch> matches;
   final MatchSettings matchSettings;
 
   const MatchResultPage(

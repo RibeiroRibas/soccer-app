@@ -60,7 +60,7 @@ class ColumnPositionAndNameComponent extends StatelessWidget {
   }
 
   double _calculateCellWidth(BuildContext context) =>
-      MediaQuery.of(context).size.width / 2.9;
+      MediaQuery.of(context).size.width / 3.0;
 
   double _getScreenWidthHalf(BuildContext context) =>
       MediaQuery.of(context).size.width / 2.0;

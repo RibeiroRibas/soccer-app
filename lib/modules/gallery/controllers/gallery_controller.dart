@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:mobx/mobx.dart';
-import 'package:team_draw/services/media_service.dart';
+import 'package:team_draw/shared/services/media_service.dart';
 
 part "gallery_controller.g.dart";
 

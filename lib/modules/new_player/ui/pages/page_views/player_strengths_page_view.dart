@@ -19,7 +19,7 @@ class PlayerStrengthsPageView extends StatefulWidget {
 }
 
 class _PlayerStrengthsPageViewState extends State<PlayerStrengthsPageView> {
-  final List<PlayerStrengths> playerStrengths = PlayerStrengths.all();
+  final List<PlayerStrengths> playerStrengths = PlayerStrengths.values;
 
   void setStrengthsPoints(int index) {
     if (widget.player.isStrengthsNotSelected(playerStrengths[index])) {

@@ -19,7 +19,7 @@ class PlayerWeakPointsPageView extends StatefulWidget {
 }
 
 class _PlayerWeakPointsPageViewState extends State<PlayerWeakPointsPageView> {
-  final List<PlayerWeakPoints> playerWeakPoints = PlayerWeakPoints.all();
+  final List<PlayerWeakPoints> playerWeakPoints = PlayerWeakPoints.values;
 
   void setPlayerWeakPoints(int index) {
     if (widget.player.isWeakPointNotSelected(playerWeakPoints[index])) {

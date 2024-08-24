@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/services/player_service.dart';
+import 'package:team_draw/shared/services/player_service.dart';
 
 part 'player_lineup_controller.g.dart';
 

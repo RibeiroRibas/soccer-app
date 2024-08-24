@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/presentation/custom_icons.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 
-class PlayerScoreSubtitleComponent extends StatefulWidget {
-  const PlayerScoreSubtitleComponent({super.key});
+class PlayerScoreIconsComponent extends StatefulWidget {
+  const PlayerScoreIconsComponent({super.key});
 
   @override
-  State<PlayerScoreSubtitleComponent> createState() =>
-      _PlayerScoreSubtitleComponentState();
+  State<PlayerScoreIconsComponent> createState() =>
+      _PlayerScoreIconsComponentState();
 }
 
-class _PlayerScoreSubtitleComponentState
-    extends State<PlayerScoreSubtitleComponent> {
+class _PlayerScoreIconsComponentState
+    extends State<PlayerScoreIconsComponent> {
   bool tapped = false;
 
   @override

@@ -4,11 +4,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/home/controllers/home_controller.dart';
-import 'package:team_draw/modules/home/helper/home_page_view.dart';
 import 'package:team_draw/modules/home/home_route_navigator.dart';
+import 'package:team_draw/modules/home/ui/components/drawer_menu_component.dart';
 import 'package:team_draw/modules/home/ui/expandable_fab/action_button_component.dart';
 import 'package:team_draw/modules/home/ui/expandable_fab/expandable_fab_section.dart';
-import 'package:team_draw/modules/home/ui/pages/drawer_menu.dart';
 import 'package:team_draw/modules/home/ui/pages/page_views/home_page_view.dart';
 import 'package:team_draw/modules/home/ui/pages/page_views/players_page_view.dart';
 import 'package:team_draw/modules/home/ui/pages/page_views/teams_page_view.dart';
@@ -16,6 +15,7 @@ import 'package:team_draw/presentation/custom_icons.dart';
 import 'package:team_draw/shared/controller/page_view_controller.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
+import 'package:team_draw/shared/ui/commom/scaffold_body_content.dart';
 
 class HomeNavBar extends StatefulWidget {
   const HomeNavBar({super.key});
@@ -32,25 +32,8 @@ class _HomeNavBarState extends State<HomeNavBar> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-    ]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     _controller.findAllData();
-  }
-
-  List<Widget> allPagesView() {
-    List<Widget> allPages = [
-      HomePageView(
-        teamsScore: _controller.calculateTeamScore(),
-        allMatches: _controller.allMatches,
-      ),
-      TeamsPageView(
-        teams: _controller.teams,
-      ),
-      PlayersPageView(playersScore: _controller.calculatePlayerScore())
-    ];
-    assert(HomePageViewHelper.getTotalPages() == allPages.length);
-    return allPages;
   }
 
   @override
@@ -63,7 +46,7 @@ class _HomeNavBarState extends State<HomeNavBar> {
         ),
         centerTitle: true,
       ),
-      drawer: const Drawer(width: 200, child: DrawerMenu()),
+      drawer: const Drawer(width: 200, child: DrawerMenuComponent()),
       floatingActionButton: ExpandableFabSection(
         distance: 80,
         children: [
@@ -79,39 +62,66 @@ class _HomeNavBarState extends State<HomeNavBar> {
         ],
       ),
       bottomNavigationBar: Observer(
-        builder: (_) => BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: home,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.people),
-              label: teams,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: players,
-            ),
-          ],
-          selectedItemColor: Theme.of(context).primaryColor,
-          currentIndex: _pageViewController.currentPageIndex,
-          onTap: (index) => _pageViewController.animateToPage(index),
-        ),
-      ),
+          builder: (_) => _BottomNavigationBarComponent(
+              currentIndex: _pageViewController.currentPageIndex,
+              onTabTap: (index) => _pageViewController.animateToPage(index))),
       body: Observer(
         builder: (_) => _controller.isLoading
             ? const Center(child: CircularProgressIndicator())
-            : Padding(
-                padding: const EdgeInsets.only(
-                    left: 12.0, right: 12.0, top: 8.0, bottom: 8.0),
+            : ScaffoldBodyContent(
                 child: PageView(
                   controller: _pageViewController.pageController,
                   children: allPagesView(),
                   onPageChanged: (index) =>
                       _pageViewController.changeCurrentPageIndex(index),
-                )),
+                ),
+              ),
       ),
+    );
+  }
+
+  List<Widget> allPagesView() {
+    List<Widget> allPages = [
+      HomePageView(
+        teamsScore: _controller.calculateTeamScore(),
+        allMatches: _controller.allMatches,
+      ),
+      TeamsPageView(
+        teams: _controller.teams,
+      ),
+      PlayersPageView(playersScore: _controller.calculatePlayerScore())
+    ];
+    return allPages;
+  }
+}
+
+class _BottomNavigationBarComponent extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTabTap;
+
+  const _BottomNavigationBarComponent(
+      {required this.currentIndex, required this.onTabTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomNavigationBar(
+      items: const <BottomNavigationBarItem>[
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: home,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.people),
+          label: teams,
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: players,
+        ),
+      ],
+      selectedItemColor: Theme.of(context).primaryColor,
+      currentIndex: currentIndex,
+      onTap: (index) => onTabTap(index),
     );
   }
 }

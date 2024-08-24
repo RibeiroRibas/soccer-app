@@ -6,7 +6,7 @@ import 'package:team_draw/model/team.dart';
 import 'package:team_draw/modules/match/model/default_formation.dart';
 import 'package:team_draw/modules/match/model/formation.dart';
 import 'package:team_draw/modules/match/model/team_formation.dart';
-import 'package:team_draw/services/player_service.dart';
+import 'package:team_draw/shared/services/player_service.dart';
 
 part 'team_controller.g.dart';
 
@@ -54,6 +54,8 @@ abstract class TeamControllerBase with Store {
   late Color teamColor;
 
   late int numberOfStartingPlayers;
+
+  Map<Player, Player> whoGetInWhoGetOut = {};
 
   void init(Team team, int numberOfStartingPlayers) {
     this.numberOfStartingPlayers = numberOfStartingPlayers;
@@ -151,11 +153,6 @@ abstract class TeamControllerBase with Store {
     playersThatNotGotOut.removeWhere(
         (player) => playersAlreadyGoneToReserve.any((p) => p.id == player.id));
 
-    // Regra 2
-    for (Player player in this.playersToGetIn) {
-      player.improvisedPosition = null;
-    }
-
     // Regra 3 e 5
     playersThatNotGotOut.removeWhere((p) =>
         p.principalPosition == Position.goalkeeper ||
@@ -184,6 +181,7 @@ abstract class TeamControllerBase with Store {
         if (playersToGetOut.length < this.playersToGetIn.length) {
           Player playerToGetIn = playersToGetIn.firstWhere(
               (p) => p.principalPosition == player.principalPosition);
+          whoGetInWhoGetOut[playerToGetIn] = player;
           playersToGetIn.remove(playerToGetIn);
           playersToGetOut.add(player);
         }
@@ -191,6 +189,7 @@ abstract class TeamControllerBase with Store {
     }
 
     if (playersToGetOut.length == this.playersToGetIn.length) return;
+
     playersThatNotGotOut
         .removeWhere((player) => playersToGetOut.any((p) => p.id == player.id));
 
@@ -203,16 +202,18 @@ abstract class TeamControllerBase with Store {
               (p) => p.principalPosition == player.improvisedPosition);
           playersToGetIn.remove(playerToGetIn);
           for (var p in this.playersToGetIn) {
-            if (p == playerToGetIn) {
+            if (p.id == playerToGetIn.id) {
               p.improvisedPosition = player.improvisedPosition;
             }
           }
+          whoGetInWhoGetOut[playerToGetIn] = player;
           playersToGetOut.add(player);
         }
       }
     }
 
     if (playersToGetOut.length == this.playersToGetIn.length) return;
+
     playersThatNotGotOut
         .removeWhere((player) => playersToGetOut.any((p) => p.id == player.id));
 
@@ -230,11 +231,12 @@ abstract class TeamControllerBase with Store {
                         .any((position) => p.principalPosition == position));
                 playersToGetIn.remove(playerToGetIn);
                 for (var p in this.playersToGetIn) {
-                  if (p == playerToGetIn) {
+                  if (p.id == playerToGetIn.id) {
                     p.improvisedPosition =
                         player.improvisedPosition ?? player.principalPosition;
                   }
                 }
+                whoGetInWhoGetOut[playerToGetIn] = player;
                 playersToGetOut.add(player);
               }
             }
@@ -244,6 +246,7 @@ abstract class TeamControllerBase with Store {
     }
 
     if (playersToGetOut.length == this.playersToGetIn.length) return;
+
     playersThatNotGotOut
         .removeWhere((player) => playersToGetOut.any((p) => p.id == player.id));
 
@@ -263,11 +266,12 @@ abstract class TeamControllerBase with Store {
                         .any((position) => p.principalPosition == position));
                 playersToGetIn.remove(playerToGetIn);
                 for (var p in this.playersToGetIn) {
-                  if (p == playerToGetIn) {
+                  if (p.id == playerToGetIn.id) {
                     p.improvisedPosition =
                         player.improvisedPosition ?? player.principalPosition;
                   }
                 }
+                whoGetInWhoGetOut[playerToGetIn] = player;
                 playersToGetOut.add(player);
               }
             }
@@ -337,11 +341,34 @@ abstract class TeamControllerBase with Store {
   }
 
   void switchPlayers() {
+    whoGetInWhoGetOut.forEach((getIn, getOut) {
+      if (getOut.improvisedPosition != null) {
+        if (getIn.principalPosition != getOut.improvisedPosition) {
+          getIn.improvisedPosition = getOut.improvisedPosition;
+        }
+      } else {
+        if (getIn.principalPosition != getOut.principalPosition) {
+          getIn.improvisedPosition = getOut.principalPosition;
+        }
+      }
+    });
+
+    playersToGetIn.clear();
+    playersToGetIn.addAll(whoGetInWhoGetOut.keys);
+    playersToGetOut.clear();
+    playersToGetOut.addAll(whoGetInWhoGetOut.values);
+
     startingPlayers
         .removeWhere((player) => playersToGetOut.any((p) => p.id == player.id));
     startingPlayers.addAll(playersToGetIn);
     reservePlayers
         .removeWhere((player) => playersToGetIn.any((p) => p.id == player.id));
+
+    // Regra 2
+    for (Player player in playersToGetOut) {
+      player.improvisedPosition = null;
+    }
+
     reservePlayers.addAll(playersToGetOut);
     playersToGetIn.clear();
     playersToGetIn.addAll(reservePlayers);

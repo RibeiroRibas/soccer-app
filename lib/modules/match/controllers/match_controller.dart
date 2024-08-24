@@ -1,15 +1,15 @@
 import 'dart:ui';
 
 import 'package:mobx/mobx.dart';
-import 'package:team_draw/exceptions/players_goal_not_found_exception.dart';
 import 'package:team_draw/model/match_settings.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/home/model/player_score.dart';
+import 'package:team_draw/model/player_goals.dart';
+import 'package:team_draw/model/player_score.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/modules/match/model/formation.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
-import 'package:team_draw/services/player_service.dart';
-import 'package:team_draw/services/team_match_service.dart';
+import 'package:team_draw/shared/services/player_service.dart';
+import 'package:team_draw/shared/services/team_match_service.dart';
 
 part 'match_controller.g.dart';
 
@@ -21,7 +21,7 @@ abstract class MatchControllerBase with Store {
 
   MatchControllerBase(this._playerService, this._teamMatchService);
 
-  late TeamMatch match;
+  late TeamsMatch match;
 
   @observable
   int scoreTeamOne = 0;
@@ -32,9 +32,7 @@ abstract class MatchControllerBase with Store {
   @observable
   bool isMatchStarted = false;
 
-  String? playerGoalNotFundMessage;
-
-  List<TeamMatch> allMatches = [];
+  List<TeamsMatch> allMatches = [];
 
   List<PlayerScore> playersScoreTeamOne = [];
   List<PlayerScore> playersScoreTeamTwo = [];
@@ -46,7 +44,7 @@ abstract class MatchControllerBase with Store {
   @observable
   Formation formation = Formation.defaultFormation;
 
-  void init(List<TeamMatch> matches, MatchSettings matchSettings) {
+  void init(List<TeamsMatch> matches, MatchSettings matchSettings) {
     settings = matchSettings;
 
     match = matches.first;
@@ -81,22 +79,20 @@ abstract class MatchControllerBase with Store {
   @action
   Future<void> changeScore(bool isScoreTeamOne, bool isIncreaseScore,
       Player player, String goalTime) async {
-    _setPlayerGoal(isIncreaseScore, player, goalTime);
+    match.setPlayerGoal(isIncreaseScore, player, goalTime, isScoreTeamOne);
 
-    if (playerGoalNotFundMessage == null) {
-      if (isScoreTeamOne && isIncreaseScore) {
-        scoreTeamOne += 1;
-      } else if (isScoreTeamOne && !isIncreaseScore && scoreTeamOne > 0) {
-        scoreTeamOne -= 1;
-      } else if (!isScoreTeamOne && isIncreaseScore) {
-        scoreTeamTwo += 1;
-      } else if (scoreTeamTwo > 0) {
-        scoreTeamTwo -= 1;
-      }
-
-      match.scoreTeamOne = scoreTeamOne;
-      match.scoreTeamTwo = scoreTeamTwo;
+    if (isScoreTeamOne && isIncreaseScore) {
+      scoreTeamOne += 1;
+    } else if (isScoreTeamOne && !isIncreaseScore && scoreTeamOne > 0) {
+      scoreTeamOne -= 1;
+    } else if (!isScoreTeamOne && isIncreaseScore) {
+      scoreTeamTwo += 1;
+    } else if (scoreTeamTwo > 0) {
+      scoreTeamTwo -= 1;
     }
+
+    match.scoreTeamOne = scoreTeamOne;
+    match.scoreTeamTwo = scoreTeamTwo;
   }
 
   bool verifyIfScoreIsNotEqualsZero(bool isScoreTeamOne, bool isIncreaseScore) {
@@ -105,27 +101,46 @@ abstract class MatchControllerBase with Store {
         !isScoreTeamOne && !isIncreaseScore && scoreTeamTwo > 0;
   }
 
-  void _setPlayerGoal(bool isIncreaseScore, Player player, String goalTime) {
-    playerGoalNotFundMessage = null;
-    try {
-      match.setPlayerGoal(isIncreaseScore, player, goalTime);
-    } on PlayersGoalNotFoundException {
-      playerGoalNotFundMessage =
-          "Não foi possível remover o gol. O jogador selecionado não marcou um gol nessa partida,"
-          " por favor escolha um jogador que já tenha marcado um gol para remover.";
-    }
-  }
-
-  Future<void> save(List<TeamMatch> matches) async {
+  Future<void> save(List<TeamsMatch> matches) async {
     matches[0] = match;
   }
 
-  void cleanTemporaryValues() {
+  void cleanImprovisedPositions() {
     for (var player in match.teamOne!.players!) {
       player.improvisedPosition = null;
     }
     for (var player in match.teamTwo!.players!) {
       player.improvisedPosition = null;
     }
+  }
+
+  List<Player> getPlayersToShowInScoreDialog(
+      bool isScoreTeamOne, bool isIncreaseScore) {
+    List<Player> players = [];
+    if (isIncreaseScore && isScoreTeamOne) {
+      players.addAll(match.teamOne!.players!);
+      players.addAll(match.teamTwo!.players!);
+      return players;
+    }
+    if (isIncreaseScore && !isScoreTeamOne) {
+      players.addAll(match.teamTwo!.players!);
+      players.addAll(match.teamOne!.players!);
+      return players;
+    }
+
+    if (!isIncreaseScore && isScoreTeamOne) {
+      for (PlayerGoals playerGoals in match.matchGoals!) {
+        if(match.isTeamOnePlayerGoalOrIsOwnGoal(playerGoals)){
+          players.add(playerGoals.player);
+        }
+      }
+    } else {
+      for (PlayerGoals playerGoals in match.matchGoals!) {
+        if(match.isTeamTwoPlayerGoalOrIsOwnGoal(playerGoals)){
+          players.add(playerGoals.player);
+        }
+      }
+    }
+    return players;
   }
 }

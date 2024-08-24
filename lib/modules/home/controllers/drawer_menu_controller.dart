@@ -1,16 +1,17 @@
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/shared/repositories/local_storage_repository.dart';
-import 'package:team_draw/services/media_service.dart';
+import 'package:team_draw/shared/services/local_storage_service.dart';
+import 'package:team_draw/shared/services/media_service.dart';
 
 part 'drawer_menu_controller.g.dart';
 
 class DrawerMenuController = DrawerControllerBase with _$DrawerMenuController;
 
 abstract class DrawerControllerBase with Store {
-  final MediaService mediaService;
-  final LocalStorageRepository repository;
+  final MediaService _mediaService;
+  final LocalStorageService _localStorageService;
 
-  DrawerControllerBase(this.mediaService, this.repository);
+  DrawerControllerBase(this._mediaService, this._localStorageService);
 
   final String _imageDrawer = "image_drawer";
 
@@ -21,16 +22,16 @@ abstract class DrawerControllerBase with Store {
   bool isMediaLocationPermanentlyDenied = false;
 
   Future<void> init() async {
-    image = await repository.read(_imageDrawer);
+    image = await _localStorageService.read(_imageDrawer);
   }
 
   Future<void> onImageTap() async {
-    if (await mediaService.isMediaLocationPermanentlyDenied()) {
+    if (await _mediaService.isMediaLocationPermanentlyDenied()) {
       isMediaLocationPermanentlyDenied = !isMediaLocationPermanentlyDenied;
     } else {
-      String? selectedImage = await mediaService.pickImageFomDevice();
+      String? selectedImage = await _mediaService.pickImageFomDevice();
       if (selectedImage != null) {
-        await repository.write(_imageDrawer, selectedImage);
+        await _localStorageService.write(_imageDrawer, selectedImage);
         image = selectedImage;
       }
     }

@@ -8,20 +8,20 @@ import 'package:team_draw/data/profile_data.dart';
 import 'package:team_draw/data/shield_data.dart';
 import 'package:team_draw/modules/home/controllers/drawer_menu_controller.dart';
 import 'package:team_draw/modules/home/home_route_navigator.dart';
-import 'package:team_draw/services/media_service.dart';
+import 'package:team_draw/shared/services/media_service.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 import 'package:team_draw/shared/ui/dialogs/permission_denied_dialog.dart';
 
-class DrawerMenu extends StatefulWidget {
-  const DrawerMenu({super.key});
+class DrawerMenuComponent extends StatefulWidget {
+  const DrawerMenuComponent({super.key});
 
   @override
-  State<DrawerMenu> createState() => _DrawerMenuState();
+  State<DrawerMenuComponent> createState() => _DrawerMenuComponentState();
 }
 
-class _DrawerMenuState extends State<DrawerMenu> {
+class _DrawerMenuComponentState extends State<DrawerMenuComponent> {
   final _navigator = Modular.get<HomeRouteNavigator>();
   final _viewModel = Modular.get<DrawerMenuController>();
   late ReactionDisposer disposer;

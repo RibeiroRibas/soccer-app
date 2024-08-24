@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/shared/helper/date_time_format_helper.dart';
 import 'package:team_draw/shared/ui/component/match_score_component.dart';
 
 class MatchesListItem extends StatefulWidget {
-  final TeamMatch match;
+  final TeamsMatch match;
 
   const MatchesListItem({super.key, required this.match});
 

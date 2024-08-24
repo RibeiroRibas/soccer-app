@@ -22,4 +22,5 @@ class ThemeColors {
   static const Color overall = Color.fromRGBO(0, 255, 66, 1);
 
   static const Color selectedPosition = Colors.orange;
+  static const Color ownGoal = Colors.red;
 }

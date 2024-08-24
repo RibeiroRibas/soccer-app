@@ -1,4 +1,4 @@
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/shared/repositories/team_match_repository.dart';
 
 class TeamMatchService {
@@ -6,7 +6,7 @@ class TeamMatchService {
 
   TeamMatchService(this._repository);
 
-  Future<List<TeamMatch>> findAllMatches() async {
+  Future<List<TeamsMatch>> findAllMatches() async {
     return _repository.findAllMatches();
   }
 }

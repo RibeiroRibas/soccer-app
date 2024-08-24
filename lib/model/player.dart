@@ -3,8 +3,8 @@ import 'package:team_draw/model/match_result.dart';
 import 'package:team_draw/model/player_strengths.dart';
 import 'package:team_draw/model/player_weak_points.dart';
 import 'package:team_draw/model/position.dart';
-import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/home/model/player_score.dart';
+import 'package:team_draw/model/teams_match.dart';
+import 'package:team_draw/model/player_score.dart';
 
 class Player {
   int id;
@@ -17,32 +17,32 @@ class Player {
 
   Player({this.id = 0, this.name, this.overall, this.principalPosition});
 
-  bool isGoalKeeper() {
-    return principalPosition == Position.goalkeeper;
-  }
-
-  PlayerScore calculateScore(List<TeamMatch> allMatches) {
+  PlayerScore calculateScore(List<TeamsMatch> allMatches) {
     PlayerScore playerScore = PlayerScore(this);
-    List<TeamMatch> matches = [];
+    List<TeamsMatch> matches = [];
     matches.addAll(allMatches);
     matches.removeWhere((e) =>
         !e.teamOne!.players!.contains(this) &&
         !e.teamTwo!.players!.contains(this));
-    for (TeamMatch teamMatch in matches) {
-      if (teamMatch.matchGoals != null) {
-        for (PlayerGoals playerGoals in teamMatch.matchGoals!) {
-          if (playerGoals.player == this) {
-            playerScore.goals += playerGoals.goalTime.length;
-          }
-        }
-      }
+    for (TeamsMatch teamMatch in matches) {
+      _setPlayerGoals(teamMatch, playerScore);
       _setScore(teamMatch, playerScore);
     }
     return playerScore;
   }
 
+  void _setPlayerGoals(TeamsMatch teamMatch, PlayerScore playerScore) {
+    if (teamMatch.matchGoals != null) {
+      for (PlayerGoals playerGoals in teamMatch.matchGoals!) {
+        if (playerGoals.player == this) {
+          playerScore.goals += playerGoals.goalTime.length;
+        }
+      }
+    }
+  }
+
   void _setScore(
-    TeamMatch teamMatch,
+    TeamsMatch teamMatch,
     PlayerScore playerScore,
   ) {
     MatchResult resultTeamOne =
@@ -77,6 +77,10 @@ class Player {
     }
   }
 
+  bool isGoalKeeper() {
+    return principalPosition == Position.goalkeeper;
+  }
+
   bool isForward() {
     return principalPosition == Position.forward;
   }
@@ -102,7 +106,7 @@ class Player {
   }
 
   bool isLastWeakPointAllowed() {
-    return weakPoints.length == PlayerWeakPoints.all().length - 1;
+    return weakPoints.length == PlayerWeakPoints.values.length - 1;
   }
 
   bool isStrengthsNotSelected(PlayerStrengths playerStrengths) {
@@ -110,7 +114,7 @@ class Player {
   }
 
   bool isLastStrengthsAllowed() {
-    return strengths.length == PlayerStrengths.all().length - 1;
+    return strengths.length == PlayerStrengths.values.length - 1;
   }
 
   bool isLeftWinger() {

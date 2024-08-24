@@ -25,69 +25,48 @@ enum Position {
     assert(values.length == 14);
     switch (index) {
       case 0:
-        assert(allPositions()[0] == goalkeeper);
+        assert(values[0] == goalkeeper);
         return goalkeeper;
       case 1:
-        assert(allPositions()[1] == goalkeeper);
+        assert(values[1] == goalkeeper);
         return forward;
       case 2:
-        assert(allPositions()[2] == goalkeeper);
+        assert(values[2] == goalkeeper);
         return midfielder;
       case 3:
-        assert(allPositions()[3] == goalkeeper);
+        assert(values[3] == goalkeeper);
         return leftMidfielder;
       case 4:
-        assert(allPositions()[4] == goalkeeper);
+        assert(values[4] == goalkeeper);
         return rightMidfielder;
       case 5:
-        assert(allPositions()[5] == goalkeeper);
+        assert(values[5] == goalkeeper);
         return defender;
       case 6:
-        assert(allPositions()[6] == goalkeeper);
+        assert(values[6] == goalkeeper);
         return leftDefender;
       case 7:
-        assert(allPositions()[7] == goalkeeper);
+        assert(values[7] == goalkeeper);
         return rightDefender;
       case 8:
-        assert(allPositions()[8] == goalkeeper);
+        assert(values[8] == goalkeeper);
         return leftBack;
       case 9:
-        assert(allPositions()[9] == goalkeeper);
+        assert(values[9] == goalkeeper);
         return rightBack;
       case 10:
-        assert(allPositions()[10] == goalkeeper);
+        assert(values[10] == goalkeeper);
         return leftWinger;
       case 11:
-        assert(allPositions()[11] == goalkeeper);
+        assert(values[11] == goalkeeper);
         return rightWinger;
       case 12:
-        assert(allPositions()[12] == goalkeeper);
+        assert(values[12] == goalkeeper);
         return leftDefensiveMidfielder;
       default:
-        assert(allPositions()[13] == goalkeeper);
+        assert(values[13] == goalkeeper);
         return rightDefensiveMidfielder;
     }
-  }
-
-  static List<Position> allPositions() {
-    List<Position> positions = [
-      goalkeeper,
-      forward,
-      midfielder,
-      leftMidfielder,
-      rightMidfielder,
-      defender,
-      leftDefender,
-      rightDefender,
-      leftBack,
-      rightBack,
-      leftWinger,
-      rightWinger,
-      leftDefensiveMidfielder,
-      rightDefensiveMidfielder,
-    ];
-    assert(values.length == positions.length);
-    return positions;
   }
 
   static List<Position> defensivePositions() {

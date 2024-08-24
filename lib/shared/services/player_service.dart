@@ -3,8 +3,8 @@ import 'dart:math';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/home/model/player_score.dart';
+import 'package:team_draw/model/teams_match.dart';
+import 'package:team_draw/model/player_score.dart';
 import 'package:team_draw/shared/repositories/player_repository.dart';
 
 class PlayerService {
@@ -45,7 +45,7 @@ class PlayerService {
   bool alreadyDrawTeamOne = false;
 
   List<PlayerScore> calculatePlayerScore(
-      List<Player> players, List<TeamMatch> matches) {
+      List<Player> players, List<TeamsMatch> matches) {
     List<PlayerScore> playersScore = [];
     for (Player player in players) {
       playersScore.add(player.calculateScore(matches));
@@ -116,7 +116,7 @@ class PlayerService {
         _rightMidfielders.add(player);
       }
     }
-    for (Position position in Position.allPositions()) {
+    for (Position position in Position.values) {
       allPlayersByPosition[position] = players
           .where((player) => player.principalPosition == position)
           .toList();
@@ -295,7 +295,7 @@ class PlayerService {
       List<Player> players, int numberOfStartingPlayers) {
     initPlayersByPosition(players);
     List<Player> startingPlayers = [];
-    for (Position position in Position.allPositions()) {
+    for (Position position in Position.values) {
       if (allPlayersByPosition[position]!.isNotEmpty &&
           startingPlayers.length != numberOfStartingPlayers) {
         startingPlayers.add(allPlayersByPosition[position]!.first);
@@ -303,7 +303,7 @@ class PlayerService {
       }
     }
     while (startingPlayers.length != numberOfStartingPlayers) {
-      for (Position position in Position.allPositions()) {
+      for (Position position in Position.values) {
         if (allPlayersByPosition[position]!.isNotEmpty &&
             startingPlayers.length != numberOfStartingPlayers) {
           startingPlayers.add(allPlayersByPosition[position]!.first);

@@ -1,9 +1,9 @@
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/model/team_match.dart';
-import 'package:team_draw/modules/home/model/player_score.dart';
-import 'package:team_draw/services/player_service.dart';
-import 'package:team_draw/services/team_match_service.dart';
+import 'package:team_draw/model/teams_match.dart';
+import 'package:team_draw/model/player_score.dart';
+import 'package:team_draw/shared/services/player_service.dart';
+import 'package:team_draw/shared/services/team_match_service.dart';
 
 part 'new_player_controller.g.dart';
 
@@ -37,7 +37,7 @@ abstract class NewPlayerControllerBase with Store {
         await _playerService.findAllPlayers(), await findAllMatches());
   }
 
-  Future<List<TeamMatch>> findAllMatches() async {
+  Future<List<TeamsMatch>> findAllMatches() async {
     return await _teamMatchService.findAllMatches();
   }
 }

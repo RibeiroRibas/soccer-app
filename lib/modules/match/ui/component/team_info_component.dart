@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/modules/home/model/player_score.dart';
-import 'package:team_draw/shared/ui/component/player_score_subtitle_component.dart';
+import 'package:team_draw/model/player_score.dart';
+import 'package:team_draw/shared/ui/component/player_score_icons_component.dart';
+import 'package:team_draw/shared/ui/list_item/player_info_list_item_.dart';
 import 'package:team_draw/shared/ui/list_item/player_overall_list_item.dart';
 import 'package:team_draw/shared/ui/component/team_overall_component.dart';
 
@@ -27,12 +28,12 @@ class TeamInfoComponent extends StatelessWidget {
             children: [
               TeamOverallComponent(
                   team: team, teamOverall: team.teamOverall.value),
-              const PlayerScoreSubtitleComponent(),
+              const PlayerScoreIconsComponent(),
               ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return PlayerOverallListItem(
+                    return PlayerInfoListItem(
                         playerScore: playersScore[index],
                         player: playersScore[index].player);
                   },

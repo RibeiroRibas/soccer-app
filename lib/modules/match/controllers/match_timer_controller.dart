@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:team_draw/model/match_settings.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 
 part 'match_timer_controller.g.dart';
 
@@ -48,13 +48,13 @@ abstract class MatchTimerControllerBase with Store implements Disposable {
   Timer? _reservePlayerTimer;
   Timer? _matchTimer;
 
-  TeamMatch? match;
+  TeamsMatch? match;
 
   late ReactionDisposer reservePlayerTimerDisposer;
   late ReactionDisposer matchTimerDisposer;
 
   @action
-  void init(TeamMatch match, MatchSettings matchSettings) {
+  void init(TeamsMatch match, MatchSettings matchSettings) {
     this.match = match;
     this.matchSettings = matchSettings;
     resetTimer();

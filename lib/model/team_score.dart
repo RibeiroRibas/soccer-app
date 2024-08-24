@@ -1,6 +1,6 @@
 import 'package:team_draw/model/match_result.dart';
 import 'package:team_draw/model/team.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 
 class TeamScore implements Comparable<TeamScore> {
   String teamName = "";
@@ -12,7 +12,7 @@ class TeamScore implements Comparable<TeamScore> {
   int goalsScored = 0;
   int goalsConceded = 0;
 
-  TeamScore({required Team team, required List<TeamMatch> matches}) {
+  TeamScore({required Team team, required List<TeamsMatch> matches}) {
     teamName = team.name!;
     for (var match in matches) {
       setMatchResult(match.getMatchResult(team: team));

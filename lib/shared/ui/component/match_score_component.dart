@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 
 class MatchScoreComponent extends StatelessWidget {
-  final TeamMatch match;
+  final TeamsMatch match;
   final bool isShowTeamName;
 
   const MatchScoreComponent(

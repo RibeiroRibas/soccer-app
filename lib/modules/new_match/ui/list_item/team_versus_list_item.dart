@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:team_draw/model/team_match.dart';
+import 'package:team_draw/model/teams_match.dart';
 import 'package:team_draw/model/team_shield.dart';
 import 'package:team_draw/modules/new_match/model/team_information.dart';
 import 'package:team_draw/modules/new_match/ui/components/team_name_and_shield_component.dart';
@@ -9,7 +9,7 @@ import 'package:team_draw/shared/ui/component/teams_info_component.dart';
 import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 
 class TeamVersusListItem extends StatelessWidget {
-  final TeamMatch teamMatch;
+  final TeamsMatch teamMatch;
   final Function(String, String) onTeamNameChange;
   final Function(TeamShield, TeamShield) onTeamShieldChange;
   final List<String> availableNames;

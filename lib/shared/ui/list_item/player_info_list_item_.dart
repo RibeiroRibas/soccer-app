@@ -4,36 +4,24 @@ import 'package:team_draw/model/player_score.dart';
 import 'package:team_draw/shared/theme/theme_colors.dart';
 import 'package:team_draw/shared/ui/component/player_position_component.dart';
 
-class PlayerOverallListItem extends StatelessWidget {
+class PlayerInfoListItem extends StatelessWidget {
   final PlayerScore? playerScore;
   final Player player;
-  final Function(Player)? goToUpdatePlayerRoute;
-  final Function(Player)? moveToColumnRight;
-  final Function(Player)? moveToColumnLeft;
   final Function(Player)? onSwitchPlayer;
+  final Function(Player)? goToUpdatePlayerRoute;
 
-  const PlayerOverallListItem(
+  const PlayerInfoListItem(
       {super.key,
       this.playerScore,
-      this.goToUpdatePlayerRoute,
       required this.player,
-      this.moveToColumnRight,
-      this.moveToColumnLeft,
-      this.onSwitchPlayer});
+      this.onSwitchPlayer,
+      this.goToUpdatePlayerRoute});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (moveToColumnLeft != null)
-          IconButton(
-            onPressed: () => moveToColumnLeft!(player),
-            icon: Icon(
-              Icons.arrow_back,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
         Expanded(
           child: Text(
             player.name!,
@@ -92,14 +80,6 @@ class PlayerOverallListItem extends StatelessWidget {
                   _PlayerScoreWidget(score: playerScore!.defeats.toString()),
                   _PlayerScoreWidget(score: playerScore!.draws.toString()),
                 ],
-              ),
-            if (moveToColumnRight != null)
-              IconButton(
-                onPressed: () => moveToColumnRight!(player),
-                icon: Icon(
-                  Icons.arrow_forward,
-                  color: Theme.of(context).primaryColor,
-                ),
               ),
           ],
         ),
