@@ -10,4 +10,8 @@ class PlayerRepository {
     //TODO: return empty when plays is null
     return getAllPlayers;
   }
+
+  void delete(Player player) {
+    getAllPlayers.remove(player);
+  }
 }

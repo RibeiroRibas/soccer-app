@@ -28,7 +28,7 @@ class ListHelper {
 
   static List<String> getListOfPossibleTeams(int numberOfTotalPlayers) {
     List<String> values = [];
-    for (int i = 1; i <= numberOfTotalPlayers; i++) {
+    for (int i = 2; i <= numberOfTotalPlayers; i++) {
       values.add(i.toString());
     }
     return values;

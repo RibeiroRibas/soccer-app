@@ -12,8 +12,6 @@ class Player {
   Position? principalPosition;
   Position? improvisedPosition;
   double? overall;
-  List<PlayerStrengths> strengths = [];
-  List<PlayerWeakPoints> weakPoints = [];
 
   Player({this.id = 0, this.name, this.overall, this.principalPosition});
 
@@ -99,22 +97,6 @@ class Player {
 
   bool isRightBack() {
     return principalPosition == Position.rightBack;
-  }
-
-  bool isWeakPointNotSelected(PlayerWeakPoints playerWeakPoints) {
-    return !weakPoints.any((element) => element == playerWeakPoints);
-  }
-
-  bool isLastWeakPointAllowed() {
-    return weakPoints.length == PlayerWeakPoints.values.length - 1;
-  }
-
-  bool isStrengthsNotSelected(PlayerStrengths playerStrengths) {
-    return !strengths.any((element) => element == playerStrengths);
-  }
-
-  bool isLastStrengthsAllowed() {
-    return strengths.length == PlayerStrengths.values.length - 1;
   }
 
   bool isLeftWinger() {

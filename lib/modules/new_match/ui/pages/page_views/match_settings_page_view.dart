@@ -6,7 +6,6 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/new_match/controllers/match_settings_controller.dart';
 import 'package:team_draw/modules/new_match/ui/components/match_duration_time_component.dart';
 import 'package:team_draw/modules/new_match/ui/components/select_box_component.dart';
-import 'package:team_draw/modules/new_match/ui/components/select_one_option_component.dart';
 import 'package:team_draw/shared/helper/list_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/tittle_component.dart';
@@ -32,12 +31,8 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
   @override
   void initState() {
     super.initState();
-    if (widget.matchSettings.isAllFieldsNotNull()) {
-      widget.onShowForwardButton(true);
-    } else {
-      widget.onShowForwardButton(false);
-    }
     _controller.init(widget.selectedPlayers.values, widget.matchSettings);
+    _verifyCanShowForwardButton();
   }
 
   Future<void> _verifyCanShowForwardButton() async {
@@ -73,14 +68,11 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
             value: widget.matchSettings.numberOfTeams.toString(),
             onValueChange: (value) async {
               if (int.parse(value) != widget.matchSettings.numberOfTeams) {
-                widget.matchSettings.numberOfTeams = int.parse(value);
-                _controller.numberOfStartingPlayers = null;
-                widget.matchSettings.numberOfStartingPlayers = null;
+                _controller.updateNumberOfTeams(value, widget.matchSettings);
                 await _verifyCanShowForwardButton();
               }
             },
-            values: ListHelper.getListOfPossibleTeams(
-                _controller.getTotalPlayers(widget.selectedPlayers.values)),
+            values: _controller.totalPossibleTeams,
             description: numberOfTeams,
             labelText: quantity,
           ),
@@ -93,24 +85,23 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
                 widget.matchSettings.numberOfStartingPlayers = int.parse(value);
                 await _verifyCanShowForwardButton();
               },
-              values: _controller.getListOfTotalPlayersPossibleByTeam(
-                  widget.matchSettings.numberOfTeams,
-                  widget.selectedPlayers.values),
+              values: _controller.totalPossiblePlayersByTeam,
               description: numberOfPlayersByTeam,
               labelText: quantity,
             ),
           ),
-          const Divider(),
-          Observer(
-            builder: (_) => SelectOneOptionComponent(
-                question: hasChangeSideQuestion,
-                value: _controller.hasChangeSide,
-                onValueSelected: (value) async {
-                  _controller.changeSide(value);
-                  widget.matchSettings.hasChangeSide = value;
-                  await _verifyCanShowForwardButton();
-                }),
-          ),
+          //TODO: Descomentar para abilitar troca de lado (tem que terminar essa feature)
+          //const Divider(),
+          // Observer(
+          //   builder: (_) => SelectOneOptionComponent(
+          //       question: hasChangeSideQuestion,
+          //       value: _controller.hasChangeSide,
+          //       onValueSelected: (value) async {
+          //         _controller.changeSide(value);
+          //         widget.matchSettings.hasChangeSide = value;
+          //         await _verifyCanShowForwardButton();
+          //       }),
+          // ),
           const Divider(),
           SelectBoxComponent(
             value: widget.matchSettings.timeToChangePlayer.toString(),

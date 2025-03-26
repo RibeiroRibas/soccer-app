@@ -9,22 +9,25 @@ class PlayerNamePageView extends StatelessWidget {
   final Player player;
   final void Function(NewPlayerPageView) goToNextPageView;
   final List<Player>? allPlayers;
+  final Function(bool) canGoToNextPage;
 
   PlayerNamePageView({
     super.key,
     required this.player,
     required this.goToNextPageView,
     required this.allPlayers,
+    required this.canGoToNextPage,
   });
 
   final _formKey = GlobalKey<FormState>();
   final _focusNode = FocusNode();
 
   bool _existPlayerName(String name) {
-    return allPlayers!.any((player) {
+    return allPlayers!.any((registeredPlayer) {
       String playerName = name;
-      return player.name!.toLowerCase() ==
-          playerName.trimLeft().trimRight().toLowerCase();
+      return registeredPlayer.name!.toLowerCase() ==
+              playerName.trimLeft().trimRight().toLowerCase() &&
+          registeredPlayer.id != player.id;
     });
   }
 
@@ -41,7 +44,7 @@ class PlayerNamePageView extends StatelessWidget {
           child: OutlinedTextFieldComponent(
             focusNode: _focusNode,
             validator: (String? value) => value == null || value.isEmpty
-                ? requestTeamName
+                ? requestPlayerName
                 : _existPlayerName(value)
                     ? playerAlreadyExist
                     : null,
@@ -49,16 +52,11 @@ class PlayerNamePageView extends StatelessWidget {
             initialValue: player.name ?? "",
             onChanged: (String value) {
               player.name = value;
-              if (player.id == 0) {
-                _formKey.currentState!.validate();
-              }
+              bool valid = _formKey.currentState!.validate();
+              canGoToNextPage(valid);
             },
             onFieldSubmitted: (_) {
-              if (player.id == 0) {
-                _formKey.currentState!.validate()
-                    ? goToNextPageView(NewPlayerPageView.principalPosition)
-                    : null;
-              } else {
+              if (_formKey.currentState!.validate()) {
                 goToNextPageView(NewPlayerPageView.principalPosition);
               }
             },

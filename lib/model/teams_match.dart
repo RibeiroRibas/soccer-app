@@ -86,8 +86,8 @@ class TeamsMatch {
       !isScoreTeamOne && teamOne!.players!.any((p) => p.id == player.id);
 
   TeamInformation getTeamsInformation() {
-    List<String> teamOneInformation = teamOne!.getTeamInformation();
-    List<String> teamTwoInformation = teamTwo!.getTeamInformation();
+    List<String> teamOneInformation = teamOne!.geInformation();
+    List<String> teamTwoInformation = teamTwo!.geInformation();
     return TeamInformation(teamOneInformation, teamTwoInformation);
   }
 

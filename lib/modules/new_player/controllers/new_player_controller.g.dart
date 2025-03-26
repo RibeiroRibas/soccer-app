@@ -25,6 +25,23 @@ mixin _$NewPlayerController on NewPlayerControllerBase, Store {
     });
   }
 
+  late final _$canShowForwardButtonAtom = Atom(
+      name: 'NewPlayerControllerBase.canShowForwardButton', context: context);
+
+  @override
+  bool get canShowForwardButton {
+    _$canShowForwardButtonAtom.reportRead();
+    return super.canShowForwardButton;
+  }
+
+  @override
+  set canShowForwardButton(bool value) {
+    _$canShowForwardButtonAtom.reportWrite(value, super.canShowForwardButton,
+        () {
+      super.canShowForwardButton = value;
+    });
+  }
+
   late final _$findAllPlayersAsyncAction =
       AsyncAction('NewPlayerControllerBase.findAllPlayers', context: context);
 
@@ -36,7 +53,8 @@ mixin _$NewPlayerController on NewPlayerControllerBase, Store {
   @override
   String toString() {
     return '''
-allPlayers: ${allPlayers}
+allPlayers: ${allPlayers},
+canShowForwardButton: ${canShowForwardButton}
     ''';
   }
 }

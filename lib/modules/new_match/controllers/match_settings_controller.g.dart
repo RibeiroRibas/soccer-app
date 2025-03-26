@@ -69,6 +69,17 @@ mixin _$MatchSettingsController on MatchSettingsControllerBase, Store {
   }
 
   @override
+  void updateNumberOfTeams(String value, MatchSettings matchSettings) {
+    final _$actionInfo = _$MatchSettingsControllerBaseActionController
+        .startAction(name: 'MatchSettingsControllerBase.updateNumberOfTeams');
+    try {
+      return super.updateNumberOfTeams(value, matchSettings);
+    } finally {
+      _$MatchSettingsControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 hasChangeSide: ${hasChangeSide},

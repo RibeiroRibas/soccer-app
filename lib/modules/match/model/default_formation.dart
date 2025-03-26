@@ -79,6 +79,28 @@ class DefaultFormation extends TeamFormation {
 
   void _setTeamFormation() {
     switch (numberOfPlayers) {
+      case 1:
+        formation = {
+          Position.goalkeeper: null,
+        };
+      case 2:
+        formation = {
+          Position.goalkeeper: null,
+          Position.midfielder: null,
+        };
+      case 3:
+        formation = {
+          Position.goalkeeper: null,
+          Position.leftDefensiveMidfielder: null,
+          Position.rightDefensiveMidfielder: null,
+        };
+      case 4:
+        formation = {
+          Position.goalkeeper: null,
+          Position.leftDefender: null,
+          Position.midfielder: null,
+          Position.forward: null,
+        };
       case 5:
         formation = {
           Position.goalkeeper: null,

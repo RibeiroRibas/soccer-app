@@ -1,7 +1,7 @@
 const newMatch = "NOVA PARTIDA";
 const selectPlayers = "Selecione os Jogadores";
+const selected = "Selecionados";
 const next = "Continuar";
-const nextRecommended = "Continuar (recomendado)";
 const playFontFamily = "Play";
 const historyMatches = "Histórico de jogos";
 const appName = "Sagrado Fut - Time Equilibrado";
@@ -18,6 +18,8 @@ const goals = "Gols";
 const defeats = "Der.";
 const victories = "Vit.";
 const draws = "Emp.";
+const confirm = "Confirmar";
+const confirmDeletePlayerTap =  "Deseja excluir o jogador ";
 
 //theme
 const welcome = "Bem vindo ao \n $appName.";
@@ -85,7 +87,7 @@ const matchSettings = "Configurações da partida:";
 const duration = "Duração: ";
 const hour = "hr";
 const minute = "min";
-const numberOfPlayersByTeam = "Numero de jogadores (titulares) por time: ";
+const numberOfPlayersByTeam = "Numero de jogadores TITULARES por time: ";
 const hasChangeSideQuestion = "Troca de lado?";
 const yes = "Sim";
 const no = "Não";
@@ -93,7 +95,6 @@ const changePlayerEvery = "Troca jogador a cada:";
 const quantity = "qtd";
 const numberOfTeams = "Número de times";
 const sortTeams = "Sortear Equipes";
-const requestTeamName = "Nome do time é obrigatório";
 const selectName = "Informe o novo nome do time ou selecione na lista abaixo";
 const typeTeamName = "Informe o nome do time!";
 const tapOnShieldOrNameToEdit = "Toque no escudo ou nome do time para editar";
@@ -110,6 +111,7 @@ const hasHistoryMatchMessage =
     "Caso queira repetir a partida selecione uma na lista abaixa.\n"
     "Caso queira gerar novos times avance tocando na seta indicadora acima.";
 const matchRepeater = "Repetidor de partida";
+const selectPlayerToSwitch = "Selecione um jogador do outro time para efetuar a troca.";
 
 // teams information
 const forward = "Ataque";
@@ -181,6 +183,8 @@ const continuePlaying = "Continuar jogando";
 const endMatch = "Fim do jogo!";
 const stopMatch = "Encerrar a partida";
 const formation = "Formação";
+const whoScoredQuestion = "Quem fez o gol?";
+const cancelGoal = "Parece que o var anulou o gol do jogador:";
 
 //gallery
 const images = "Imagens";

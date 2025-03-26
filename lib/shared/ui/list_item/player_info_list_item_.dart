@@ -9,13 +9,15 @@ class PlayerInfoListItem extends StatelessWidget {
   final Player player;
   final Function(Player)? onSwitchPlayer;
   final Function(Player)? goToUpdatePlayerRoute;
+  final Function(Player)? onDeletePlayerTap;
 
   const PlayerInfoListItem(
       {super.key,
       this.playerScore,
       required this.player,
       this.onSwitchPlayer,
-      this.goToUpdatePlayerRoute});
+      this.goToUpdatePlayerRoute,
+      this.onDeletePlayerTap});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,14 @@ class PlayerInfoListItem extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            if (onDeletePlayerTap != null)
+              GestureDetector(
+                onTap: () => onDeletePlayerTap!(player),
+                child: const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Icon(Icons.delete, size: 25),
+                ),
+              ),
             if (goToUpdatePlayerRoute != null)
               GestureDetector(
                 onTap: () => goToUpdatePlayerRoute!(player),

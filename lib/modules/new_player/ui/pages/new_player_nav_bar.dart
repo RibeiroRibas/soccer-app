@@ -10,11 +10,10 @@ import 'package:team_draw/modules/new_player/ui/pages/page_views/confirm_new_pla
 import 'package:team_draw/modules/new_player/ui/pages/page_views/player_name_page_view.dart';
 import 'package:team_draw/modules/new_player/ui/pages/page_views/player_overall_page_view.dart';
 import 'package:team_draw/modules/new_player/ui/pages/page_views/player_position_page_view.dart';
-import 'package:team_draw/modules/new_player/ui/pages/page_views/player_strengths_page_view.dart';
-import 'package:team_draw/modules/new_player/ui/pages/page_views/player_weak_points_page_view.dart';
 import 'package:team_draw/shared/controller/page_view_controller.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/routes/route_named.dart';
+import 'package:team_draw/shared/ui/commom/scaffold_body_content.dart';
 import 'package:team_draw/shared/ui/component/app_bar_tittle_and_arrows_component.dart';
 import 'package:team_draw/shared/ui/component/forward_button_component.dart';
 import 'package:team_draw/shared/ui/component/page_index_animation_component.dart';
@@ -32,20 +31,30 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
   final _navigator = Modular.get<NewPlayerRouteNavigator>();
   final _controller = Modular.get<NewPlayerController>();
   final _pageViewController = Modular.get<PageViewController>();
-  late final Function(NewPlayerPageView) goToNextPageView;
+  late final Function(NewPlayerPageView) _goToNextPageView;
+  late final Function(bool) _onShowForwardButton;
 
   @override
   void initState() {
     super.initState();
-    goToNextPageView = (NewPlayerPageView newPlayerPageViewEnum) {
+    _goToNextPageView = (NewPlayerPageView newPlayerPageViewEnum) {
       if (_isLastPageView(newPlayerPageViewEnum)) {
         _savePlayerAndGoToPlayersPage();
       } else {
+        if (widget.player.name != null && widget.player.name!.isEmpty) return;
         _gotoNextPageView(newPlayerPageViewEnum);
       }
     };
+
+    _onShowForwardButton = (isShowForwardButton) {
+      _controller.canShowForwardButton = isShowForwardButton;
+    };
+
     _controller.findAllPlayers();
+    _controller.canShowForwardButton = _isUpdatePlayer();
   }
+
+  bool _isUpdatePlayer() => widget.player.id > 0;
 
   void _gotoNextPageView(NewPlayerPageView newPlayerPageViewEnum) {
     _pageViewController.animateToPage(newPlayerPageViewEnum.pageIndex);
@@ -82,28 +91,21 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
     List<Widget> allPages = [
       PlayerNamePageView(
         player: widget.player,
-        goToNextPageView: goToNextPageView,
+        goToNextPageView: _goToNextPageView,
         allPlayers: _controller.allPlayers,
+        canGoToNextPage: _onShowForwardButton,
       ),
       PlayerPositionPageView(
         player: widget.player,
-        goToNextPageView: goToNextPageView,
+        goToNextPageView: _goToNextPageView,
       ),
       PlayerOverallPageView(
         player: widget.player,
-        goToNextPageView: goToNextPageView,
-      ),
-      PlayerStrengthsPageView(
-        player: widget.player,
-        goToNextPageView: goToNextPageView,
-      ),
-      PlayerWeakPointsPageView(
-        player: widget.player,
-        goToNextPageView: goToNextPageView,
+        goToNextPageView: _goToNextPageView,
       ),
       ConfirmNewPlayerPageView(
         player: widget.player,
-        goToNextPageView: goToNextPageView,
+        goToNextPageView: _goToNextPageView,
       )
     ];
     assert(NewPlayerPageView.getTotalPages() == allPages.length);
@@ -130,17 +132,21 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
         forwardButtonAction: <Widget>[
           Observer(
             builder: (_) => ForwardButtonComponent(
-              onPressed: () => _pageViewController.animateToNextPage(),
-              isShowButton: _isShowForwardButton(),
+              onPressed: () {
+                if (_canGoToNextPageView()) {
+                  _pageViewController.animateToNextPage();
+                }
+              },
+              isShowButton:
+                  _controller.canShowForwardButton && _isShowForwardButton(),
             ),
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-            left: 16.0, right: 16.0, top: 64, bottom: 32.0),
+      body: ScaffoldBodyContent(
         child: Column(
           children: [
+            const SizedBox(height: 50),
             Expanded(
               child: Observer(
                 builder: (_) => _controller.allPlayers == null
@@ -163,4 +169,6 @@ class _NewPlayerNavBarState extends State<NewPlayerNavBar> {
       ),
     );
   }
+
+  bool _canGoToNextPageView() => widget.player.name!.isNotEmpty;
 }

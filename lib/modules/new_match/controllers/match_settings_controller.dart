@@ -19,11 +19,35 @@ abstract class MatchSettingsControllerBase with Store {
   @observable
   int? numberOfStartingPlayers;
 
+  late List<String> totalPossiblePlayersByTeam;
+
+  late List<String> totalPossibleTeams;
+
+  late int totalPlayersSelected;
+
   @action
   void init(Iterable<bool> arePlayersSelected, MatchSettings matchSettings) {
     changeSide(matchSettings.hasChangeSide);
-    numberOfStartingPlayers = matchSettings.numberOfStartingPlayers;
+    totalPlayersSelected = getTotalPlayers(arePlayersSelected);
+
+    totalPossiblePlayersByTeam = getListOfTotalPlayersPossibleByTeam(
+        matchSettings.numberOfTeams);
+    totalPossibleTeams = ListHelper.getListOfPossibleTeams(totalPlayersSelected);
+
+    if (_isUpdateMatchSettings(matchSettings)) {
+      matchSettings.numberOfTeams = int.parse(totalPossibleTeams.last);
+      matchSettings.numberOfStartingPlayers =
+          int.parse(totalPossiblePlayersByTeam.last);
+      save(matchSettings);
+    }
   }
+
+  bool _isUpdateMatchSettings(
+          MatchSettings matchSettings) =>
+      !totalPossiblePlayersByTeam.any((total) =>
+          total == matchSettings.numberOfStartingPlayers.toString()) ||
+      !totalPossibleTeams
+          .any((total) => total == matchSettings.numberOfTeams.toString());
 
   @action
   void changeSide(bool changeSide) {
@@ -41,12 +65,11 @@ abstract class MatchSettingsControllerBase with Store {
   }
 
   List<String> getListOfTotalPlayersPossibleByTeam(
-      int? numberOfTeams, Iterable<bool> arePlayersSelected) {
+      int? numberOfTeams) {
     int numberOfPossiblePlayersByTeam = 0;
 
     if (numberOfTeams != null) {
-      int totalPLayers = getTotalPlayers(arePlayersSelected);
-      numberOfPossiblePlayersByTeam = totalPLayers ~/ numberOfTeams;
+      numberOfPossiblePlayersByTeam = totalPlayersSelected ~/ numberOfTeams;
     }
 
     return ListHelper.getListOfTotalPlayersPossibleByTeam(
@@ -55,5 +78,14 @@ abstract class MatchSettingsControllerBase with Store {
 
   Future<void> save(MatchSettings matchSettings) async {
     await matchSettingsService.save(matchSettings);
+  }
+
+  @action
+  void updateNumberOfTeams(String value, MatchSettings matchSettings){
+    int numberOfTeams = int.parse(value);
+    matchSettings.numberOfTeams = numberOfTeams;
+    totalPossiblePlayersByTeam = getListOfTotalPlayersPossibleByTeam(numberOfTeams);
+    numberOfStartingPlayers = int.parse(totalPossiblePlayersByTeam.last);
+    matchSettings.numberOfStartingPlayers = numberOfStartingPlayers;
   }
 }

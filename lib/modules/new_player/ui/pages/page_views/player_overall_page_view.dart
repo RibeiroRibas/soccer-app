@@ -25,7 +25,7 @@ class PlayerOverallPageView extends StatelessWidget {
           initialValue: player.overall,
           onChangeEnd: (overall) {
             player.overall = overall;
-            goToNextPageView(NewPlayerPageView.strengths);
+            goToNextPageView(NewPlayerPageView.confirmNewPlayer);
           },
         ),
       ],

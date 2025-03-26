@@ -14,6 +14,7 @@ import 'package:team_draw/modules/new_match/controllers/new_match_nav_bar_contro
 import 'package:team_draw/shared/controller/page_view_controller.dart';
 import 'package:team_draw/shared/helper/focus_node_helper.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/ui/commom/scaffold_body_content.dart';
 import 'package:team_draw/shared/ui/component/app_bar_tittle_and_arrows_component.dart';
 import 'package:team_draw/shared/ui/component/forward_button_component.dart';
 import 'package:team_draw/shared/ui/component/page_index_animation_component.dart';
@@ -104,8 +105,7 @@ class _NewMatchNavBarState extends State<NewMatchNavBar> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+        body: ScaffoldBodyContent(
           child: Stack(
             children: [
               Positioned.fill(

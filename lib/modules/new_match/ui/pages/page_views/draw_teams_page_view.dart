@@ -52,11 +52,13 @@ class _DrawnTeamsPageViewState extends State<DrawnTeamsPageView> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return SelectPlayerDialog(
-              players: players,
-              onPlayerTap: (selectedPlayer) => {
-                    _controller.switchPlayers(player, selectedPlayer),
-                    Navigator.of(context).pop()
-                  });
+            players: players,
+            onPlayerTap: (selectedPlayer) => {
+              _controller.switchPlayers(player, selectedPlayer),
+              Navigator.of(context).pop()
+            },
+            message: selectPlayerToSwitch,
+          );
         });
   }
 

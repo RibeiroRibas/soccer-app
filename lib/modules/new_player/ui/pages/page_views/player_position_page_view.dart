@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:team_draw/model/player.dart';
 import 'package:team_draw/model/position.dart';
 import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
-import 'package:team_draw/modules/new_player/ui/components/player_characteristics_component.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 
 class PlayerPositionPageView extends StatelessWidget {
   final Player player;
@@ -18,30 +18,43 @@ class PlayerPositionPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     final focusNode = FocusNode();
     focusNode.requestFocus();
-    return PlayerCharacteristicsComponent(
-      heightSize: 400,
-      questionText: principalPositionQuestion,
-      subQuestionText: principalPositionSubQuestion,
-      positions: List.generate(
-        positions.length,
-        (index) {
-          return CheckboxListTile(
-            title: Text(
-              positions.elementAt(index).name,
-              style: const TextStyle(fontSize: 12),
-              softWrap: false,
+    return Column(
+      children: [
+        TextWithBorderComponent(
+            text: principalPositionQuestion,
+            textStyle: Theme.of(context).textTheme.bodyLarge!),
+        const SizedBox(height: 16),
+        SizedBox(
+          height: 400,
+          width: MediaQuery.of(context).size.width,
+          child: GridView(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 3.5,
             ),
-            focusNode: focusNode,
-            value: player.principalPosition != null
-                ? player.principalPosition! == positions[index]
-                : false,
-            onChanged: (_) {
-              player.principalPosition = Position.fromIndex(index);
-              goToNextPageView(NewPlayerPageView.overall);
-            },
-          );
-        },
-      ),
+            children: List.generate(
+              positions.length,
+              (index) {
+                return CheckboxListTile(
+                  title: Text(
+                    positions.elementAt(index).name,
+                    style: const TextStyle(fontSize: 12),
+                    softWrap: false,
+                  ),
+                  focusNode: focusNode,
+                  value: player.principalPosition != null
+                      ? player.principalPosition! == positions[index]
+                      : false,
+                  onChanged: (_) {
+                    player.principalPosition = Position.fromIndex(index);
+                    goToNextPageView(NewPlayerPageView.overall);
+                  },
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

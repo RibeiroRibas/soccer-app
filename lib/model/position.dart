@@ -28,44 +28,44 @@ enum Position {
         assert(values[0] == goalkeeper);
         return goalkeeper;
       case 1:
-        assert(values[1] == goalkeeper);
+        assert(values[1] == forward);
         return forward;
       case 2:
-        assert(values[2] == goalkeeper);
-        return midfielder;
-      case 3:
-        assert(values[3] == goalkeeper);
+        assert(values[2] == leftMidfielder);
         return leftMidfielder;
+      case 3:
+        assert(values[3] == midfielder);
+        return midfielder;
       case 4:
-        assert(values[4] == goalkeeper);
+        assert(values[4] == rightMidfielder);
         return rightMidfielder;
       case 5:
-        assert(values[5] == goalkeeper);
-        return defender;
-      case 6:
-        assert(values[6] == goalkeeper);
+        assert(values[5] == leftDefender);
         return leftDefender;
+      case 6:
+        assert(values[6] == defender);
+        return defender;
       case 7:
-        assert(values[7] == goalkeeper);
+        assert(values[7] == rightDefender);
         return rightDefender;
       case 8:
-        assert(values[8] == goalkeeper);
+        assert(values[8] == leftBack);
         return leftBack;
       case 9:
-        assert(values[9] == goalkeeper);
+        assert(values[9] == rightBack);
         return rightBack;
       case 10:
-        assert(values[10] == goalkeeper);
-        return leftWinger;
-      case 11:
-        assert(values[11] == goalkeeper);
-        return rightWinger;
-      case 12:
-        assert(values[12] == goalkeeper);
+        assert(values[10] == leftDefensiveMidfielder);
         return leftDefensiveMidfielder;
-      default:
-        assert(values[13] == goalkeeper);
+      case 11:
+        assert(values[11] == rightDefensiveMidfielder);
         return rightDefensiveMidfielder;
+      case 12:
+        assert(values[12] == leftWinger);
+        return leftWinger;
+      default:
+        assert(values[13] == rightWinger);
+        return rightWinger;
     }
   }
 

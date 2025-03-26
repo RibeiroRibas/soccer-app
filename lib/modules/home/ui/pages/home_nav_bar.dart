@@ -6,6 +6,7 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/home/controllers/home_controller.dart';
 import 'package:team_draw/modules/home/home_route_navigator.dart';
 import 'package:team_draw/modules/home/ui/components/drawer_menu_component.dart';
+import 'package:team_draw/modules/home/ui/dialogs/confirm_delete_player_dialog.dart';
 import 'package:team_draw/modules/home/ui/expandable_fab/action_button_component.dart';
 import 'package:team_draw/modules/home/ui/expandable_fab/expandable_fab_section.dart';
 import 'package:team_draw/modules/home/ui/pages/page_views/home_page_view.dart';
@@ -80,6 +81,25 @@ class _HomeNavBarState extends State<HomeNavBar> {
     );
   }
 
+  Future<bool> _showConfirmDeletePlayerDialog(Player player) async {
+    bool canDeletePlayer = false;
+    await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => ConfirmDeletePlayerDialog(
+            message: '$confirmDeletePlayerTap ${player.name}?',
+            onDeleteButtonTap: ()  {
+              _controller.deletePlayer(player);
+              _navigator.pop();
+              canDeletePlayer =  true;
+            },
+            onCancelButtonTap: () {
+              _navigator.pop();
+              canDeletePlayer =  false;
+            }));
+    return canDeletePlayer;
+  }
+
   List<Widget> allPagesView() {
     List<Widget> allPages = [
       HomePageView(
@@ -89,7 +109,10 @@ class _HomeNavBarState extends State<HomeNavBar> {
       TeamsPageView(
         teams: _controller.teams,
       ),
-      PlayersPageView(playersScore: _controller.calculatePlayerScore())
+      PlayersPageView(
+        playersScore: _controller.calculatePlayerScore(),
+        onDeletePlayerTap: _showConfirmDeletePlayerDialog,
+      )
     ];
     return allPages;
   }

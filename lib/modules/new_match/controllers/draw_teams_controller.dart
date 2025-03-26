@@ -157,9 +157,11 @@ abstract class DrawTeamsControllerBase with Store {
     sortedTeams.elementAt(indexOfTeam).players![indexOfPlayer] = anotherPlayer;
     sortedTeams.elementAt(indexOfAnotherTeam).players![indexOfAnotherPlayer] =
         player;
+
     for (Team team in sortedTeams) {
       team.calculateOverall();
     }
+
     final List<TeamsMatch> teamMatches =
         service.generateTeamMatches(sortedTeams);
     _getTeamInformation(teamMatches);

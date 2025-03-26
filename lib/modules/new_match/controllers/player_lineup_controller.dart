@@ -25,4 +25,10 @@ abstract class PlayerLineupControllerBase with Store {
     }
     this.selectedPlayers = ObservableMap<Player, bool>.of(selectedPlayers);
   }
+
+  Iterable<bool> getOnlySelectedPlayers(){
+    return selectedPlayers.values
+        .map((isSelected) => isSelected)
+        .where((element) => element);
+  }
 }

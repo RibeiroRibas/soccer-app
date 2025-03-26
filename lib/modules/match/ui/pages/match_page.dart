@@ -200,13 +200,14 @@ class _MatchPageState extends State<MatchPage> {
           barrierDismissible: false,
           builder: (BuildContext context) {
             return SelectPlayerDialog(
-                isIncreaseScore: isIncreaseScore,
-                players: _matchController.getPlayersToShowInScoreDialog(
-                    isScoreTeamOne, isIncreaseScore),
-                onPlayerTap: (player) => _matchController
-                    .changeScore(isScoreTeamOne, isIncreaseScore, player,
-                        _buildGoalTime())
-                    .then((_) => Navigator.of(context).pop()));
+              players: _matchController.getPlayersToShowInScoreDialog(
+                  isScoreTeamOne, isIncreaseScore),
+              onPlayerTap: (player) => _matchController
+                  .changeScore(
+                      isScoreTeamOne, isIncreaseScore, player, _buildGoalTime())
+                  .then((_) => Navigator.of(context).pop()),
+              message: isIncreaseScore ? whoScoredQuestion : cancelGoal,
+            );
           });
     }
   }

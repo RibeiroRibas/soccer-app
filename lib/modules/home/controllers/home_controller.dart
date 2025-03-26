@@ -54,4 +54,9 @@ abstract class HomeControllerBase with Store {
   List<PlayerScore> calculatePlayerScore() {
     return _playerService.calculatePlayerScore(players, allMatches);
   }
+
+  void deletePlayer(Player player){
+    _playerService.delete(player);
+    players.remove(player);
+  }
 }

@@ -7,6 +7,8 @@ class PlayerGoals {
 
   PlayerGoals(
       {required this.player, required this.goalTime, bool isOwnGoal = false}) {
-    isOwnGoals.add(isOwnGoal);
+    for(String goal in goalTime){
+      isOwnGoals.add(isOwnGoal);
+    }
   }
 }

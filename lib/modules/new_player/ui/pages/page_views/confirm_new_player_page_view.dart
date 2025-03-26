@@ -3,7 +3,7 @@ import 'package:team_draw/model/player.dart';
 import 'package:team_draw/modules/new_player/helper/new_player_page_view.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
 import 'package:team_draw/shared/ui/component/elevated_button_component.dart';
-import 'package:team_draw/shared/ui/component/tittle_component.dart';
+import 'package:team_draw/shared/ui/component/text_with_border_component.dart';
 
 class ConfirmNewPlayerPageView extends StatelessWidget {
   final Player player;
@@ -21,7 +21,10 @@ class ConfirmNewPlayerPageView extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const TittleComponent(tittle: playerConfirmData),
+        TextWithBorderComponent(
+          text: playerConfirmData,
+          textStyle: Theme.of(context).textTheme.bodyLarge!,
+        ),
         const SizedBox(height: 15),
         _PlayerInfoDetailComponent(
             description: nameConfirm, value: player.name!),
@@ -32,14 +35,6 @@ class ConfirmNewPlayerPageView extends StatelessWidget {
         _PlayerInfoDetailComponent(
           description: overallConfirm,
           value: player.overall!.toStringAsFixed(1),
-        ),
-        _PlayerInfoDetailComponent(
-          description: strengthsConfirm,
-          value: player.strengths.map((e) => e.characteristic).join(' , '),
-        ),
-        _PlayerInfoDetailComponent(
-          description: weakPointsConfirm,
-          value: player.weakPoints.map((e) => e.characteristic).join(' , '),
         ),
         const SizedBox(height: 15),
         SizedBox(

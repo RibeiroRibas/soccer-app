@@ -6,19 +6,19 @@ import 'package:team_draw/model/player_goals.dart';
 import 'package:team_draw/model/teams_match.dart';
 
 List<TeamsMatch> getAllTeamMatches = [
-  matchOneVSTwo,
-  matchOneVSTree,
-  matchTwoVSTree,
-  matchFiveVSSix,
-  matchFourVSTree,
-  matchSixVSFour,
-  matchTwoVSFour,
-  matchOneVSTwo,
-  matchOneVSTree,
-  matchTwoVSTree,
-  matchFiveVSSix,
-  matchFourVSTree,
-  matchSixVSFour,
+  // matchOneVSTwo,
+  // matchOneVSTree,
+  // matchTwoVSTree,
+  // matchFiveVSSix,
+  // matchFourVSTree,
+  // matchSixVSFour,
+  // matchTwoVSFour,
+  // matchOneVSTwo,
+  // matchOneVSTree,
+  // matchTwoVSTree,
+  // matchFiveVSSix,
+  // matchFourVSTree,
+  // matchSixVSFour,
 ];
 
 TeamsMatch matchOneVSTwo = TeamsMatch(
@@ -204,7 +204,7 @@ MatchSettings getMatchSettings(int numberOfStartingPlayers, int numberOfTeams) {
 }
 
 List<MatchDetails> allMatchDetails = [
-  matchDetailsOne,
-  matchDetailsTwo,
-  matchDetailsOne
+  // matchDetailsOne,
+  // matchDetailsTwo,
+  // matchDetailsOne
 ];

@@ -33,6 +33,10 @@ class DrawTeamsService {
 
     _addReservePlayers(players, teams);
 
+    for (Team team in teams) {
+      team.calculateOverall();
+    }
+
     await _generateTeamNameAndShield(teams);
 
     return teams;
@@ -124,7 +128,6 @@ class DrawTeamsService {
       _playerService.addPlayersByPosition(
           team, settings.numberOfStartingPlayers, players);
       team.numberOfStartingPlayers = settings.numberOfStartingPlayers;
-      team.calculateOverall();
       teams.add(team);
     }
   }

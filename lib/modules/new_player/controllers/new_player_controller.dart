@@ -18,6 +18,9 @@ abstract class NewPlayerControllerBase with Store {
   @observable
   List<Player>? allPlayers;
 
+  @observable
+  bool canShowForwardButton = false;
+
   @action
   Future<void> findAllPlayers() async {
     allPlayers = await _playerService.findAllPlayers();

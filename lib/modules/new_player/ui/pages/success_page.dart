@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:lottie/lottie.dart';
 import 'package:team_draw/model/player.dart';
-import 'package:team_draw/modules/new_player/ui/pages/page_views/players_page_view.dart';
-import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/model/player_score.dart';
 import 'package:team_draw/modules/new_player/new_player_rote_navigator.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/ui/component/app_bar_tittle_with_close_button_component.dart';
 import 'package:team_draw/shared/ui/component/elevated_button_component.dart';
+import 'package:team_draw/shared/ui/component/players_component.dart';
 
 class SuccessView extends StatefulWidget {
   final List<PlayerScore> playersScore;
@@ -44,7 +44,11 @@ class _SuccessViewState extends State<SuccessView> {
             ),
             body: Padding(
               padding: const EdgeInsets.all(12.0),
-              child: PlayersPageView(playersScore: widget.playersScore),
+              child: PlayersComponent(
+                playersScore: widget.playersScore,
+                goToUpdatePlayerRoute: (player) => _navigator
+                    .goTo("$newPlayerRote/", arguments: {"player": player}),
+              ),
             ),
             bottomNavigationBar: Row(
               children: [

@@ -8,8 +8,9 @@ import 'package:team_draw/modules/new_match/controllers/player_lineup_controller
 import 'package:team_draw/modules/new_match/new_match_rote_navigator.dart';
 import 'package:team_draw/modules/new_match/ui/components/player_check_box_component.dart';
 import 'package:team_draw/shared/i18n/messages.dart';
+import 'package:team_draw/shared/routes/route_named.dart';
 import 'package:team_draw/shared/ui/component/new_player_and_match_component.dart';
-import 'package:team_draw/shared/ui/component/tittle_component.dart';
+import 'package:team_draw/shared/ui/component/tittle_with_sub_tittle_component.dart';
 
 class PlayersLineupPageView extends StatefulWidget {
   final Map<Player, bool> selectedPlayers;
@@ -50,10 +51,7 @@ class _PlayersLineupPageViewState extends State<PlayersLineupPageView> {
   }
 
   void onShowForwardButton() {
-    Iterable<bool> selectedPlayers = widget.selectedPlayers.values
-        .map((isSelected) => isSelected)
-        .where((element) => element);
-    if (selectedPlayers.length > 1) {
+    if (_controller.getOnlySelectedPlayers().length > 1) {
       widget.onShowForwardButton(true);
     } else {
       widget.onShowForwardButton(false);
@@ -63,8 +61,10 @@ class _PlayersLineupPageViewState extends State<PlayersLineupPageView> {
   void _onSelectedPlayer(Player selectedPlayer) {
     if (widget.selectedPlayers[selectedPlayer] == true) {
       widget.selectedPlayers[selectedPlayer] = false;
+      _controller.selectedPlayers[selectedPlayer] = false;
     } else {
       widget.selectedPlayers[selectedPlayer] = true;
+      _controller.selectedPlayers[selectedPlayer] = true;
     }
     onShowForwardButton();
   }
@@ -75,16 +75,32 @@ class _PlayersLineupPageViewState extends State<PlayersLineupPageView> {
         builder: (_) => _controller.selectedPlayers.length < 2
             ? NewPlayerAndMatchComponent(
                 message: emptyPlayerMessage,
-                goToNextRoute: (route) => _navigator.goTo('$route/'),
+                goToNewPlayerRoute: (route) =>
+                    _navigator.goTo('$route/', arguments: {"player": Player()}),
+                goToNewMatchRoute: (route) => _navigator.goTo('$route/'),
                 isShowNewMatchButton: false,
               )
             : SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: TittleComponent(tittle: selectPlayers),
+                    Row(
+                      children: [
+                        const Expanded(child: SizedBox()),
+                        TittleWithSubTittleComponent(
+                          tittle: selectPlayers,
+                          subTittle:
+                              "$selected ${_controller.getOnlySelectedPlayers().length}",
+                        ),
+                        const Expanded(child: SizedBox()),
+                        FloatingActionButton.small(
+                          onPressed: () => _navigator.goTo('$newPlayerRote/',
+                              arguments: {"player": Player()}),
+                          child: const Icon(Icons.add, size: 28),
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 16),
                     MediaQuery.removePadding(
                       context: context,
                       removeTop: true,

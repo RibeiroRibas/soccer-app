@@ -5,13 +5,15 @@ import 'package:team_draw/shared/ui/component/elevated_button_component.dart';
 
 class NewPlayerAndMatchComponent extends StatelessWidget {
   final String message;
-  final Function(String) goToNextRoute;
+  final Function(String) goToNewPlayerRoute;
+  final Function(String) goToNewMatchRoute;
   final bool isShowNewMatchButton;
 
   const NewPlayerAndMatchComponent({
     super.key,
     required this.message,
-    required this.goToNextRoute,
+    required this.goToNewPlayerRoute,
+    required this.goToNewMatchRoute,
     this.isShowNewMatchButton = true,
   });
 
@@ -28,7 +30,7 @@ class NewPlayerAndMatchComponent extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.75,
           child: ElevatedButtonComponent(
-            onButtonPressed: () => goToNextRoute(newPlayerRote),
+            onButtonPressed: () => goToNewPlayerRoute(newPlayerRote),
             text: newPLayer,
           ),
         ),
@@ -37,7 +39,7 @@ class NewPlayerAndMatchComponent extends StatelessWidget {
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.75,
             child: ElevatedButtonComponent(
-              onButtonPressed: () => goToNextRoute(newMatchRote),
+              onButtonPressed: () => goToNewMatchRoute(newMatchRote),
               text: newMatch,
             ),
           ),

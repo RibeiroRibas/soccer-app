@@ -329,4 +329,8 @@ class PlayerService {
     });
     return players;
   }
+
+  void delete(Player player) {
+    _repository.delete(player);
+  }
 }
