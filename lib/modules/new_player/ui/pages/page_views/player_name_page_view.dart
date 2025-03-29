@@ -41,7 +41,7 @@ class PlayerNamePageView extends StatelessWidget {
           child: OutlinedTextFieldComponent(
             focusNode: _focusNode,
             validator: (String? value) => value == null || value.isEmpty
-                ? requestTeamName
+                ? requestPlayerName
                 : _existPlayerName(value)
                     ? playerAlreadyExist
                     : null,

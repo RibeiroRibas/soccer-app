@@ -142,6 +142,22 @@ mixin _$TeamController on TeamControllerBase, Store {
     });
   }
 
+  late final _$selectedPositionAtom =
+      Atom(name: 'TeamControllerBase.selectedPosition', context: context);
+
+  @override
+  Position? get selectedPosition {
+    _$selectedPositionAtom.reportRead();
+    return super.selectedPosition;
+  }
+
+  @override
+  set selectedPosition(Position? value) {
+    _$selectedPositionAtom.reportWrite(value, super.selectedPosition, () {
+      super.selectedPosition = value;
+    });
+  }
+
   late final _$TeamControllerBaseActionController =
       ActionController(name: 'TeamControllerBase', context: context);
 
@@ -221,7 +237,8 @@ startingPlayers: ${startingPlayers},
 reservePlayers: ${reservePlayers},
 formation: ${formation},
 teamFormation: ${teamFormation},
-selectedPlayer: ${selectedPlayer}
+selectedPlayer: ${selectedPlayer},
+selectedPosition: ${selectedPosition}
     ''';
   }
 }

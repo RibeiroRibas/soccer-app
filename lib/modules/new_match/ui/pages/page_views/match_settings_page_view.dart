@@ -32,16 +32,21 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
   @override
   void initState() {
     super.initState();
-    if (widget.matchSettings.isAllFieldsNotNull()) {
+    final int totalPlayers =
+    _controller.getTotalPlayers(widget.selectedPlayers.values);
+    if (widget.matchSettings.isAllFieldsValidated()) {
+      widget.matchSettings.validateAndSetNumberOfPlayersByTeam(totalPlayers);
+      _controller.save(widget.matchSettings);
       widget.onShowForwardButton(true);
     } else {
+      widget.matchSettings.setDefaultFields(totalPlayers);
       widget.onShowForwardButton(false);
     }
     _controller.init(widget.selectedPlayers.values, widget.matchSettings);
   }
 
   Future<void> _verifyCanShowForwardButton() async {
-    if (widget.matchSettings.isAllFieldsNotNull()) {
+    if (widget.matchSettings.isAllFieldsValidated()) {
       widget.onShowForwardButton(true);
       _controller.save(widget.matchSettings);
     } else {
@@ -74,8 +79,10 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
             onValueChange: (value) async {
               if (int.parse(value) != widget.matchSettings.numberOfTeams) {
                 widget.matchSettings.numberOfTeams = int.parse(value);
-                _controller.numberOfStartingPlayers = null;
-                widget.matchSettings.numberOfStartingPlayers = null;
+                widget.matchSettings.numberOfStartingPlayers = int.parse(_controller.getListOfTotalPlayersPossibleByTeam(
+                    widget.matchSettings.numberOfTeams,
+                    widget.selectedPlayers.values).last);
+                _controller.numberOfStartingPlayers = widget.matchSettings.numberOfStartingPlayers;
                 await _verifyCanShowForwardButton();
               }
             },
@@ -87,7 +94,7 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
           const Divider(),
           Observer(
             builder: (_) => SelectBoxComponent(
-              value: _controller.numberOfStartingPlayers.toString(),
+              value: _controller.numberOfStartingPlayers?.toString(),
               onValueChange: (value) async {
                 _controller.numberOfStartingPlayers = int.parse(value);
                 widget.matchSettings.numberOfStartingPlayers = int.parse(value);
@@ -123,6 +130,9 @@ class _MatchSettingsPageViewState extends State<MatchSettingsPageView> {
             labelText: minute,
           ),
           const Divider(),
+          Column(
+            children: [Text("")],
+          )
         ],
       ),
     );

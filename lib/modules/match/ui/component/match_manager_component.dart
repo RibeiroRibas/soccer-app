@@ -31,12 +31,19 @@ class MatchManagerComponent extends StatelessWidget {
                   onChangeScore(isScoreTeamOne, isIncreaseScore)),
           const Center(child: MatchTimerComponent()),
           const Expanded(child: SizedBox()),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          Column(
             children: [
-              _ReserveBenchWidget(isTeamOne: false),
-              ReservePlayerTimerComponent(),
-              _ReserveBenchWidget(isTeamOne: true),
+              timeToChangePlayer > 0
+                  ? const ReservePlayerTimerComponent()
+                  : const SizedBox(width: 100, height: 30),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _ReserveBenchWidget(isTeamOne: false),
+                  SizedBox(width: 6,),
+                  _ReserveBenchWidget(isTeamOne: true),
+                ],
+              ),
             ],
           ),
           const SizedBox(height: 10),

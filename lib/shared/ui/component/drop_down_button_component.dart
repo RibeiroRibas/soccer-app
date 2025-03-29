@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DropDownButtonComponent extends StatelessWidget {
-  final dynamic value;
+  final String? value;
   final Function(String) onValueChange;
   final double width;
   final List<String> values;

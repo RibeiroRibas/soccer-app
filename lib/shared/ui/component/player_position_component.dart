@@ -18,9 +18,13 @@ class PlayerNameAndPositionComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return Stack(
+      alignment: AlignmentDirectional.center,
       children: [
+        const SizedBox(
+          height: 60,
+          width: 56,
+        ),
         Container(
           height: 28,
           width: 28,
@@ -34,7 +38,7 @@ class PlayerNameAndPositionComponent extends StatelessWidget {
           child: position != null
               ? Text(
                   position!.acronym,
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                       color: isStartingPlayersComponent && showEmptyPositions
                           ? positionColor
                           : isStartingPlayersComponent && !showEmptyPositions
@@ -45,12 +49,15 @@ class PlayerNameAndPositionComponent extends StatelessWidget {
               : null,
         ),
         if (playerName != null)
-          Text(
-            isStartingPlayersComponent ? "" : playerName!,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: positionColor, fontWeight: FontWeight.bold),
+          Positioned(
+            bottom: -3,
+            child: Text(
+              isStartingPlayersComponent ? "" : playerName!,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: positionColor, fontWeight: FontWeight.bold),
+            ),
           )
       ],
     );

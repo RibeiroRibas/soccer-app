@@ -8,8 +8,8 @@ class DefaultFormation extends TeamFormation {
   final int numberOfPlayers;
   Map<Position, Player?> formation = {};
 
-  DefaultFormation(super.players, super.teamColor, super.onSelectedPlayer,
-      super.onLongPlayerPress,
+  DefaultFormation(super.players, super.teamColor,
+      super.onSelectedPlayer, super.onLongPlayerPress,
       {required this.numberOfPlayers});
 
   void _setPlayersAndPositions() {
@@ -169,30 +169,32 @@ class DefaultFormation extends TeamFormation {
   @override
   List<Widget> getGoalKeeper() {
     List<Widget> playersComponent = [];
-    addComponent(formation[Position.goalkeeper], playersComponent);
+    addComponent(
+        formation[Position.goalkeeper]!, playersComponent);
     return playersComponent;
   }
 
   @override
-  void addComponent(Player? player, List<Widget> playersComponent) {
-    if (player != null) {
+  void addComponent(
+      Player player, List<Widget> playersComponent) {
       playersComponent.add(GestureDetector(
         child: PlayerNameAndPositionComponent(
             position: player.improvisedPosition ?? player.principalPosition,
             playerName: formatName(player.name!),
-            positionColor: resolveSelectedPlayerColor(player)),
+            positionColor:
+                resolveSelectedPlayerOrPositionColor(player)),
         onTap: () => super.onSelectedPlayer(player),
         onLongPress: () => super.onLongPlayerPress(player),
       ));
-    }
+
   }
 
   @override
   List<Widget> getDefendersLeftSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.defensivePositions()) {
-      if (formation.containsKey(position)) {
-        addComponent(formation[position], playersComponent);
+      if(formation.containsKey(position)) {
+        addComponent(formation[position]!, playersComponent);
       }
     }
     return playersComponent;
@@ -202,8 +204,8 @@ class DefaultFormation extends TeamFormation {
   List<Widget> getDefendersRightSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.defensivePositions().reversed) {
-      if (formation.containsKey(position)) {
-        addComponent(formation[position], playersComponent);
+      if(formation.containsKey(position)) {
+        addComponent(formation[position]!, playersComponent);
       }
     }
     return playersComponent;
@@ -213,8 +215,8 @@ class DefaultFormation extends TeamFormation {
   List<Widget> getDefensiveMidfieldersLeftSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.defensiveMidfielderPositions()) {
-      if (formation.containsKey(position)) {
-        addComponent(formation[position], playersComponent);
+      if(formation.containsKey(position)) {
+        addComponent(formation[position]!, playersComponent);
       }
     }
     return playersComponent;
@@ -225,8 +227,8 @@ class DefaultFormation extends TeamFormation {
     List<Widget> playersComponent = [];
     for (Position position
         in Position.defensiveMidfielderPositions().reversed) {
-      if (formation.containsKey(position)) {
-        addComponent(formation[position], playersComponent);
+      if(formation.containsKey(position)) {
+        addComponent(formation[position]!, playersComponent);
       }
     }
     return playersComponent;
@@ -236,8 +238,8 @@ class DefaultFormation extends TeamFormation {
   List<Widget> getForwardsLeftSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.forwardPositions()) {
-      if (formation.containsKey(position)) {
-        addComponent(formation[position], playersComponent);
+      if(formation.containsKey(position)) {
+        addComponent(formation[position]!, playersComponent);
       }
     }
     return playersComponent;
@@ -247,8 +249,8 @@ class DefaultFormation extends TeamFormation {
   List<Widget> getForwardsRightSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.forwardPositions().reversed) {
-      if (formation.containsKey(position)) {
-        addComponent(formation[position], playersComponent);
+      if(formation.containsKey(position)) {
+        addComponent(formation[position]!, playersComponent);
       }
     }
     return playersComponent;
@@ -258,8 +260,8 @@ class DefaultFormation extends TeamFormation {
   List<Widget> getMidfieldersLeftSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.midfielderPositions()) {
-      if (formation.containsKey(position)) {
-        addComponent(formation[position], playersComponent);
+      if(formation.containsKey(position)) {
+        addComponent(formation[position]!, playersComponent);
       }
     }
     return playersComponent;
@@ -269,8 +271,8 @@ class DefaultFormation extends TeamFormation {
   List<Widget> getMidfieldersRightSide() {
     List<Widget> playersComponent = [];
     for (Position position in Position.midfielderPositions().reversed) {
-      if (formation.containsKey(position)) {
-        addComponent(formation[position], playersComponent);
+      if(formation.containsKey(position)) {
+        addComponent(formation[position]!, playersComponent);
       }
     }
     return playersComponent;

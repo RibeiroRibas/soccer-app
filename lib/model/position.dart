@@ -14,7 +14,8 @@ enum Position {
   leftDefensiveMidfielder(ldm, leftDefenderMidfielderPosition),
   rightDefensiveMidfielder(rdm, rightDefenderMidfielderPosition),
   leftWinger(lw, leftWingerPosition),
-  rightWinger(rw, rightWingerPosition);
+  rightWinger(rw, rightWingerPosition),
+  defensiveMidfielder(dm, defenderMidfielderPosition);
 
   const Position(this.acronym, this.name);
 
@@ -22,75 +23,78 @@ enum Position {
   final String name;
 
   static Position fromIndex(int index) {
-    assert(values.length == 14);
+    assert(values.length == 15);
     switch (index) {
       case 0:
         assert(values[0] == goalkeeper);
         return goalkeeper;
       case 1:
-        assert(values[1] == goalkeeper);
+        assert(values[1] == forward);
         return forward;
       case 2:
-        assert(values[2] == goalkeeper);
+        assert(values[2] == midfielder);
         return midfielder;
       case 3:
-        assert(values[3] == goalkeeper);
+        assert(values[3] == leftMidfielder);
         return leftMidfielder;
       case 4:
-        assert(values[4] == goalkeeper);
+        assert(values[4] == rightMidfielder);
         return rightMidfielder;
       case 5:
-        assert(values[5] == goalkeeper);
+        assert(values[5] == defender);
         return defender;
       case 6:
-        assert(values[6] == goalkeeper);
+        assert(values[6] == leftDefender);
         return leftDefender;
       case 7:
-        assert(values[7] == goalkeeper);
+        assert(values[7] == rightDefender);
         return rightDefender;
       case 8:
-        assert(values[8] == goalkeeper);
+        assert(values[8] == leftBack);
         return leftBack;
       case 9:
-        assert(values[9] == goalkeeper);
+        assert(values[9] == rightBack);
         return rightBack;
       case 10:
-        assert(values[10] == goalkeeper);
-        return leftWinger;
-      case 11:
-        assert(values[11] == goalkeeper);
-        return rightWinger;
-      case 12:
-        assert(values[12] == goalkeeper);
+        assert(values[10] == leftDefensiveMidfielder);
         return leftDefensiveMidfielder;
-      default:
-        assert(values[13] == goalkeeper);
+      case 11:
+        assert(values[11] == rightDefensiveMidfielder);
         return rightDefensiveMidfielder;
+      case 12:
+        assert(values[12] == leftWinger);
+        return leftWinger;
+      case 13:
+        assert(values[13] == rightWinger);
+        return rightWinger;
+      default:
+        assert(values[14] == defensiveMidfielder);
+        return defensiveMidfielder;
     }
   }
 
   static List<Position> defensivePositions() {
     return [
-      defender,
-      leftDefender,
-      rightDefender,
       leftBack,
+      leftDefender,
+      defender,
+      rightDefender,
       rightBack,
     ];
   }
 
   static List<Position> midfielderPositions() {
     return [
-      midfielder,
       leftMidfielder,
+      midfielder,
       rightMidfielder,
     ];
   }
 
   static List<Position> forwardPositions() {
     return [
-      forward,
       leftWinger,
+      forward,
       rightWinger,
     ];
   }
@@ -98,6 +102,7 @@ enum Position {
   static List<Position> defensiveMidfielderPositions() {
     return [
       leftDefensiveMidfielder,
+      defensiveMidfielder,
       rightDefensiveMidfielder,
     ];
   }
@@ -118,6 +123,7 @@ enum Position {
       rightDefender,
       leftBack,
       rightBack,
+      defensiveMidfielder,
       leftDefensiveMidfielder,
       rightDefensiveMidfielder,
       midfielder,
@@ -133,6 +139,7 @@ enum Position {
 
   static List<Position> orderOfChangingDefensiveMidfielderPlayers() {
     List<Position> positions = [
+      defensiveMidfielder,
       leftDefensiveMidfielder,
       rightDefensiveMidfielder,
       midfielder,
@@ -159,6 +166,7 @@ enum Position {
       forward,
       leftWinger,
       rightWinger,
+      defensiveMidfielder,
       leftDefensiveMidfielder,
       rightDefensiveMidfielder,
       defender,
@@ -179,6 +187,7 @@ enum Position {
       midfielder,
       leftMidfielder,
       rightMidfielder,
+      defensiveMidfielder,
       leftDefensiveMidfielder,
       rightDefensiveMidfielder,
       leftBack,

@@ -21,24 +21,24 @@ class StartingPlayersComponent extends StatelessWidget {
             direction: Axis.horizontal,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.04),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: teamFormation.getGoalKeeper(),
               ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.025),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.005),
               Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: teamFormation.getDefendersLeftSide()),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.025),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.005),
               Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: teamFormation.getDefensiveMidfieldersLeftSide()),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.012),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.005),
               Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: teamFormation.getMidfieldersLeftSide()),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.040),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.005),
               Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: teamFormation.getForwardsLeftSide()),
@@ -51,24 +51,20 @@ class StartingPlayersComponent extends StatelessWidget {
               Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: teamFormation.getForwardsRightSide()),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.040),
               Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: teamFormation.getMidfieldersRightSide()),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.012),
               Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: teamFormation.getDefensiveMidfieldersRightSide()),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.025),
               Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: teamFormation.getDefendersRightSide()),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.025),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: teamFormation.getGoalKeeper(),
               ),
-              SizedBox(width: MediaQuery.of(context).size.width * 0.05),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.04),
             ],
           );
   }

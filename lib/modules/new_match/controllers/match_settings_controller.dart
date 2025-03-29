@@ -53,6 +53,10 @@ abstract class MatchSettingsControllerBase with Store {
         numberOfPossiblePlayersByTeam);
   }
 
+  String getNumberOfPlayersByTeam(Iterable<bool> arePlayersSelected){
+    return (getTotalPlayers(arePlayersSelected) / 2).round().toString();
+  }
+
   Future<void> save(MatchSettings matchSettings) async {
     await matchSettingsService.save(matchSettings);
   }

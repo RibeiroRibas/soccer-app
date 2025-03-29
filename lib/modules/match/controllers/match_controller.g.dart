@@ -57,22 +57,6 @@ mixin _$MatchController on MatchControllerBase, Store {
     });
   }
 
-  late final _$formationAtom =
-      Atom(name: 'MatchControllerBase.formation', context: context);
-
-  @override
-  Formation get formation {
-    _$formationAtom.reportRead();
-    return super.formation;
-  }
-
-  @override
-  set formation(Formation value) {
-    _$formationAtom.reportWrite(value, super.formation, () {
-      super.formation = value;
-    });
-  }
-
   late final _$changeScoreAsyncAction =
       AsyncAction('MatchControllerBase.changeScore', context: context);
 
@@ -102,8 +86,7 @@ mixin _$MatchController on MatchControllerBase, Store {
     return '''
 scoreTeamOne: ${scoreTeamOne},
 scoreTeamTwo: ${scoreTeamTwo},
-isMatchStarted: ${isMatchStarted},
-formation: ${formation}
+isMatchStarted: ${isMatchStarted}
     ''';
   }
 }

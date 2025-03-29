@@ -24,6 +24,7 @@ class PlayerService {
   late List<Player> _rightBacks;
   late List<Player> _leftWingers;
   late List<Player> _rightWingers;
+  late List<Player> _defensiveMidfielder;
   late List<Player> _leftDefensiveMidfielder;
   late List<Player> _rightDefensiveMidfielder;
 
@@ -40,6 +41,7 @@ class PlayerService {
   bool canAddRightDefender = true;
   bool canAddLeftMidfielder = true;
   bool canAddRightMidfielder = true;
+  bool canAddDefensiveMidfielder = true;
   bool canAddLeftDefensiveMidfielder = true;
   bool canAddRightDefensiveMidfielder = true;
   bool alreadyDrawTeamOne = false;
@@ -83,6 +85,7 @@ class PlayerService {
     _rightBacks = [];
     _leftWingers = [];
     _rightWingers = [];
+    _defensiveMidfielder = [];
     _leftDefensiveMidfielder = [];
     _rightDefensiveMidfielder = [];
     for (Player player in players) {
@@ -102,6 +105,8 @@ class PlayerService {
         _leftWingers.add(player);
       } else if (player.isRightWinger()) {
         _rightWingers.add(player);
+      } else if (player.isDefensiveMidfielder()) {
+        _defensiveMidfielder.add(player);
       } else if (player.isLeftDefensiveMidfielder()) {
         _leftDefensiveMidfielder.add(player);
       } else if (player.isRightDefensiveMidfielder()) {
@@ -169,6 +174,10 @@ class PlayerService {
       canAddRightDefender = Random().nextInt(2) == 0;
     }
     count++;
+    if (_defensiveMidfielder.length == 1) {
+      canAddDefensiveMidfielder = Random().nextInt(2) == 0;
+    }
+    count++;
     if (_leftDefensiveMidfielder.length == 1) {
       canAddLeftDefensiveMidfielder = Random().nextInt(2) == 0;
     }
@@ -188,6 +197,7 @@ class PlayerService {
     canAddRightBack = true;
     canAddLeftWinger = true;
     canAddRightWinger = true;
+    canAddDefensiveMidfielder = true;
     canAddLeftDefensiveMidfielder = true;
     canAddRightDefensiveMidfielder = true;
     canAddLeftDefender = true;
@@ -286,6 +296,12 @@ class PlayerService {
           team.players!.length < numberOfStartingPlayers!) {
         if (canAddRightMidfielder) {
           _addPlayer(_rightMidfielders, team, players);
+        }
+      }
+      if (_defensiveMidfielder.isNotEmpty &&
+          team.players!.length < numberOfStartingPlayers!) {
+        if (canAddDefensiveMidfielder) {
+          _addPlayer(_defensiveMidfielder, team, players);
         }
       }
     } while (team.players!.length < numberOfStartingPlayers!);

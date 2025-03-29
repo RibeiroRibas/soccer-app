@@ -11,6 +11,7 @@ abstract class TeamFormation {
   final Function(Player) onSelectedPlayer;
   final Function(Player) onLongPlayerPress;
   Player? selectedPlayer;
+  Position? selectedPosition;
 
   late Player goalKeeper;
 
@@ -37,7 +38,7 @@ abstract class TeamFormation {
 
   List<Widget> getForwardsRightSide();
 
-  void addComponent(Player? player, List<Widget> playersComponent);
+  void addComponent(Player player, List<Widget> playersComponent);
 
   String formatName(String name) {
     if (name.length > 6) {
@@ -57,11 +58,11 @@ abstract class TeamFormation {
     }
   }
 
-  Color resolveSelectedPlayerColor(Player player) {
-    return selectedPlayer != null && selectedPlayer!.id == player.id ||
-            selectedPlayer != null &&
-                selectedPlayer!.principalPosition == player.principalPosition
-        ? ThemeColors.selectedPosition
-        : teamColor;
+  Color resolveSelectedPlayerOrPositionColor(Player player) {
+      return selectedPlayer != null && selectedPlayer!.id == player.id ||
+          selectedPlayer != null &&
+              selectedPlayer!.principalPosition == player.principalPosition
+          ? ThemeColors.selectedPosition
+          : teamColor;
   }
 }

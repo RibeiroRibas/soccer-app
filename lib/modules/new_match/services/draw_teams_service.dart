@@ -118,7 +118,7 @@ class DrawTeamsService {
     List<Player> players,
     List<Team> teams,
   ) {
-    for (int i = 0; i < settings.numberOfTeams!; i++) {
+    for (int i = 0; i < settings.numberOfTeams; i++) {
       Team team = Team();
       team.players = [];
       _playerService.addPlayersByPosition(

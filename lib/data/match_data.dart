@@ -195,11 +195,11 @@ MatchDetails matchDetailsTwo = MatchDetails(
 
 MatchSettings getMatchSettings(int numberOfStartingPlayers, int numberOfTeams) {
   MatchSettings matchSettings = MatchSettings(
-      numberOfStartingPlayers: numberOfStartingPlayers,
-      numberOfTeams: numberOfTeams);
+      numberOfStartingPlayers: numberOfStartingPlayers);
   matchSettings.durationMin = 0;
   matchSettings.durationHr = 1;
   matchSettings.timeToChangePlayer = 10;
+  matchSettings.numberOfTeams = numberOfTeams;
   return matchSettings;
 }
 

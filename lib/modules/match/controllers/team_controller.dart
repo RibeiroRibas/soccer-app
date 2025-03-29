@@ -49,6 +49,9 @@ abstract class TeamControllerBase with Store {
   @observable
   Player? selectedPlayer;
 
+  @observable
+  Position? selectedPosition;
+
   late Team team;
 
   late Color teamColor;
@@ -88,15 +91,17 @@ abstract class TeamControllerBase with Store {
 
   @action
   void _onSelectedPlayer(Player player) {
-    if (selectedPlayer == null) {
-      selectedPlayer = player;
-    } else if (selectedPlayer!.id == player.id) {
-      selectedPlayer = null;
-    } else {
-      _switchPlayersPosition(selectedPlayer!, player);
-      selectedPlayer = null;
-    }
+
+      if (selectedPlayer == null) {
+        selectedPlayer = player;
+      } else if (selectedPlayer!.id == player.id) {
+        selectedPlayer = null;
+      } else{
+        _switchPlayersPosition(selectedPlayer!, player);
+        selectedPlayer = null;
+      }
   }
+
 
   void _switchPlayersPosition(Player player1, Player player2) {
     Position? improvisedPositionPlayer1 = player1.improvisedPosition;

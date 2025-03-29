@@ -49,7 +49,7 @@ class _DrawnTeamsPageViewState extends State<DrawnTeamsPageView> {
       List<Player> players, Player player) async {
     return showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (BuildContext context) {
           return SelectPlayerDialog(
               players: players,
@@ -62,71 +62,74 @@ class _DrawnTeamsPageViewState extends State<DrawnTeamsPageView> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverToBoxAdapter(
-          child: _controller.teamMatches.isEmpty
-              ? Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 25),
-                  child: ElevatedButtonComponent(
-                    onButtonPressed: () => _drawTeams(),
-                    text: sortTeams,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 48.0),
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: _controller.teamMatches.isEmpty
+                ? Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 50, vertical: 25),
+                    child: ElevatedButtonComponent(
+                      onButtonPressed: () => _drawTeams(),
+                      text: sortTeams,
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(bottom: 25, top: 25),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButtonComponent(
+                          onButtonPressed: () => _drawTeams(),
+                          text: sortTeams,
+                        ),
+                        ElevatedButtonComponent(
+                          onButtonPressed: () => _navigator.goTo("$matchRote/",
+                              arguments: {
+                                "matches": _controller.teamMatches,
+                                "matchSettings": widget.matchSettings
+                              }),
+                          text: startMatch,
+                        ),
+                      ],
+                    ),
                   ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(bottom: 25, top: 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ElevatedButtonComponent(
-                        onButtonPressed: () => _drawTeams(),
-                        text: sortTeams,
-                      ),
-                      ElevatedButtonComponent(
-                        onButtonPressed: () => _navigator.goTo("$matchRote/",
-                            arguments: {
-                              "matches": _controller.teamMatches,
-                              "matchSettings": widget.matchSettings
-                            }),
-                        text: startMatch,
-                      ),
-                    ],
-                  ),
-                ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return TeamVersusListItem(
-                  teamMatch: _controller.teamMatches.elementAt(index),
-                  onTeamNameChange: _controller.onTeamNameChange,
-                  availableNames: _controller.availableNames,
-                  onTeamShieldChange: _controller.onTeamShieldChange,
-                  teamInformation:
-                      _controller.teamsInformation.elementAt(index));
-            },
-            childCount: _controller.teamMatches.length,
           ),
-        ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: BoxCardComponent(
-                  boxCardBody: TeamLineupComponent(
-                    team: _controller.sortedTeams[index],
-                    onSwitchPlayer: (player) => _showSelectPlayerDialog(
-                        _controller.getPlayersAnotherTeams(player), player),
-                  ),
-                ),
-              );
-            },
-            childCount: _controller.sortedTeams.length,
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return TeamVersusListItem(
+                    teamMatch: _controller.teamMatches.elementAt(index),
+                    onTeamNameChange: _controller.onTeamNameChange,
+                    availableNames: _controller.availableNames,
+                    onTeamShieldChange: _controller.onTeamShieldChange,
+                    teamInformation:
+                        _controller.teamsInformation.elementAt(index));
+              },
+              childCount: _controller.teamMatches.length,
+            ),
           ),
-        ),
-      ],
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: BoxCardComponent(
+                    boxCardBody: TeamLineupComponent(
+                      team: _controller.sortedTeams[index],
+                      onSwitchPlayer: (player) => _showSelectPlayerDialog(
+                          _controller.getPlayersAnotherTeams(player), player),
+                    ),
+                  ),
+                );
+              },
+              childCount: _controller.sortedTeams.length,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

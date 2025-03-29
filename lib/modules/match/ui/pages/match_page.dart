@@ -139,8 +139,8 @@ class _MatchPageState extends State<MatchPage> {
                   isMatchStarted: _matchController.isMatchStarted)),
           Observer(
             builder: (_) => Positioned(
-              top: 37,
-              bottom: 37,
+              top: 30,
+              bottom: 30,
               child: StartingPlayersComponent(
                 isTeamLeftSide: true,
                 teamFormation: _teamOneController.teamFormation,
@@ -162,8 +162,8 @@ class _MatchPageState extends State<MatchPage> {
                   : const SizedBox()),
           Observer(
             builder: (_) => Positioned(
-              top: 37,
-              bottom: 37,
+              top: 30,
+              bottom: 30,
               right: 4,
               child: StartingPlayersComponent(
                 isTeamLeftSide: false,
@@ -247,7 +247,7 @@ class _PreMatchMessagesComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return !isMatchStarted
         ? const Positioned(
-            top: 5,
+            top: 2,
             right: 0,
             left: 0,
             child: Column(

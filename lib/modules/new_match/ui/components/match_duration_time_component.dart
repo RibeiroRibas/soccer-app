@@ -24,7 +24,7 @@ class MatchDurationTimeComponent extends StatelessWidget {
       children: [
         const Expanded(child: Text(duration)),
         DropDownButtonComponent(
-          value: durationHr.toString(),
+          value: durationHr != null ? durationHr.toString() : "1",
           onValueChange: onDurationHrChange,
           width: MediaQuery.of(context).size.width / 4,
           values: ListHelper.getListOfHours(),
@@ -32,7 +32,7 @@ class MatchDurationTimeComponent extends StatelessWidget {
         ),
         const SizedBox(width: 2),
         DropDownButtonComponent(
-          value: durationMin.toString(),
+          value: durationMin != null ? durationMin.toString() : "0",
           onValueChange: onDurationMinChange,
           width: MediaQuery.of(context).size.width / 4,
           values: ListHelper.getListOfMinutes(),

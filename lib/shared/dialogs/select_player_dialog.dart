@@ -18,8 +18,14 @@ class SelectPlayerDialog extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Dialog(
-        child: SizedBox(
+        child: Container(
           width: MediaQuery.of(context).size.width * 0.3,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                width: 2,
+                color: Theme.of(context).colorScheme.onSurface,
+              )),
           child: SingleChildScrollView(
             child: Column(
               children: [

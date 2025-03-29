@@ -141,6 +141,10 @@ class Player {
     return principalPosition == Position.rightMidfielder;
   }
 
+  bool isDefensiveMidfielder() {
+    return principalPosition == Position.defensiveMidfielder;
+  }
+
   bool isLeftDefensiveMidfielder() {
     return principalPosition == Position.leftDefensiveMidfielder;
   }

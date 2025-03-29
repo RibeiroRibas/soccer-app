@@ -41,9 +41,6 @@ abstract class MatchControllerBase with Store {
 
   late MatchSettings settings;
 
-  @observable
-  Formation formation = Formation.defaultFormation;
-
   void init(List<TeamsMatch> matches, MatchSettings matchSettings) {
     settings = matchSettings;
 
